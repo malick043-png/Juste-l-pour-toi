@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juste là pour toi</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f0f4ff; height: 100vh; display: flex; flex-direction: column; }
+    .header { background: #2563eb; padding: 20px; color: white; }
+    .header h1 { font-size: 20px; }
+    .header p { font-size: 13px; color: #bfdbfe; }
+    .messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .bubble { max-width: 78%; padding: 12px; border-radius: 16px; font-size: 15px; line-height: 1.5; }
+    .assistant { background: white; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e0e0e0; }
+    .user { background: #2563eb; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .input-area { display: flex; gap: 8px; padding: 12px; background: white; border-top: 1px solid #ddd; }
+    textarea { flex: 1; border: 1px solid #ccc; border-radius: 20px; padding: 9px 14px; font-size: 14px; resize: none; height: 42px; font-family: Arial; }
+    button { background: #2563eb; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-size: 14px; cursor: pointer; }
+    button:disabled { opacity: 0.4; }
+    .chargement { font-size: 12px; color: #888; font-style: italic; padding: 4px 16px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>💙 Juste là pour toi</h1>
+    <p>Je t'écoute</p>
+  </div>
+  <div class="messages" id="messages">
+    <div class="bubble assistant">💙 Bonjour ! Je suis là pour toi. Comment te sens-tu aujourd'hui ?</div>
+  </div>
+  <div class="chargement" id="chargement" style="display:none">En train d'écrire...</div>
+  <div class="input-area">
+    <textarea id="input" placeholder="Écris ce que tu ressens..."></textarea>
+    <button id="btn" onclick="envoyer()">Envoyer</button>
+  </div>
+
+  <script>
+    const CLE = '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';
+    const SYSTEM = `Vous êtes un assistant bienveillant de l'application "Juste là pour toi". Écoutez avec empathie, posez des questions ouvertes, donnez des conseils simples et bienveillants. Répondez toujours en français, en 2 à 4 phrases maximum.`;
+    
+    let historique = [];
+
+    async function envoyer() {
+      const input = document.getElementById('input');
+      const texte = input.value.trim();
+      if (!texte) return;
+
+      ajouterMessage('user', texte);
+      historique.push({ role: 'user', content: texte });
+      input.value = '';
+
+      document.getElementById('btn').disabled = true;
+      document.getElementById('chargement').style.display = 'block';
+
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': CLE,
+            'anthropic-version': '2023-06-01'
+          },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 1000,
+            system: SYSTEM,
+            messages: historique
+          })
+        });
+        const data = await res.json();
+        const reponse = data.content[0].text;
+        historique.push({ role: 'assistant', content: reponse });
+        ajouterMessage('assistant', reponse);
+      } catch(e) {
+        ajouterMessage('assistant', '😔 Désolé, une erreur est survenue. Réessaie dans un moment.');
+      }
+
+      document.getElementById('btn').disabled = false;
+      document.getElementById('chargement').style.display = 'none';
+    }
+
+    function ajouterMessage(role, texte) {
+      const div = document.createElement('div');
+      div.className = 'bubble ' + role;
+      div.textContent = texte;
+      document.getElementById('messages').appendChild(div);
+      div.scrollIntoView();
+    }
+
+    document.getElementById('input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); envoyer(); }
+    });
+  </script>
+</body>
+</html>
