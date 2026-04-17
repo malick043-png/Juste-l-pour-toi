@@ -54,12 +54,11 @@
       document.getElementById('chargement').style.display = 'block';
 
       try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
+        const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'x-api-key': CLE,
-            'anthropic-version': '2023-06-01'
+           
           },
           body: JSON.stringify({
             model: 'claude-sonnet-4-20250514',
