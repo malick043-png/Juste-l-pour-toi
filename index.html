@@ -56,10 +56,15 @@
       try {
         const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-           
-          },
+         headers: {
+  'Content-Type': 'application/json',
+},
+body: JSON.stringify({
+  model: 'claude-sonnet-4-20250514',
+  max_tokens: 1000,
+  system: SYSTEM,
+  messages: historique
+}),
           body: JSON.stringify({
             model: 'claude-sonnet-4-20250514',
             max_tokens: 1000,
