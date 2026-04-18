@@ -36,7 +36,6 @@
   </div>
 
   <script>
-    const CLE = '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';
     const SYSTEM = `Vous êtes un assistant bienveillant de l'application "Juste là pour toi". Écoutez avec empathie, posez des questions ouvertes, donnez des conseils simples et bienveillants. Répondez toujours en français, en 2 à 4 phrases maximum.`;
     
     let historique = [];
@@ -56,15 +55,9 @@
       try {
         const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
           method: 'POST',
-         headers: {
-  'Content-Type': 'application/json',
-},
-body: JSON.stringify({
-  model: 'claude-sonnet-4-20250514',
-  max_tokens: 1000,
-  system: SYSTEM,
-  messages: historique
-}),
+          headers: {
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({
             model: 'claude-sonnet-4-20250514',
             max_tokens: 1000,
