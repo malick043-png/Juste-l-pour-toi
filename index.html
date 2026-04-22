@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://serveur-juste-la-pour-toi.onrender.com https://fonts.googleapis.com https://fonts.gstatic.com">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="mobile-web-app-capable" content="yes"> 
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Juste là pour toi">
   <title>Juste là pour toi</title>
@@ -13,22 +13,17 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'DM Sans', Arial, sans-serif; height: 100vh; overflow: hidden; background: #f0f6ff; transition: background 0.4s; }
     body.dark { background: #0a1628; }
-
-    /* SPLASH */
     #splash { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 30px; text-align: center; transition: opacity 1s; }
-    body.light #splash, #splash { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
+    body:not(.dark) #splash { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
     body.dark #splash { background: linear-gradient(135deg, #0a1628, #1a2d4a, #0d2137); }
     .splash-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(181,212,244,0.5); margin-bottom: 28px; box-shadow: 0 4px 20px rgba(24,95,165,0.2); }
     .splash-citation { font-family: 'Lora', serif; font-size: 18px; line-height: 1.8; font-style: italic; max-width: 300px; margin-bottom: 28px; min-height: 80px; }
     body:not(.dark) .splash-citation { color: #0C447C; }
     body.dark .splash-citation { color: rgba(255,255,255,0.9); }
-    .splash-btn { background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 12px 32px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; box-shadow: 0 4px 16px rgba(24,95,165,0.3); transition: all 0.3s; margin-bottom: 12px; }
-    .splash-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(24,95,165,0.4); }
+    .splash-btn { background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 12px 32px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; box-shadow: 0 4px 16px rgba(24,95,165,0.3); margin-bottom: 12px; }
     .splash-share { background: none; border: none; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     body:not(.dark) .splash-share { color: #85B7EB; }
     body.dark .splash-share { color: rgba(255,255,255,0.4); }
-
-    /* ACCUEIL */
     #accueil { position: fixed; inset: 0; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px; text-align: center; }
     body:not(.dark) #accueil { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
     body.dark #accueil { background: linear-gradient(135deg, #0a1628, #112233); }
@@ -39,14 +34,13 @@
     .accueil-sous { font-size: 14px; margin-bottom: 32px; }
     body:not(.dark) .accueil-sous { color: #378ADD; }
     body.dark .accueil-sous { color: rgba(181,212,244,0.6); }
-    .prenom-input { width: 100%; max-width: 300px; border-radius: 24px; padding: 13px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; margin-bottom: 14px; transition: all 0.3s; }
+    .prenom-input { width: 100%; max-width: 300px; border-radius: 24px; padding: 13px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; margin-bottom: 14px; }
     body:not(.dark) .prenom-input { border: 1.5px solid #B5D4F4; background: #fff; color: #0C447C; box-shadow: 0 2px 12px rgba(24,95,165,0.08); }
     body:not(.dark) .prenom-input::placeholder { color: #85B7EB; }
     body.dark .prenom-input { border: 1.5px solid rgba(181,212,244,0.2); background: rgba(255,255,255,0.07); color: #e8f2ff; }
     body.dark .prenom-input::placeholder { color: rgba(181,212,244,0.3); }
-    .btn-commencer { width: 100%; max-width: 300px; background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; box-shadow: 0 4px 20px rgba(24,95,165,0.3); transition: all 0.3s; margin-bottom: 14px; }
-    .btn-commencer:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(24,95,165,0.5); }
-    .btn-dark-toggle { background: none; border: 1.5px solid rgba(181,212,244,0.4); border-radius: 20px; padding: 8px 20px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.3s; margin-bottom: 14px; }
+    .btn-commencer { width: 100%; max-width: 300px; background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 14px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; box-shadow: 0 4px 20px rgba(24,95,165,0.3); margin-bottom: 14px; }
+    .btn-dark-toggle { background: none; border: 1.5px solid rgba(181,212,244,0.4); border-radius: 20px; padding: 8px 20px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-bottom: 14px; }
     body:not(.dark) .btn-dark-toggle { color: #85B7EB; }
     body.dark .btn-dark-toggle { color: rgba(181,212,244,0.6); }
     .btn-explorer { background: none; border: none; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 6px; }
@@ -55,8 +49,6 @@
     .accueil-footer { position: absolute; bottom: 16px; font-size: 11px; font-style: italic; font-family: 'Lora', serif; }
     body:not(.dark) .accueil-footer { color: #B5D4F4; }
     body.dark .accueil-footer { color: rgba(181,212,244,0.3); }
-
-    /* MENU DRAWER */
     #menu-drawer { position: fixed; inset: 0; z-index: 50; display: none; }
     #menu-drawer.open { display: block; }
     .drawer-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
@@ -69,22 +61,18 @@
     body:not(.dark) .drawer-titre { color: #0C447C; }
     body.dark .drawer-titre { color: #e8f2ff; }
     .drawer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .drawer-item { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px; border-radius: 14px; cursor: pointer; transition: all 0.2s; border: 0.5px solid; }
+    .drawer-item { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px; border-radius: 14px; cursor: pointer; border: 0.5px solid; }
     body:not(.dark) .drawer-item { background: #f7faff; border-color: #B5D4F4; }
     body:not(.dark) .drawer-item:hover { background: #E6F1FB; }
     body.dark .drawer-item { background: rgba(255,255,255,0.05); border-color: rgba(181,212,244,0.15); }
-    body.dark .drawer-item:hover { background: rgba(255,255,255,0.1); }
     .drawer-icon { font-size: 24px; }
     .drawer-label { font-size: 11px; font-weight: 500; text-align: center; }
     body:not(.dark) .drawer-label { color: #185FA5; }
     body.dark .drawer-label { color: rgba(181,212,244,0.7); }
-
-    /* CHAT */
     #chat { position: fixed; inset: 0; z-index: 10; display: none; flex-direction: column; height: 100vh; }
     body:not(.dark) #chat { background: #f0f6ff; }
     body.dark #chat { background: #0d1f35; }
     .chat-header { background: linear-gradient(135deg, #185FA5, #1a4a7a); padding: 12px 16px; flex-shrink: 0; overflow: hidden; position: relative; }
-    .chat-header::after { content: ''; position: absolute; top: -30px; right: -20px; width: 90px; height: 90px; border-radius: 50%; background: rgba(255,255,255,0.05); }
     .chat-top { display: flex; align-items: center; gap: 10px; position: relative; }
     .chat-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.3); }
     .chat-title { font-family: 'Lora', serif; font-size: 15px; color: #fff; }
@@ -100,6 +88,8 @@
     body:not(.dark) .wave-sep::after { background: #f0f6ff; }
     body.dark .wave-sep::after { background: #0d1f35; }
     .messages { flex: 1; overflow-y: auto; padding: 12px 14px 8px; display: flex; flex-direction: column; gap: 10px; }
+    body:not(.dark) .messages { background: #f0f6ff; }
+    body.dark .messages { background: #0d1f35; }
     .date-div { display: flex; align-items: center; gap: 8px; }
     .date-div::before, .date-div::after { content: ''; flex: 1; height: 0.5px; }
     body:not(.dark) .date-div::before, body:not(.dark) .date-div::after { background: #B5D4F4; }
@@ -111,18 +101,17 @@
     @keyframes bubbleIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
     .bwrap.user { align-items: flex-end; }
     .bubble { max-width: 78%; padding: 10px 13px; font-size: 14px; line-height: 1.6; }
-    body:not(.dark) .bubble.assistant { background: #fff; color: #0C447C; border-radius: 14px 14px 14px 4px; border: 0.5px solid #B5D4F4; align-self: flex-start; box-shadow: 0 1px 6px rgba(24,95,165,0.06); }
+    body:not(.dark) .bubble.assistant { background: #fff; color: #0C447C; border-radius: 14px 14px 14px 4px; border: 0.5px solid #B5D4F4; align-self: flex-start; }
     body.dark .bubble.assistant { background: rgba(255,255,255,0.07); color: #e8f2ff; border-radius: 14px 14px 14px 4px; border: 0.5px solid rgba(181,212,244,0.15); align-self: flex-start; }
-    .bubble.user { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border-radius: 14px 14px 4px 14px; box-shadow: 0 2px 10px rgba(24,95,165,0.25); }
+    .bubble.user { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border-radius: 14px 14px 4px 14px; }
     .btime { font-size: 10px; margin-top: 2px; }
     body:not(.dark) .btime { color: #85B7EB; }
     body.dark .btime { color: rgba(181,212,244,0.3); }
     .suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px; flex-shrink: 0; }
     body:not(.dark) .suggestions { background: #f0f6ff; }
     body.dark .suggestions { background: #0d1f35; }
-    .sugg-btn { border-radius: 14px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; transition: all 0.2s; }
+    .sugg-btn { border-radius: 14px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     body:not(.dark) .sugg-btn { background: #fff; color: #185FA5; border: 1px solid #B5D4F4; }
-    body:not(.dark) .sugg-btn:hover { background: #E6F1FB; }
     body.dark .sugg-btn { background: rgba(255,255,255,0.07); color: rgba(181,212,244,0.8); border: 1px solid rgba(181,212,244,0.2); }
     .typing { display: flex; gap: 5px; align-items: center; padding: 10px 14px; border-radius: 14px 14px 14px 4px; align-self: flex-start; }
     body:not(.dark) .typing { background: #fff; border: 0.5px solid #B5D4F4; }
@@ -133,12 +122,12 @@
     .input-area { padding: 10px 12px; border-top: 0.5px solid; display: flex; gap: 8px; align-items: flex-end; flex-shrink: 0; }
     body:not(.dark) .input-area { background: #fff; border-color: #B5D4F4; }
     body.dark .input-area { background: rgba(13,31,53,0.95); border-color: rgba(181,212,244,0.1); }
-    .chat-textarea { flex: 1; border: 0.5px solid; border-radius: 18px; padding: 8px 13px; font-size: 14px; font-family: 'DM Sans', Arial, sans-serif; resize: none; max-height: 80px; outline: none; transition: border-color 0.2s; }
+    .chat-textarea { flex: 1; border: 0.5px solid; border-radius: 18px; padding: 8px 13px; font-size: 14px; font-family: 'DM Sans', Arial, sans-serif; resize: none; max-height: 80px; outline: none; }
     body:not(.dark) .chat-textarea { background: #f7faff; color: #0C447C; border-color: #B5D4F4; }
     body:not(.dark) .chat-textarea::placeholder { color: #85B7EB; }
     body.dark .chat-textarea { background: rgba(255,255,255,0.07); color: #e8f2ff; border-color: rgba(181,212,244,0.2); }
     body.dark .chat-textarea::placeholder { color: rgba(181,212,244,0.3); }
-    .send-btn { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #185FA5, #1a6db5); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 10px rgba(24,95,165,0.3); }
+    .send-btn { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #185FA5, #1a6db5); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .send-btn:disabled { opacity: 0.4; }
     .send-btn svg { width: 15px; height: 15px; fill: white; }
     .chat-footer { display: flex; justify-content: center; padding: 4px; flex-shrink: 0; }
@@ -147,8 +136,6 @@
     .chat-footer span { font-size: 10px; font-style: italic; font-family: 'Lora', serif; }
     body:not(.dark) .chat-footer span { color: #B5D4F4; }
     body.dark .chat-footer span { color: rgba(181,212,244,0.3); }
-
-    /* PAGES SECONDAIRES */
     .page-sec { position: fixed; inset: 0; z-index: 30; display: none; flex-direction: column; height: 100vh; animation: fadeIn 0.35s ease; }
     .page-sec.open { display: flex; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
@@ -159,13 +146,13 @@
     .btn-back { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 10px; padding: 5px 10px; font-size: 12px; cursor: pointer; }
     .sec-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
     .card { padding: 16px; border-radius: 16px; }
-    body:not(.dark) .card { background: #fff; border: 0.5px solid #B5D4F4; box-shadow: 0 1px 8px rgba(24,95,165,0.05); }
+    body:not(.dark) .card { background: #fff; border: 0.5px solid #B5D4F4; }
     body.dark .card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(181,212,244,0.15); }
     .card-titre { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
     body:not(.dark) .card-titre { color: #0C447C; }
     body.dark .card-titre { color: #e8f2ff; }
-    .btn-p { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border: none; border-radius: 16px; padding: 11px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; font-weight: 500; margin-top: 10px; box-shadow: 0 3px 12px rgba(24,95,165,0.25); transition: all 0.2s; }
-    .btn-s { border: 1px solid; border-radius: 16px; padding: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; margin-top: 8px; transition: all 0.2s; }
+    .btn-p { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border: none; border-radius: 16px; padding: 11px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; font-weight: 500; margin-top: 10px; }
+    .btn-s { border: 1px solid; border-radius: 16px; padding: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; margin-top: 8px; }
     body:not(.dark) .btn-s { background: #fff; border-color: #B5D4F4; color: #185FA5; }
     body.dark .btn-s { background: rgba(255,255,255,0.05); border-color: rgba(181,212,244,0.2); color: rgba(181,212,244,0.8); }
     .succes { text-align: center; font-size: 13px; color: #1D9E75; padding: 6px; display: none; }
@@ -181,11 +168,10 @@
     body:not(.dark) .entree-j { border-color: #E6F1FB; }
     body.dark .entree-j { border-color: rgba(181,212,244,0.1); }
     .entree-date { font-size: 11px; color: #85B7EB; min-width: 65px; }
-    .obj-btn { border: 1px solid; border-radius: 10px; padding: 9px 12px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; width: 100%; margin-bottom: 6px; transition: all 0.2s; }
+    .obj-btn { border: 1px solid; border-radius: 10px; padding: 9px 12px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; width: 100%; margin-bottom: 6px; }
     body:not(.dark) .obj-btn { background: #f7faff; border-color: #B5D4F4; color: #185FA5; }
-    body:not(.dark) .obj-btn:hover { background: #E6F1FB; }
     body.dark .obj-btn { background: rgba(255,255,255,0.05); border-color: rgba(181,212,244,0.15); color: rgba(181,212,244,0.8); }
-    .delai-btn { border: 1px solid; border-radius: 10px; padding: 7px 14px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+    .delai-btn { border: 1px solid; border-radius: 10px; padding: 7px 14px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     body:not(.dark) .delai-btn { background: #fff; border-color: #B5D4F4; color: #185FA5; }
     body.dark .delai-btn { background: rgba(255,255,255,0.05); border-color: rgba(181,212,244,0.2); color: rgba(181,212,244,0.8); }
     .delai-btn.selected { background: #185FA5; border-color: #185FA5; color: #fff; }
@@ -196,7 +182,6 @@
 </head>
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
   <img src="icon.png" class="splash-logo" alt="Logo">
   <p class="splash-citation" id="splash-citation"></p>
@@ -204,7 +189,6 @@
   <button class="splash-share" onclick="partagercitation()">✨ Partager cette citation</button>
 </div>
 
-<!-- ACCUEIL -->
 <div id="accueil" style="display:none; position:fixed; inset:0; z-index:10; flex-direction:column; align-items:center; justify-content:center; padding:30px 24px; text-align:center;">
   <img src="icon.png" class="accueil-logo" alt="Logo">
   <h1 class="accueil-titre">Juste là pour toi</h1>
@@ -216,35 +200,32 @@
   <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
 </div>
 
-<!-- MENU DRAWER -->
 <div id="menu-drawer">
   <div class="drawer-overlay" onclick="fermerMenu()"></div>
   <div class="drawer-content">
     <div class="drawer-handle"></div>
     <p class="drawer-titre">Explore ton espace bien-être 💙</p>
     <div class="drawer-grid">
-      <div class="drawer-item" onclick="ouvrirSec('journal');fermerMenu();afficherHistoriqueJournal()"><span class="drawer-icon">📔</span><span class="drawer-label">Journal de bord</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('journal');fermerMenu();afficherHistoriqueJournal()"><span class="drawer-icon">📔</span><span class="drawer-label">Journal</span></div>
       <div class="drawer-item" onclick="ouvrirSec('respiration');fermerMenu()"><span class="drawer-icon">🌬️</span><span class="drawer-label">Respiration</span></div>
       <div class="drawer-item" onclick="ouvrirSec('objectifs');fermerMenu();afficherObjectifActuel()"><span class="drawer-icon">🎯</span><span class="drawer-label">Objectifs</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('humeur');fermerMenu();afficherGraphique()"><span class="drawer-icon">📊</span><span class="drawer-label">Suivi humeur</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('humeur');fermerMenu();afficherGraphique()"><span class="drawer-icon">📊</span><span class="drawer-label">Humeur</span></div>
       <div class="drawer-item" onclick="ouvrirSec('defi');fermerMenu();chargerDefi();afficherDefisHisto()"><span class="drawer-icon">⚡</span><span class="drawer-label">Défi du jour</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
       <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
     </div>
   </div>
 </div>
 
-<!-- CHAT -->
 <div id="chat" style="display:none; position:fixed; inset:0; z-index:10; flex-direction:column; height:100vh;">
   <div class="chat-header">
     <div class="chat-top">
       <img src="icon.png" class="chat-avatar" alt="">
       <div><p class="chat-title">Juste là pour toi</p><p class="chat-sub" id="chat-sub">Ton espace de bien-être</p></div>
       <div class="chat-acts">
-       <button class="chat-btn" onclick="allerAccueil()">🏠</button>
-<button class="chat-btn" onclick="ouvrirMenu()">☰ Menu</button>
-        <button class="chat-btn" onclick="ouvrirMenu()">☰</button>
+        <button class="chat-btn" onclick="allerAccueil()">🏠</button>
+        <button class="chat-btn" onclick="ouvrirMenu()">☰ Menu</button>
         <button class="chat-btn" onclick="reinitialiser()">↺</button>
       </div>
     </div>
@@ -265,7 +246,6 @@
   <div class="chat-footer"><span>un espace bienveillant, rien que pour toi</span></div>
 </div>
 
-<!-- JOURNAL -->
 <div class="page-sec" id="journal">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('journal')">← Retour</button><h2>📔 Journal de bord</h2></div>
   <div class="sec-body">
@@ -286,7 +266,6 @@
   </div>
 </div>
 
-<!-- RESPIRATION -->
 <div class="page-sec" id="respiration">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('respiration');arreterResp()">← Retour</button><h2>🌬️ Respiration guidée</h2></div>
   <div class="sec-body" style="align-items:center;justify-content:center;text-align:center;">
@@ -299,7 +278,6 @@
   </div>
 </div>
 
-<!-- OBJECTIFS -->
 <div class="page-sec" id="objectifs">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('objectifs')">← Retour</button><h2>🎯 Mes objectifs</h2></div>
   <div class="sec-body">
@@ -323,7 +301,6 @@
   </div>
 </div>
 
-<!-- HUMEUR -->
 <div class="page-sec" id="humeur">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('humeur')">← Retour</button><h2>📊 Suivi de mon humeur</h2></div>
   <div class="sec-body">
@@ -351,7 +328,6 @@
   </div>
 </div>
 
-<!-- DEFI -->
 <div class="page-sec" id="defi">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('defi')">← Retour</button><h2>⚡ Défi bien-être du jour</h2></div>
   <div class="sec-body">
@@ -365,42 +341,14 @@
       </div>
       <div id="defi-ok-msg" style="display:none;">
         <p style="font-size:32px;margin-bottom:8px;">🎉</p>
-        <p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;">Bravo ! Tu as accepté le défi !</p>
+        <p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;">Bravo !</p>
         <p style="font-size:12px;color:#85B7EB;margin-top:4px;">Reviens demain 💙</p>
       </div>
     </div>
     <div class="card"><p class="card-titre">Mes défis complétés</p><div id="defi-histo"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun défi 💙</p></div></div>
   </div>
 </div>
-  <!-- COMMUNAUTE -->
-<div class="page-sec" id="communaute">
-  <div class="sec-header"><button class="btn-back" onclick="fermerSec('communaute')">← Retour</button><h2>🌍 Communauté</h2></div>
-  <div class="sec-body">
-    <div class="card" style="text-align:center;">
-      <p style="font-size:13px;color:#85B7EB;margin-bottom:12px;">Partage une pensée positive anonymement 💙</p>
-      <textarea class="textarea-sec" id="pensee-input" placeholder="Une pensée bienveillante à partager..." style="height:80px;margin-bottom:10px;"></textarea>
-      <button class="btn-p" onclick="partagerPensee()">Partager 💙</button>
-      <p class="succes" id="succes-pensee">✅ Partagé !</p>
-    </div>
-    <div class="card">
-      <p class="card-titre">💙 Pensées de la communauté</p>
-      <div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
-    </div>
-  </div>
-</div>
-<!-- BADGES -->
-<div class="page-sec" id="badges">
-  <div class="sec-header"><button class="btn-back" onclick="fermerSec('badges')">← Retour</button><h2>🏆 Mes récompenses</h2></div>
-  <div class="sec-body">
-    <div class="card" style="text-align:center;">
-      <p style="font-size:32px;margin-bottom:8px;">🏆</p>
-      <p class="card-titre">Tes badges bien-être</p>
-      <p style="font-size:13px;color:#85B7EB;">Utilise l'app pour débloquer des badges !</p>
-    </div>
-    <div class="card"><div id="badges-liste"></div></div>
-  </div>
-</div>
-<!-- LETTRE -->
+
 <div class="page-sec" id="lettre">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('lettre')">← Retour</button><h2>💌 Lettre à mon futur moi</h2></div>
   <div class="sec-body">
@@ -419,12 +367,39 @@
   </div>
 </div>
 
+<div class="page-sec" id="communaute">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('communaute')">← Retour</button><h2>🌍 Communauté</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <p style="font-size:13px;color:#85B7EB;margin-bottom:12px;">Partage une pensée positive anonymement 💙</p>
+      <textarea class="textarea-sec" id="pensee-input" placeholder="Une pensée bienveillante à partager..." style="height:80px;margin-bottom:10px;"></textarea>
+      <button class="btn-p" onclick="partagerPensee()">Partager 💙</button>
+      <p class="succes" id="succes-pensee">✅ Partagé !</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">💙 Pensées de la communauté</p>
+      <div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-sec" id="badges">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('badges')">← Retour</button><h2>🏆 Mes récompenses</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <p style="font-size:32px;margin-bottom:8px;">🏆</p>
+      <p class="card-titre">Tes badges bien-être</p>
+      <p style="font-size:13px;color:#85B7EB;">Utilise l'app pour débloquer des badges !</p>
+    </div>
+    <div class="card"><div id="badges-liste"></div></div>
+  </div>
+</div>
+
 <script>
 const CITATIONS=['Chaque jour est une nouvelle chance de prendre soin de toi.','Tu n\'as pas à être parfait pour mériter d\'être aimé.','La douceur envers soi-même est le début de tout.','Tes émotions sont valides, même celles que tu n\'arrives pas à nommer.','Prendre soin de toi n\'est pas un luxe, c\'est une nécessité.','Tu es plus fort que tu ne le crois.','Chaque petit pas compte sur le chemin du bien-être.','Il est courageux de demander de l\'aide.','Tu mérites la paix intérieure.','Respire. Tu es là. C\'est déjà beaucoup.'];
 const SYSTEM=`You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. Keep responses to 2-4 sentences. Address user by first name when natural.`;
-let historique=[],prenom='',humeurSel='',delaiLettre='',pagePrecedente='accueil';
+let historique=[],prenom='',humeurSel2='',delaiLettre='',pagePrecedente='accueil';
 
-// MODE CLAIR PAR DEFAUT
 if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark');}
 
 function toggleDark(){
@@ -433,7 +408,6 @@ function toggleDark(){
   document.getElementById('dark-btn').textContent=isDark?'☀️ Mode clair':'🌙 Mode sombre';
 }
 
-// CITATION MOT PAR MOT
 const citation=CITATIONS[Math.floor(Math.random()*CITATIONS.length)];
 const mots=('"'+citation+'"').split(' ');
 let idx=0;
@@ -479,9 +453,8 @@ function reinitialiser(){
 }
 
 function ouvrirSec(id){pagePrecedente=document.getElementById('chat').style.display==='flex'?'chat':'accueil';document.getElementById(id).classList.add('open');}
-function fermerSec(id){ document.getElementById(id).classList.remove('open'); ouvrirMenu(); }
-// JOURNAL
-let humeurSel2='';
+function fermerSec(id){document.getElementById(id).classList.remove('open');ouvrirMenu();}
+
 function selHumeur(el,h){document.querySelectorAll('.humeur-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');humeurSel2=h;}
 function sauvegarderJournal(){
   if(!humeurSel2){alert('Sélectionne ton humeur !');return;}
@@ -503,7 +476,6 @@ function afficherHistoriqueJournal(){
   c.innerHTML=j.slice(0,10).map(e=>`<div class="entree-j"><div class="entree-date">${e.date}</div><div><span style="font-size:16px;">${e.humeur}</span>${e.note?'<p style="font-size:12px;color:#85B7EB;margin-top:2px;">'+e.note+'</p>':''}</div></div>`).join('');
 }
 
-// RESPIRATION
 let respInt=null,cycleN=0;
 function demarrerResp(){document.getElementById('btn-start-resp').style.display='none';document.getElementById('btn-stop-resp').style.display='block';cycleN=0;execCycle();}
 function arreterResp(){if(respInt){clearTimeout(respInt);respInt=null;}document.getElementById('btn-start-resp').style.display='block';document.getElementById('btn-stop-resp').style.display='none';document.getElementById('instr-resp').textContent='Prêt ?';document.getElementById('compte-resp').textContent='';document.getElementById('cycle-resp').textContent='Appuie sur Commencer';document.getElementById('cercle').style.transform='scale(1)';document.getElementById('cercle').style.background='linear-gradient(135deg,#185FA5,#1a6db5)';}
@@ -516,7 +488,6 @@ function execCycle(){
   const i1=setInterval(()=>{n--;if(n>0)document.getElementById('compte-resp').textContent=n;else{clearInterval(i1);document.getElementById('instr-resp').textContent='Retiens...';c.style.background='linear-gradient(135deg,#1D9E75,#0f7a5a)';let n2=4;document.getElementById('compte-resp').textContent=n2;const i2=setInterval(()=>{n2--;if(n2>0)document.getElementById('compte-resp').textContent=n2;else{clearInterval(i2);document.getElementById('instr-resp').textContent='Expire...';c.style.background='linear-gradient(135deg,#185FA5,#1a6db5)';c.style.transform='scale(1)';let n3=6;document.getElementById('compte-resp').textContent=n3;const i3=setInterval(()=>{n3--;if(n3>0)document.getElementById('compte-resp').textContent=n3;else{clearInterval(i3);respInt=setTimeout(execCycle,500);}},1000);}},1000);}},1000);
 }
 
-// OBJECTIFS
 function selObj(o){document.getElementById('obj-input').value=o;}
 function sauvegarderObj(){
   const o=document.getElementById('obj-input').value.trim();
@@ -531,7 +502,7 @@ function afficherObjectifActuel(){
 function parlerObj(){
   const d=JSON.parse(localStorage.getItem('objectif')||'null');
   if(!d)return;
-  fermerSec('objectifs');
+  fermerSec('objectifs');fermerMenu();
   document.getElementById('accueil').style.display='none';
   document.getElementById('chat').style.display='flex';
   pagePrecedente='chat';
@@ -540,13 +511,12 @@ function parlerObj(){
 }
 function changerObj(){localStorage.removeItem('objectif');document.getElementById('obj-actuel').style.display='none';document.getElementById('obj-input').value='';}
 
-// HUMEUR
 function updateNote(v){document.getElementById('note-disp').textContent=v;const e={1:'😭',2:'😢',3:'😔',4:'😕',5:'😐',6:'🙂',7:'😊',8:'😄',9:'😁',10:'🤩'};document.getElementById('emoji-hum').textContent=e[v];}
 function sauvegarderNote(){
   const n=parseInt(document.getElementById('note-slider').value);
   const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
-  const idx=notes.findIndex(x=>x.date===getDate());
-  if(idx>=0)notes[idx].note=n;else notes.push({date:getDate(),note:n});
+  const i=notes.findIndex(x=>x.date===getDate());
+  if(i>=0)notes[i].note=n;else notes.push({date:getDate(),note:n});
   if(notes.length>30)notes.shift();
   localStorage.setItem('notes-humeur',JSON.stringify(notes));
   document.getElementById('succes-note').style.display='block';
@@ -564,7 +534,6 @@ function afficherGraphique(){
   if(np.length)document.getElementById('score-sem').textContent=(np.reduce((a,b)=>a+b.n,0)/np.length).toFixed(1)+'/10';
 }
 
-// DEFI
 const DEFIS=['Écris 3 choses pour lesquelles tu es reconnaissant aujourd\'hui.','Offre un sourire sincère à quelqu\'un autour de toi.','Prends 5 minutes pour respirer profondément.','Envoie un message d\'encouragement à quelqu\'un que tu aimes.','Bois un grand verre d\'eau et fais une petite marche.','Écris une qualité que tu aimes en toi.','Appelle quelqu\'un que tu n\'as pas contacté depuis longtemps.'];
 async function chargerDefi(){
   document.getElementById('defi-ok-msg').style.display='none';
@@ -583,7 +552,7 @@ function defiOk(){
   if(defis.length>10)defis.pop();
   localStorage.setItem('defis-ok',JSON.stringify(defis));
   document.getElementById('defi-acts').style.display='none';document.getElementById('defi-ok-msg').style.display='block';
-  afficherDefisHisto();
+  afficherDefisHisto();verifierBadges();
 }
 function afficherDefisHisto(){
   const d=JSON.parse(localStorage.getItem('defis-ok')||'[]');
@@ -592,7 +561,6 @@ function afficherDefisHisto(){
   c.innerHTML=d.map(x=>`<div style="padding:8px 0;border-bottom:0.5px solid #E6F1FB;display:flex;gap:8px;"><span>✅</span><div><p style="font-size:11px;color:#85B7EB;">${x.date}</p><p style="font-size:13px;color:#0C447C;">${x.defi}</p></div></div>`).join('');
 }
 
-// LETTRE
 function selDelai(el,d){document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');delaiLettre=d;}
 function sauvegarderLettre(){
   const t=document.getElementById('lettre-txt').value.trim();
@@ -603,61 +571,47 @@ function sauvegarderLettre(){
   document.getElementById('lettre-txt').value='';delaiLettre='';
   document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));
   alert('Lettre scellée ! 💌 Elle t\'attend dans '+delaiLettre);
-  afficherLettres();
+  afficherLettres();verifierBadges();
 }
 function afficherLettres(){
-  // COMMUNAUTE
-async function chargerCommunaute() {
-  try {
-    const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');
-    const data = await res.json();
-    const c = document.getElementById('communaute-liste');
-    if (!data.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Sois le premier à partager une pensée 💙</p>'; return; }
-    c.innerHTML = data.map(p => `
-      <div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;">
-        <p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span>
-          <button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button>
-        </div>
-      </div>
-    `).join('');
-  } catch(e) {
-    document.getElementById('communaute-liste').innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur de chargement 😔</p>';
-  }
+  const l=JSON.parse(localStorage.getItem('lettres')||'[]');
+  const c=document.getElementById('lettres-list');
+  if(!l.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>';return;}
+  c.innerHTML=l.map(x=>`<div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:#85B7EB;">${x.date}</span><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Dans ${x.delai}</span></div><p style="font-size:13px;color:#0C447C;font-style:italic;">"${x.texte.substring(0,80)}${x.texte.length>80?'...':''}"</p></div>`).join('');
 }
 
-async function partagerPensee() {
-  const pensee = document.getElementById('pensee-input').value.trim();
-  if (!pensee) { alert('Écris une pensée d\'abord !'); return; }
-  if (pensee.length > 200) { alert('Maximum 200 caractères !'); return; }
-  try {
-    await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pensee, prenom: prenom || 'Anonyme' })
-    });
-    document.getElementById('pensee-input').value = '';
-    document.getElementById('succes-pensee').style.display = 'block';
-    setTimeout(() => document.getElementById('succes-pensee').style.display = 'none', 2000);
+async function chargerCommunaute(){
+  try{
+    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');
+    const data=await res.json();
+    const c=document.getElementById('communaute-liste');
+    if(!data.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Sois le premier à partager une pensée 💙</p>';return;}
+    c.innerHTML=data.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');
+  }catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
+}
+async function partagerPensee(){
+  const pensee=document.getElementById('pensee-input').value.trim();
+  if(!pensee){alert('Écris une pensée !');return;}
+  try{
+    await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee,prenom:prenom||'Anonyme'})});
+    document.getElementById('pensee-input').value='';
+    document.getElementById('succes-pensee').style.display='block';
+    setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);
     chargerCommunaute();
-    verifierBadges();
-  } catch(e) { alert('Erreur 😔'); }
+  }catch(e){alert('Erreur 😔');}
+}
+async function envoyerCoeur(id,btn){
+  try{
+    const res=await fetch(`https://serveur-juste-la-pour-toi.onrender.com/communaute/${id}/coeur`,{method:'POST'});
+    const data=await res.json();
+    btn.textContent='💙 '+data.coeurs;
+  }catch(e){}
 }
 
-async function envoyerCoeur(id, btn) {
-  try {
-    const res = await fetch(`https://serveur-juste-la-pour-toi.onrender.com/communaute/${id}/coeur`, { method: 'POST' });
-    const data = await res.json();
-    btn.textContent = '💙 ' + data.coeurs;
-  } catch(e) {}
-}
-  // RECOMPENSES
 const BADGES=[
   {id:'premier-pas',icon:'💙',nom:'Premier pas',desc:'Première conversation'},
   {id:'objectif-fixe',icon:'🎯',nom:'Objectif fixé',desc:'Premier objectif créé'},
   {id:'journaliste',icon:'📔',nom:'Journaliste',desc:'5 entrées dans le journal'},
-  {id:'zen',icon:'🌬️',nom:'Zen',desc:'3 respirations complétées'},
   {id:'challenger',icon:'⚡',nom:'Challenger',desc:'5 défis acceptés'},
   {id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},
   {id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'}
@@ -679,17 +633,12 @@ function verifierBadges(){
   if(!obtenus.includes('futur-moi')&&lettres.length>0){obtenus.push('futur-moi');nouveaux.push('futur-moi');}
   if(!obtenus.includes('semaine')&&visites.length>=7){obtenus.push('semaine');nouveaux.push('semaine');}
   localStorage.setItem('badges',JSON.stringify(obtenus));
-  if(nouveaux.length>0){
-    nouveaux.forEach(id=>{
-      const b=BADGES.find(x=>x.id===id);
-      afficherNotifBadge(b);
-    });
-  }
+  nouveaux.forEach(id=>{const b=BADGES.find(x=>x.id===id);afficherNotifBadge(b);});
 }
 function afficherNotifBadge(badge){
   const notif=document.createElement('div');
-  notif.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#185FA5;color:#fff;border-radius:20px;padding:12px 20px;font-size:14px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;display:flex;align-items:center;gap:10px;animation:slideUp 0.4s ease;white-space:nowrap;';
-  notif.innerHTML=`<span style="font-size:24px;">${badge.icon}</span><div><p style="font-weight:500;font-size:13px;">Badge obtenu !</p><p style="font-size:12px;opacity:0.85;">${badge.nom} — ${badge.desc}</p></div>`;
+  notif.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#185FA5;color:#fff;border-radius:20px;padding:12px 20px;font-size:14px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;display:flex;align-items:center;gap:10px;white-space:nowrap;';
+  notif.innerHTML=`<span style="font-size:24px;">${badge.icon}</span><div><p style="font-weight:500;font-size:13px;">Badge obtenu !</p><p style="font-size:12px;opacity:0.85;">${badge.nom}</p></div>`;
   document.body.appendChild(notif);
   setTimeout(()=>{notif.style.opacity='0';notif.style.transition='opacity 0.5s';setTimeout(()=>notif.remove(),500);},3000);
 }
@@ -697,21 +646,15 @@ function afficherBadges(){
   const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');
   const c=document.getElementById('badges-liste');
   c.innerHTML=BADGES.map(b=>{
-    const obtenu=obtenus.includes(b.id);
-    return `<div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:${obtenu?'rgba(24,95,165,0.1)':'rgba(0,0,0,0.03)'};border:0.5px solid ${obtenu?'#B5D4F4':'#e0e0e0'};margin-bottom:8px;opacity:${obtenu?'1':'0.4'};">
+    const ok=obtenus.includes(b.id);
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:${ok?'rgba(24,95,165,0.08)':'transparent'};border:0.5px solid ${ok?'#B5D4F4':'#e0e0e0'};margin-bottom:8px;opacity:${ok?'1':'0.4'};">
       <span style="font-size:28px;">${b.icon}</span>
-      <div><p style="font-size:14px;font-weight:500;color:${obtenu?'#0C447C':'#999'};">${b.nom}</p><p style="font-size:12px;color:#85B7EB;">${b.desc}</p></div>
-      ${obtenu?'<span style="margin-left:auto;font-size:12px;color:#1D9E75;">✓ Obtenu</span>':''}
+      <div><p style="font-size:14px;font-weight:500;color:${ok?'#0C447C':'#999'};">${b.nom}</p><p style="font-size:12px;color:#85B7EB;">${b.desc}</p></div>
+      ${ok?'<span style="margin-left:auto;font-size:12px;color:#1D9E75;font-weight:500;">✓</span>':''}
     </div>`;
   }).join('');
 }
-  const l=JSON.parse(localStorage.getItem('lettres')||'[]');
-  const c=document.getElementById('lettres-list');
-  if(!l.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>';return;}
-  c.innerHTML=l.map(x=>`<div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:#85B7EB;">${x.date}</span><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Dans ${x.delai}</span></div><p style="font-size:13px;color:#0C447C;font-style:italic;">"${x.texte.substring(0,80)}${x.texte.length>80?'...':''}"</p></div>`).join('');
-}
 
-// CHAT
 function suggerer(t){document.getElementById('input').value=t;envoyer();}
 function ajouterMsg(role,texte){
   if(role==='user')document.getElementById('suggestions').style.display='none';
