@@ -38,11 +38,59 @@
     .prenom-input { border: 1.5px solid #B5D4F4; border-radius: 20px; padding: 12px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; width: 100%; max-width: 300px; text-align: center; margin-bottom: 16px; }
     body.light .prenom-input { background: #fff; color: #0C447C; }
     body.dark .prenom-input { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
-    body.dark .prenom-input::placeholder { color: #378ADD; }
-    .btn-commencer { background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 13px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; width: 100%; max-width: 300px; margin-bottom: 16px; }
-    .btn-commencer:hover { opacity: 0.88; }
-    .accueil-footer { margin-top: 16px; font-size: 11px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
+    .btn-commencer { background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 13px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; width: 100%; max-width: 300px; margin-bottom: 12px; }
+    .btn-journal { background: none; border: 1.5px solid #185FA5; color: #185FA5; border-radius: 24px; padding: 11px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; max-width: 300px; margin-bottom: 12px; }
+    body.dark .btn-journal { border-color: #B5D4F4; color: #B5D4F4; }
     .dark-toggle-accueil { background: none; border: 1px solid #B5D4F4; border-radius: 20px; padding: 7px 16px; font-size: 12px; cursor: pointer; color: #85B7EB; font-family: 'DM Sans', sans-serif; }
+    .accueil-footer { margin-top: 16px; font-size: 11px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
+
+    /* JOURNAL */
+    #journal { display: none; flex-direction: column; height: 100vh; }
+    .journal-header { background: #185FA5; padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
+    .journal-header h2 { font-family: 'Lora', serif; font-size: 18px; color: #fff; flex: 1; }
+    .btn-back { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 12px; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+    .journal-body { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 20px; }
+    body.light .journal-body { background: #f0f6ff; }
+    body.dark .journal-body { background: #0d1b2a; }
+
+    .humeur-section { padding: 16px; border-radius: 16px; }
+    body.light .humeur-section { background: #fff; border: 0.5px solid #B5D4F4; }
+    body.dark .humeur-section { background: #1a2d42; border: 0.5px solid #185FA5; }
+    .humeur-titre { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
+    body.light .humeur-titre { color: #0C447C; }
+    body.dark .humeur-titre { color: #B5D4F4; }
+    .humeurs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .humeur-btn { font-size: 28px; cursor: pointer; padding: 8px; border-radius: 50%; border: 2px solid transparent; transition: all 0.2s; }
+    .humeur-btn.selected { border-color: #185FA5; background: #E6F1FB; transform: scale(1.2); }
+    body.dark .humeur-btn.selected { background: #185FA5; }
+
+    .note-section { padding: 16px; border-radius: 16px; }
+    body.light .note-section { background: #fff; border: 0.5px solid #B5D4F4; }
+    body.dark .note-section { background: #1a2d42; border: 0.5px solid #185FA5; }
+    .note-titre { font-size: 14px; font-weight: 500; margin-bottom: 10px; }
+    body.light .note-titre { color: #0C447C; }
+    body.dark .note-titre { color: #B5D4F4; }
+    .note-textarea { width: 100%; border: 0.5px solid #B5D4F4; border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; resize: none; height: 100px; outline: none; }
+    body.light .note-textarea { background: #f7faff; color: #0C447C; }
+    body.dark .note-textarea { background: #0d1b2a; color: #B5D4F4; border-color: #185FA5; }
+    .btn-sauvegarder { background: #185FA5; color: #fff; border: none; border-radius: 20px; padding: 11px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; font-weight: 500; }
+    .btn-sauvegarder:hover { opacity: 0.88; }
+
+    .historique-section { padding: 16px; border-radius: 16px; }
+    body.light .historique-section { background: #fff; border: 0.5px solid #B5D4F4; }
+    body.dark .historique-section { background: #1a2d42; border: 0.5px solid #185FA5; }
+    .historique-titre { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
+    body.light .historique-titre { color: #0C447C; }
+    body.dark .historique-titre { color: #B5D4F4; }
+    .entree-journal { padding: 10px 0; border-bottom: 0.5px solid #B5D4F4; display: flex; gap: 10px; align-items: flex-start; }
+    .entree-journal:last-child { border-bottom: none; }
+    .entree-date { font-size: 11px; color: #85B7EB; min-width: 70px; }
+    .entree-contenu { flex: 1; }
+    .entree-humeur { font-size: 18px; }
+    .entree-note { font-size: 13px; color: #378ADD; margin-top: 2px; }
+    body.dark .entree-note { color: #85B7EB; }
+    .vide-msg { font-size: 13px; color: #85B7EB; text-align: center; font-style: italic; padding: 10px 0; }
+    .succes-msg { text-align: center; font-size: 13px; color: #1D9E75; padding: 8px; display: none; }
 
     /* PAGE CHAT */
     #chat { display: none; flex-direction: column; height: 100vh; }
@@ -56,6 +104,7 @@
     .header-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
     .btn-reset { border: none; border-radius: 12px; padding: 5px 10px; font-size: 11px; cursor: pointer; font-family: 'DM Sans', sans-serif; background: rgba(255,255,255,0.15); color: #fff; }
     .btn-dark { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; padding: 4px; }
+    .btn-journal-chat { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 12px; padding: 5px 10px; font-size: 11px; cursor: pointer; }
     .status { display: flex; align-items: center; gap: 6px; margin-top: 8px; position: relative; }
     .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #5DCAA5; }
     .status-text { font-size: 11px; color: rgba(255,255,255,0.7); }
@@ -83,9 +132,9 @@
     body.light .bubble-time { color: #85B7EB; }
     body.dark .bubble-time { color: #378ADD; }
     .suggestions { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 14px; }
+    .suggestion-btn { border-radius: 20px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     body.light .suggestion-btn { background: #fff; color: #185FA5; border: 1px solid #B5D4F4; }
     body.dark .suggestion-btn { background: #1a2d42; color: #85B7EB; border: 1px solid #185FA5; }
-    .suggestion-btn { border-radius: 20px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     body.light .typing { background: #fff; border: 0.5px solid #B5D4F4; }
     body.dark .typing { background: #1a2d42; border: 0.5px solid #185FA5; }
     .typing { display: flex; gap: 5px; align-items: center; padding: 12px 16px; border-radius: 16px 16px 16px 4px; align-self: flex-start; }
@@ -133,8 +182,39 @@
     <p class="accueil-label">Comment tu t'appelles ?</p>
     <input type="text" class="prenom-input" id="prenom" placeholder="Ton prénom...">
     <button class="btn-commencer" onclick="commencer()">Commencer la conversation 💙</button>
+    <button class="btn-journal" onclick="ouvrirJournal()">📔 Mon journal de bord</button>
     <button class="dark-toggle-accueil" onclick="toggleDark()">🌙 Mode sombre</button>
     <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
+  </div>
+
+  <!-- JOURNAL DE BORD -->
+  <div id="journal">
+    <div class="journal-header">
+      <button class="btn-back" onclick="fermerJournal()">← Retour</button>
+      <h2>📔 Mon journal de bord</h2>
+    </div>
+    <div class="journal-body">
+      <div class="humeur-section">
+        <p class="humeur-titre">Comment te sens-tu aujourd'hui ?</p>
+        <div class="humeurs">
+          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😊')">😊</span>
+          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😐')">😐</span>
+          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😔')">😔</span>
+          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😰')">😰</span>
+          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😡')">😡</span>
+        </div>
+      </div>
+      <div class="note-section">
+        <p class="note-titre">Note de la journée (optionnel)</p>
+        <textarea class="note-textarea" id="note-journal" placeholder="Écris quelques mots sur ta journée..."></textarea>
+        <div class="succes-msg" id="succes-msg">✅ Enregistré avec succès !</div>
+        <button class="btn-sauvegarder" onclick="sauvegarderJournal()">Sauvegarder 💙</button>
+      </div>
+      <div class="historique-section">
+        <p class="historique-titre">Mes dernières entrées</p>
+        <div id="historique-journal"></div>
+      </div>
+    </div>
   </div>
 
   <!-- PAGE CHAT -->
@@ -149,8 +229,9 @@
           <p id="header-prenom">Ton espace de bien-être</p>
         </div>
         <div class="header-actions">
-          <button class="btn-dark" onclick="toggleDark()" title="Mode sombre">🌙</button>
-          <button class="btn-reset" onclick="reinitialiser()">↺ Nouveau</button>
+          <button class="btn-journal-chat" onclick="ouvrirJournal()">📔</button>
+          <button class="btn-dark" onclick="toggleDark()">🌙</button>
+          <button class="btn-reset" onclick="reinitialiser()">↺</button>
         </div>
       </div>
       <div class="status">
@@ -180,11 +261,13 @@
   </div>
 
   <script>
-    const SYSTEM = `You are a compassionate and professional wellness assistant for the app "Juste là pour toi" (Just here for you). Your role is to listen with empathy, ask open-ended questions, and give simple kind advice. VERY IMPORTANT: Always respond in the SAME language the user writes in. Keep responses to 2-4 sentences maximum. Address the user by their first name when natural.`;
+    const SYSTEM = `You are a compassionate and professional wellness assistant for the app "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. VERY IMPORTANT: Always respond in the SAME language the user writes in. Keep responses to 2-4 sentences maximum. Address the user by their first name when natural.`;
 
     let historique = [];
     let prenom = '';
     let darkMode = false;
+    let humeurSelectionnee = '';
+    let pageAvantJournal = '';
 
     if (localStorage.getItem('darkMode') === 'true') {
       darkMode = true;
@@ -199,6 +282,10 @@
 
     function getTime() {
       return new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+    }
+
+    function getDate() {
+      return new Date().toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', year:'numeric'});
     }
 
     async function chargerCitation() {
@@ -239,6 +326,66 @@
       document.getElementById('chat').style.display = 'flex';
       document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
       ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
+    }
+
+    function ouvrirJournal() {
+      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
+      document.getElementById('accueil').style.display = 'none';
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('journal').style.display = 'flex';
+      afficherHistoriqueJournal();
+    }
+
+    function fermerJournal() {
+      document.getElementById('journal').style.display = 'none';
+      if (pageAvantJournal === 'chat') {
+        document.getElementById('chat').style.display = 'flex';
+      } else {
+        document.getElementById('accueil').style.display = 'flex';
+      }
+    }
+
+    function selectionnerHumeur(el, humeur) {
+      document.querySelectorAll('.humeur-btn').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+      humeurSelectionnee = humeur;
+    }
+
+    function sauvegarderJournal() {
+      if (!humeurSelectionnee) {
+        alert('Sélectionne d\'abord ton humeur du jour !');
+        return;
+      }
+      const note = document.getElementById('note-journal').value.trim();
+      const entree = { date: getDate(), humeur: humeurSelectionnee, note: note };
+      const journal = JSON.parse(localStorage.getItem('journal') || '[]');
+      journal.unshift(entree);
+      if (journal.length > 30) journal.pop();
+      localStorage.setItem('journal', JSON.stringify(journal));
+      document.getElementById('succes-msg').style.display = 'block';
+      setTimeout(() => { document.getElementById('succes-msg').style.display = 'none'; }, 2000);
+      document.getElementById('note-journal').value = '';
+      humeurSelectionnee = '';
+      document.querySelectorAll('.humeur-btn').forEach(b => b.classList.remove('selected'));
+      afficherHistoriqueJournal();
+    }
+
+    function afficherHistoriqueJournal() {
+      const journal = JSON.parse(localStorage.getItem('journal') || '[]');
+      const container = document.getElementById('historique-journal');
+      if (journal.length === 0) {
+        container.innerHTML = '<p class="vide-msg">Aucune entrée pour le moment.<br>Commence dès aujourd\'hui ! 💙</p>';
+        return;
+      }
+      container.innerHTML = journal.slice(0, 10).map(e => `
+        <div class="entree-journal">
+          <div class="entree-date">${e.date}</div>
+          <div class="entree-contenu">
+            <div class="entree-humeur">${e.humeur}</div>
+            ${e.note ? '<div class="entree-note">' + e.note + '</div>' : ''}
+          </div>
+        </div>
+      `).join('');
     }
 
     function reinitialiser() {
