@@ -576,6 +576,59 @@ function sauvegarderLettre(){
   afficherLettres();
 }
 function afficherLettres(){
+  // RECOMPENSES
+const BADGES=[
+  {id:'premier-pas',icon:'💙',nom:'Premier pas',desc:'Première conversation'},
+  {id:'objectif-fixe',icon:'🎯',nom:'Objectif fixé',desc:'Premier objectif créé'},
+  {id:'journaliste',icon:'📔',nom:'Journaliste',desc:'5 entrées dans le journal'},
+  {id:'zen',icon:'🌬️',nom:'Zen',desc:'3 respirations complétées'},
+  {id:'challenger',icon:'⚡',nom:'Challenger',desc:'5 défis acceptés'},
+  {id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},
+  {id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'}
+];
+function verifierBadges(){
+  const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');
+  const journal=JSON.parse(localStorage.getItem('journal')||'[]');
+  const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');
+  const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');
+  const objectif=localStorage.getItem('objectif');
+  const visites=JSON.parse(localStorage.getItem('visites')||'[]');
+  const aujourd=getDate();
+  if(!visites.includes(aujourd)){visites.push(aujourd);if(visites.length>30)visites.shift();localStorage.setItem('visites',JSON.stringify(visites));}
+  const nouveaux=[];
+  if(!obtenus.includes('premier-pas')&&historique.length>0){obtenus.push('premier-pas');nouveaux.push('premier-pas');}
+  if(!obtenus.includes('objectif-fixe')&&objectif){obtenus.push('objectif-fixe');nouveaux.push('objectif-fixe');}
+  if(!obtenus.includes('journaliste')&&journal.length>=5){obtenus.push('journaliste');nouveaux.push('journaliste');}
+  if(!obtenus.includes('challenger')&&defis.length>=5){obtenus.push('challenger');nouveaux.push('challenger');}
+  if(!obtenus.includes('futur-moi')&&lettres.length>0){obtenus.push('futur-moi');nouveaux.push('futur-moi');}
+  if(!obtenus.includes('semaine')&&visites.length>=7){obtenus.push('semaine');nouveaux.push('semaine');}
+  localStorage.setItem('badges',JSON.stringify(obtenus));
+  if(nouveaux.length>0){
+    nouveaux.forEach(id=>{
+      const b=BADGES.find(x=>x.id===id);
+      afficherNotifBadge(b);
+    });
+  }
+}
+function afficherNotifBadge(badge){
+  const notif=document.createElement('div');
+  notif.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#185FA5;color:#fff;border-radius:20px;padding:12px 20px;font-size:14px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;display:flex;align-items:center;gap:10px;animation:slideUp 0.4s ease;white-space:nowrap;';
+  notif.innerHTML=`<span style="font-size:24px;">${badge.icon}</span><div><p style="font-weight:500;font-size:13px;">Badge obtenu !</p><p style="font-size:12px;opacity:0.85;">${badge.nom} — ${badge.desc}</p></div>`;
+  document.body.appendChild(notif);
+  setTimeout(()=>{notif.style.opacity='0';notif.style.transition='opacity 0.5s';setTimeout(()=>notif.remove(),500);},3000);
+}
+function afficherBadges(){
+  const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');
+  const c=document.getElementById('badges-liste');
+  c.innerHTML=BADGES.map(b=>{
+    const obtenu=obtenus.includes(b.id);
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:${obtenu?'rgba(24,95,165,0.1)':'rgba(0,0,0,0.03)'};border:0.5px solid ${obtenu?'#B5D4F4':'#e0e0e0'};margin-bottom:8px;opacity:${obtenu?'1':'0.4'};">
+      <span style="font-size:28px;">${b.icon}</span>
+      <div><p style="font-size:14px;font-weight:500;color:${obtenu?'#0C447C':'#999'};">${b.nom}</p><p style="font-size:12px;color:#85B7EB;">${b.desc}</p></div>
+      ${obtenu?'<span style="margin-left:auto;font-size:12px;color:#1D9E75;">✓ Obtenu</span>':''}
+    </div>`;
+  }).join('');
+}
   const l=JSON.parse(localStorage.getItem('lettres')||'[]');
   const c=document.getElementById('lettres-list');
   if(!l.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>';return;}
