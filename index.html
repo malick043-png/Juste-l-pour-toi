@@ -75,7 +75,8 @@
     body.dark .note-textarea { background: #0d1b2a; color: #B5D4F4; border-color: #185FA5; }
     .btn-sauvegarder { background: #185FA5; color: #fff; border: none; border-radius: 20px; padding: 11px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; font-weight: 500; }
     .btn-sauvegarder:hover { opacity: 0.88; }
-
+.objectif-btn { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 12px; padding: 10px 14px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; transition: all 0.2s; }
+    .objectif-btn:hover { background: #E6F1FB; }
     .historique-section { padding: 16px; border-radius: 16px; }
     body.light .historique-section { background: #fff; border: 0.5px solid #B5D4F4; }
     body.dark .historique-section { background: #1a2d42; border: 0.5px solid #185FA5; }
@@ -398,6 +399,90 @@ function partagercitation() {
       document.getElementById('chat').style.display = 'flex';
       document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
       ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
+    }
+    function ouvrirObjectifs() {
+      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
+      document.getElementById('accueil').style.display = 'none';
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('objectifs').style.display = 'flex';
+      afficherObjectifActuel();
+    }
+
+    function fermerObjectifs() {
+      document.getElementById('objectifs').style.display = 'none';
+      if (pageAvantJournal === 'chat') {
+        document.getElementById('chat').style.display = 'flex';
+      } else {
+        document.getElementById('accueil').style.display = 'flex';
+      }
+    }
+
+    function selectionnerObjectif(objectif) {
+      document.getElementById('objectif-custom').value = objectif;
+    }
+
+    function sauvegarderObjectif() {
+      const objectif = document.getElementById('objectif-custom').value.trim();
+      if (!objectif) {
+        alert('Choisis ou écris ton objectif !');
+        return;
+      }
+      const data = {
+        texte: objectif,
+        date: new Date().toLocaleDateString('fr-FR'),
+        progression: []
+      };
+      localStorage.setItem('objectif', JSON.stringify(data));
+      afficherObjectifActuel();
+      alert('Objectif sauvegardé ! 💙 L\'assistant va t\'accompagner vers cet objectif.');
+    }
+
+    function afficherObjectifActuel() {
+      const data = JSON.parse(localStorage.getItem('objectif') || 'null');
+      if (data) {
+        document.getElementById('objectif-actuel').style.display = 'block';
+        document.getElementById('objectif-texte').textContent = '🎯 ' + data.texte;
+        afficherProgression(data);
+      }
+    }
+
+    function afficherProgression(data) {
+      const container = document.getElementById('progression-container');
+      const jours = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+      const aujourd = new Date().getDay();
+      let html = '<div style="display:flex; gap:8px; justify-content:center;">';
+      for (let i = 0; i < 7; i++) {
+        const actif = i < aujourd;
+        html += '<div style="display:flex; flex-direction:column; align-items:center; gap:4px;">';
+        html += '<div style="width:32px; height:32px; border-radius:50%; background:' + (actif ? '#185FA5' : '#E6F1FB') + '; display:flex; align-items:center; justify-content:center; font-size:14px;">' + (actif ? '✓' : '') + '</div>';
+        html += '<span style="font-size:10px; color:#85B7EB;">' + jours[i] + '</span>';
+        html += '</div>';
+      }
+      html += '</div>';
+      html += '<p style="font-size:12px; color:#85B7EB; text-align:center; margin-top:8px;">Continue comme ça ! 💙</p>';
+      container.innerHTML = html;
+    }
+
+    function parlerObjectif() {
+      const data = JSON.parse(localStorage.getItem('objectif') || 'null');
+      if (!data) return;
+      fermerObjectifs();
+      if (pageAvantJournal !== 'chat') {
+        prenom = document.getElementById('prenom').value.trim() || 'toi';
+        document.getElementById('accueil').style.display = 'none';
+        document.getElementById('chat').style.display = 'flex';
+        document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
+      }
+      const message = 'Je travaille sur mon objectif : ' + data.texte + '. Peux-tu m\'aider ?';
+      document.getElementById('input').value = message;
+      envoyer();
+    }
+
+    function changerObjectif() {
+      localStorage.removeItem('objectif');
+      document.getElementById('objectif-actuel').style.display = 'none';
+      document.getElementById('objectif-custom').value = '';
+      document.getElementById('progression-container').innerHTML = '<p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Fixe un objectif pour commencer 💙</p>';
     }
 function ouvrirRespiration() {
       pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
