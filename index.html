@@ -215,7 +215,9 @@
     }
 
     function ajouterMessage(role, texte) {
-      document.getElementById('suggestions').style.display = 'none';
+      if (role === 'user') {
+        document.getElementById('suggestions').style.display = 'none';
+      }
       const wrap = document.createElement('div');
       wrap.className = 'bubble-wrap' + (role === 'user' ? ' user' : '');
       const bubble = document.createElement('div');
