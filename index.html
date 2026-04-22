@@ -11,605 +11,548 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', Arial, sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-    body.light { background: #f0f6ff; color: #0C447C; }
-    body.dark { background: #0d1b2a; color: #B5D4F4; }
+    body { font-family: 'DM Sans', Arial, sans-serif; height: 100vh; overflow: hidden; background: #0a1628; }
 
-    /* CITATION */
-    #citation-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 40px 30px; text-align: center; background: #185FA5; transition: opacity 1s; }
-    .citation-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.4); margin-bottom: 24px; }
-    .citation-texte { font-family: 'Lora', serif; font-size: 19px; color: #fff; line-height: 1.7; font-style: italic; max-width: 320px; margin-bottom: 24px; }
-    .btn-partager { margin-top: 8px; background: rgba(255,255,255,0.2); border: 1.5px solid rgba(255,255,255,0.5); color: #fff; border-radius: 24px; padding: 10px 24px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; }
-    .btn-continuer { margin-top: 12px; background: none; border: none; color: rgba(255,255,255,0.7); font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; text-decoration: underline; }
+    /* PARTICULES */
+    #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+
+    /* ECRAN SPLASH */
+    #splash { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0d2137 100%); padding: 40px 30px; text-align: center; transition: opacity 1.2s ease; }
+    .splash-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(181,212,244,0.4); margin-bottom: 28px; animation: logoGlow 2s ease-in-out infinite; }
+    @keyframes logoGlow { 0%,100%{ box-shadow: 0 0 20px rgba(55,138,221,0.3); } 50%{ box-shadow: 0 0 40px rgba(55,138,221,0.7); } }
+    .splash-citation { font-family: 'Lora', serif; font-size: 18px; color: rgba(255,255,255,0.9); line-height: 1.8; font-style: italic; max-width: 300px; margin-bottom: 28px; min-height: 80px; }
+    .splash-btn { background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.3); color: #fff; border-radius: 24px; padding: 11px 28px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.3s; margin-top: 8px; }
+    .splash-btn:hover { background: rgba(255,255,255,0.2); }
+    .splash-share { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 12px; cursor: pointer; margin-top: 12px; font-family: 'DM Sans', sans-serif; }
+
+    /* PAGES */
+    .page { position: fixed; inset: 0; z-index: 10; display: none; flex-direction: column; height: 100vh; }
+    .page.active { display: flex; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ACCUEIL */
-    #accueil { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 30px 24px; text-align: center; }
-    body.light #accueil { background: linear-gradient(160deg, #E6F1FB 0%, #f0f6ff 100%); }
-    body.dark #accueil { background: linear-gradient(160deg, #0d1b2a 0%, #112233 100%); }
-    .logo-accueil { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #B5D4F4; margin-bottom: 16px; }
-    .accueil-titre { font-family: 'Lora', serif; font-size: 26px; margin-bottom: 6px; }
-    body.light .accueil-titre { color: #0C447C; }
-    body.dark .accueil-titre { color: #B5D4F4; }
-    .accueil-sous { font-size: 14px; color: #378ADD; margin-bottom: 24px; }
-    .prenom-input { border: 1.5px solid #B5D4F4; border-radius: 20px; padding: 11px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; width: 100%; max-width: 300px; text-align: center; margin-bottom: 12px; }
-    body.light .prenom-input { background: #fff; color: #0C447C; }
-    body.dark .prenom-input { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
-    .btn-commencer { background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 12px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; width: 100%; max-width: 300px; margin-bottom: 20px; }
+    #accueil { background: linear-gradient(160deg, #0d1f35 0%, #132840 60%, #0a1628 100%); align-items: center; justify-content: center; padding: 30px 24px; text-align: center; }
+    .accueil-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2.5px solid rgba(181,212,244,0.5); margin-bottom: 16px; animation: logoGlow 3s ease-in-out infinite; }
+    .accueil-titre { font-family: 'Lora', serif; font-size: 26px; color: #fff; margin-bottom: 6px; }
+    .accueil-sous { font-size: 13px; color: rgba(181,212,244,0.7); margin-bottom: 28px; }
+    .prenom-wrap { position: relative; width: 100%; max-width: 300px; margin-bottom: 14px; }
+    .prenom-input { width: 100%; border: 1.5px solid rgba(181,212,244,0.3); border-radius: 24px; padding: 12px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; background: rgba(255,255,255,0.07); color: #fff; backdrop-filter: blur(10px); transition: border-color 0.3s; }
+    .prenom-input::placeholder { color: rgba(181,212,244,0.4); }
+    .prenom-input:focus { border-color: rgba(181,212,244,0.7); }
+    .btn-commencer { background: linear-gradient(135deg, #185FA5, #1a7fd4); color: #fff; border: none; border-radius: 24px; padding: 13px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; width: 100%; max-width: 300px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(24,95,165,0.4); transition: all 0.3s; }
+    .btn-commencer:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(24,95,165,0.6); }
 
-    /* MENU ICONES */
-    .menu-icons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 320px; margin-bottom: 16px; }
-    .menu-icon-btn { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 6px; border-radius: 14px; border: 0.5px solid #B5D4F4; cursor: pointer; background: none; font-family: 'DM Sans', sans-serif; }
-    body.light .menu-icon-btn { background: #fff; }
-    body.dark .menu-icon-btn { background: #1a2d42; border-color: #185FA5; }
-    .menu-icon-btn span:first-child { font-size: 24px; }
-    .menu-icon-btn span:last-child { font-size: 10px; color: #85B7EB; text-align: center; line-height: 1.3; }
-    .btn-dark-small { background: none; border: 1px solid #B5D4F4; border-radius: 20px; padding: 6px 14px; font-size: 12px; cursor: pointer; color: #85B7EB; font-family: 'DM Sans', sans-serif; }
-    .accueil-footer { margin-top: 12px; font-size: 11px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
+    /* MENU GRILLE */
+    .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 320px; }
+    .menu-item { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 6px; border-radius: 16px; border: 1px solid rgba(181,212,244,0.15); cursor: pointer; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); transition: all 0.25s; }
+    .menu-item:hover { background: rgba(255,255,255,0.12); border-color: rgba(181,212,244,0.4); transform: translateY(-2px); }
+    .menu-item:active { transform: scale(0.95); }
+    .menu-item .icon { font-size: 22px; }
+    .menu-item .label { font-size: 9px; color: rgba(181,212,244,0.7); text-align: center; line-height: 1.3; }
+    .accueil-footer { margin-top: 18px; font-size: 11px; color: rgba(181,212,244,0.4); font-style: italic; font-family: 'Lora', serif; }
 
     /* CHAT */
-    #chat { display: none; flex-direction: column; height: 100vh; }
-    .header { background: #185FA5; padding: 12px 16px; position: relative; overflow: hidden; }
-    .header-deco { position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; border-radius: 50%; background: rgba(255,255,255,0.07); }
-    .header-top { display: flex; align-items: center; gap: 10px; position: relative; }
-    .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.3); }
-    .header-text h1 { font-size: 15px; font-weight: 500; color: #fff; font-family: 'Lora', serif; }
-    .header-text p { font-size: 11px; color: #B5D4F4; }
-    .header-actions { margin-left: auto; display: flex; gap: 6px; align-items: center; }
-    .btn-header { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 10px; padding: 4px 8px; font-size: 11px; cursor: pointer; }
-    .status { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #5DCAA5; }
-    .status-text { font-size: 11px; color: rgba(255,255,255,0.7); }
-    .wave { height: 18px; background: #185FA5; position: relative; }
-    .wave::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 18px; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
-    body.light .wave::after { background: #f0f6ff; }
-    body.dark .wave::after { background: #0d1b2a; }
-    .messages { flex: 1; overflow-y: auto; padding: 12px 14px 8px; display: flex; flex-direction: column; gap: 10px; }
-    body.light .messages { background: #f0f6ff; }
-    body.dark .messages { background: #0d1b2a; }
-    .date-divider { display: flex; align-items: center; gap: 8px; }
-    .date-divider::before, .date-divider::after { content: ''; flex: 1; height: 0.5px; }
-    body.light .date-divider::before, body.light .date-divider::after { background: #B5D4F4; }
-    body.dark .date-divider::before, body.dark .date-divider::after { background: #185FA5; }
-    .date-divider span { font-size: 11px; white-space: nowrap; color: #85B7EB; }
-    .bubble-wrap { display: flex; flex-direction: column; }
-    .bubble-wrap.user { align-items: flex-end; }
+    #chat { background: #0d1f35; }
+    .chat-header { background: linear-gradient(135deg, #185FA5, #1a4a7a); padding: 12px 16px; position: relative; overflow: hidden; flex-shrink: 0; }
+    .chat-header::after { content: ''; position: absolute; top: -30px; right: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+    .chat-header-top { display: flex; align-items: center; gap: 10px; position: relative; }
+    .chat-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.3); }
+    .chat-title { font-family: 'Lora', serif; font-size: 15px; color: #fff; }
+    .chat-subtitle { font-size: 10px; color: rgba(181,212,244,0.8); }
+    .chat-actions { margin-left: auto; display: flex; gap: 6px; }
+    .chat-btn { background: rgba(255,255,255,0.12); border: none; color: #fff; border-radius: 10px; padding: 4px 8px; font-size: 11px; cursor: pointer; transition: background 0.2s; }
+    .chat-btn:hover { background: rgba(255,255,255,0.2); }
+    .status-bar { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #5DCAA5; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .status-txt { font-size: 10px; color: rgba(255,255,255,0.6); }
+    .wave-sep { height: 16px; background: linear-gradient(135deg, #185FA5, #1a4a7a); position: relative; flex-shrink: 0; }
+    .wave-sep::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 16px; background: #0d1f35; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+    .messages { flex: 1; overflow-y: auto; padding: 12px 14px 8px; display: flex; flex-direction: column; gap: 10px; background: #0d1f35; }
+    .date-div { display: flex; align-items: center; gap: 8px; }
+    .date-div::before, .date-div::after { content: ''; flex: 1; height: 0.5px; background: rgba(181,212,244,0.2); }
+    .date-div span { font-size: 10px; color: rgba(181,212,244,0.4); white-space: nowrap; }
+    .bwrap { display: flex; flex-direction: column; animation: bubbleIn 0.3s ease; }
+    @keyframes bubbleIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .bwrap.user { align-items: flex-end; }
     .bubble { max-width: 78%; padding: 10px 13px; font-size: 14px; line-height: 1.6; }
-    body.light .bubble.assistant { background: #fff; color: #0C447C; border-radius: 14px 14px 14px 4px; border: 0.5px solid #B5D4F4; align-self: flex-start; }
-    body.dark .bubble.assistant { background: #1a2d42; color: #B5D4F4; border-radius: 14px 14px 14px 4px; border: 0.5px solid #185FA5; align-self: flex-start; }
-    .bubble.user { background: #185FA5; color: #fff; border-radius: 14px 14px 4px 14px; }
-    .bubble-time { font-size: 10px; color: #85B7EB; margin-top: 2px; }
-    .suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px; }
-    .suggestion-btn { border-radius: 16px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
-    body.light .suggestion-btn { background: #fff; color: #185FA5; border: 1px solid #B5D4F4; }
-    body.dark .suggestion-btn { background: #1a2d42; color: #85B7EB; border: 1px solid #185FA5; }
-    .typing { display: flex; gap: 5px; align-items: center; padding: 10px 14px; border-radius: 14px 14px 14px 4px; align-self: flex-start; }
-    body.light .typing { background: #fff; border: 0.5px solid #B5D4F4; }
-    body.dark .typing { background: #1a2d42; border: 0.5px solid #185FA5; }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: #85B7EB; animation: bounce 1.2s infinite; }
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
+    .bubble.assistant { background: rgba(255,255,255,0.07); color: #e8f2ff; border-radius: 14px 14px 14px 4px; border: 0.5px solid rgba(181,212,244,0.15); backdrop-filter: blur(10px); align-self: flex-start; }
+    .bubble.user { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border-radius: 14px 14px 4px 14px; box-shadow: 0 2px 12px rgba(24,95,165,0.3); }
+    .btime { font-size: 10px; color: rgba(181,212,244,0.3); margin-top: 2px; }
+    .suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px; background: #0d1f35; flex-shrink: 0; }
+    .sugg-btn { border-radius: 14px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; background: rgba(255,255,255,0.07); color: rgba(181,212,244,0.8); border: 1px solid rgba(181,212,244,0.2); transition: all 0.2s; }
+    .sugg-btn:hover { background: rgba(255,255,255,0.15); }
+    .typing { display: flex; gap: 5px; align-items: center; padding: 10px 14px; border-radius: 14px 14px 14px 4px; background: rgba(255,255,255,0.07); border: 0.5px solid rgba(181,212,244,0.15); align-self: flex-start; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(181,212,244,0.5); animation: bounce 1.2s infinite; }
+    .dot:nth-child(2){animation-delay:.2s} .dot:nth-child(3){animation-delay:.4s}
     @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
-    .input-area { padding: 10px 12px; border-top: 0.5px solid; display: flex; gap: 8px; align-items: flex-end; }
-    body.light .input-area { background: #fff; border-color: #B5D4F4; }
-    body.dark .input-area { background: #112233; border-color: #185FA5; }
-    textarea { flex: 1; border: 0.5px solid; border-radius: 18px; padding: 8px 13px; font-size: 14px; font-family: 'DM Sans', Arial, sans-serif; resize: none; max-height: 80px; outline: none; }
-    body.light textarea { background: #f7faff; color: #0C447C; border-color: #B5D4F4; }
-    body.dark textarea { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
-    textarea::placeholder { color: #85B7EB; }
-    .send-btn { width: 36px; height: 36px; border-radius: 50%; background: #185FA5; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .input-area { padding: 10px 12px; border-top: 0.5px solid rgba(181,212,244,0.1); display: flex; gap: 8px; align-items: flex-end; background: rgba(13,31,53,0.95); backdrop-filter: blur(10px); flex-shrink: 0; }
+    .chat-textarea { flex: 1; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 18px; padding: 8px 13px; font-size: 14px; font-family: 'DM Sans', Arial, sans-serif; resize: none; max-height: 80px; outline: none; background: rgba(255,255,255,0.07); color: #e8f2ff; transition: border-color 0.2s; }
+    .chat-textarea::placeholder { color: rgba(181,212,244,0.3); }
+    .chat-textarea:focus { border-color: rgba(181,212,244,0.5); }
+    .send-btn { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #185FA5, #1a6db5); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 10px rgba(24,95,165,0.4); transition: all 0.2s; }
+    .send-btn:hover { transform: scale(1.05); }
     .send-btn:disabled { opacity: 0.4; }
     .send-btn svg { width: 15px; height: 15px; fill: white; }
-    .bottom-bar { display: flex; justify-content: center; padding: 5px; border-top: 0.5px solid; }
-    body.light .bottom-bar { background: #fff; border-color: #E6F1FB; }
-    body.dark .bottom-bar { background: #112233; border-color: #185FA5; }
-    .bottom-bar span { font-size: 10px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
+    .chat-footer { display: flex; justify-content: center; padding: 4px; background: rgba(13,31,53,0.95); flex-shrink: 0; }
+    .chat-footer span { font-size: 10px; color: rgba(181,212,244,0.3); font-style: italic; font-family: 'Lora', serif; }
 
     /* PAGES SECONDAIRES */
-    .page-secondaire { display: none; flex-direction: column; height: 100vh; }
-    .page-header { background: #185FA5; padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
-    .page-header h2 { font-family: 'Lora', serif; font-size: 17px; color: #fff; flex: 1; }
-    .btn-back { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 10px; padding: 5px 10px; font-size: 12px; cursor: pointer; }
-    .page-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
-    body.light .page-body { background: #f0f6ff; }
-    body.dark .page-body { background: #0d1b2a; }
-    .card { padding: 16px; border-radius: 14px; }
-    body.light .card { background: #fff; border: 0.5px solid #B5D4F4; }
-    body.dark .card { background: #1a2d42; border: 0.5px solid #185FA5; }
-    .card-titre { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
-    body.light .card-titre { color: #0C447C; }
-    body.dark .card-titre { color: #B5D4F4; }
-    .btn-primary { background: #185FA5; color: #fff; border: none; border-radius: 18px; padding: 11px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; font-weight: 500; margin-top: 10px; }
-    .btn-secondary { background: none; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 18px; padding: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; margin-top: 8px; }
-    body.dark .btn-secondary { color: #B5D4F4; border-color: #185FA5; }
-    .succes { text-align: center; font-size: 13px; color: #1D9E75; padding: 6px; display: none; }
+    .page-sec { position: fixed; inset: 0; z-index: 20; display: none; flex-direction: column; height: 100vh; background: #0d1f35; animation: slideUp 0.35s ease; }
+    .page-sec.open { display: flex; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .sec-header { background: linear-gradient(135deg, #185FA5, #1a4a7a); padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .sec-header h2 { font-family: 'Lora', serif; font-size: 16px; color: #fff; flex: 1; }
+    .btn-back { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 10px; padding: 5px 10px; font-size: 12px; cursor: pointer; transition: background 0.2s; }
+    .btn-back:hover { background: rgba(255,255,255,0.25); }
+    .sec-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+    .card { padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(181,212,244,0.15); backdrop-filter: blur(10px); }
+    .card-titre { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom: 12px; }
+    .btn-p { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border: none; border-radius: 16px; padding: 11px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; font-weight: 500; margin-top: 10px; transition: all 0.2s; box-shadow: 0 3px 12px rgba(24,95,165,0.3); }
+    .btn-p:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(24,95,165,0.5); }
+    .btn-s { background: rgba(255,255,255,0.07); border: 1px solid rgba(181,212,244,0.2); color: rgba(181,212,244,0.8); border-radius: 16px; padding: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; margin-top: 8px; transition: all 0.2s; }
+    .btn-s:hover { background: rgba(255,255,255,0.12); }
+    .succes { text-align: center; font-size: 13px; color: #5DCAA5; padding: 6px; display: none; }
+    .input-sec { width: 100%; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 14px; padding: 10px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; background: rgba(255,255,255,0.07); color: #e8f2ff; }
+    .input-sec::placeholder { color: rgba(181,212,244,0.3); }
+    .textarea-sec { width: 100%; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 14px; padding: 10px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; resize: none; outline: none; background: rgba(255,255,255,0.07); color: #e8f2ff; }
+    .textarea-sec::placeholder { color: rgba(181,212,244,0.3); }
 
-    /* JOURNAL */
-    .humeur-btn { font-size: 26px; cursor: pointer; padding: 6px; border-radius: 50%; border: 2px solid transparent; }
-    .humeur-btn.selected { border-color: #185FA5; background: #E6F1FB; transform: scale(1.2); }
-    .entree-journal { padding: 8px 0; border-bottom: 0.5px solid #B5D4F4; display: flex; gap: 10px; }
-    .entree-date { font-size: 11px; color: #85B7EB; min-width: 65px; }
+    /* HUMEUR BTNS */
+    .humeur-btn { font-size: 24px; cursor: pointer; padding: 6px; border-radius: 50%; border: 2px solid transparent; transition: all 0.2s; }
+    .humeur-btn.selected { border-color: #378ADD; background: rgba(55,138,221,0.2); transform: scale(1.2); }
+    .entree-j { padding: 8px 0; border-bottom: 0.5px solid rgba(181,212,244,0.1); display: flex; gap: 10px; }
+    .entree-date { font-size: 11px; color: rgba(181,212,244,0.4); min-width: 65px; }
 
-    /* OBJECTIFS */
-    .objectif-btn { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 10px; padding: 9px 12px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; width: 100%; margin-bottom: 6px; }
-    body.dark .objectif-btn { background: #0d1b2a; border-color: #185FA5; color: #B5D4F4; }
+    /* OBJECTIF BTNS */
+    .obj-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(181,212,244,0.15); color: rgba(181,212,244,0.8); border-radius: 10px; padding: 9px 12px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; width: 100%; margin-bottom: 6px; transition: all 0.2s; }
+    .obj-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(181,212,244,0.3); }
 
-    /* DELAI LETTRE */
-    .btn-delai { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 10px; padding: 7px 14px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    body.dark .btn-delai { background: #0d1b2a; border-color: #185FA5; color: #B5D4F4; }
-    .btn-delai.selected { background: #E6F1FB; border-color: #185FA5; }
-    body.dark .btn-delai.selected { background: #185FA5; color: #fff; }
+    /* DELAI BTNS */
+    .delai-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(181,212,244,0.15); color: rgba(181,212,244,0.8); border-radius: 10px; padding: 7px 14px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+    .delai-btn.selected { background: rgba(24,95,165,0.4); border-color: #378ADD; color: #fff; }
+
+    /* GRAPHIQUE */
+    .bar { border-radius: 3px 3px 0 0; transition: height 0.5s ease; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(181,212,244,0.2); border-radius: 2px; }
   </style>
 </head>
-<body class="light">
+<body>
 
-  <!-- CITATION -->
-  <div id="citation-screen">
-    <img src="icon.png" class="citation-logo" alt="Logo">
-    <p class="citation-texte" id="citation-texte">Chaque jour est une nouvelle chance de prendre soin de toi.</p>
-    <button class="btn-partager" onclick="partagercitation()">Partager cette citation 🌟</button>
-    <button class="btn-continuer" onclick="allerAccueil()">Continuer →</button>
-  </div>
+<canvas id="canvas-bg"></canvas>
 
-  <!-- ACCUEIL -->
-  <div id="accueil">
-    <img src="icon.png" class="logo-accueil" alt="Logo">
-    <h1 class="accueil-titre">Juste là pour toi</h1>
-    <p class="accueil-sous">Ton espace bienveillant de bien-être</p>
+<!-- SPLASH -->
+<div id="splash">
+  <img src="icon.png" class="splash-logo" alt="Logo">
+  <p class="splash-citation" id="splash-citation"></p>
+  <button class="splash-btn" onclick="allerAccueil()">Commencer 💙</button>
+  <button class="splash-share" onclick="partagercitation()">✨ Partager cette citation</button>
+</div>
+
+<!-- ACCUEIL -->
+<div class="page" id="accueil">
+  <img src="icon.png" class="accueil-logo" alt="Logo">
+  <h1 class="accueil-titre">Juste là pour toi</h1>
+  <p class="accueil-sous">Ton espace bienveillant de bien-être</p>
+  <div class="prenom-wrap">
     <input type="text" class="prenom-input" id="prenom" placeholder="Ton prénom...">
-    <button class="btn-commencer" onclick="commencer()">Commencer la conversation 💙</button>
-    <div class="menu-icons">
-      <button class="menu-icon-btn" onclick="ouvrirJournal()"><span>📔</span><span>Journal</span></button>
-      <button class="menu-icon-btn" onclick="ouvrirRespiration()"><span>🌬️</span><span>Respiration</span></button>
-      <button class="menu-icon-btn" onclick="ouvrirObjectifs()"><span>🎯</span><span>Objectifs</span></button>
-      <button class="menu-icon-btn" onclick="ouvrirSuiviHumeur()"><span>📊</span><span>Humeur</span></button>
-      <button class="menu-icon-btn" onclick="ouvrirDefi()"><span>⚡</span><span>Défi du jour</span></button>
-      <button class="menu-icon-btn" onclick="ouvrirLettre()"><span>💌</span><span>Ma lettre</span></button>
-      <button class="menu-icon-btn" onclick="toggleDark()"><span>🌙</span><span>Mode sombre</span></button>
-      <button class="menu-icon-btn" onclick="partagercitation()"><span>🌟</span><span>Partager</span></button>
-    </div>
-    <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
   </div>
-
-  <!-- CHAT -->
-  <div id="chat">
-    <div class="header">
-      <div class="header-deco"></div>
-      <div class="header-top">
-        <img src="icon.png" class="avatar" alt="Logo">
-        <div class="header-text">
-          <h1>Juste là pour toi</h1>
-          <p id="header-prenom">Ton espace de bien-être</p>
-        </div>
-        <div class="header-actions">
-          <button class="btn-header" onclick="toggleDark()">🌙</button>
-          <button class="btn-header" onclick="allerAccueil()">🏠</button>
-          <button class="btn-header" onclick="reinitialiser()">↺</button>
-        </div>
-      </div>
-      <div class="status"><div class="status-dot"></div><span class="status-text">Disponible · toujours là pour t'écouter</span></div>
-    </div>
-    <div class="wave"></div>
-    <div class="messages" id="messages"><div class="date-divider"><span>aujourd'hui</span></div></div>
-    <div class="suggestions" id="suggestions" style="display:flex">
-      <button class="suggestion-btn" onclick="suggerer('Je me sens stressé')">😰 Stressé</button>
-      <button class="suggestion-btn" onclick="suggerer('Je me sens seul')">😔 Seul</button>
-      <button class="suggestion-btn" onclick="suggerer('J\'ai besoin de conseils')">💡 Conseils</button>
-      <button class="suggestion-btn" onclick="suggerer('Je veux parler de mes émotions')">💭 Émotions</button>
-    </div>
-    <div class="input-area">
-      <textarea id="input" placeholder="Écris ce que tu ressens..." rows="1"></textarea>
-      <button class="send-btn" id="btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
-    </div>
-    <div class="bottom-bar"><span>un espace bienveillant, rien que pour toi</span></div>
+  <button class="btn-commencer" onclick="commencer()">Commencer la conversation 💙</button>
+  <div class="menu-grid">
+    <div class="menu-item" onclick="ouvrirSec('journal'); afficherHistoriqueJournal()"><span class="icon">📔</span><span class="label">Journal</span></div>
+    <div class="menu-item" onclick="ouvrirSec('respiration')"><span class="icon">🌬️</span><span class="label">Respiration</span></div>
+    <div class="menu-item" onclick="ouvrirSec('objectifs'); afficherObjectifActuel()"><span class="icon">🎯</span><span class="label">Objectifs</span></div>
+    <div class="menu-item" onclick="ouvrirSec('humeur'); afficherGraphique()"><span class="icon">📊</span><span class="label">Humeur</span></div>
+    <div class="menu-item" onclick="ouvrirSec('defi'); chargerDefi(); afficherDefisHisto()"><span class="icon">⚡</span><span class="label">Défi du jour</span></div>
+    <div class="menu-item" onclick="ouvrirSec('lettre'); afficherLettres()"><span class="icon">💌</span><span class="label">Ma lettre</span></div>
+    <div class="menu-item" onclick="partagercitation()"><span class="icon">🌟</span><span class="label">Partager</span></div>
+    <div class="menu-item" onclick="toggleDark()" id="dark-btn"><span class="icon">🌙</span><span class="label">Thème</span></div>
   </div>
+  <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
+</div>
 
-  <!-- JOURNAL -->
-  <div id="journal" class="page-secondaire">
-    <div class="page-header">
-      <button class="btn-back" onclick="fermerPage('journal')">← Retour</button>
-      <h2>📔 Journal de bord</h2>
-    </div>
-    <div class="page-body">
-      <div class="card">
-        <p class="card-titre">Comment te sens-tu aujourd'hui ?</p>
-        <div style="display:flex; gap:12px; justify-content:center; margin-bottom:14px;">
-          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😊')">😊</span>
-          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😐')">😐</span>
-          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😔')">😔</span>
-          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😰')">😰</span>
-          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😡')">😡</span>
-        </div>
-        <textarea style="width:100%; border:0.5px solid #B5D4F4; border-radius:10px; padding:10px; font-size:14px; font-family:'DM Sans',sans-serif; resize:none; height:90px; outline:none; background:#f7faff; color:#0C447C;" id="note-journal" placeholder="Note de la journée..."></textarea>
-        <p class="succes" id="succes-journal">✅ Enregistré !</p>
-        <button class="btn-primary" onclick="sauvegarderJournal()">Sauvegarder 💙</button>
-      </div>
-      <div class="card">
-        <p class="card-titre">Mes dernières entrées</p>
-        <div id="historique-journal"><p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune entrée pour le moment 💙</p></div>
+<!-- CHAT -->
+<div class="page" id="chat">
+  <div class="chat-header">
+    <div class="chat-header-top">
+      <img src="icon.png" class="chat-avatar" alt="">
+      <div><p class="chat-title">Juste là pour toi</p><p class="chat-subtitle" id="chat-sub">Ton espace de bien-être</p></div>
+      <div class="chat-actions">
+        <button class="chat-btn" onclick="allerAccueil()">🏠</button>
+        <button class="chat-btn" onclick="reinitialiser()">↺</button>
       </div>
     </div>
+    <div class="status-bar"><div class="status-dot"></div><span class="status-txt">Disponible · toujours là pour t'écouter</span></div>
   </div>
-
-  <!-- RESPIRATION -->
-  <div id="respiration" class="page-secondaire">
-    <div class="page-header">
-      <button class="btn-back" onclick="fermerPage('respiration'); arreterRespiration()">← Retour</button>
-      <h2>🌬️ Respiration guidée</h2>
-    </div>
-    <div class="page-body" style="align-items:center; justify-content:center; text-align:center;">
-      <div id="cercle-respiration" style="width:150px; height:150px; border-radius:50%; background:#185FA5; display:flex; align-items:center; justify-content:center; transition:all 4s ease; margin-bottom:24px;"><span style="font-size:36px;">🌬️</span></div>
-      <p id="instruction-respiration" style="font-family:'Lora',serif; font-size:22px; color:#185FA5; margin-bottom:8px;">Prêt ?</p>
-      <p id="compteur-respiration" style="font-size:44px; font-weight:500; color:#185FA5; margin-bottom:8px;"></p>
-      <p id="cycle-respiration" style="font-size:13px; color:#85B7EB; margin-bottom:24px;">Appuie sur Commencer</p>
-      <button id="btn-start-respiration" class="btn-primary" style="max-width:240px;" onclick="demarrerRespiration()">Commencer 💙</button>
-      <button id="btn-stop-respiration" class="btn-secondary" style="display:none; max-width:240px;" onclick="arreterRespiration()">Arrêter</button>
-    </div>
+  <div class="wave-sep"></div>
+  <div class="messages" id="messages"><div class="date-div"><span>aujourd'hui</span></div></div>
+  <div class="suggestions" id="suggestions">
+    <button class="sugg-btn" onclick="suggerer('Je me sens stressé')">😰 Stressé</button>
+    <button class="sugg-btn" onclick="suggerer('Je me sens seul')">😔 Seul</button>
+    <button class="sugg-btn" onclick="suggerer('J\'ai besoin de conseils')">💡 Conseils</button>
+    <button class="sugg-btn" onclick="suggerer('Je veux parler de mes émotions')">💭 Émotions</button>
   </div>
+  <div class="input-area">
+    <textarea class="chat-textarea" id="input" placeholder="Écris ce que tu ressens..." rows="1"></textarea>
+    <button class="send-btn" id="btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+  </div>
+  <div class="chat-footer"><span>un espace bienveillant, rien que pour toi</span></div>
+</div>
 
-  <!-- OBJECTIFS -->
-  <div id="objectifs" class="page-secondaire">
-    <div class="page-header">
-      <button class="btn-back" onclick="fermerPage('objectifs')">← Retour</button>
-      <h2>🎯 Mes objectifs</h2>
+<!-- JOURNAL -->
+<div class="page-sec" id="journal">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('journal')">← Retour</button><h2>📔 Journal de bord</h2></div>
+  <div class="sec-body">
+    <div class="card">
+      <p class="card-titre">Comment te sens-tu aujourd'hui ?</p>
+      <div style="display:flex;gap:12px;justify-content:center;margin-bottom:14px;">
+        <span class="humeur-btn" onclick="selHumeur(this,'😊')">😊</span>
+        <span class="humeur-btn" onclick="selHumeur(this,'😐')">😐</span>
+        <span class="humeur-btn" onclick="selHumeur(this,'😔')">😔</span>
+        <span class="humeur-btn" onclick="selHumeur(this,'😰')">😰</span>
+        <span class="humeur-btn" onclick="selHumeur(this,'😡')">😡</span>
+      </div>
+      <textarea class="textarea-sec" id="note-journal" placeholder="Note de la journée..." style="height:80px;margin-bottom:8px;"></textarea>
+      <p class="succes" id="succes-j">✅ Enregistré !</p>
+      <button class="btn-p" onclick="sauvegarderJournal()">Sauvegarder 💙</button>
     </div>
-    <div class="page-body">
-      <div class="card">
-        <p class="card-titre">Quel est ton objectif principal ?</p>
-        <button class="objectif-btn" onclick="selectionnerObjectif('Réduire mon stress')">😌 Réduire mon stress</button>
-        <button class="objectif-btn" onclick="selectionnerObjectif('Mieux dormir')">😴 Mieux dormir</button>
-        <button class="objectif-btn" onclick="selectionnerObjectif('Avoir plus confiance en moi')">💪 Avoir plus confiance en moi</button>
-        <button class="objectif-btn" onclick="selectionnerObjectif('Mieux gérer mes émotions')">💭 Mieux gérer mes émotions</button>
-        <button class="objectif-btn" onclick="selectionnerObjectif('Me sentir moins seul')">🤝 Me sentir moins seul</button>
-        <button class="objectif-btn" onclick="selectionnerObjectif('Aller de l\'avant')">🚀 Aller de l\'avant</button>
-        <input type="text" id="objectif-custom" placeholder="Mon objectif personnalisé..." style="width:100%; border:0.5px solid #B5D4F4; border-radius:16px; padding:10px 14px; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; background:#f7faff; color:#0C447C; margin-top:8px;">
-        <button class="btn-primary" onclick="sauvegarderObjectif()">Sauvegarder 💙</button>
-      </div>
-      <div id="objectif-actuel" style="display:none;" class="card">
-        <p style="font-size:12px; color:#85B7EB; margin-bottom:4px;">Mon objectif actuel</p>
-        <p id="objectif-texte" style="font-size:16px; font-weight:500; color:#0C447C; margin-bottom:12px;"></p>
-        <button class="btn-primary" onclick="parlerObjectif()">💙 En parler avec l'assistant</button>
-        <button class="btn-secondary" onclick="changerObjectif()">Changer d'objectif</button>
-      </div>
+    <div class="card"><p class="card-titre">Mes dernières entrées</p><div id="histo-journal"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;font-style:italic;">Aucune entrée 💙</p></div></div>
+  </div>
+</div>
+
+<!-- RESPIRATION -->
+<div class="page-sec" id="respiration">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('respiration');arreterResp()">← Retour</button><h2>🌬️ Respiration guidée</h2></div>
+  <div class="sec-body" style="align-items:center;justify-content:center;text-align:center;">
+    <div id="cercle" style="width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,#185FA5,#1a6db5);display:flex;align-items:center;justify-content:center;transition:all 4s ease;margin-bottom:24px;box-shadow:0 0 30px rgba(24,95,165,0.4);"><span style="font-size:32px;">🌬️</span></div>
+    <p id="instr-resp" style="font-family:'Lora',serif;font-size:22px;color:#e8f2ff;margin-bottom:8px;">Prêt ?</p>
+    <p id="compte-resp" style="font-size:42px;font-weight:500;color:#378ADD;margin-bottom:8px;"></p>
+    <p id="cycle-resp" style="font-size:13px;color:rgba(181,212,244,0.5);margin-bottom:24px;">Appuie sur Commencer</p>
+    <button id="btn-start-resp" class="btn-p" style="max-width:240px;" onclick="demarrerResp()">Commencer 💙</button>
+    <button id="btn-stop-resp" class="btn-s" style="display:none;max-width:240px;" onclick="arreterResp()">Arrêter</button>
+  </div>
+</div>
+
+<!-- OBJECTIFS -->
+<div class="page-sec" id="objectifs">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('objectifs')">← Retour</button><h2>🎯 Mes objectifs</h2></div>
+  <div class="sec-body">
+    <div class="card">
+      <p class="card-titre">Quel est ton objectif ?</p>
+      <button class="obj-btn" onclick="selObj('Réduire mon stress')">😌 Réduire mon stress</button>
+      <button class="obj-btn" onclick="selObj('Mieux dormir')">😴 Mieux dormir</button>
+      <button class="obj-btn" onclick="selObj('Avoir plus confiance en moi')">💪 Plus confiance en moi</button>
+      <button class="obj-btn" onclick="selObj('Mieux gérer mes émotions')">💭 Gérer mes émotions</button>
+      <button class="obj-btn" onclick="selObj('Me sentir moins seul')">🤝 Moins seul(e)</button>
+      <button class="obj-btn" onclick="selObj('Aller de l\'avant')">🚀 Aller de l\'avant</button>
+      <input type="text" class="input-sec" id="obj-input" placeholder="Mon objectif personnalisé..." style="margin-top:8px;margin-bottom:0;">
+      <button class="btn-p" onclick="sauvegarderObj()">Sauvegarder 💙</button>
+    </div>
+    <div id="obj-actuel" style="display:none;" class="card">
+      <p style="font-size:12px;color:rgba(181,212,244,0.5);margin-bottom:4px;">Mon objectif actuel</p>
+      <p id="obj-texte" style="font-size:16px;font-weight:500;color:#e8f2ff;margin-bottom:12px;"></p>
+      <button class="btn-p" onclick="parlerObj()">💙 En parler avec l'assistant</button>
+      <button class="btn-s" onclick="changerObj()">Changer d'objectif</button>
     </div>
   </div>
+</div>
 
-  <!-- SUIVI HUMEUR -->
-  <div id="suivi-humeur" class="page-secondaire">
-    <div class="page-header">
-      <button class="btn-back" onclick="fermerPage('suivi-humeur')">← Retour</button>
-      <h2>📊 Suivi de mon humeur</h2>
-    </div>
-    <div class="page-body">
-      <div class="card">
-        <p class="card-titre">Note ton humeur aujourd'hui (sur 10)</p>
-        <div style="display:flex; justify-content:center; align-items:baseline; gap:6px; margin-bottom:12px;">
-          <span id="note-display" style="font-size:44px; font-weight:500; color:#185FA5;">5</span>
-          <span style="font-size:18px; color:#85B7EB;">/10</span>
-        </div>
-        <p id="emoji-humeur" style="text-align:center; font-size:28px; margin-bottom:12px;">😐</p>
-        <input type="range" min="1" max="10" value="5" id="note-slider" oninput="updateNote(this.value)" style="width:100%; margin-bottom:6px;">
-        <div style="display:flex; justify-content:space-between; font-size:11px; color:#85B7EB; margin-bottom:12px;">
-          <span>😔 Très mal</span><span>😊 Très bien</span>
-        </div>
-        <p class="succes" id="succes-note">✅ Enregistré !</p>
-        <button class="btn-primary" onclick="sauvegarderNote()">Enregistrer 💙</button>
+<!-- HUMEUR -->
+<div class="page-sec" id="humeur">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('humeur')">← Retour</button><h2>📊 Suivi de mon humeur</h2></div>
+  <div class="sec-body">
+    <div class="card">
+      <p class="card-titre">Note ton humeur (sur 10)</p>
+      <div style="display:flex;justify-content:center;align-items:baseline;gap:6px;margin-bottom:10px;">
+        <span id="note-disp" style="font-size:48px;font-weight:500;color:#378ADD;">5</span>
+        <span style="font-size:18px;color:rgba(181,212,244,0.4);">/10</span>
       </div>
-      <div class="card">
-        <p class="card-titre">Ma semaine</p>
-        <div id="graphique-semaine" style="display:flex; gap:6px; align-items:flex-end; height:100px; justify-content:center; margin-bottom:6px;"></div>
-        <div id="jours-labels" style="display:flex; gap:6px; justify-content:center;"></div>
-        <div style="margin-top:14px; padding:10px; background:#E6F1FB; border-radius:10px; text-align:center;">
-          <p style="font-size:12px; color:#85B7EB; margin-bottom:2px;">Score moyen de la semaine</p>
-          <p id="score-semaine" style="font-size:26px; font-weight:500; color:#185FA5;">-/10</p>
-        </div>
+      <p id="emoji-hum" style="text-align:center;font-size:28px;margin-bottom:12px;">😐</p>
+      <input type="range" min="1" max="10" value="5" id="note-slider" oninput="updateNote(this.value)" style="width:100%;margin-bottom:6px;accent-color:#185FA5;">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(181,212,244,0.4);margin-bottom:12px;"><span>😔 Très mal</span><span>😊 Très bien</span></div>
+      <p class="succes" id="succes-note">✅ Enregistré !</p>
+      <button class="btn-p" onclick="sauvegarderNote()">Enregistrer 💙</button>
+    </div>
+    <div class="card">
+      <p class="card-titre">Ma semaine</p>
+      <div id="graph-sem" style="display:flex;gap:6px;align-items:flex-end;height:100px;justify-content:center;margin-bottom:6px;"></div>
+      <div id="jours-lab" style="display:flex;gap:6px;justify-content:center;"></div>
+      <div style="margin-top:14px;padding:10px;background:rgba(24,95,165,0.15);border-radius:12px;text-align:center;border:0.5px solid rgba(181,212,244,0.1);">
+        <p style="font-size:12px;color:rgba(181,212,244,0.4);margin-bottom:2px;">Score moyen</p>
+        <p id="score-sem" style="font-size:26px;font-weight:500;color:#378ADD;">-/10</p>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- DEFI -->
-  <div id="defi" class="page-secondaire">
-    <div class="page-header">
-      <button class="btn-back" onclick="fermerPage('defi')">← Retour</button>
-      <h2>⚡ Défi bien-être du jour</h2>
-    </div>
-    <div class="page-body">
-      <div class="card" style="text-align:center;">
-        <p style="font-size:12px; color:#85B7EB; margin-bottom:12px;">Ton défi d'aujourd'hui</p>
-        <div id="defi-loading" style="color:#85B7EB; font-size:13px;">Génération de ton défi...</div>
-        <p id="defi-texte" style="display:none; font-family:'Lora',serif; font-size:17px; color:#0C447C; line-height:1.7; margin-bottom:16px;"></p>
-        <div id="defi-actions" style="display:none; flex-direction:column; gap:8px;">
-          <button class="btn-primary" onclick="defiAccepte()">✅ J'accepte ce défi !</button>
-          <button class="btn-secondary" onclick="nouveauDefi()">🔄 Nouveau défi</button>
-        </div>
-        <div id="defi-accepte-msg" style="display:none;">
-          <p style="font-size:28px; margin-bottom:8px;">🎉</p>
-          <p style="font-family:'Lora',serif; font-size:15px; color:#0C447C;">Bravo ! Tu as accepté le défi !</p>
-          <p style="font-size:12px; color:#85B7EB; margin-top:4px;">Reviens demain pour un nouveau défi 💙</p>
-        </div>
+<!-- DEFI -->
+<div class="page-sec" id="defi">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('defi')">← Retour</button><h2>⚡ Défi bien-être du jour</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <p style="font-size:12px;color:rgba(181,212,244,0.4);margin-bottom:12px;">Ton défi d'aujourd'hui</p>
+      <div id="defi-load" style="color:rgba(181,212,244,0.4);font-size:13px;">Génération de ton défi...</div>
+      <p id="defi-txt" style="display:none;font-family:'Lora',serif;font-size:17px;color:#e8f2ff;line-height:1.7;margin-bottom:16px;"></p>
+      <div id="defi-acts" style="display:none;flex-direction:column;gap:8px;">
+        <button class="btn-p" onclick="defiOk()">✅ J'accepte ce défi !</button>
+        <button class="btn-s" onclick="nouveauDefi()">🔄 Nouveau défi</button>
       </div>
-      <div class="card">
-        <p class="card-titre">Mes défis complétés</p>
-        <div id="defis-historique"><p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucun défi complété 💙</p></div>
+      <div id="defi-ok-msg" style="display:none;">
+        <p style="font-size:32px;margin-bottom:8px;">🎉</p>
+        <p style="font-family:'Lora',serif;font-size:15px;color:#e8f2ff;">Bravo ! Tu as accepté le défi !</p>
+        <p style="font-size:12px;color:rgba(181,212,244,0.4);margin-top:4px;">Reviens demain 💙</p>
       </div>
     </div>
+    <div class="card"><p class="card-titre">Mes défis complétés</p><div id="defi-histo"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;font-style:italic;">Aucun défi 💙</p></div></div>
   </div>
+</div>
 
-  <!-- LETTRE -->
-  <div id="lettre" class="page-secondaire">
-    <div class="page-header">
-      <button class="btn-back" onclick="fermerPage('lettre')">← Retour</button>
-      <h2>💌 Lettre à mon futur moi</h2>
-    </div>
-    <div class="page-body">
-      <div class="card">
-        <p class="card-titre">Dans combien de temps ?</p>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
-          <button class="btn-delai" onclick="selectionnerDelai(this,'1 mois')">1 mois</button>
-          <button class="btn-delai" onclick="selectionnerDelai(this,'3 mois')">3 mois</button>
-          <button class="btn-delai" onclick="selectionnerDelai(this,'6 mois')">6 mois</button>
-          <button class="btn-delai" onclick="selectionnerDelai(this,'1 an')">1 an</button>
-        </div>
-        <textarea id="lettre-texte" placeholder="Cher futur moi, aujourd'hui je me sens..." style="width:100%; border:0.5px solid #B5D4F4; border-radius:10px; padding:10px; font-size:14px; font-family:'DM Sans',sans-serif; resize:none; height:150px; outline:none; background:#f7faff; color:#0C447C;"></textarea>
-        <button class="btn-primary" onclick="sauvegarderLettre()">Sceller ma lettre 💌</button>
+<!-- LETTRE -->
+<div class="page-sec" id="lettre">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('lettre')">← Retour</button><h2>💌 Lettre à mon futur moi</h2></div>
+  <div class="sec-body">
+    <div class="card">
+      <p class="card-titre">Dans combien de temps ?</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+        <button class="delai-btn" onclick="selDelai(this,'1 mois')">1 mois</button>
+        <button class="delai-btn" onclick="selDelai(this,'3 mois')">3 mois</button>
+        <button class="delai-btn" onclick="selDelai(this,'6 mois')">6 mois</button>
+        <button class="delai-btn" onclick="selDelai(this,'1 an')">1 an</button>
       </div>
-      <div class="card">
-        <p class="card-titre">Mes lettres scellées</p>
-        <div id="lettres-liste"><p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune lettre 💌</p></div>
-      </div>
+      <textarea class="textarea-sec" id="lettre-txt" placeholder="Cher futur moi, aujourd'hui je me sens..." style="height:140px;margin-bottom:0;"></textarea>
+      <button class="btn-p" onclick="sauvegarderLettre()">Sceller ma lettre 💌</button>
     </div>
+    <div class="card"><p class="card-titre">Mes lettres scellées</p><div id="lettres-list"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;font-style:italic;">Aucune lettre 💌</p></div></div>
   </div>
+</div>
 
-  <script>
-    const CITATIONS = [
-      "Chaque jour est une nouvelle chance de prendre soin de toi.",
-      "Tu n'as pas à être parfait pour mériter d'être aimé.",
-      "La douceur envers soi-même est le début de tout.",
-      "Tes émotions sont valides, même celles que tu n'arrives pas à nommer.",
-      "Prendre soin de toi n'est pas un luxe, c'est une nécessité.",
-      "Tu es plus fort que tu ne le crois.",
-      "Chaque petit pas compte sur le chemin du bien-être.",
-      "Il est courageux de demander de l'aide.",
-      "Tu mérites la paix intérieure.",
-      "Respire. Tu es là. C'est déjà beaucoup."
-    ];
+<script>
+const CITATIONS = ["Chaque jour est une nouvelle chance de prendre soin de toi.","Tu n'as pas à être parfait pour mériter d'être aimé.","La douceur envers soi-même est le début de tout.","Tes émotions sont valides, même celles que tu n'arrives pas à nommer.","Prendre soin de toi n'est pas un luxe, c'est une nécessité.","Tu es plus fort que tu ne le crois.","Chaque petit pas compte sur le chemin du bien-être.","Il est courageux de demander de l'aide.","Tu mérites la paix intérieure.","Respire. Tu es là. C'est déjà beaucoup."];
+const SYSTEM = `You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. Keep responses to 2-4 sentences. Address user by first name when natural.`;
+let historique=[], prenom='', humeurSel='', delaiLettre='', pagePrecedente='accueil';
 
-    const SYSTEM = `You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. Keep responses to 2-4 sentences. Address user by first name when natural.`;
+// PARTICULES
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+for (let i = 0; i < 50; i++) particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2+0.5, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3, o: Math.random()*0.4+0.1 });
+function animParticles() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.x+=p.vx; p.y+=p.vy; if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0; if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(181,212,244,${p.o})`; ctx.fill(); }); requestAnimationFrame(animParticles); }
+animParticles();
 
-    let historique = [], prenom = '', darkMode = false, humeurSelectionnee = '', delaiLettre = '', pageActuelle = 'accueil';
+// CITATION ANIMEE (mot par mot)
+const citation = CITATIONS[Math.floor(Math.random()*CITATIONS.length)];
+const mots = ('"' + citation + '"').split(' ');
+let motIdx = 0;
+const citEl = document.getElementById('splash-citation');
+function afficherMotSuivant() { if(motIdx < mots.length) { citEl.textContent += (motIdx>0?' ':'') + mots[motIdx]; motIdx++; setTimeout(afficherMotSuivant, 120); } }
+afficherMotSuivant();
 
-    if (localStorage.getItem('darkMode') === 'true') { darkMode = true; document.body.className = 'dark'; }
+// Citation IA en arrière-plan
+fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:'Génère UNE citation courte et bienveillante sur le bien-être. Réponds UNIQUEMENT avec la citation, sans guillemets.',messages:[{role:'user',content:'Citation'}]})}).then(r=>r.json()).then(d=>{if(d.content&&d.content[0]){const c=d.content[0].text;citEl.textContent='"'+c+'"';}}).catch(()=>{});
 
-    function toggleDark() { darkMode = !darkMode; document.body.className = darkMode ? 'dark' : 'light'; localStorage.setItem('darkMode', darkMode); }
-    function getTime() { return new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}); }
-    function getDate() { return new Date().toLocaleDateString('fr-FR'); }
+function getTime(){ return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); }
+function getDate(){ return new Date().toLocaleDateString('fr-FR'); }
 
-    // CITATION INSTANTANEE
-    const citationAlea = CITATIONS[Math.floor(Math.random() * CITATIONS.length)];
-    document.getElementById('citation-texte').textContent = '"' + citationAlea + '"';
+function allerAccueil(){
+  document.getElementById('splash').style.display='none';
+  document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('accueil').classList.add('active');
+  pagePrecedente='accueil';
+}
 
-    // Génère une nouvelle citation IA en arrière-plan
-    fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
-      method: 'POST', headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ model: 'claude-opus-4-5', max_tokens: 100, system: 'Génère UNE citation courte et bienveillante sur le bien-être. Réponds UNIQUEMENT avec la citation, sans guillemets.', messages: [{role:'user', content:'Citation du jour'}] })
-    }).then(r => r.json()).then(d => {
-      if (d.content && d.content[0]) document.getElementById('citation-texte').textContent = '"' + d.content[0].text + '"';
-    }).catch(() => {});
+function partagercitation(){
+  const t = citEl.textContent+'\n\n💙 Juste là pour toi\nhttps://malick043-png.github.io/Juste-l-pour-toi';
+  if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);alert('Citation copiée ! 💙');}
+}
 
-    function allerAccueil() {
-      document.querySelectorAll('.page-secondaire, #chat, #citation-screen').forEach(el => el.style.display = 'none');
-      document.getElementById('accueil').style.display = 'flex';
-    }
+function toggleDark(){ alert('Le mode sombre est désactivé dans ce thème — l\'app est déjà en mode sombre élégant ! 🌙'); }
 
-    function partagercitation() {
-      const citation = document.getElementById('citation-texte').textContent;
-      const texte = citation + '\n\n💙 Juste là pour toi\nhttps://malick043-png.github.io/Juste-l-pour-toi';
-      if (navigator.share) { navigator.share({ text: texte }); }
-      else { navigator.clipboard.writeText(texte); alert('Citation copiée ! 💙'); }
-    }
+function commencer(){
+  prenom=document.getElementById('prenom').value.trim()||'toi';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('chat').classList.add('active');
+  document.getElementById('chat-sub').textContent='Bonjour '+prenom+' 💙';
+  pagePrecedente='chat';
+  ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
+}
 
-    function ouvrirPage(id) {
-      document.querySelectorAll('.page-secondaire, #chat, #accueil, #citation-screen').forEach(el => el.style.display = 'none');
-      document.getElementById(id).style.display = 'flex';
-    }
+function reinitialiser(){
+  historique=[];
+  document.getElementById('messages').innerHTML='<div class="date-div"><span>aujourd\'hui</span></div>';
+  document.getElementById('suggestions').style.display='flex';
+  ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Comment te sens-tu ?');
+}
 
-    function fermerPage(id) {
-      document.getElementById(id).style.display = 'none';
-      if (pageActuelle === 'chat') { document.getElementById('chat').style.display = 'flex'; }
-      else { document.getElementById('accueil').style.display = 'flex'; }
-    }
+function ouvrirSec(id){ pagePrecedente=document.getElementById('chat').classList.contains('active')?'chat':'accueil'; document.getElementById(id).classList.add('open'); }
+function fermerSec(id){ document.getElementById(id).classList.remove('open'); }
 
-    function commencer() {
-      prenom = document.getElementById('prenom').value.trim() || 'toi';
-      pageActuelle = 'chat';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'flex';
-      document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
-      ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
-    }
+// JOURNAL
+let humeurSel2='';
+function selHumeur(el,h){ document.querySelectorAll('.humeur-btn').forEach(b=>b.classList.remove('selected')); el.classList.add('selected'); humeurSel2=h; }
+function sauvegarderJournal(){
+  if(!humeurSel2){alert('Sélectionne ton humeur !');return;}
+  const n=document.getElementById('note-journal').value.trim();
+  const j=JSON.parse(localStorage.getItem('journal')||'[]');
+  j.unshift({date:getDate(),humeur:humeurSel2,note:n});
+  if(j.length>30)j.pop();
+  localStorage.setItem('journal',JSON.stringify(j));
+  document.getElementById('succes-j').style.display='block';
+  setTimeout(()=>document.getElementById('succes-j').style.display='none',2000);
+  document.getElementById('note-journal').value=''; humeurSel2='';
+  document.querySelectorAll('.humeur-btn').forEach(b=>b.classList.remove('selected'));
+  afficherHistoriqueJournal();
+}
+function afficherHistoriqueJournal(){
+  const j=JSON.parse(localStorage.getItem('journal')||'[]');
+  const c=document.getElementById('histo-journal');
+  if(!j.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;font-style:italic;">Aucune entrée 💙</p>';return;}
+  c.innerHTML=j.slice(0,10).map(e=>`<div class="entree-j"><div class="entree-date">${e.date}</div><div><span style="font-size:16px;">${e.humeur}</span>${e.note?'<p style="font-size:12px;color:rgba(181,212,244,0.5);margin-top:2px;">'+e.note+'</p>':''}</div></div>`).join('');
+}
 
-    function reinitialiser() {
-      historique = [];
-      document.getElementById('messages').innerHTML = '<div class="date-divider"><span>aujourd\'hui</span></div>';
-      document.getElementById('suggestions').style.display = 'flex';
-      ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Comment te sens-tu ?');
-    }
+// RESPIRATION
+let respInt=null, cycleN=0;
+function demarrerResp(){ document.getElementById('btn-start-resp').style.display='none'; document.getElementById('btn-stop-resp').style.display='block'; cycleN=0; execCycle(); }
+function arreterResp(){ if(respInt){clearTimeout(respInt);respInt=null;} document.getElementById('btn-start-resp').style.display='block'; document.getElementById('btn-stop-resp').style.display='none'; document.getElementById('instr-resp').textContent='Prêt ?'; document.getElementById('compte-resp').textContent=''; document.getElementById('cycle-resp').textContent='Appuie sur Commencer'; document.getElementById('cercle').style.transform='scale(1)'; document.getElementById('cercle').style.background='linear-gradient(135deg,#185FA5,#1a6db5)'; }
+function execCycle(){
+  if(cycleN>=5){document.getElementById('instr-resp').textContent='🎉 Bravo !'; document.getElementById('compte-resp').textContent=''; document.getElementById('cycle-resp').textContent='5 cycles complétés 💙'; document.getElementById('btn-start-resp').style.display='block'; document.getElementById('btn-stop-resp').style.display='none'; return;}
+  cycleN++; document.getElementById('cycle-resp').textContent='Cycle '+cycleN+' / 5';
+  const c=document.getElementById('cercle');
+  document.getElementById('instr-resp').textContent='Inspire...'; c.style.background='linear-gradient(135deg,#378ADD,#1a9ddb)'; c.style.transform='scale(1.5)';
+  let n=4; document.getElementById('compte-resp').textContent=n;
+  const i1=setInterval(()=>{n--;if(n>0)document.getElementById('compte-resp').textContent=n;else{clearInterval(i1);document.getElementById('instr-resp').textContent='Retiens...'; c.style.background='linear-gradient(135deg,#1D9E75,#0f7a5a)'; let n2=4; document.getElementById('compte-resp').textContent=n2; const i2=setInterval(()=>{n2--;if(n2>0)document.getElementById('compte-resp').textContent=n2;else{clearInterval(i2);document.getElementById('instr-resp').textContent='Expire...'; c.style.background='linear-gradient(135deg,#185FA5,#1a6db5)'; c.style.transform='scale(1)'; let n3=6; document.getElementById('compte-resp').textContent=n3; const i3=setInterval(()=>{n3--;if(n3>0)document.getElementById('compte-resp').textContent=n3;else{clearInterval(i3);respInt=setTimeout(execCycle,500);}},1000);}},1000);}},1000);
+}
 
-    function ouvrirJournal() { ouvrirPage('journal'); afficherHistoriqueJournal(); }
-    function ouvrirRespiration() { ouvrirPage('respiration'); }
-    function ouvrirObjectifs() { ouvrirPage('objectifs'); afficherObjectifActuel(); }
-    function ouvrirSuiviHumeur() { ouvrirPage('suivi-humeur'); afficherGraphique(); }
-    function ouvrirDefi() { ouvrirPage('defi'); chargerDefi(); afficherDefisHistorique(); }
-    function ouvrirLettre() { ouvrirPage('lettre'); afficherLettres(); }
+// OBJECTIFS
+function selObj(o){ document.getElementById('obj-input').value=o; }
+function sauvegarderObj(){
+  const o=document.getElementById('obj-input').value.trim();
+  if(!o){alert('Choisis un objectif !');return;}
+  localStorage.setItem('objectif',JSON.stringify({texte:o,date:getDate()}));
+  afficherObjectifActuel(); alert('Objectif sauvegardé ! 💙');
+}
+function afficherObjectifActuel(){
+  const d=JSON.parse(localStorage.getItem('objectif')||'null');
+  if(d){document.getElementById('obj-actuel').style.display='block'; document.getElementById('obj-texte').textContent='🎯 '+d.texte;}
+}
+function parlerObj(){
+  const d=JSON.parse(localStorage.getItem('objectif')||'null');
+  if(!d)return;
+  fermerSec('objectifs');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('chat').classList.add('active');
+  pagePrecedente='chat';
+  document.getElementById('input').value='Je travaille sur mon objectif : '+d.texte+'. Peux-tu m\'aider ?';
+  envoyer();
+}
+function changerObj(){ localStorage.removeItem('objectif'); document.getElementById('obj-actuel').style.display='none'; document.getElementById('obj-input').value=''; }
 
-    // JOURNAL
-    function selectionnerHumeur(el, h) { document.querySelectorAll('.humeur-btn').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); humeurSelectionnee = h; }
-    function sauvegarderJournal() {
-      if (!humeurSelectionnee) { alert('Sélectionne ton humeur !'); return; }
-      const note = document.getElementById('note-journal').value.trim();
-      const journal = JSON.parse(localStorage.getItem('journal') || '[]');
-      journal.unshift({ date: getDate(), humeur: humeurSelectionnee, note: note });
-      if (journal.length > 30) journal.pop();
-      localStorage.setItem('journal', JSON.stringify(journal));
-      document.getElementById('succes-journal').style.display = 'block';
-      setTimeout(() => document.getElementById('succes-journal').style.display = 'none', 2000);
-      document.getElementById('note-journal').value = ''; humeurSelectionnee = '';
-      document.querySelectorAll('.humeur-btn').forEach(b => b.classList.remove('selected'));
-      afficherHistoriqueJournal();
-    }
-    function afficherHistoriqueJournal() {
-      const journal = JSON.parse(localStorage.getItem('journal') || '[]');
-      const c = document.getElementById('historique-journal');
-      if (!journal.length) { c.innerHTML = '<p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune entrée 💙</p>'; return; }
-      c.innerHTML = journal.slice(0,10).map(e => `<div class="entree-journal"><div class="entree-date">${e.date}</div><div><span style="font-size:16px;">${e.humeur}</span>${e.note ? '<p style="font-size:12px; color:#85B7EB; margin-top:2px;">' + e.note + '</p>' : ''}</div></div>`).join('');
-    }
+// HUMEUR
+function updateNote(v){ document.getElementById('note-disp').textContent=v; const e={1:'😭',2:'😢',3:'😔',4:'😕',5:'😐',6:'🙂',7:'😊',8:'😄',9:'😁',10:'🤩'}; document.getElementById('emoji-hum').textContent=e[v]; }
+function sauvegarderNote(){
+  const n=parseInt(document.getElementById('note-slider').value);
+  const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
+  const idx=notes.findIndex(x=>x.date===getDate());
+  if(idx>=0)notes[idx].note=n; else notes.push({date:getDate(),note:n});
+  if(notes.length>30)notes.shift();
+  localStorage.setItem('notes-humeur',JSON.stringify(notes));
+  document.getElementById('succes-note').style.display='block';
+  setTimeout(()=>document.getElementById('succes-note').style.display='none',2000);
+  afficherGraphique();
+}
+function afficherGraphique(){
+  const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
+  const jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+  const auj=new Date(); const sem=[];
+  for(let i=6;i>=0;i--){const d=new Date(auj);d.setDate(auj.getDate()-i);const ds=d.toLocaleDateString('fr-FR');const n=notes.find(x=>x.date===ds);sem.push({j:jours[d.getDay()],n:n?n.note:null});}
+  document.getElementById('graph-sem').innerHTML=sem.map(s=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;">${s.n?`<span style="font-size:10px;color:#378ADD;font-weight:500;">${s.n}</span><div class="bar" style="width:100%;background:linear-gradient(to top,#185FA5,#378ADD);height:${s.n*9}px;"></div>`:`<span style="font-size:10px;color:rgba(181,212,244,0.2);">-</span><div style="width:100%;background:rgba(181,212,244,0.1);border-radius:3px 3px 0 0;height:8px;"></div>`}</div>`).join('');
+  document.getElementById('jours-lab').innerHTML=sem.map(s=>`<span style="font-size:10px;color:rgba(181,212,244,0.3);flex:1;text-align:center;">${s.j}</span>`).join('');
+  const np=sem.filter(s=>s.n!==null);
+  if(np.length)document.getElementById('score-sem').textContent=(np.reduce((a,b)=>a+b.n,0)/np.length).toFixed(1)+'/10';
+}
 
-    // RESPIRATION
-    let respirationInterval = null, cycleCount = 0;
-    function demarrerRespiration() { document.getElementById('btn-start-respiration').style.display = 'none'; document.getElementById('btn-stop-respiration').style.display = 'block'; cycleCount = 0; executerCycle(); }
-    function arreterRespiration() {
-      if (respirationInterval) { clearTimeout(respirationInterval); respirationInterval = null; }
-      document.getElementById('btn-start-respiration').style.display = 'block';
-      document.getElementById('btn-stop-respiration').style.display = 'none';
-      document.getElementById('instruction-respiration').textContent = 'Prêt ?';
-      document.getElementById('compteur-respiration').textContent = '';
-      document.getElementById('cycle-respiration').textContent = 'Appuie sur Commencer';
-      document.getElementById('cercle-respiration').style.transform = 'scale(1)';
-      document.getElementById('cercle-respiration').style.background = '#185FA5';
-    }
-    function executerCycle() {
-      if (cycleCount >= 5) { document.getElementById('instruction-respiration').textContent = '🎉 Bravo !'; document.getElementById('compteur-respiration').textContent = ''; document.getElementById('cycle-respiration').textContent = '5 cycles complétés 💙'; document.getElementById('btn-start-respiration').style.display = 'block'; document.getElementById('btn-stop-respiration').style.display = 'none'; return; }
-      cycleCount++; document.getElementById('cycle-respiration').textContent = 'Cycle ' + cycleCount + ' / 5';
-      const c = document.getElementById('cercle-respiration');
-      document.getElementById('instruction-respiration').textContent = 'Inspire...'; c.style.background = '#378ADD'; c.style.transform = 'scale(1.5)';
-      let n = 4; document.getElementById('compteur-respiration').textContent = n;
-      const i1 = setInterval(() => { n--; if (n > 0) document.getElementById('compteur-respiration').textContent = n; else { clearInterval(i1); document.getElementById('instruction-respiration').textContent = 'Retiens...'; c.style.background = '#1D9E75'; let n2 = 4; document.getElementById('compteur-respiration').textContent = n2; const i2 = setInterval(() => { n2--; if (n2 > 0) document.getElementById('compteur-respiration').textContent = n2; else { clearInterval(i2); document.getElementById('instruction-respiration').textContent = 'Expire...'; c.style.background = '#185FA5'; c.style.transform = 'scale(1)'; let n3 = 6; document.getElementById('compteur-respiration').textContent = n3; const i3 = setInterval(() => { n3--; if (n3 > 0) document.getElementById('compteur-respiration').textContent = n3; else { clearInterval(i3); respirationInterval = setTimeout(executerCycle, 500); } }, 1000); } }, 1000); } }, 1000);
-    }
+// DEFI
+const DEFIS=['Écris 3 choses pour lesquelles tu es reconnaissant aujourd\'hui.','Offre un sourire sincère à quelqu\'un autour de toi.','Prends 5 minutes pour respirer profondément et ne rien faire.','Envoie un message d\'encouragement à quelqu\'un que tu aimes.','Bois un grand verre d\'eau et fais une petite marche.','Écris une qualité que tu aimes en toi.','Appelle quelqu\'un que tu n\'as pas contacté depuis longtemps.'];
+async function chargerDefi(){
+  document.getElementById('defi-ok-msg').style.display='none';
+  if(localStorage.getItem('defi-date')===getDate()){
+    document.getElementById('defi-load').style.display='none'; document.getElementById('defi-txt').style.display='block'; document.getElementById('defi-txt').textContent=localStorage.getItem('defi-txt'); document.getElementById('defi-ok-msg').style.display='block'; return;
+  }
+  const d=DEFIS[Math.floor(Math.random()*DEFIS.length)];
+  document.getElementById('defi-load').style.display='none'; document.getElementById('defi-txt').style.display='block'; document.getElementById('defi-txt').textContent=d; document.getElementById('defi-acts').style.display='flex'; localStorage.setItem('defi-txt',d);
+  fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:'Génère UN défi bien-être simple réalisable en une journée. Réponds UNIQUEMENT avec le défi.',messages:[{role:'user',content:'Défi'}]})}).then(r=>r.json()).then(d=>{if(d.content&&d.content[0]){document.getElementById('defi-txt').textContent=d.content[0].text;localStorage.setItem('defi-txt',d.content[0].text);}}).catch(()=>{});
+}
+function nouveauDefi(){ localStorage.removeItem('defi-txt'); localStorage.removeItem('defi-date'); document.getElementById('defi-load').style.display='block'; document.getElementById('defi-txt').style.display='none'; document.getElementById('defi-acts').style.display='none'; chargerDefi(); }
+function defiOk(){
+  localStorage.setItem('defi-date',getDate());
+  const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');
+  defis.unshift({date:getDate(),defi:document.getElementById('defi-txt').textContent});
+  if(defis.length>10)defis.pop();
+  localStorage.setItem('defis-ok',JSON.stringify(defis));
+  document.getElementById('defi-acts').style.display='none'; document.getElementById('defi-ok-msg').style.display='block';
+  afficherDefisHisto();
+}
+function afficherDefisHisto(){
+  const d=JSON.parse(localStorage.getItem('defis-ok')||'[]');
+  const c=document.getElementById('defi-histo');
+  if(!d.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;font-style:italic;">Aucun défi 💙</p>';return;}
+  c.innerHTML=d.map(x=>`<div style="padding:8px 0;border-bottom:0.5px solid rgba(181,212,244,0.1);display:flex;gap:8px;"><span>✅</span><div><p style="font-size:11px;color:rgba(181,212,244,0.4);">${x.date}</p><p style="font-size:13px;color:#e8f2ff;">${x.defi}</p></div></div>`).join('');
+}
 
-    // OBJECTIFS
-    function selectionnerObjectif(o) { document.getElementById('objectif-custom').value = o; }
-    function sauvegarderObjectif() {
-      const o = document.getElementById('objectif-custom').value.trim();
-      if (!o) { alert('Choisis un objectif !'); return; }
-      localStorage.setItem('objectif', JSON.stringify({ texte: o, date: getDate() }));
-      afficherObjectifActuel();
-      alert('Objectif sauvegardé ! 💙');
-    }
-    function afficherObjectifActuel() {
-      const data = JSON.parse(localStorage.getItem('objectif') || 'null');
-      if (data) { document.getElementById('objectif-actuel').style.display = 'block'; document.getElementById('objectif-texte').textContent = '🎯 ' + data.texte; }
-    }
-    function parlerObjectif() {
-      const data = JSON.parse(localStorage.getItem('objectif') || 'null');
-      if (!data) return;
-      fermerPage('objectifs'); pageActuelle = 'chat';
-      if (document.getElementById('chat').style.display !== 'flex') { prenom = prenom || 'toi'; document.getElementById('accueil').style.display = 'none'; document.getElementById('chat').style.display = 'flex'; document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙'; }
-      document.getElementById('input').value = 'Je travaille sur mon objectif : ' + data.texte + '. Peux-tu m\'aider ?';
-      envoyer();
-    }
-    function changerObjectif() { localStorage.removeItem('objectif'); document.getElementById('objectif-actuel').style.display = 'none'; document.getElementById('objectif-custom').value = ''; }
+// LETTRE
+function selDelai(el,d){ document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected')); el.classList.add('selected'); delaiLettre=d; }
+function sauvegarderLettre(){
+  const t=document.getElementById('lettre-txt').value.trim();
+  if(!t){alert('Écris ta lettre !');return;} if(!delaiLettre){alert('Choisis un délai !');return;}
+  const l=JSON.parse(localStorage.getItem('lettres')||'[]');
+  l.unshift({date:getDate(),delai:delaiLettre,texte:t});
+  localStorage.setItem('lettres',JSON.stringify(l));
+  document.getElementById('lettre-txt').value=''; delaiLettre='';
+  document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));
+  alert('Lettre scellée ! 💌 Elle t\'attend dans '+delaiLettre);
+  afficherLettres();
+}
+function afficherLettres(){
+  const l=JSON.parse(localStorage.getItem('lettres')||'[]');
+  const c=document.getElementById('lettres-list');
+  if(!l.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;font-style:italic;">Aucune lettre 💌</p>';return;}
+  c.innerHTML=l.map(x=>`<div style="padding:10px;border-radius:10px;background:rgba(255,255,255,0.05);border:0.5px solid rgba(181,212,244,0.1);margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:rgba(181,212,244,0.4);">${x.date}</span><span style="font-size:11px;background:rgba(24,95,165,0.3);color:#378ADD;padding:2px 8px;border-radius:8px;">Dans ${x.delai}</span></div><p style="font-size:13px;color:rgba(181,212,244,0.7);font-style:italic;">"${x.texte.substring(0,80)}${x.texte.length>80?'...':''}"</p></div>`).join('');
+}
 
-    // SUIVI HUMEUR
-    function updateNote(val) { document.getElementById('note-display').textContent = val; const e = {1:'😭',2:'😢',3:'😔',4:'😕',5:'😐',6:'🙂',7:'😊',8:'😄',9:'😁',10:'🤩'}; document.getElementById('emoji-humeur').textContent = e[val]; }
-    function sauvegarderNote() {
-      const note = parseInt(document.getElementById('note-slider').value);
-      const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
-      const idx = notes.findIndex(n => n.date === getDate());
-      if (idx >= 0) notes[idx].note = note; else notes.push({ date: getDate(), note: note });
-      if (notes.length > 30) notes.shift();
-      localStorage.setItem('notes-humeur', JSON.stringify(notes));
-      document.getElementById('succes-note').style.display = 'block';
-      setTimeout(() => document.getElementById('succes-note').style.display = 'none', 2000);
-      afficherGraphique();
-    }
-    function afficherGraphique() {
-      const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
-      const jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-      const auj = new Date(); const semaine = [];
-      for (let i = 6; i >= 0; i--) { const d = new Date(auj); d.setDate(auj.getDate()-i); const ds = d.toLocaleDateString('fr-FR'); const n = notes.find(x => x.date === ds); semaine.push({ jour: jours[d.getDay()], note: n ? n.note : null }); }
-      document.getElementById('graphique-semaine').innerHTML = semaine.map(s => `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;">${s.note ? `<span style="font-size:10px;color:#185FA5;font-weight:500;">${s.note}</span><div style="width:100%;background:#185FA5;border-radius:3px 3px 0 0;height:${s.note*9}px;"></div>` : `<span style="font-size:10px;color:#B5D4F4;">-</span><div style="width:100%;background:#E6F1FB;border-radius:3px 3px 0 0;height:8px;"></div>`}</div>`).join('');
-      document.getElementById('jours-labels').innerHTML = semaine.map(s => `<span style="font-size:10px;color:#85B7EB;flex:1;text-align:center;">${s.jour}</span>`).join('');
-      const np = semaine.filter(s => s.note !== null);
-      if (np.length) document.getElementById('score-semaine').textContent = (np.reduce((a,b) => a+b.note, 0)/np.length).toFixed(1) + '/10';
-    }
-
-    // DEFI
-    async function chargerDefi() {
-      const defisPredefinis = ['Écris 3 choses pour lesquelles tu es reconnaissant aujourd\'hui.', 'Offre un sourire sincère à quelqu\'un autour de toi.', 'Prends 5 minutes pour respirer profondément et ne rien faire.', 'Envoie un message d\'encouragement à quelqu\'un que tu aimes.', 'Bois un grand verre d\'eau et fais une petite marche.', 'Écris une qualité que tu aimes en toi.', 'Appelle ou écris à quelqu\'un que tu n\'as pas contacté depuis longtemps.'];
-      document.getElementById('defi-accepte-msg').style.display = 'none';
-      if (localStorage.getItem('defi-date') === getDate()) {
-        document.getElementById('defi-loading').style.display = 'none'; document.getElementById('defi-texte').style.display = 'block'; document.getElementById('defi-texte').textContent = localStorage.getItem('defi-texte'); document.getElementById('defi-accepte-msg').style.display = 'block'; return;
-      }
-      const defiAlea = defisPredefinis[Math.floor(Math.random() * defisPredefinis.length)];
-      document.getElementById('defi-loading').style.display = 'none'; document.getElementById('defi-texte').style.display = 'block'; document.getElementById('defi-texte').textContent = defiAlea; document.getElementById('defi-actions').style.display = 'flex';
-      localStorage.setItem('defi-texte', defiAlea);
-      fetch('https://serveur-juste-la-pour-toi.onrender.com/message', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:100, system:'Génère UN défi bien-être simple et réalisable en une journée. Réponds UNIQUEMENT avec le défi.', messages:[{role:'user',content:'Défi du jour'}] }) }).then(r=>r.json()).then(d => { if(d.content && d.content[0]) { document.getElementById('defi-texte').textContent = d.content[0].text; localStorage.setItem('defi-texte', d.content[0].text); } }).catch(()=>{});
-    }
-    function nouveauDefi() { localStorage.removeItem('defi-texte'); localStorage.removeItem('defi-date'); chargerDefi(); }
-    function defiAccepte() {
-      localStorage.setItem('defi-date', getDate());
-      const defis = JSON.parse(localStorage.getItem('defis-completes') || '[]');
-      defis.unshift({ date: getDate(), defi: document.getElementById('defi-texte').textContent });
-      if (defis.length > 10) defis.pop();
-      localStorage.setItem('defis-completes', JSON.stringify(defis));
-      document.getElementById('defi-actions').style.display = 'none'; document.getElementById('defi-accepte-msg').style.display = 'block';
-      afficherDefisHistorique();
-    }
-    function afficherDefisHistorique() {
-      const defis = JSON.parse(localStorage.getItem('defis-completes') || '[]');
-      const c = document.getElementById('defis-historique');
-      if (!defis.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun défi complété 💙</p>'; return; }
-      c.innerHTML = defis.map(d => `<div style="padding:8px 0;border-bottom:0.5px solid #B5D4F4;display:flex;gap:8px;"><span>✅</span><div><p style="font-size:11px;color:#85B7EB;">${d.date}</p><p style="font-size:13px;color:#0C447C;">${d.defi}</p></div></div>`).join('');
-    }
-
-    // LETTRE
-    function selectionnerDelai(el, d) { document.querySelectorAll('.btn-delai').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); delaiLettre = d; }
-    function sauvegarderLettre() {
-      const texte = document.getElementById('lettre-texte').value.trim();
-      if (!texte) { alert('Écris ta lettre !'); return; }
-      if (!delaiLettre) { alert('Choisis un délai !'); return; }
-      const lettres = JSON.parse(localStorage.getItem('lettres') || '[]');
-      lettres.unshift({ date: getDate(), delai: delaiLettre, texte: texte });
-      localStorage.setItem('lettres', JSON.stringify(lettres));
-      document.getElementById('lettre-texte').value = ''; delaiLettre = '';
-      document.querySelectorAll('.btn-delai').forEach(b => b.classList.remove('selected'));
-      alert('Lettre scellée ! 💌 Elle t\'attend dans ' + delaiLettre);
-      afficherLettres();
-    }
-    function afficherLettres() {
-      const lettres = JSON.parse(localStorage.getItem('lettres') || '[]');
-      const c = document.getElementById('lettres-liste');
-      if (!lettres.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>'; return; }
-      c.innerHTML = lettres.map(l => `<div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:#85B7EB;">${l.date}</span><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Dans ${l.delai}</span></div><p style="font-size:13px;color:#0C447C;font-style:italic;">"${l.texte.substring(0,80)}${l.texte.length>80?'...':''}"</p></div>`).join('');
-    }
-
-    // CHAT
-    function suggerer(t) { document.getElementById('input').value = t; envoyer(); }
-    function ajouterMessage(role, texte) {
-      if (role === 'user') document.getElementById('suggestions').style.display = 'none';
-      const wrap = document.createElement('div'); wrap.className = 'bubble-wrap' + (role==='user'?' user':'');
-      const bubble = document.createElement('div'); bubble.className = 'bubble ' + role; bubble.textContent = texte;
-      const time = document.createElement('div'); time.className = 'bubble-time'; time.textContent = getTime();
-      wrap.appendChild(bubble); wrap.appendChild(time); document.getElementById('messages').appendChild(wrap);
-      wrap.scrollIntoView({ behavior: 'smooth' });
-    }
-    function showTyping() { const d = document.createElement('div'); d.className = 'typing'; d.id = 'typing'; d.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>'; document.getElementById('messages').appendChild(d); d.scrollIntoView({behavior:'smooth'}); }
-    function removeTyping() { const el = document.getElementById('typing'); if (el) el.remove(); }
-    async function envoyer() {
-      const input = document.getElementById('input'); const texte = input.value.trim();
-      if (!texte || document.getElementById('btn').disabled) return;
-      ajouterMessage('user', texte); historique.push({role:'user', content:texte}); input.value = ''; input.style.height = 'auto';
-      document.getElementById('btn').disabled = true; showTyping();
-      try {
-        const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:1000, system: SYSTEM + ' User first name: ' + prenom, messages: historique }) });
-        const data = await res.json(); const reponse = data.content[0].text;
-        historique.push({role:'assistant', content:reponse}); removeTyping(); ajouterMessage('assistant', reponse);
-      } catch(e) { removeTyping(); ajouterMessage('assistant', '😔 Désolé, une erreur est survenue.'); }
-      document.getElementById('btn').disabled = false; input.focus();
-    }
-    document.getElementById('btn').addEventListener('click', envoyer);
-    document.getElementById('input').addEventListener('keydown', e => { if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); envoyer(); } });
-    document.getElementById('input').addEventListener('input', function() { this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,80)+'px'; });
-    document.getElementById('prenom').addEventListener('keydown', e => { if (e.key==='Enter') commencer(); });
-  </script>
+// CHAT
+function suggerer(t){ document.getElementById('input').value=t; envoyer(); }
+function ajouterMsg(role, texte){
+  if(role==='user')document.getElementById('suggestions').style.display='none';
+  const w=document.createElement('div'); w.className='bwrap'+(role==='user'?' user':'');
+  const b=document.createElement('div'); b.className='bubble '+role; b.textContent=texte;
+  const t=document.createElement('div'); t.className='btime'; t.textContent=getTime();
+  w.appendChild(b); w.appendChild(t); document.getElementById('messages').appendChild(w);
+  w.scrollIntoView({behavior:'smooth'});
+}
+function showTyping(){ const d=document.createElement('div'); d.className='typing'; d.id='typing'; d.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>'; document.getElementById('messages').appendChild(d); d.scrollIntoView({behavior:'smooth'}); }
+function removeTyping(){ const el=document.getElementById('typing'); if(el)el.remove(); }
+async function envoyer(){
+  const inp=document.getElementById('input'); const t=inp.value.trim();
+  if(!t||document.getElementById('btn').disabled)return;
+  ajouterMsg('user',t); historique.push({role:'user',content:t}); inp.value=''; inp.style.height='auto';
+  document.getElementById('btn').disabled=true; showTyping();
+  try{
+    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:1000,system:SYSTEM+' User first name: '+prenom,messages:historique})});
+    const data=await res.json(); const rep=data.content[0].text;
+    historique.push({role:'assistant',content:rep}); removeTyping(); ajouterMsg('assistant',rep);
+  }catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}
+  document.getElementById('btn').disabled=false; inp.focus();
+}
+document.getElementById('btn').addEventListener('click',envoyer);
+document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();envoyer();}});
+document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
+document.getElementById('prenom').addEventListener('keydown',e=>{if(e.key==='Enter')commencer();});
+</script>
 </body>
 </html>
