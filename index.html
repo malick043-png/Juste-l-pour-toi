@@ -228,6 +228,7 @@
       <div class="drawer-item" onclick="ouvrirSec('objectifs');fermerMenu();afficherObjectifActuel()"><span class="drawer-icon">🎯</span><span class="drawer-label">Objectifs</span></div>
       <div class="drawer-item" onclick="ouvrirSec('humeur');fermerMenu();afficherGraphique()"><span class="drawer-icon">📊</span><span class="drawer-label">Suivi humeur</span></div>
       <div class="drawer-item" onclick="ouvrirSec('defi');fermerMenu();chargerDefi();afficherDefisHisto()"><span class="drawer-icon">⚡</span><span class="drawer-label">Défi du jour</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
       <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
     </div>
   </div>
@@ -369,7 +370,18 @@
     <div class="card"><p class="card-titre">Mes défis complétés</p><div id="defi-histo"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun défi 💙</p></div></div>
   </div>
 </div>
-
+<!-- BADGES -->
+<div class="page-sec" id="badges">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('badges')">← Retour</button><h2>🏆 Mes récompenses</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <p style="font-size:32px;margin-bottom:8px;">🏆</p>
+      <p class="card-titre">Tes badges bien-être</p>
+      <p style="font-size:13px;color:#85B7EB;">Utilise l'app pour débloquer des badges !</p>
+    </div>
+    <div class="card"><div id="badges-liste"></div></div>
+  </div>
+</div>
 <!-- LETTRE -->
 <div class="page-sec" id="lettre">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('lettre')">← Retour</button><h2>💌 Lettre à mon futur moi</h2></div>
@@ -656,6 +668,7 @@ async function envoyer(){
     const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:1000,system:SYSTEM+' User first name: '+prenom,messages:historique})});
     const data=await res.json();const rep=data.content[0].text;
     historique.push({role:'assistant',content:rep});removeTyping();ajouterMsg('assistant',rep);
+    verifierBadges();
   }catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}
   document.getElementById('btn').disabled=false;inp.focus();
 }
