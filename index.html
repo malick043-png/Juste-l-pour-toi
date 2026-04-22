@@ -11,53 +11,34 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
     body { font-family: 'DM Sans', Arial, sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-
-    /* LIGHT MODE */
     body.light { background: #f0f6ff; color: #0C447C; }
-    body.light .messages { background: #f0f6ff; }
-    body.light .bubble.assistant { background: #fff; color: #0C447C; border: 0.5px solid #B5D4F4; }
-    body.light .bubble.user { background: #185FA5; color: #fff; }
-    body.light .input-area, body.light .bottom-bar { background: #fff; border-color: #B5D4F4; }
-    body.light textarea { background: #f7faff; color: #0C447C; border-color: #B5D4F4; }
-    body.light .suggestion-btn { background: #fff; color: #185FA5; border-color: #B5D4F4; }
-    body.light .suggestion-btn:hover { background: #E6F1FB; }
-    body.light #accueil { background: linear-gradient(160deg, #E6F1FB 0%, #f0f6ff 60%, #fff 100%); }
-    body.light .accueil-titre { color: #0C447C; }
-    body.light .prenom-input { background: #fff; color: #0C447C; border-color: #B5D4F4; }
-    body.light .btn-reset { background: rgba(255,255,255,0.15); color: #fff; }
-
-    /* DARK MODE */
     body.dark { background: #0d1b2a; color: #B5D4F4; }
-    body.dark .messages { background: #0d1b2a; }
-    body.dark .bubble.assistant { background: #1a2d42; color: #B5D4F4; border: 0.5px solid #185FA5; }
-    body.dark .bubble.user { background: #185FA5; color: #fff; }
-    body.dark .input-area, body.dark .bottom-bar { background: #112233; border-color: #185FA5; }
-    body.dark textarea { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
-    body.dark textarea::placeholder { color: #378ADD; }
-    body.dark .suggestion-btn { background: #1a2d42; color: #85B7EB; border-color: #185FA5; }
-    body.dark .suggestion-btn:hover { background: #185FA5; color: #fff; }
-    body.dark #accueil { background: linear-gradient(160deg, #0d1b2a 0%, #112233 100%); }
-    body.dark .accueil-titre { color: #B5D4F4; }
-    body.dark .accueil-sous { color: #85B7EB; }
-    body.dark .prenom-input { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
-    body.dark .prenom-input::placeholder { color: #378ADD; }
-    body.dark .accueil-label { color: #85B7EB; }
-    body.dark .accueil-footer { color: #378ADD; }
-    body.dark .date-divider::before, body.dark .date-divider::after { background: #185FA5; }
-    body.dark .date-divider span { color: #378ADD; }
-    body.dark .bubble-time { color: #378ADD; }
-    body.dark .bottom-bar span { color: #378ADD; }
-    body.dark .wave { background: #185FA5; }
-    body.dark .wave::after { background: #0d1b2a; }
-    body.dark .btn-reset { background: rgba(255,255,255,0.1); color: #B5D4F4; }
+
+    /* ECRAN CITATION */
+    #citation-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 40px 30px; text-align: center; background: #185FA5; opacity: 1; transition: opacity 1s; }
+    .citation-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.4); margin-bottom: 30px; }
+    .citation-texte { font-family: 'Lora', serif; font-size: 20px; color: #fff; line-height: 1.7; font-style: italic; max-width: 320px; margin-bottom: 20px; }
+    .citation-chargement { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .citation-points { display: flex; gap: 6px; justify-content: center; margin-top: 8px; }
+    .citation-point { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.4); animation: pulse 1.5s infinite; }
+    .citation-point:nth-child(2) { animation-delay: 0.3s; }
+    .citation-point:nth-child(3) { animation-delay: 0.6s; }
+    @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
 
     /* PAGE D'ACCUEIL */
-    #accueil { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 30px 24px; text-align: center; }
+    #accueil { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 30px 24px; text-align: center; }
+    body.light #accueil { background: linear-gradient(160deg, #E6F1FB 0%, #f0f6ff 60%, #fff 100%); }
+    body.dark #accueil { background: linear-gradient(160deg, #0d1b2a 0%, #112233 100%); }
     .logo-accueil { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #B5D4F4; margin-bottom: 20px; }
     .accueil-titre { font-family: 'Lora', serif; font-size: 28px; margin-bottom: 8px; }
+    body.light .accueil-titre { color: #0C447C; }
+    body.dark .accueil-titre { color: #B5D4F4; }
     .accueil-sous { font-size: 15px; color: #378ADD; margin-bottom: 32px; }
     .accueil-label { font-size: 13px; color: #85B7EB; margin-bottom: 10px; }
     .prenom-input { border: 1.5px solid #B5D4F4; border-radius: 20px; padding: 12px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; width: 100%; max-width: 300px; text-align: center; margin-bottom: 16px; }
+    body.light .prenom-input { background: #fff; color: #0C447C; }
+    body.dark .prenom-input { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
+    body.dark .prenom-input::placeholder { color: #378ADD; }
     .btn-commencer { background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 13px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; width: 100%; max-width: 300px; margin-bottom: 16px; }
     .btn-commencer:hover { opacity: 0.88; }
     .accueil-footer { margin-top: 16px; font-size: 11px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
@@ -73,43 +54,76 @@
     .header-text h1 { font-size: 16px; font-weight: 500; color: #fff; font-family: 'Lora', serif; }
     .header-text p { font-size: 11px; color: #B5D4F4; margin-top: 1px; }
     .header-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
-    .btn-reset { border: none; border-radius: 12px; padding: 5px 10px; font-size: 11px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-reset { border: none; border-radius: 12px; padding: 5px 10px; font-size: 11px; cursor: pointer; font-family: 'DM Sans', sans-serif; background: rgba(255,255,255,0.15); color: #fff; }
     .btn-dark { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; padding: 4px; }
     .status { display: flex; align-items: center; gap: 6px; margin-top: 8px; position: relative; }
     .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #5DCAA5; }
     .status-text { font-size: 11px; color: rgba(255,255,255,0.7); }
     .wave { height: 20px; background: #185FA5; position: relative; }
     .wave::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 20px; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+    body.light .wave::after { background: #f0f6ff; }
+    body.dark .wave::after { background: #0d1b2a; }
     .messages { flex: 1; overflow-y: auto; padding: 14px 14px 8px; display: flex; flex-direction: column; gap: 12px; }
+    body.light .messages { background: #f0f6ff; }
+    body.dark .messages { background: #0d1b2a; }
     .date-divider { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
-    .date-divider::before, .date-divider::after { content: ''; flex: 1; height: 0.5px; background: #B5D4F4; }
-    .date-divider span { font-size: 11px; color: #85B7EB; white-space: nowrap; }
+    .date-divider::before, .date-divider::after { content: ''; flex: 1; height: 0.5px; }
+    body.light .date-divider::before, body.light .date-divider::after { background: #B5D4F4; }
+    body.dark .date-divider::before, body.dark .date-divider::after { background: #185FA5; }
+    .date-divider span { font-size: 11px; white-space: nowrap; }
+    body.light .date-divider span { color: #85B7EB; }
+    body.dark .date-divider span { color: #378ADD; }
     .bubble-wrap { display: flex; flex-direction: column; }
     .bubble-wrap.user { align-items: flex-end; }
     .bubble { max-width: 78%; padding: 11px 14px; font-size: 14px; line-height: 1.6; }
-    .bubble.assistant { border-radius: 16px 16px 16px 4px; align-self: flex-start; }
-    .bubble.user { border-radius: 16px 16px 4px 16px; }
-    .bubble-time { font-size: 10px; color: #85B7EB; margin-top: 3px; }
+    body.light .bubble.assistant { background: #fff; color: #0C447C; border-radius: 16px 16px 16px 4px; border: 0.5px solid #B5D4F4; align-self: flex-start; }
+    body.dark .bubble.assistant { background: #1a2d42; color: #B5D4F4; border-radius: 16px 16px 16px 4px; border: 0.5px solid #185FA5; align-self: flex-start; }
+    .bubble.user { background: #185FA5; color: #fff; border-radius: 16px 16px 4px 16px; }
+    .bubble-time { font-size: 10px; margin-top: 3px; }
+    body.light .bubble-time { color: #85B7EB; }
+    body.dark .bubble-time { color: #378ADD; }
     .suggestions { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 14px; }
-    .suggestion-btn { border: 1px solid; border-radius: 20px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
-    .typing { display: flex; gap: 5px; align-items: center; padding: 12px 16px; border-radius: 16px 16px 16px 4px; align-self: flex-start; }
+    body.light .suggestion-btn { background: #fff; color: #185FA5; border: 1px solid #B5D4F4; }
+    body.dark .suggestion-btn { background: #1a2d42; color: #85B7EB; border: 1px solid #185FA5; }
+    .suggestion-btn { border-radius: 20px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     body.light .typing { background: #fff; border: 0.5px solid #B5D4F4; }
     body.dark .typing { background: #1a2d42; border: 0.5px solid #185FA5; }
+    .typing { display: flex; gap: 5px; align-items: center; padding: 12px 16px; border-radius: 16px 16px 16px 4px; align-self: flex-start; }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: #85B7EB; animation: bounce 1.2s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
     .input-area { padding: 10px 14px; border-top: 0.5px solid; display: flex; gap: 8px; align-items: flex-end; }
+    body.light .input-area { background: #fff; border-color: #B5D4F4; }
+    body.dark .input-area { background: #112233; border-color: #185FA5; }
     textarea { flex: 1; border: 0.5px solid; border-radius: 20px; padding: 9px 14px; font-size: 14px; font-family: 'DM Sans', Arial, sans-serif; resize: none; max-height: 90px; outline: none; }
-    textarea:focus { border-color: #185FA5; }
+    body.light textarea { background: #f7faff; color: #0C447C; border-color: #B5D4F4; }
+    body.dark textarea { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
+    textarea::placeholder { color: #85B7EB; }
     .send-btn { width: 38px; height: 38px; border-radius: 50%; background: #185FA5; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .send-btn svg { width: 16px; height: 16px; fill: white; }
     .bottom-bar { display: flex; justify-content: center; padding: 6px; border-top: 0.5px solid; }
+    body.light .bottom-bar { background: #fff; border-color: #E6F1FB; }
+    body.dark .bottom-bar { background: #112233; border-color: #185FA5; }
     .bottom-bar span { font-size: 11px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
   </style>
 </head>
 <body class="light">
+
+  <!-- ECRAN CITATION -->
+  <div id="citation-screen">
+    <img src="icon.png" class="citation-logo" alt="Logo">
+    <p class="citation-texte" id="citation-texte"></p>
+    <div class="citation-chargement" id="citation-chargement">
+      Préparation de votre citation du jour...
+      <div class="citation-points">
+        <div class="citation-point"></div>
+        <div class="citation-point"></div>
+        <div class="citation-point"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- PAGE D'ACCUEIL -->
   <div id="accueil">
@@ -129,7 +143,7 @@
       <div class="header-deco"></div>
       <div class="header-deco2"></div>
       <div class="header-top">
-        <img src="WhatsApp%20Image%202026-04-15%20at%2011.38.39.jpeg" class="avatar" alt="Logo">
+        <img src="icon.png" class="avatar" alt="Logo">
         <div class="header-text">
           <h1>Juste là pour toi</h1>
           <p id="header-prenom">Ton espace de bien-être</p>
@@ -148,7 +162,7 @@
     <div class="messages" id="messages">
       <div class="date-divider"><span>aujourd'hui</span></div>
     </div>
-   <div class="suggestions" id="suggestions" style="display:flex">
+    <div class="suggestions" id="suggestions" style="display:flex">
       <button class="suggestion-btn" onclick="suggerer('Je me sens stressé')">😰 Je suis stressé</button>
       <button class="suggestion-btn" onclick="suggerer('Je me sens seul')">😔 Je me sens seul</button>
       <button class="suggestion-btn" onclick="suggerer('J\'ai besoin de conseils')">💡 Conseils</button>
@@ -166,17 +180,16 @@
   </div>
 
   <script>
-    const SYSTEM = `You are a compassionate and professional wellness assistant for the app "Juste là pour toi" (Just here for you). Your role is to:
-- Listen with empathy to understand the user's needs and emotions
-- Ask open-ended questions to encourage reflection
-- Give simple, kind, and easy-to-apply advice
-- VERY IMPORTANT: Always respond in the SAME language the user writes in. If they write in French, respond in French. If they write in English, respond in English. If they write in another language, respond in that language.
-- Keep responses to 2-4 sentences maximum.
-- Address the user by their first name when natural.`;
+    const SYSTEM = `You are a compassionate and professional wellness assistant for the app "Juste là pour toi" (Just here for you). Your role is to listen with empathy, ask open-ended questions, and give simple kind advice. VERY IMPORTANT: Always respond in the SAME language the user writes in. Keep responses to 2-4 sentences maximum. Address the user by their first name when natural.`;
 
     let historique = [];
     let prenom = '';
     let darkMode = false;
+
+    if (localStorage.getItem('darkMode') === 'true') {
+      darkMode = true;
+      document.body.className = 'dark';
+    }
 
     function toggleDark() {
       darkMode = !darkMode;
@@ -184,14 +197,41 @@
       localStorage.setItem('darkMode', darkMode);
     }
 
-    if (localStorage.getItem('darkMode') === 'true') {
-      darkMode = true;
-      document.body.className = 'dark';
-    }
-
     function getTime() {
       return new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
     }
+
+    async function chargerCitation() {
+      try {
+        const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-opus-4-5',
+            max_tokens: 150,
+            system: 'Tu es un générateur de citations bienveillantes et inspirantes. Génère UNE SEULE citation courte (max 2 lignes) sur le bien-être, la résilience ou la bienveillance. La citation doit être originale, touchante et positive. Réponds UNIQUEMENT avec la citation, sans guillemets, sans auteur, sans explication.',
+            messages: [{ role: 'user', content: 'Génère une citation du jour inspirante et bienveillante.' }]
+          })
+        });
+        const data = await res.json();
+        const citation = data.content[0].text;
+        document.getElementById('citation-texte').textContent = '"' + citation + '"';
+        document.getElementById('citation-chargement').style.display = 'none';
+        setTimeout(() => {
+          const screen = document.getElementById('citation-screen');
+          screen.style.opacity = '0';
+          setTimeout(() => {
+            screen.style.display = 'none';
+            document.getElementById('accueil').style.display = 'flex';
+          }, 1000);
+        }, 3000);
+      } catch(e) {
+        document.getElementById('citation-screen').style.display = 'none';
+        document.getElementById('accueil').style.display = 'flex';
+      }
+    }
+
+    chargerCitation();
 
     function commencer() {
       prenom = document.getElementById('prenom').value.trim() || 'toi';
@@ -210,7 +250,6 @@
 
     function suggerer(texte) {
       document.getElementById('input').value = texte;
-    
       envoyer();
     }
 
