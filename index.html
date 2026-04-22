@@ -4,452 +4,176 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://serveur-juste-la-pour-toi.onrender.com https://fonts.googleapis.com https://fonts.gstatic.com">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Juste là pour toi">
   <title>Juste là pour toi</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'DM Sans', Arial, sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
     body.light { background: #f0f6ff; color: #0C447C; }
     body.dark { background: #0d1b2a; color: #B5D4F4; }
 
-    /* ECRAN CITATION */
-    #citation-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 40px 30px; text-align: center; background: #185FA5; opacity: 1; transition: opacity 1s; }
-    .citation-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.4); margin-bottom: 30px; }
-    .citation-texte { font-family: 'Lora', serif; font-size: 20px; color: #fff; line-height: 1.7; font-style: italic; max-width: 320px; margin-bottom: 20px; }
-    .citation-chargement { font-size: 13px; color: rgba(255,255,255,0.6); }
-    .citation-points { display: flex; gap: 6px; justify-content: center; margin-top: 8px; }
-    .citation-point { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.4); animation: pulse 1.5s infinite; }
-    .citation-point:nth-child(2) { animation-delay: 0.3s; }
-    .citation-point:nth-child(3) { animation-delay: 0.6s; }
-    @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+    /* CITATION */
+    #citation-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 40px 30px; text-align: center; background: #185FA5; transition: opacity 1s; }
+    .citation-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.4); margin-bottom: 24px; }
+    .citation-texte { font-family: 'Lora', serif; font-size: 19px; color: #fff; line-height: 1.7; font-style: italic; max-width: 320px; margin-bottom: 24px; }
+    .btn-partager { margin-top: 8px; background: rgba(255,255,255,0.2); border: 1.5px solid rgba(255,255,255,0.5); color: #fff; border-radius: 24px; padding: 10px 24px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+    .btn-continuer { margin-top: 12px; background: none; border: none; color: rgba(255,255,255,0.7); font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; text-decoration: underline; }
 
-    /* PAGE D'ACCUEIL */
+    /* ACCUEIL */
     #accueil { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 30px 24px; text-align: center; }
-    body.light #accueil { background: linear-gradient(160deg, #E6F1FB 0%, #f0f6ff 60%, #fff 100%); }
+    body.light #accueil { background: linear-gradient(160deg, #E6F1FB 0%, #f0f6ff 100%); }
     body.dark #accueil { background: linear-gradient(160deg, #0d1b2a 0%, #112233 100%); }
-    .logo-accueil { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #B5D4F4; margin-bottom: 20px; }
-    .accueil-titre { font-family: 'Lora', serif; font-size: 28px; margin-bottom: 8px; }
+    .logo-accueil { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #B5D4F4; margin-bottom: 16px; }
+    .accueil-titre { font-family: 'Lora', serif; font-size: 26px; margin-bottom: 6px; }
     body.light .accueil-titre { color: #0C447C; }
     body.dark .accueil-titre { color: #B5D4F4; }
-    .accueil-sous { font-size: 15px; color: #378ADD; margin-bottom: 32px; }
-    .accueil-label { font-size: 13px; color: #85B7EB; margin-bottom: 10px; }
-    .prenom-input { border: 1.5px solid #B5D4F4; border-radius: 20px; padding: 12px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; width: 100%; max-width: 300px; text-align: center; margin-bottom: 16px; }
+    .accueil-sous { font-size: 14px; color: #378ADD; margin-bottom: 24px; }
+    .prenom-input { border: 1.5px solid #B5D4F4; border-radius: 20px; padding: 11px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; width: 100%; max-width: 300px; text-align: center; margin-bottom: 12px; }
     body.light .prenom-input { background: #fff; color: #0C447C; }
     body.dark .prenom-input { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
-    .btn-commencer { background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 13px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; width: 100%; max-width: 300px; margin-bottom: 12px; }
-    .btn-journal { background: none; border: 1.5px solid #185FA5; color: #185FA5; border-radius: 24px; padding: 11px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; max-width: 300px; margin-bottom: 12px; }
-    body.dark .btn-journal { border-color: #B5D4F4; color: #B5D4F4; }
-    .dark-toggle-accueil { background: none; border: 1px solid #B5D4F4; border-radius: 20px; padding: 7px 16px; font-size: 12px; cursor: pointer; color: #85B7EB; font-family: 'DM Sans', sans-serif; }
-    .accueil-footer { margin-top: 16px; font-size: 11px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
+    .btn-commencer { background: #185FA5; color: #fff; border: none; border-radius: 24px; padding: 12px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; width: 100%; max-width: 300px; margin-bottom: 20px; }
 
-    /* JOURNAL */
-    #journal { display: none; flex-direction: column; height: 100vh; }
-    .journal-header { background: #185FA5; padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
-    .journal-header h2 { font-family: 'Lora', serif; font-size: 18px; color: #fff; flex: 1; }
-    .btn-back { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 12px; padding: 6px 12px; font-size: 12px; cursor: pointer; }
-    .journal-body { flex: 1; overflow-y: auto; padding: 20px 16px; display: flex; flex-direction: column; gap: 20px; }
-    body.light .journal-body { background: #f0f6ff; }
-    body.dark .journal-body { background: #0d1b2a; }
+    /* MENU ICONES */
+    .menu-icons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 320px; margin-bottom: 16px; }
+    .menu-icon-btn { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 6px; border-radius: 14px; border: 0.5px solid #B5D4F4; cursor: pointer; background: none; font-family: 'DM Sans', sans-serif; }
+    body.light .menu-icon-btn { background: #fff; }
+    body.dark .menu-icon-btn { background: #1a2d42; border-color: #185FA5; }
+    .menu-icon-btn span:first-child { font-size: 24px; }
+    .menu-icon-btn span:last-child { font-size: 10px; color: #85B7EB; text-align: center; line-height: 1.3; }
+    .btn-dark-small { background: none; border: 1px solid #B5D4F4; border-radius: 20px; padding: 6px 14px; font-size: 12px; cursor: pointer; color: #85B7EB; font-family: 'DM Sans', sans-serif; }
+    .accueil-footer { margin-top: 12px; font-size: 11px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
 
-    .humeur-section { padding: 16px; border-radius: 16px; }
-    body.light .humeur-section { background: #fff; border: 0.5px solid #B5D4F4; }
-    body.dark .humeur-section { background: #1a2d42; border: 0.5px solid #185FA5; }
-    .humeur-titre { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
-    body.light .humeur-titre { color: #0C447C; }
-    body.dark .humeur-titre { color: #B5D4F4; }
-    .humeurs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .humeur-btn { font-size: 28px; cursor: pointer; padding: 8px; border-radius: 50%; border: 2px solid transparent; transition: all 0.2s; }
-    .humeur-btn.selected { border-color: #185FA5; background: #E6F1FB; transform: scale(1.2); }
-    body.dark .humeur-btn.selected { background: #185FA5; }
-
-    .note-section { padding: 16px; border-radius: 16px; }
-    body.light .note-section { background: #fff; border: 0.5px solid #B5D4F4; }
-    body.dark .note-section { background: #1a2d42; border: 0.5px solid #185FA5; }
-    .note-titre { font-size: 14px; font-weight: 500; margin-bottom: 10px; }
-    body.light .note-titre { color: #0C447C; }
-    body.dark .note-titre { color: #B5D4F4; }
-    .note-textarea { width: 100%; border: 0.5px solid #B5D4F4; border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; resize: none; height: 100px; outline: none; }
-    body.light .note-textarea { background: #f7faff; color: #0C447C; }
-    body.dark .note-textarea { background: #0d1b2a; color: #B5D4F4; border-color: #185FA5; }
-    .btn-sauvegarder { background: #185FA5; color: #fff; border: none; border-radius: 20px; padding: 11px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; font-weight: 500; }
-    .btn-sauvegarder:hover { opacity: 0.88; }
-.objectif-btn { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 12px; padding: 10px 14px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; transition: all 0.2s; }
-    .objectif-btn:hover { background: #E6F1FB; }
-    .btn-delai { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 12px; padding: 8px 16px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    .btn-delai:hover { background: #E6F1FB; }
-    .historique-section { padding: 16px; border-radius: 16px; }
-    body.light .historique-section { background: #fff; border: 0.5px solid #B5D4F4; }
-    body.dark .historique-section { background: #1a2d42; border: 0.5px solid #185FA5; }
-    .historique-titre { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
-    body.light .historique-titre { color: #0C447C; }
-    body.dark .historique-titre { color: #B5D4F4; }
-    .entree-journal { padding: 10px 0; border-bottom: 0.5px solid #B5D4F4; display: flex; gap: 10px; align-items: flex-start; }
-    .entree-journal:last-child { border-bottom: none; }
-    .entree-date { font-size: 11px; color: #85B7EB; min-width: 70px; }
-    .entree-contenu { flex: 1; }
-    .entree-humeur { font-size: 18px; }
-    .entree-note { font-size: 13px; color: #378ADD; margin-top: 2px; }
-    body.dark .entree-note { color: #85B7EB; }
-    .vide-msg { font-size: 13px; color: #85B7EB; text-align: center; font-style: italic; padding: 10px 0; }
-    .succes-msg { text-align: center; font-size: 13px; color: #1D9E75; padding: 8px; display: none; }
-
-    /* PAGE CHAT */
+    /* CHAT */
     #chat { display: none; flex-direction: column; height: 100vh; }
-    .header { background: #185FA5; padding: 14px 18px; position: relative; overflow: hidden; }
-    .header-deco { position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.07); }
-    .header-deco2 { position: absolute; bottom: -30px; right: 40px; width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+    .header { background: #185FA5; padding: 12px 16px; position: relative; overflow: hidden; }
+    .header-deco { position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; border-radius: 50%; background: rgba(255,255,255,0.07); }
     .header-top { display: flex; align-items: center; gap: 10px; position: relative; }
-    .avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.3); }
-    .header-text h1 { font-size: 16px; font-weight: 500; color: #fff; font-family: 'Lora', serif; }
-    .header-text p { font-size: 11px; color: #B5D4F4; margin-top: 1px; }
-    .header-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
-    .btn-reset { border: none; border-radius: 12px; padding: 5px 10px; font-size: 11px; cursor: pointer; font-family: 'DM Sans', sans-serif; background: rgba(255,255,255,0.15); color: #fff; }
-    .btn-dark { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; padding: 4px; }
-    .btn-journal-chat { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 12px; padding: 5px 10px; font-size: 11px; cursor: pointer; }
-    .status { display: flex; align-items: center; gap: 6px; margin-top: 8px; position: relative; }
-    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #5DCAA5; }
+    .avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.3); }
+    .header-text h1 { font-size: 15px; font-weight: 500; color: #fff; font-family: 'Lora', serif; }
+    .header-text p { font-size: 11px; color: #B5D4F4; }
+    .header-actions { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+    .btn-header { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 10px; padding: 4px 8px; font-size: 11px; cursor: pointer; }
+    .status { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #5DCAA5; }
     .status-text { font-size: 11px; color: rgba(255,255,255,0.7); }
-    .wave { height: 20px; background: #185FA5; position: relative; }
-    .wave::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 20px; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+    .wave { height: 18px; background: #185FA5; position: relative; }
+    .wave::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 18px; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
     body.light .wave::after { background: #f0f6ff; }
     body.dark .wave::after { background: #0d1b2a; }
-    .messages { flex: 1; overflow-y: auto; padding: 14px 14px 8px; display: flex; flex-direction: column; gap: 12px; }
+    .messages { flex: 1; overflow-y: auto; padding: 12px 14px 8px; display: flex; flex-direction: column; gap: 10px; }
     body.light .messages { background: #f0f6ff; }
     body.dark .messages { background: #0d1b2a; }
-    .date-divider { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+    .date-divider { display: flex; align-items: center; gap: 8px; }
     .date-divider::before, .date-divider::after { content: ''; flex: 1; height: 0.5px; }
     body.light .date-divider::before, body.light .date-divider::after { background: #B5D4F4; }
     body.dark .date-divider::before, body.dark .date-divider::after { background: #185FA5; }
-    .date-divider span { font-size: 11px; white-space: nowrap; }
-    body.light .date-divider span { color: #85B7EB; }
-    body.dark .date-divider span { color: #378ADD; }
+    .date-divider span { font-size: 11px; white-space: nowrap; color: #85B7EB; }
     .bubble-wrap { display: flex; flex-direction: column; }
     .bubble-wrap.user { align-items: flex-end; }
-    .bubble { max-width: 78%; padding: 11px 14px; font-size: 14px; line-height: 1.6; }
-    body.light .bubble.assistant { background: #fff; color: #0C447C; border-radius: 16px 16px 16px 4px; border: 0.5px solid #B5D4F4; align-self: flex-start; }
-    body.dark .bubble.assistant { background: #1a2d42; color: #B5D4F4; border-radius: 16px 16px 16px 4px; border: 0.5px solid #185FA5; align-self: flex-start; }
-    .bubble.user { background: #185FA5; color: #fff; border-radius: 16px 16px 4px 16px; }
-    .bubble-time { font-size: 10px; margin-top: 3px; }
-    body.light .bubble-time { color: #85B7EB; }
-    body.dark .bubble-time { color: #378ADD; }
-    .suggestions { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 14px; }
-    .suggestion-btn { border-radius: 20px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+    .bubble { max-width: 78%; padding: 10px 13px; font-size: 14px; line-height: 1.6; }
+    body.light .bubble.assistant { background: #fff; color: #0C447C; border-radius: 14px 14px 14px 4px; border: 0.5px solid #B5D4F4; align-self: flex-start; }
+    body.dark .bubble.assistant { background: #1a2d42; color: #B5D4F4; border-radius: 14px 14px 14px 4px; border: 0.5px solid #185FA5; align-self: flex-start; }
+    .bubble.user { background: #185FA5; color: #fff; border-radius: 14px 14px 4px 14px; }
+    .bubble-time { font-size: 10px; color: #85B7EB; margin-top: 2px; }
+    .suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px; }
+    .suggestion-btn { border-radius: 16px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     body.light .suggestion-btn { background: #fff; color: #185FA5; border: 1px solid #B5D4F4; }
     body.dark .suggestion-btn { background: #1a2d42; color: #85B7EB; border: 1px solid #185FA5; }
+    .typing { display: flex; gap: 5px; align-items: center; padding: 10px 14px; border-radius: 14px 14px 14px 4px; align-self: flex-start; }
     body.light .typing { background: #fff; border: 0.5px solid #B5D4F4; }
     body.dark .typing { background: #1a2d42; border: 0.5px solid #185FA5; }
-    .typing { display: flex; gap: 5px; align-items: center; padding: 12px 16px; border-radius: 16px 16px 16px 4px; align-self: flex-start; }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: #85B7EB; animation: bounce 1.2s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
-    .input-area { padding: 10px 14px; border-top: 0.5px solid; display: flex; gap: 8px; align-items: flex-end; }
+    .input-area { padding: 10px 12px; border-top: 0.5px solid; display: flex; gap: 8px; align-items: flex-end; }
     body.light .input-area { background: #fff; border-color: #B5D4F4; }
     body.dark .input-area { background: #112233; border-color: #185FA5; }
-    textarea { flex: 1; border: 0.5px solid; border-radius: 20px; padding: 9px 14px; font-size: 14px; font-family: 'DM Sans', Arial, sans-serif; resize: none; max-height: 90px; outline: none; }
+    textarea { flex: 1; border: 0.5px solid; border-radius: 18px; padding: 8px 13px; font-size: 14px; font-family: 'DM Sans', Arial, sans-serif; resize: none; max-height: 80px; outline: none; }
     body.light textarea { background: #f7faff; color: #0C447C; border-color: #B5D4F4; }
     body.dark textarea { background: #1a2d42; color: #B5D4F4; border-color: #185FA5; }
     textarea::placeholder { color: #85B7EB; }
-    .send-btn { width: 38px; height: 38px; border-radius: 50%; background: #185FA5; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .send-btn svg { width: 16px; height: 16px; fill: white; }
-    .bottom-bar { display: flex; justify-content: center; padding: 6px; border-top: 0.5px solid; }
+    .send-btn { width: 36px; height: 36px; border-radius: 50%; background: #185FA5; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .send-btn:disabled { opacity: 0.4; }
+    .send-btn svg { width: 15px; height: 15px; fill: white; }
+    .bottom-bar { display: flex; justify-content: center; padding: 5px; border-top: 0.5px solid; }
     body.light .bottom-bar { background: #fff; border-color: #E6F1FB; }
     body.dark .bottom-bar { background: #112233; border-color: #185FA5; }
-    .bottom-bar span { font-size: 11px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
+    .bottom-bar span { font-size: 10px; color: #85B7EB; font-style: italic; font-family: 'Lora', serif; }
+
+    /* PAGES SECONDAIRES */
+    .page-secondaire { display: none; flex-direction: column; height: 100vh; }
+    .page-header { background: #185FA5; padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
+    .page-header h2 { font-family: 'Lora', serif; font-size: 17px; color: #fff; flex: 1; }
+    .btn-back { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 10px; padding: 5px 10px; font-size: 12px; cursor: pointer; }
+    .page-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+    body.light .page-body { background: #f0f6ff; }
+    body.dark .page-body { background: #0d1b2a; }
+    .card { padding: 16px; border-radius: 14px; }
+    body.light .card { background: #fff; border: 0.5px solid #B5D4F4; }
+    body.dark .card { background: #1a2d42; border: 0.5px solid #185FA5; }
+    .card-titre { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
+    body.light .card-titre { color: #0C447C; }
+    body.dark .card-titre { color: #B5D4F4; }
+    .btn-primary { background: #185FA5; color: #fff; border: none; border-radius: 18px; padding: 11px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; font-weight: 500; margin-top: 10px; }
+    .btn-secondary { background: none; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 18px; padding: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; margin-top: 8px; }
+    body.dark .btn-secondary { color: #B5D4F4; border-color: #185FA5; }
+    .succes { text-align: center; font-size: 13px; color: #1D9E75; padding: 6px; display: none; }
+
+    /* JOURNAL */
+    .humeur-btn { font-size: 26px; cursor: pointer; padding: 6px; border-radius: 50%; border: 2px solid transparent; }
+    .humeur-btn.selected { border-color: #185FA5; background: #E6F1FB; transform: scale(1.2); }
+    .entree-journal { padding: 8px 0; border-bottom: 0.5px solid #B5D4F4; display: flex; gap: 10px; }
+    .entree-date { font-size: 11px; color: #85B7EB; min-width: 65px; }
+
+    /* OBJECTIFS */
+    .objectif-btn { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 10px; padding: 9px 12px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; width: 100%; margin-bottom: 6px; }
+    body.dark .objectif-btn { background: #0d1b2a; border-color: #185FA5; color: #B5D4F4; }
+
+    /* DELAI LETTRE */
+    .btn-delai { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 10px; padding: 7px 14px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    body.dark .btn-delai { background: #0d1b2a; border-color: #185FA5; color: #B5D4F4; }
+    .btn-delai.selected { background: #E6F1FB; border-color: #185FA5; }
+    body.dark .btn-delai.selected { background: #185FA5; color: #fff; }
   </style>
 </head>
 <body class="light">
 
-  <!-- ECRAN CITATION -->
+  <!-- CITATION -->
   <div id="citation-screen">
     <img src="icon.png" class="citation-logo" alt="Logo">
-    <p class="citation-texte" id="citation-texte"></p>
-    <div class="citation-chargement" id="citation-chargement">
-      Préparation de votre citation du jour...
-      <div class="citation-points">
-        <div class="citation-point"></div>
-        <div class="citation-point"></div>
-        <div class="citation-point"></div>
-      </div>
-    </div>
-    <button id="btn-partager" onclick="partagercitation()" style="display:none; margin-top:20px; background:rgba(255,255,255,0.2); border:1.5px solid rgba(255,255,255,0.5); color:#fff; border-radius:24px; padding:10px 24px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer;">
-      Partager cette citation 🌟
-    </button>
+    <p class="citation-texte" id="citation-texte">Chaque jour est une nouvelle chance de prendre soin de toi.</p>
+    <button class="btn-partager" onclick="partagercitation()">Partager cette citation 🌟</button>
+    <button class="btn-continuer" onclick="allerAccueil()">Continuer →</button>
   </div>
 
-  <!-- PAGE D'ACCUEIL -->
+  <!-- ACCUEIL -->
   <div id="accueil">
     <img src="icon.png" class="logo-accueil" alt="Logo">
     <h1 class="accueil-titre">Juste là pour toi</h1>
     <p class="accueil-sous">Ton espace bienveillant de bien-être</p>
-    <p class="accueil-label">Comment tu t'appelles ?</p>
     <input type="text" class="prenom-input" id="prenom" placeholder="Ton prénom...">
     <button class="btn-commencer" onclick="commencer()">Commencer la conversation 💙</button>
-    <button class="btn-journal" onclick="ouvrirJournal()">📔 Mon journal de bord</button>
-    <button class="btn-journal" onclick="ouvrirRespiration()">🌬️ Exercice de respiration</button>
-    <button class="btn-journal" onclick="ouvrirObjectifs()">🎯 Mes objectifs personnels</button> 
-    <button class="btn-journal" onclick="ouvrirSuiviHumeur()">📊 Suivi de mon humeur</button>
-    <button class="btn-journal" onclick="ouvrirDefi()">🎯 Défi bien-être du jour</button>
-<button class="btn-journal" onclick="ouvrirLettre()">💌 Lettre à mon futur moi</button>
-    <button class="dark-toggle-accueil" onclick="toggleDark()">🌙 Mode sombre</button>
+    <div class="menu-icons">
+      <button class="menu-icon-btn" onclick="ouvrirJournal()"><span>📔</span><span>Journal</span></button>
+      <button class="menu-icon-btn" onclick="ouvrirRespiration()"><span>🌬️</span><span>Respiration</span></button>
+      <button class="menu-icon-btn" onclick="ouvrirObjectifs()"><span>🎯</span><span>Objectifs</span></button>
+      <button class="menu-icon-btn" onclick="ouvrirSuiviHumeur()"><span>📊</span><span>Humeur</span></button>
+      <button class="menu-icon-btn" onclick="ouvrirDefi()"><span>⚡</span><span>Défi du jour</span></button>
+      <button class="menu-icon-btn" onclick="ouvrirLettre()"><span>💌</span><span>Ma lettre</span></button>
+      <button class="menu-icon-btn" onclick="toggleDark()"><span>🌙</span><span>Mode sombre</span></button>
+      <button class="menu-icon-btn" onclick="partagercitation()"><span>🌟</span><span>Partager</span></button>
+    </div>
     <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
-  </div> 
-  <!-- DEFI BIEN-ETRE -->
-  <div id="defi" style="display:none; flex-direction:column; height:100vh;">
-    <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
-      <button onclick="fermerDefi()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
-      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">🎯 Défi bien-être du jour</h2>
-    </div>
-    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
-      <div style="padding:20px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4; text-align:center;">
-        <p style="font-size:13px; color:#85B7EB; margin-bottom:12px;">Ton défi d'aujourd'hui</p>
-        <div id="defi-loading" style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-          <div class="citation-point" style="width:8px; height:8px;"></div>
-          <p style="font-size:13px; color:#85B7EB;">Génération de ton défi...</p>
-        </div>
-        <p id="defi-texte" style="display:none; font-family:'Lora',serif; font-size:18px; color:#0C447C; line-height:1.7; margin-bottom:16px;"></p>
-        <div id="defi-actions" style="display:none; display:flex; flex-direction:column; gap:10px;">
-          <button onclick="defiAccepte()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; font-weight:500;">✅ J'accepte ce défi !</button>
-          <button onclick="nouveauDefi()" style="background:none; border:1px solid #B5D4F4; color:#185FA5; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer;">🔄 Nouveau défi</button>
-        </div>
-      </div>
-      <div id="defi-accepte-msg" style="display:none; padding:16px; border-radius:16px; background:#E6F1FB; border:0.5px solid #B5D4F4; text-align:center;">
-        <p style="font-size:32px; margin-bottom:8px;">🎉</p>
-        <p style="font-family:'Lora',serif; font-size:16px; color:#0C447C; margin-bottom:8px;">Bravo ! Tu as accepté le défi !</p>
-        <p style="font-size:13px; color:#85B7EB;">Reviens demain pour un nouveau défi 💙</p>
-      </div>
-      <div style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
-        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:12px;">Mes défis complétés</p>
-        <div id="defis-historique">
-          <p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucun défi complété pour le moment 💙</p>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <!-- LETTRE A MON FUTUR MOI -->
-  <div id="lettre" style="display:none; flex-direction:column; height:100vh;">
-    <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
-      <button onclick="fermerLettre()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
-      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">💌 Lettre à mon futur moi</h2>
-    </div>
-    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
-      
-      <div id="lettre-form" style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
-        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:8px;">Écris à ton futur toi</p>
-        <p style="font-size:13px; color:#85B7EB; margin-bottom:14px;">Dans combien de temps veux-tu recevoir ta lettre ?</p>
-        <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
-          <button class="btn-delai" onclick="selectionnerDelai(this, '1 mois')">1 mois</button>
-          <button class="btn-delai" onclick="selectionnerDelai(this, '3 mois')">3 mois</button>
-          <button class="btn-delai" onclick="selectionnerDelai(this, '6 mois')">6 mois</button>
-          <button class="btn-delai" onclick="selectionnerDelai(this, '1 an')">1 an</button>
-        </div>
-        <p style="font-size:13px; color:#85B7EB; margin-bottom:8px;">Ta lettre :</p>
-        <textarea id="lettre-texte" placeholder="Cher futur moi, aujourd'hui je me sens..." style="width:100%; border:0.5px solid #B5D4F4; border-radius:12px; padding:12px 14px; font-size:14px; font-family:'DM Sans',sans-serif; resize:none; height:160px; outline:none; background:#f7faff; color:#0C447C; margin-bottom:12px;"></textarea>
-        <button onclick="sauvegarderLettre()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; font-weight:500;">Sceller ma lettre 💌</button>
-      </div>
-
-      <div id="lettres-sauvegardees" style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
-        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:12px;">Mes lettres scellées</p>
-        <div id="lettres-liste">
-          <p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune lettre pour le moment 💌</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <!-- SUIVI HUMEUR -->
-  <div id="suivi-humeur" style="display:none; flex-direction:column; height:100vh;">
-    <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
-      <button onclick="fermerSuiviHumeur()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
-      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">📊 Suivi de mon humeur</h2>
-    </div>
-    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
-      
-      <div style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
-        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:16px;">Note ton humeur aujourd'hui</p>
-        <p style="font-size:13px; color:#85B7EB; margin-bottom:12px; text-align:center;">Sur 10, comment te sens-tu ?</p>
-        <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
-          <span id="note-display" style="font-size:48px; font-weight:500; color:#185FA5;">5</span>
-          <span style="font-size:20px; color:#85B7EB;">/10</span>
-        </div>
-        <input type="range" min="1" max="10" value="5" id="note-slider" oninput="updateNote(this.value)" style="width:100%; margin-bottom:8px;">
-        <div style="display:flex; justify-content:space-between; font-size:11px; color:#85B7EB; margin-bottom:16px;">
-          <span>😔 Très mal</span>
-          <span>😐 Neutre</span>
-          <span>😊 Très bien</span>
-        </div>
-        <p id="emoji-humeur" style="text-align:center; font-size:32px; margin-bottom:16px;">😐</p>
-        <button onclick="sauvegarderNote()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; font-weight:500;">Enregistrer 💙</button>
-        <p id="succes-note" style="text-align:center; font-size:13px; color:#1D9E75; margin-top:8px; display:none;">✅ Enregistré !</p>
-      </div>
-
-      <div style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
-        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:16px;">Ma semaine en cours</p>
-        <div id="graphique-semaine" style="display:flex; gap:8px; align-items:flex-end; height:120px; justify-content:center;"></div>
-        <div style="display:flex; gap:8px; justify-content:center; margin-top:6px;" id="jours-labels"></div>
-        <div style="margin-top:16px; padding:12px; background:#E6F1FB; border-radius:12px; text-align:center;">
-          <p style="font-size:12px; color:#85B7EB; margin-bottom:4px;">Score moyen de la semaine</p>
-          <p id="score-semaine" style="font-size:28px; font-weight:500; color:#185FA5;">-/10</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- MODE URGENCE -->
-  <div id="urgence-old" style="display:none; flex-direction:column; height:100vh; background:#fff5f5;">
-    <div style="background:#e53e3e; padding:14px 18px; display:flex; align-items:center; gap:12px;">
-      <button onclick="fermerUrgence()" style="background:rgba(255,255,255,0.2); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
-      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">🆘 Aide d'urgence</h2>
-    </div>
-    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
-      
-      <div style="padding:20px; border-radius:16px; background:#fff; border:1px solid #feb2b2; text-align:center;">
-        <p style="font-size:32px; margin-bottom:12px;">💙</p>
-        <p style="font-family:'Lora',serif; font-size:18px; color:#c53030; margin-bottom:8px;">Tu n'es pas seul(e)</p>
-        <p style="font-size:14px; color:#718096; line-height:1.6;">Si tu traverses une période difficile, des personnes sont là pour t'aider. Tu as le droit de demander de l'aide.</p>
-      </div>
-
-      <div style="padding:16px; border-radius:16px; background:#fff; border:1px solid #feb2b2;">
-        <p style="font-size:14px; font-weight:500; color:#c53030; margin-bottom:14px;">📞 Contacts d'urgence au Sénégal</p>
-        
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <a href="tel:15" style="display:flex; align-items:center; gap:12px; padding:12px; background:#fff5f5; border-radius:12px; text-decoration:none; border:0.5px solid #feb2b2;">
-            <span style="font-size:24px;">🚑</span>
-            <div>
-              <p style="font-size:14px; font-weight:500; color:#c53030;">SAMU</p>
-              <p style="font-size:13px; color:#718096;">Urgences médicales — 15</p>
-            </div>
-          </a>
-          <a href="tel:17" style="display:flex; align-items:center; gap:12px; padding:12px; background:#fff5f5; border-radius:12px; text-decoration:none; border:0.5px solid #feb2b2;">
-            <span style="font-size:24px;">👮</span>
-            <div>
-              <p style="font-size:14px; font-weight:500; color:#c53030;">Police</p>
-              <p style="font-size:13px; color:#718096;">Urgences sécurité — 17</p>
-            </div>
-          </a>
-          <a href="tel:18" style="display:flex; align-items:center; gap:12px; padding:12px; background:#fff5f5; border-radius:12px; text-decoration:none; border:0.5px solid #feb2b2;">
-            <span style="font-size:24px;">🚒</span>
-            <div>
-              <p style="font-size:14px; font-weight:500; color:#c53030;">Pompiers</p>
-              <p style="font-size:13px; color:#718096;">Urgences — 18</p>
-            </div>
-          </a>
-          <a href="tel:+221338493838" style="display:flex; align-items:center; gap:12px; padding:12px; background:#fff5f5; border-radius:12px; text-decoration:none; border:0.5px solid #feb2b2;">
-            <span style="font-size:24px;">🧠</span>
-            <div>
-              <p style="font-size:14px; font-weight:500; color:#c53030;">Hôpital Psychiatrique de Thiaroye</p>
-              <p style="font-size:13px; color:#718096;">Santé mentale — +221 33 849 38 38</p>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <div style="padding:16px; border-radius:16px; background:#fff; border:1px solid #feb2b2;">
-        <p style="font-size:14px; font-weight:500; color:#c53030; margin-bottom:12px;">💙 Parler à l'assistant maintenant</p>
-        <p style="font-size:13px; color:#718096; margin-bottom:12px;">L'assistant est disponible pour t'écouter immédiatement.</p>
-        <button onclick="parlerUrgence()" style="background:#e53e3e; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; font-weight:500;">Je veux parler à quelqu'un 💙</button>
-      </div>
-
-    </div>
-  </div>
-  <!-- OBJECTIFS PERSONNELS -->
-  <div id="objectifs" style="display:none; flex-direction:column; height:100vh;">
-    <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
-      <button onclick="fermerObjectifs()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
-      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">🎯 Mes objectifs</h2>
-    </div>
-    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;" id="objectifs-body">
-      
-      <div style="padding:16px; border-radius:16px;" id="objectif-card-light">
-        <p style="font-size:14px; font-weight:500; margin-bottom:12px; color:#0C447C;">Quel est ton objectif principal ?</p>
-        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
-          <button class="objectif-btn" onclick="selectionnerObjectif('Réduire mon stress')">😌 Réduire mon stress</button>
-          <button class="objectif-btn" onclick="selectionnerObjectif('Mieux dormir')">😴 Mieux dormir</button>
-          <button class="objectif-btn" onclick="selectionnerObjectif('Avoir plus confiance en moi')">💪 Avoir plus confiance en moi</button>
-          <button class="objectif-btn" onclick="selectionnerObjectif('Mieux gérer mes émotions')">💭 Mieux gérer mes émotions</button>
-          <button class="objectif-btn" onclick="selectionnerObjectif('Me sentir moins seul')">🤝 Me sentir moins seul</button>
-          <button class="objectif-btn" onclick="selectionnerObjectif('Aller de l\'avant')">🚀 Aller de l\'avant</button>
-        </div>
-        <p style="font-size:13px; color:#85B7EB; margin-bottom:8px;">Ou écris ton propre objectif :</p>
-        <input type="text" id="objectif-custom" placeholder="Mon objectif personnalisé..." style="width:100%; border:0.5px solid #B5D4F4; border-radius:20px; padding:10px 14px; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; background:#f7faff; color:#0C447C; margin-bottom:12px;">
-        <button onclick="sauvegarderObjectif()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; font-weight:500;">Sauvegarder mon objectif 💙</button>
-      </div>
-
-      <div id="objectif-actuel" style="display:none; padding:16px; border-radius:16px; background:#E6F1FB; border:0.5px solid #B5D4F4;">
-        <p style="font-size:12px; color:#85B7EB; margin-bottom:4px;">Mon objectif actuel</p>
-        <p id="objectif-texte" style="font-size:16px; font-weight:500; color:#0C447C; margin-bottom:12px;"></p>
-        <button onclick="parlerObjectif()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:10px 16px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; margin-right:8px;">💙 En parler avec l'assistant</button>
-        <button onclick="changerObjectif()" style="background:none; border:1px solid #185FA5; color:#185FA5; border-radius:20px; padding:10px 16px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer;">Changer</button>
-      </div>
-
-      <div style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
-        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:12px;">Ma progression</p>
-        <div id="progression-container" style="display:flex; flex-direction:column; gap:8px;">
-          <p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Fixe un objectif pour commencer 💙</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-<!-- EXERCICE DE RESPIRATION -->
-  <div id="respiration" style="display:none; flex-direction:column; height:100vh; align-items:center; justify-content:center; text-align:center; padding:30px;">
-    <div style="position:absolute; top:0; left:0; right:0; background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
-      <button onclick="fermerRespiration()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
-      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">🌬️ Respiration guidée</h2>
-    </div>
-    <div id="cercle-respiration" style="width:160px; height:160px; border-radius:50%; background:#185FA5; display:flex; align-items:center; justify-content:center; margin:60px auto 30px; animation:none; transition:all 4s ease;">
-      <span style="font-size:40px;">🌬️</span>
-    </div>
-    <p id="instruction-respiration" style="font-family:'Lora',serif; font-size:22px; margin-bottom:12px; color:#185FA5;"></p>
-    <p id="compteur-respiration" style="font-size:48px; font-weight:500; color:#185FA5; margin-bottom:20px;"></p>
-    <p id="cycle-respiration" style="font-size:13px; color:#85B7EB; margin-bottom:30px;"></p>
-    <button id="btn-start-respiration" onclick="demarrerRespiration()" style="background:#185FA5; color:#fff; border:none; border-radius:24px; padding:13px 36px; font-size:15px; font-family:'DM Sans',sans-serif; cursor:pointer; font-weight:500;">
-      Commencer 💙
-    </button>
-    <button id="btn-stop-respiration" onclick="arreterRespiration()" style="display:none; background:none; border:1.5px solid #185FA5; color:#185FA5; border-radius:24px; padding:11px 36px; font-size:15px; font-family:'DM Sans',sans-serif; cursor:pointer; margin-top:10px;">
-      Arrêter
-    </button>
-  </div>
-  <!-- JOURNAL DE BORD -->
-  <div id="journal">
-    <div class="journal-header">
-      <button class="btn-back" onclick="fermerJournal()">← Retour</button>
-      <h2>📔 Mon journal de bord</h2>
-    </div>
-    <div class="journal-body">
-      <div class="humeur-section">
-        <p class="humeur-titre">Comment te sens-tu aujourd'hui ?</p>
-        <div class="humeurs">
-          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😊')">😊</span>
-          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😐')">😐</span>
-          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😔')">😔</span>
-          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😰')">😰</span>
-          <span class="humeur-btn" onclick="selectionnerHumeur(this, '😡')">😡</span>
-        </div>
-      </div>
-      <div class="note-section">
-        <p class="note-titre">Note de la journée (optionnel)</p>
-        <textarea class="note-textarea" id="note-journal" placeholder="Écris quelques mots sur ta journée..."></textarea>
-        <div class="succes-msg" id="succes-msg">✅ Enregistré avec succès !</div>
-        <button class="btn-sauvegarder" onclick="sauvegarderJournal()">Sauvegarder 💙</button>
-      </div>
-      <div class="historique-section">
-        <p class="historique-titre">Mes dernières entrées</p>
-        <div id="historique-journal"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAGE CHAT -->
+  <!-- CHAT -->
   <div id="chat">
     <div class="header">
       <div class="header-deco"></div>
-      <div class="header-deco2"></div>
       <div class="header-top">
         <img src="icon.png" class="avatar" alt="Logo">
         <div class="header-text">
@@ -457,701 +181,435 @@
           <p id="header-prenom">Ton espace de bien-être</p>
         </div>
         <div class="header-actions">
-          <button class="btn-journal-chat" onclick="ouvrirJournal()">📔</button>
-          <button class="btn-dark" onclick="toggleDark()">🌙</button>
-          <button class="btn-reset" onclick="reinitialiser()">↺</button>
+          <button class="btn-header" onclick="toggleDark()">🌙</button>
+          <button class="btn-header" onclick="allerAccueil()">🏠</button>
+          <button class="btn-header" onclick="reinitialiser()">↺</button>
         </div>
       </div>
-      <div class="status">
-        <div class="status-dot"></div>
-        <span class="status-text">Disponible · toujours là pour t'écouter</span>
-      </div>
+      <div class="status"><div class="status-dot"></div><span class="status-text">Disponible · toujours là pour t'écouter</span></div>
     </div>
     <div class="wave"></div>
-    <div class="messages" id="messages">
-      <div class="date-divider"><span>aujourd'hui</span></div>
-    </div>
+    <div class="messages" id="messages"><div class="date-divider"><span>aujourd'hui</span></div></div>
     <div class="suggestions" id="suggestions" style="display:flex">
-      <button class="suggestion-btn" onclick="suggerer('Je me sens stressé')">😰 Je suis stressé</button>
-      <button class="suggestion-btn" onclick="suggerer('Je me sens seul')">😔 Je me sens seul</button>
+      <button class="suggestion-btn" onclick="suggerer('Je me sens stressé')">😰 Stressé</button>
+      <button class="suggestion-btn" onclick="suggerer('Je me sens seul')">😔 Seul</button>
       <button class="suggestion-btn" onclick="suggerer('J\'ai besoin de conseils')">💡 Conseils</button>
-      <button class="suggestion-btn" onclick="suggerer('Je veux parler de mes émotions')">💭 Mes émotions</button>
+      <button class="suggestion-btn" onclick="suggerer('Je veux parler de mes émotions')">💭 Émotions</button>
     </div>
     <div class="input-area">
       <textarea id="input" placeholder="Écris ce que tu ressens..." rows="1"></textarea>
-      <button class="send-btn" id="btn">
-        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-      </button>
+      <button class="send-btn" id="btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
     </div>
-    <div class="bottom-bar">
-      <span>un espace bienveillant, rien que pour toi</span>
+    <div class="bottom-bar"><span>un espace bienveillant, rien que pour toi</span></div>
+  </div>
+
+  <!-- JOURNAL -->
+  <div id="journal" class="page-secondaire">
+    <div class="page-header">
+      <button class="btn-back" onclick="fermerPage('journal')">← Retour</button>
+      <h2>📔 Journal de bord</h2>
+    </div>
+    <div class="page-body">
+      <div class="card">
+        <p class="card-titre">Comment te sens-tu aujourd'hui ?</p>
+        <div style="display:flex; gap:12px; justify-content:center; margin-bottom:14px;">
+          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😊')">😊</span>
+          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😐')">😐</span>
+          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😔')">😔</span>
+          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😰')">😰</span>
+          <span class="humeur-btn" onclick="selectionnerHumeur(this,'😡')">😡</span>
+        </div>
+        <textarea style="width:100%; border:0.5px solid #B5D4F4; border-radius:10px; padding:10px; font-size:14px; font-family:'DM Sans',sans-serif; resize:none; height:90px; outline:none; background:#f7faff; color:#0C447C;" id="note-journal" placeholder="Note de la journée..."></textarea>
+        <p class="succes" id="succes-journal">✅ Enregistré !</p>
+        <button class="btn-primary" onclick="sauvegarderJournal()">Sauvegarder 💙</button>
+      </div>
+      <div class="card">
+        <p class="card-titre">Mes dernières entrées</p>
+        <div id="historique-journal"><p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune entrée pour le moment 💙</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESPIRATION -->
+  <div id="respiration" class="page-secondaire">
+    <div class="page-header">
+      <button class="btn-back" onclick="fermerPage('respiration'); arreterRespiration()">← Retour</button>
+      <h2>🌬️ Respiration guidée</h2>
+    </div>
+    <div class="page-body" style="align-items:center; justify-content:center; text-align:center;">
+      <div id="cercle-respiration" style="width:150px; height:150px; border-radius:50%; background:#185FA5; display:flex; align-items:center; justify-content:center; transition:all 4s ease; margin-bottom:24px;"><span style="font-size:36px;">🌬️</span></div>
+      <p id="instruction-respiration" style="font-family:'Lora',serif; font-size:22px; color:#185FA5; margin-bottom:8px;">Prêt ?</p>
+      <p id="compteur-respiration" style="font-size:44px; font-weight:500; color:#185FA5; margin-bottom:8px;"></p>
+      <p id="cycle-respiration" style="font-size:13px; color:#85B7EB; margin-bottom:24px;">Appuie sur Commencer</p>
+      <button id="btn-start-respiration" class="btn-primary" style="max-width:240px;" onclick="demarrerRespiration()">Commencer 💙</button>
+      <button id="btn-stop-respiration" class="btn-secondary" style="display:none; max-width:240px;" onclick="arreterRespiration()">Arrêter</button>
+    </div>
+  </div>
+
+  <!-- OBJECTIFS -->
+  <div id="objectifs" class="page-secondaire">
+    <div class="page-header">
+      <button class="btn-back" onclick="fermerPage('objectifs')">← Retour</button>
+      <h2>🎯 Mes objectifs</h2>
+    </div>
+    <div class="page-body">
+      <div class="card">
+        <p class="card-titre">Quel est ton objectif principal ?</p>
+        <button class="objectif-btn" onclick="selectionnerObjectif('Réduire mon stress')">😌 Réduire mon stress</button>
+        <button class="objectif-btn" onclick="selectionnerObjectif('Mieux dormir')">😴 Mieux dormir</button>
+        <button class="objectif-btn" onclick="selectionnerObjectif('Avoir plus confiance en moi')">💪 Avoir plus confiance en moi</button>
+        <button class="objectif-btn" onclick="selectionnerObjectif('Mieux gérer mes émotions')">💭 Mieux gérer mes émotions</button>
+        <button class="objectif-btn" onclick="selectionnerObjectif('Me sentir moins seul')">🤝 Me sentir moins seul</button>
+        <button class="objectif-btn" onclick="selectionnerObjectif('Aller de l\'avant')">🚀 Aller de l\'avant</button>
+        <input type="text" id="objectif-custom" placeholder="Mon objectif personnalisé..." style="width:100%; border:0.5px solid #B5D4F4; border-radius:16px; padding:10px 14px; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; background:#f7faff; color:#0C447C; margin-top:8px;">
+        <button class="btn-primary" onclick="sauvegarderObjectif()">Sauvegarder 💙</button>
+      </div>
+      <div id="objectif-actuel" style="display:none;" class="card">
+        <p style="font-size:12px; color:#85B7EB; margin-bottom:4px;">Mon objectif actuel</p>
+        <p id="objectif-texte" style="font-size:16px; font-weight:500; color:#0C447C; margin-bottom:12px;"></p>
+        <button class="btn-primary" onclick="parlerObjectif()">💙 En parler avec l'assistant</button>
+        <button class="btn-secondary" onclick="changerObjectif()">Changer d'objectif</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUIVI HUMEUR -->
+  <div id="suivi-humeur" class="page-secondaire">
+    <div class="page-header">
+      <button class="btn-back" onclick="fermerPage('suivi-humeur')">← Retour</button>
+      <h2>📊 Suivi de mon humeur</h2>
+    </div>
+    <div class="page-body">
+      <div class="card">
+        <p class="card-titre">Note ton humeur aujourd'hui (sur 10)</p>
+        <div style="display:flex; justify-content:center; align-items:baseline; gap:6px; margin-bottom:12px;">
+          <span id="note-display" style="font-size:44px; font-weight:500; color:#185FA5;">5</span>
+          <span style="font-size:18px; color:#85B7EB;">/10</span>
+        </div>
+        <p id="emoji-humeur" style="text-align:center; font-size:28px; margin-bottom:12px;">😐</p>
+        <input type="range" min="1" max="10" value="5" id="note-slider" oninput="updateNote(this.value)" style="width:100%; margin-bottom:6px;">
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:#85B7EB; margin-bottom:12px;">
+          <span>😔 Très mal</span><span>😊 Très bien</span>
+        </div>
+        <p class="succes" id="succes-note">✅ Enregistré !</p>
+        <button class="btn-primary" onclick="sauvegarderNote()">Enregistrer 💙</button>
+      </div>
+      <div class="card">
+        <p class="card-titre">Ma semaine</p>
+        <div id="graphique-semaine" style="display:flex; gap:6px; align-items:flex-end; height:100px; justify-content:center; margin-bottom:6px;"></div>
+        <div id="jours-labels" style="display:flex; gap:6px; justify-content:center;"></div>
+        <div style="margin-top:14px; padding:10px; background:#E6F1FB; border-radius:10px; text-align:center;">
+          <p style="font-size:12px; color:#85B7EB; margin-bottom:2px;">Score moyen de la semaine</p>
+          <p id="score-semaine" style="font-size:26px; font-weight:500; color:#185FA5;">-/10</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEFI -->
+  <div id="defi" class="page-secondaire">
+    <div class="page-header">
+      <button class="btn-back" onclick="fermerPage('defi')">← Retour</button>
+      <h2>⚡ Défi bien-être du jour</h2>
+    </div>
+    <div class="page-body">
+      <div class="card" style="text-align:center;">
+        <p style="font-size:12px; color:#85B7EB; margin-bottom:12px;">Ton défi d'aujourd'hui</p>
+        <div id="defi-loading" style="color:#85B7EB; font-size:13px;">Génération de ton défi...</div>
+        <p id="defi-texte" style="display:none; font-family:'Lora',serif; font-size:17px; color:#0C447C; line-height:1.7; margin-bottom:16px;"></p>
+        <div id="defi-actions" style="display:none; flex-direction:column; gap:8px;">
+          <button class="btn-primary" onclick="defiAccepte()">✅ J'accepte ce défi !</button>
+          <button class="btn-secondary" onclick="nouveauDefi()">🔄 Nouveau défi</button>
+        </div>
+        <div id="defi-accepte-msg" style="display:none;">
+          <p style="font-size:28px; margin-bottom:8px;">🎉</p>
+          <p style="font-family:'Lora',serif; font-size:15px; color:#0C447C;">Bravo ! Tu as accepté le défi !</p>
+          <p style="font-size:12px; color:#85B7EB; margin-top:4px;">Reviens demain pour un nouveau défi 💙</p>
+        </div>
+      </div>
+      <div class="card">
+        <p class="card-titre">Mes défis complétés</p>
+        <div id="defis-historique"><p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucun défi complété 💙</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LETTRE -->
+  <div id="lettre" class="page-secondaire">
+    <div class="page-header">
+      <button class="btn-back" onclick="fermerPage('lettre')">← Retour</button>
+      <h2>💌 Lettre à mon futur moi</h2>
+    </div>
+    <div class="page-body">
+      <div class="card">
+        <p class="card-titre">Dans combien de temps ?</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+          <button class="btn-delai" onclick="selectionnerDelai(this,'1 mois')">1 mois</button>
+          <button class="btn-delai" onclick="selectionnerDelai(this,'3 mois')">3 mois</button>
+          <button class="btn-delai" onclick="selectionnerDelai(this,'6 mois')">6 mois</button>
+          <button class="btn-delai" onclick="selectionnerDelai(this,'1 an')">1 an</button>
+        </div>
+        <textarea id="lettre-texte" placeholder="Cher futur moi, aujourd'hui je me sens..." style="width:100%; border:0.5px solid #B5D4F4; border-radius:10px; padding:10px; font-size:14px; font-family:'DM Sans',sans-serif; resize:none; height:150px; outline:none; background:#f7faff; color:#0C447C;"></textarea>
+        <button class="btn-primary" onclick="sauvegarderLettre()">Sceller ma lettre 💌</button>
+      </div>
+      <div class="card">
+        <p class="card-titre">Mes lettres scellées</p>
+        <div id="lettres-liste"><p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune lettre 💌</p></div>
+      </div>
     </div>
   </div>
 
   <script>
-    const SYSTEM = `You are a compassionate and professional wellness assistant for the app "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. VERY IMPORTANT: Always respond in the SAME language the user writes in. Keep responses to 2-4 sentences maximum. Address the user by their first name when natural.`;
+    const CITATIONS = [
+      "Chaque jour est une nouvelle chance de prendre soin de toi.",
+      "Tu n'as pas à être parfait pour mériter d'être aimé.",
+      "La douceur envers soi-même est le début de tout.",
+      "Tes émotions sont valides, même celles que tu n'arrives pas à nommer.",
+      "Prendre soin de toi n'est pas un luxe, c'est une nécessité.",
+      "Tu es plus fort que tu ne le crois.",
+      "Chaque petit pas compte sur le chemin du bien-être.",
+      "Il est courageux de demander de l'aide.",
+      "Tu mérites la paix intérieure.",
+      "Respire. Tu es là. C'est déjà beaucoup."
+    ];
 
-    let historique = [];
-    let prenom = '';
-    let darkMode = false;
-    let humeurSelectionnee = '';
-    let pageAvantJournal = '';
+    const SYSTEM = `You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. Keep responses to 2-4 sentences. Address user by first name when natural.`;
 
-    if (localStorage.getItem('darkMode') === 'true') {
-      darkMode = true;
-      document.body.className = 'dark';
+    let historique = [], prenom = '', darkMode = false, humeurSelectionnee = '', delaiLettre = '', pageActuelle = 'accueil';
+
+    if (localStorage.getItem('darkMode') === 'true') { darkMode = true; document.body.className = 'dark'; }
+
+    function toggleDark() { darkMode = !darkMode; document.body.className = darkMode ? 'dark' : 'light'; localStorage.setItem('darkMode', darkMode); }
+    function getTime() { return new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}); }
+    function getDate() { return new Date().toLocaleDateString('fr-FR'); }
+
+    // CITATION INSTANTANEE
+    const citationAlea = CITATIONS[Math.floor(Math.random() * CITATIONS.length)];
+    document.getElementById('citation-texte').textContent = '"' + citationAlea + '"';
+
+    // Génère une nouvelle citation IA en arrière-plan
+    fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ model: 'claude-opus-4-5', max_tokens: 100, system: 'Génère UNE citation courte et bienveillante sur le bien-être. Réponds UNIQUEMENT avec la citation, sans guillemets.', messages: [{role:'user', content:'Citation du jour'}] })
+    }).then(r => r.json()).then(d => {
+      if (d.content && d.content[0]) document.getElementById('citation-texte').textContent = '"' + d.content[0].text + '"';
+    }).catch(() => {});
+
+    function allerAccueil() {
+      document.querySelectorAll('.page-secondaire, #chat, #citation-screen').forEach(el => el.style.display = 'none');
+      document.getElementById('accueil').style.display = 'flex';
     }
 
-    function toggleDark() {
-      darkMode = !darkMode;
-      document.body.className = darkMode ? 'dark' : 'light';
-      localStorage.setItem('darkMode', darkMode);
+    function partagercitation() {
+      const citation = document.getElementById('citation-texte').textContent;
+      const texte = citation + '\n\n💙 Juste là pour toi\nhttps://malick043-png.github.io/Juste-l-pour-toi';
+      if (navigator.share) { navigator.share({ text: texte }); }
+      else { navigator.clipboard.writeText(texte); alert('Citation copiée ! 💙'); }
     }
 
-    function getTime() {
-      return new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+    function ouvrirPage(id) {
+      document.querySelectorAll('.page-secondaire, #chat, #accueil, #citation-screen').forEach(el => el.style.display = 'none');
+      document.getElementById(id).style.display = 'flex';
     }
 
-    function getDate() {
-      return new Date().toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', year:'numeric'});
+    function fermerPage(id) {
+      document.getElementById(id).style.display = 'none';
+      if (pageActuelle === 'chat') { document.getElementById('chat').style.display = 'flex'; }
+      else { document.getElementById('accueil').style.display = 'flex'; }
     }
-
-    async function chargerCitation() {
-      try {
-        const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'claude-opus-4-5',
-            max_tokens: 150,
-            system: 'Tu es un générateur de citations bienveillantes et inspirantes. Génère UNE SEULE citation courte (max 2 lignes) sur le bien-être, la résilience ou la bienveillance. La citation doit être originale, touchante et positive. Réponds UNIQUEMENT avec la citation, sans guillemets, sans auteur, sans explication.',
-            messages: [{ role: 'user', content: 'Génère une citation du jour inspirante et bienveillante.' }]
-          })
-        });
-        const data = await res.json();
-        const citation = data.content[0].text;
-        document.getElementById('citation-texte').textContent = '"' + citation + '"';
-        document.getElementById('citation-chargement').style.display = 'none';
-        document.getElementById('btn-partager').style.display = 'block';
-        setTimeout(() => {
-          const screen = document.getElementById('citation-screen');
-          screen.style.opacity = '0';
-          setTimeout(() => {
-            screen.style.display = 'none';
-            document.getElementById('accueil').style.display = 'flex';
-          }, 1000);
-        }, 3000);
-      } catch(e) {
-        document.getElementById('citation-screen').style.display = 'none';
-        document.getElementById('accueil').style.display = 'flex';
-      }
-    }
-function partagercitation() {
-  const citation = document.getElementById('citation-texte').textContent;
-  const texte = citation + '\n\n💙 Juste là pour toi — ton espace bienveillant\nhttps://malick043-png.github.io/Juste-l-pour-toi';
-  if (navigator.share) {
-    navigator.share({ text: texte });
-  } else {
-    navigator.clipboard.writeText(texte);
-    alert('Citation copiée ! Colle-la où tu veux 💙');
-  }
-}
-    chargerCitation();
 
     function commencer() {
       prenom = document.getElementById('prenom').value.trim() || 'toi';
+      pageActuelle = 'chat';
       document.getElementById('accueil').style.display = 'none';
       document.getElementById('chat').style.display = 'flex';
       document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
       ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
-    }
-    let delaiLettre = '';
-
-    function ouvrirDefi() {
-      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'none';
-      document.getElementById('defi').style.display = 'flex';
-      chargerDefi();
-      afficherDefisHistorique();
-    }
-
-    function fermerDefi() {
-      document.getElementById('defi').style.display = 'none';
-      if (pageAvantJournal === 'chat') {
-        document.getElementById('chat').style.display = 'flex';
-      } else {
-        document.getElementById('accueil').style.display = 'flex';
-      }
-    }
-
-    async function chargerDefi() {
-      document.getElementById('defi-loading').style.display = 'flex';
-      document.getElementById('defi-texte').style.display = 'none';
-      document.getElementById('defi-actions').style.display = 'none';
-      document.getElementById('defi-accepte-msg').style.display = 'none';
-
-      const defiAccepteAujourdhui = localStorage.getItem('defi-date') === new Date().toLocaleDateString('fr-FR');
-      if (defiAccepteAujourdhui) {
-        document.getElementById('defi-loading').style.display = 'none';
-        document.getElementById('defi-texte').style.display = 'block';
-        document.getElementById('defi-texte').textContent = localStorage.getItem('defi-texte');
-        document.getElementById('defi-accepte-msg').style.display = 'block';
-        return;
-      }
-
-      try {
-        const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'claude-opus-4-5',
-            max_tokens: 150,
-            system: 'Tu es un coach bien-être bienveillant. Génère UN SEUL défi bien-être simple, positif et réalisable en une journée. Le défi doit être concret, motivant et accessible à tous. Exemples: "Écris 3 choses pour lesquelles tu es reconnaissant aujourd\'hui", "Offre un sourire sincère à quelqu\'un aujourd\'hui". Réponds UNIQUEMENT avec le défi, sans introduction ni explication.',
-            messages: [{ role: 'user', content: 'Génère un défi bien-être pour aujourd\'hui.' }]
-          })
-        });
-        const data = await res.json();
-        const defi = data.content[0].text;
-        localStorage.setItem('defi-texte', defi);
-        document.getElementById('defi-loading').style.display = 'none';
-        document.getElementById('defi-texte').style.display = 'block';
-        document.getElementById('defi-texte').textContent = defi;
-        document.getElementById('defi-actions').style.display = 'flex';
-      } catch(e) {
-        document.getElementById('defi-loading').style.display = 'none';
-        document.getElementById('defi-texte').style.display = 'block';
-        document.getElementById('defi-texte').textContent = 'Écris 3 choses positives qui se sont passées aujourd\'hui, même les plus petites. 💙';
-        document.getElementById('defi-actions').style.display = 'flex';
-      }
-    }
-
-    async function nouveauDefi() {
-      localStorage.removeItem('defi-texte');
-      await chargerDefi();
-    }
-
-    function defiAccepte() {
-      const defi = document.getElementById('defi-texte').textContent;
-      localStorage.setItem('defi-date', new Date().toLocaleDateString('fr-FR'));
-      const defis = JSON.parse(localStorage.getItem('defis-completes') || '[]');
-      defis.unshift({ date: new Date().toLocaleDateString('fr-FR'), defi: defi });
-      if (defis.length > 10) defis.pop();
-      localStorage.setItem('defis-completes', JSON.stringify(defis));
-      document.getElementById('defi-actions').style.display = 'none';
-      document.getElementById('defi-accepte-msg').style.display = 'block';
-      afficherDefisHistorique();
-    }
-
-    function afficherDefisHistorique() {
-      const defis = JSON.parse(localStorage.getItem('defis-completes') || '[]');
-      const container = document.getElementById('defis-historique');
-      if (defis.length === 0) {
-        container.innerHTML = '<p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucun défi complété pour le moment 💙</p>';
-        return;
-      }
-      container.innerHTML = defis.map(d => `
-        <div style="padding:10px 0; border-bottom:0.5px solid #B5D4F4; display:flex; gap:10px; align-items:flex-start;">
-          <span style="font-size:16px;">✅</span>
-          <div>
-            <p style="font-size:11px; color:#85B7EB;">${d.date}</p>
-            <p style="font-size:13px; color:#0C447C;">${d.defi}</p>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function ouvrirLettre() {
-      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'none';
-      document.getElementById('lettre').style.display = 'flex';
-      afficherLettres();
-    }
-
-    function fermerLettre() {
-      document.getElementById('lettre').style.display = 'none';
-      if (pageAvantJournal === 'chat') {
-        document.getElementById('chat').style.display = 'flex';
-      } else {
-        document.getElementById('accueil').style.display = 'flex';
-      }
-    }
-
-    function selectionnerDelai(el, delai) {
-      document.querySelectorAll('.btn-delai').forEach(b => b.style.background = '#fff');
-      el.style.background = '#E6F1FB';
-      delaiLettre = delai;
-    }
-
-    function sauvegarderLettre() {
-      const texte = document.getElementById('lettre-texte').value.trim();
-      if (!texte) { alert('Écris ta lettre d\'abord !'); return; }
-      if (!delaiLettre) { alert('Choisis dans combien de temps tu veux recevoir ta lettre !'); return; }
-      const lettres = JSON.parse(localStorage.getItem('lettres') || '[]');
-      lettres.unshift({
-        date: new Date().toLocaleDateString('fr-FR'),
-        delai: delaiLettre,
-        texte: texte
-      });
-      localStorage.setItem('lettres', JSON.stringify(lettres));
-      document.getElementById('lettre-texte').value = '';
-      delaiLettre = '';
-      document.querySelectorAll('.btn-delai').forEach(b => b.style.background = '#fff');
-      alert('Ta lettre a été scellée ! 💌 Elle t\'attend dans ' + delaiLettre);
-      afficherLettres();
-    }
-
-    function afficherLettres() {
-      const lettres = JSON.parse(localStorage.getItem('lettres') || '[]');
-      const container = document.getElementById('lettres-liste');
-      if (lettres.length === 0) {
-        container.innerHTML = '<p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune lettre pour le moment 💌</p>';
-        return;
-      }
-      container.innerHTML = lettres.map(l => `
-        <div style="padding:12px; border-radius:12px; background:#f7faff; border:0.5px solid #B5D4F4; margin-bottom:8px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-            <span style="font-size:11px; color:#85B7EB;">Écrite le ${l.date}</span>
-            <span style="font-size:11px; background:#E6F1FB; color:#185FA5; padding:2px 8px; border-radius:10px;">Dans ${l.delai}</span>
-          </div>
-          <p style="font-size:13px; color:#0C447C; font-style:italic;">"${l.texte.substring(0, 80)}${l.texte.length > 80 ? '...' : ''}"</p>
-        </div>
-      `).join('');
-    }
-    function ouvrirSuiviHumeur() {
-      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'none';
-      document.getElementById('suivi-humeur').style.display = 'flex';
-      afficherGraphique();
-    }
-
-    function fermerSuiviHumeur() {
-      document.getElementById('suivi-humeur').style.display = 'none';
-      if (pageAvantJournal === 'chat') {
-        document.getElementById('chat').style.display = 'flex';
-      } else {
-        document.getElementById('accueil').style.display = 'flex';
-      }
-    }
-
-    function updateNote(val) {
-      document.getElementById('note-display').textContent = val;
-      const emojis = {1:'😭', 2:'😢', 3:'😔', 4:'😕', 5:'😐', 6:'🙂', 7:'😊', 8:'😄', 9:'😁', 10:'🤩'};
-      document.getElementById('emoji-humeur').textContent = emojis[val];
-    }
-
-    function sauvegarderNote() {
-      const note = document.getElementById('note-slider').value;
-      const date = new Date().toLocaleDateString('fr-FR');
-      const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
-      const existant = notes.findIndex(n => n.date === date);
-      if (existant >= 0) {
-        notes[existant].note = parseInt(note);
-      } else {
-        notes.push({ date: date, note: parseInt(note), jour: new Date().getDay() });
-      }
-      if (notes.length > 30) notes.shift();
-      localStorage.setItem('notes-humeur', JSON.stringify(notes));
-      document.getElementById('succes-note').style.display = 'block';
-      setTimeout(() => { document.getElementById('succes-note').style.display = 'none'; }, 2000);
-      afficherGraphique();
-    }
-
-    function afficherGraphique() {
-      const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
-      const jours = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-      const graphique = document.getElementById('graphique-semaine');
-      const labels = document.getElementById('jours-labels');
-      const aujourd = new Date();
-      const semaine = [];
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date(aujourd);
-        d.setDate(aujourd.getDate() - i);
-        const dateStr = d.toLocaleDateString('fr-FR');
-        const note = notes.find(n => n.date === dateStr);
-        semaine.push({ jour: jours[d.getDay()], note: note ? note.note : null });
-      }
-      graphique.innerHTML = semaine.map(s => `
-        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex:1;">
-          ${s.note ? `<span style="font-size:11px; color:#185FA5; font-weight:500;">${s.note}</span><div style="width:100%; background:#185FA5; border-radius:4px 4px 0 0; height:${s.note * 10}px;"></div>` : `<span style="font-size:11px; color:#B5D4F4;">-</span><div style="width:100%; background:#E6F1FB; border-radius:4px 4px 0 0; height:10px;"></div>`}
-        </div>
-      `).join('');
-      labels.innerHTML = semaine.map(s => `<span style="font-size:10px; color:#85B7EB; flex:1; text-align:center;">${s.jour}</span>`).join('');
-      const notesPresentes = semaine.filter(s => s.note !== null);
-      if (notesPresentes.length > 0) {
-        const moyenne = (notesPresentes.reduce((a, b) => a + b.note, 0) / notesPresentes.length).toFixed(1);
-        document.getElementById('score-semaine').textContent = moyenne + '/10';
-      }
-    }
-
-    function ouvrirUrgence() {
-      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'none';
-      document.getElementById('urgence').style.display = 'flex';
-    }
-
-    function fermerUrgence() {
-      document.getElementById('urgence').style.display = 'none';
-      if (pageAvantJournal === 'chat') {
-        document.getElementById('chat').style.display = 'flex';
-      } else {
-        document.getElementById('accueil').style.display = 'flex';
-      }
-    }
-
-    function parlerUrgence() {
-      fermerUrgence();
-      prenom = document.getElementById('prenom').value.trim() || 'toi';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'flex';
-      document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
-      const message = 'J\'ai besoin d\'aide urgente, je ne me sens pas bien.';
-      document.getElementById('input').value = message;
-      envoyer();
-    }
-    function ouvrirObjectifs() {
-      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'none';
-      document.getElementById('objectifs').style.display = 'flex';
-      afficherObjectifActuel();
-    }
-
-    function fermerObjectifs() {
-      document.getElementById('objectifs').style.display = 'none';
-      if (pageAvantJournal === 'chat') {
-        document.getElementById('chat').style.display = 'flex';
-      } else {
-        document.getElementById('accueil').style.display = 'flex';
-      }
-    }
-
-    function selectionnerObjectif(objectif) {
-      document.getElementById('objectif-custom').value = objectif;
-    }
-
-    function sauvegarderObjectif() {
-      const objectif = document.getElementById('objectif-custom').value.trim();
-      if (!objectif) {
-        alert('Choisis ou écris ton objectif !');
-        return;
-      }
-      const data = {
-        texte: objectif,
-        date: new Date().toLocaleDateString('fr-FR'),
-        progression: []
-      };
-      localStorage.setItem('objectif', JSON.stringify(data));
-      afficherObjectifActuel();
-      alert('Objectif sauvegardé ! 💙 L\'assistant va t\'accompagner vers cet objectif.');
-    }
-
-    function afficherObjectifActuel() {
-      const data = JSON.parse(localStorage.getItem('objectif') || 'null');
-      if (data) {
-        document.getElementById('objectif-actuel').style.display = 'block';
-        document.getElementById('objectif-texte').textContent = '🎯 ' + data.texte;
-        afficherProgression(data);
-      }
-    }
-
-    function afficherProgression(data) {
-      const container = document.getElementById('progression-container');
-      const jours = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-      const aujourd = new Date().getDay();
-      let html = '<div style="display:flex; gap:8px; justify-content:center;">';
-      for (let i = 0; i < 7; i++) {
-        const actif = i < aujourd;
-        html += '<div style="display:flex; flex-direction:column; align-items:center; gap:4px;">';
-        html += '<div style="width:32px; height:32px; border-radius:50%; background:' + (actif ? '#185FA5' : '#E6F1FB') + '; display:flex; align-items:center; justify-content:center; font-size:14px;">' + (actif ? '✓' : '') + '</div>';
-        html += '<span style="font-size:10px; color:#85B7EB;">' + jours[i] + '</span>';
-        html += '</div>';
-      }
-      html += '</div>';
-      html += '<p style="font-size:12px; color:#85B7EB; text-align:center; margin-top:8px;">Continue comme ça ! 💙</p>';
-      container.innerHTML = html;
-    }
-
-    function parlerObjectif() {
-      const data = JSON.parse(localStorage.getItem('objectif') || 'null');
-      if (!data) return;
-      fermerObjectifs();
-      if (pageAvantJournal !== 'chat') {
-        prenom = document.getElementById('prenom').value.trim() || 'toi';
-        document.getElementById('accueil').style.display = 'none';
-        document.getElementById('chat').style.display = 'flex';
-        document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
-      }
-      const message = 'Je travaille sur mon objectif : ' + data.texte + '. Peux-tu m\'aider ?';
-      document.getElementById('input').value = message;
-      envoyer();
-    }
-
-    function changerObjectif() {
-      localStorage.removeItem('objectif');
-      document.getElementById('objectif-actuel').style.display = 'none';
-      document.getElementById('objectif-custom').value = '';
-      document.getElementById('progression-container').innerHTML = '<p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Fixe un objectif pour commencer 💙</p>';
-    }
-function ouvrirRespiration() {
-      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'none';
-      document.getElementById('respiration').style.display = 'flex';
-      document.getElementById('instruction-respiration').textContent = 'Prêt ?';
-      document.getElementById('compteur-respiration').textContent = '';
-      document.getElementById('cycle-respiration').textContent = 'Appuie sur Commencer pour débuter';
-    }
-
-    function fermerRespiration() {
-      arreterRespiration();
-      document.getElementById('respiration').style.display = 'none';
-      if (pageAvantJournal === 'chat') {
-        document.getElementById('chat').style.display = 'flex';
-      } else {
-        document.getElementById('accueil').style.display = 'flex';
-      }
-    }
-
-    let respirationInterval = null;
-    let cycleCount = 0;
-
-    function demarrerRespiration() {
-      document.getElementById('btn-start-respiration').style.display = 'none';
-      document.getElementById('btn-stop-respiration').style.display = 'block';
-      cycleCount = 0;
-      executerCycle();
-    }
-
-    function arreterRespiration() {
-      if (respirationInterval) {
-        clearTimeout(respirationInterval);
-        respirationInterval = null;
-      }
-      document.getElementById('btn-start-respiration').style.display = 'block';
-      document.getElementById('btn-stop-respiration').style.display = 'none';
-      document.getElementById('instruction-respiration').textContent = 'Prêt ?';
-      document.getElementById('compteur-respiration').textContent = '';
-      document.getElementById('cycle-respiration').textContent = 'Appuie sur Commencer pour débuter';
-      const cercle = document.getElementById('cercle-respiration');
-      cercle.style.transform = 'scale(1)';
-      cercle.style.background = '#185FA5';
-    }
-
-    function executerCycle() {
-      if (cycleCount >= 5) {
-        document.getElementById('instruction-respiration').textContent = '🎉 Bravo !';
-        document.getElementById('compteur-respiration').textContent = '';
-        document.getElementById('cycle-respiration').textContent = 'Tu as terminé 5 cycles de respiration 💙';
-        document.getElementById('btn-start-respiration').style.display = 'block';
-        document.getElementById('btn-stop-respiration').style.display = 'none';
-        return;
-      }
-
-      cycleCount++;
-      document.getElementById('cycle-respiration').textContent = 'Cycle ' + cycleCount + ' sur 5';
-      const cercle = document.getElementById('cercle-respiration');
-
-      // INSPIRE - 4 secondes
-      document.getElementById('instruction-respiration').textContent = 'Inspire...';
-      cercle.style.background = '#378ADD';
-      cercle.style.transform = 'scale(1.5)';
-      let compte = 4;
-      document.getElementById('compteur-respiration').textContent = compte;
-      
-      const inspireInterval = setInterval(() => {
-        compte--;
-        if (compte > 0) {
-          document.getElementById('compteur-respiration').textContent = compte;
-        } else {
-          clearInterval(inspireInterval);
-          
-          // RETIENS - 4 secondes
-          document.getElementById('instruction-respiration').textContent = 'Retiens...';
-          cercle.style.background = '#1D9E75';
-          let compte2 = 4;
-          document.getElementById('compteur-respiration').textContent = compte2;
-          
-          const retiensInterval = setInterval(() => {
-            compte2--;
-            if (compte2 > 0) {
-              document.getElementById('compteur-respiration').textContent = compte2;
-            } else {
-              clearInterval(retiensInterval);
-              
-              // EXPIRE - 6 secondes
-              document.getElementById('instruction-respiration').textContent = 'Expire...';
-              cercle.style.background = '#185FA5';
-              cercle.style.transform = 'scale(1)';
-              let compte3 = 6;
-              document.getElementById('compteur-respiration').textContent = compte3;
-              
-              const expireInterval = setInterval(() => {
-                compte3--;
-                if (compte3 > 0) {
-                  document.getElementById('compteur-respiration').textContent = compte3;
-                } else {
-                  clearInterval(expireInterval);
-                  respirationInterval = setTimeout(executerCycle, 500);
-                }
-              }, 1000);
-            }
-          }, 1000);
-        }
-      }, 1000);
-    }
-    function ouvrirJournal() {
-      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
-      document.getElementById('accueil').style.display = 'none';
-      document.getElementById('chat').style.display = 'none';
-      document.getElementById('journal').style.display = 'flex';
-      afficherHistoriqueJournal();
-    }
-
-    function fermerJournal() {
-      document.getElementById('journal').style.display = 'none';
-      if (pageAvantJournal === 'chat') {
-        document.getElementById('chat').style.display = 'flex';
-      } else {
-        document.getElementById('accueil').style.display = 'flex';
-      }
-    }
-
-    function selectionnerHumeur(el, humeur) {
-      document.querySelectorAll('.humeur-btn').forEach(b => b.classList.remove('selected'));
-      el.classList.add('selected');
-      humeurSelectionnee = humeur;
-    }
-
-    function sauvegarderJournal() {
-      if (!humeurSelectionnee) {
-        alert('Sélectionne d\'abord ton humeur du jour !');
-        return;
-      }
-      const note = document.getElementById('note-journal').value.trim();
-      const entree = { date: getDate(), humeur: humeurSelectionnee, note: note };
-      const journal = JSON.parse(localStorage.getItem('journal') || '[]');
-      journal.unshift(entree);
-      if (journal.length > 30) journal.pop();
-      localStorage.setItem('journal', JSON.stringify(journal));
-      document.getElementById('succes-msg').style.display = 'block';
-      setTimeout(() => { document.getElementById('succes-msg').style.display = 'none'; }, 2000);
-      document.getElementById('note-journal').value = '';
-      humeurSelectionnee = '';
-      document.querySelectorAll('.humeur-btn').forEach(b => b.classList.remove('selected'));
-      afficherHistoriqueJournal();
-    }
-
-    function afficherHistoriqueJournal() {
-      const journal = JSON.parse(localStorage.getItem('journal') || '[]');
-      const container = document.getElementById('historique-journal');
-      if (journal.length === 0) {
-        container.innerHTML = '<p class="vide-msg">Aucune entrée pour le moment.<br>Commence dès aujourd\'hui ! 💙</p>';
-        return;
-      }
-      container.innerHTML = journal.slice(0, 10).map(e => `
-        <div class="entree-journal">
-          <div class="entree-date">${e.date}</div>
-          <div class="entree-contenu">
-            <div class="entree-humeur">${e.humeur}</div>
-            ${e.note ? '<div class="entree-note">' + e.note + '</div>' : ''}
-          </div>
-        </div>
-      `).join('');
     }
 
     function reinitialiser() {
       historique = [];
       document.getElementById('messages').innerHTML = '<div class="date-divider"><span>aujourd\'hui</span></div>';
       document.getElementById('suggestions').style.display = 'flex';
-      ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
+      ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Comment te sens-tu ?');
     }
 
-    function suggerer(texte) {
-      document.getElementById('input').value = texte;
+    function ouvrirJournal() { ouvrirPage('journal'); afficherHistoriqueJournal(); }
+    function ouvrirRespiration() { ouvrirPage('respiration'); }
+    function ouvrirObjectifs() { ouvrirPage('objectifs'); afficherObjectifActuel(); }
+    function ouvrirSuiviHumeur() { ouvrirPage('suivi-humeur'); afficherGraphique(); }
+    function ouvrirDefi() { ouvrirPage('defi'); chargerDefi(); afficherDefisHistorique(); }
+    function ouvrirLettre() { ouvrirPage('lettre'); afficherLettres(); }
+
+    // JOURNAL
+    function selectionnerHumeur(el, h) { document.querySelectorAll('.humeur-btn').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); humeurSelectionnee = h; }
+    function sauvegarderJournal() {
+      if (!humeurSelectionnee) { alert('Sélectionne ton humeur !'); return; }
+      const note = document.getElementById('note-journal').value.trim();
+      const journal = JSON.parse(localStorage.getItem('journal') || '[]');
+      journal.unshift({ date: getDate(), humeur: humeurSelectionnee, note: note });
+      if (journal.length > 30) journal.pop();
+      localStorage.setItem('journal', JSON.stringify(journal));
+      document.getElementById('succes-journal').style.display = 'block';
+      setTimeout(() => document.getElementById('succes-journal').style.display = 'none', 2000);
+      document.getElementById('note-journal').value = ''; humeurSelectionnee = '';
+      document.querySelectorAll('.humeur-btn').forEach(b => b.classList.remove('selected'));
+      afficherHistoriqueJournal();
+    }
+    function afficherHistoriqueJournal() {
+      const journal = JSON.parse(localStorage.getItem('journal') || '[]');
+      const c = document.getElementById('historique-journal');
+      if (!journal.length) { c.innerHTML = '<p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune entrée 💙</p>'; return; }
+      c.innerHTML = journal.slice(0,10).map(e => `<div class="entree-journal"><div class="entree-date">${e.date}</div><div><span style="font-size:16px;">${e.humeur}</span>${e.note ? '<p style="font-size:12px; color:#85B7EB; margin-top:2px;">' + e.note + '</p>' : ''}</div></div>`).join('');
+    }
+
+    // RESPIRATION
+    let respirationInterval = null, cycleCount = 0;
+    function demarrerRespiration() { document.getElementById('btn-start-respiration').style.display = 'none'; document.getElementById('btn-stop-respiration').style.display = 'block'; cycleCount = 0; executerCycle(); }
+    function arreterRespiration() {
+      if (respirationInterval) { clearTimeout(respirationInterval); respirationInterval = null; }
+      document.getElementById('btn-start-respiration').style.display = 'block';
+      document.getElementById('btn-stop-respiration').style.display = 'none';
+      document.getElementById('instruction-respiration').textContent = 'Prêt ?';
+      document.getElementById('compteur-respiration').textContent = '';
+      document.getElementById('cycle-respiration').textContent = 'Appuie sur Commencer';
+      document.getElementById('cercle-respiration').style.transform = 'scale(1)';
+      document.getElementById('cercle-respiration').style.background = '#185FA5';
+    }
+    function executerCycle() {
+      if (cycleCount >= 5) { document.getElementById('instruction-respiration').textContent = '🎉 Bravo !'; document.getElementById('compteur-respiration').textContent = ''; document.getElementById('cycle-respiration').textContent = '5 cycles complétés 💙'; document.getElementById('btn-start-respiration').style.display = 'block'; document.getElementById('btn-stop-respiration').style.display = 'none'; return; }
+      cycleCount++; document.getElementById('cycle-respiration').textContent = 'Cycle ' + cycleCount + ' / 5';
+      const c = document.getElementById('cercle-respiration');
+      document.getElementById('instruction-respiration').textContent = 'Inspire...'; c.style.background = '#378ADD'; c.style.transform = 'scale(1.5)';
+      let n = 4; document.getElementById('compteur-respiration').textContent = n;
+      const i1 = setInterval(() => { n--; if (n > 0) document.getElementById('compteur-respiration').textContent = n; else { clearInterval(i1); document.getElementById('instruction-respiration').textContent = 'Retiens...'; c.style.background = '#1D9E75'; let n2 = 4; document.getElementById('compteur-respiration').textContent = n2; const i2 = setInterval(() => { n2--; if (n2 > 0) document.getElementById('compteur-respiration').textContent = n2; else { clearInterval(i2); document.getElementById('instruction-respiration').textContent = 'Expire...'; c.style.background = '#185FA5'; c.style.transform = 'scale(1)'; let n3 = 6; document.getElementById('compteur-respiration').textContent = n3; const i3 = setInterval(() => { n3--; if (n3 > 0) document.getElementById('compteur-respiration').textContent = n3; else { clearInterval(i3); respirationInterval = setTimeout(executerCycle, 500); } }, 1000); } }, 1000); } }, 1000);
+    }
+
+    // OBJECTIFS
+    function selectionnerObjectif(o) { document.getElementById('objectif-custom').value = o; }
+    function sauvegarderObjectif() {
+      const o = document.getElementById('objectif-custom').value.trim();
+      if (!o) { alert('Choisis un objectif !'); return; }
+      localStorage.setItem('objectif', JSON.stringify({ texte: o, date: getDate() }));
+      afficherObjectifActuel();
+      alert('Objectif sauvegardé ! 💙');
+    }
+    function afficherObjectifActuel() {
+      const data = JSON.parse(localStorage.getItem('objectif') || 'null');
+      if (data) { document.getElementById('objectif-actuel').style.display = 'block'; document.getElementById('objectif-texte').textContent = '🎯 ' + data.texte; }
+    }
+    function parlerObjectif() {
+      const data = JSON.parse(localStorage.getItem('objectif') || 'null');
+      if (!data) return;
+      fermerPage('objectifs'); pageActuelle = 'chat';
+      if (document.getElementById('chat').style.display !== 'flex') { prenom = prenom || 'toi'; document.getElementById('accueil').style.display = 'none'; document.getElementById('chat').style.display = 'flex'; document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙'; }
+      document.getElementById('input').value = 'Je travaille sur mon objectif : ' + data.texte + '. Peux-tu m\'aider ?';
       envoyer();
     }
+    function changerObjectif() { localStorage.removeItem('objectif'); document.getElementById('objectif-actuel').style.display = 'none'; document.getElementById('objectif-custom').value = ''; }
 
-    function ajouterMessage(role, texte) {
-      if (role === 'user') {
-        document.getElementById('suggestions').style.display = 'none';
+    // SUIVI HUMEUR
+    function updateNote(val) { document.getElementById('note-display').textContent = val; const e = {1:'😭',2:'😢',3:'😔',4:'😕',5:'😐',6:'🙂',7:'😊',8:'😄',9:'😁',10:'🤩'}; document.getElementById('emoji-humeur').textContent = e[val]; }
+    function sauvegarderNote() {
+      const note = parseInt(document.getElementById('note-slider').value);
+      const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
+      const idx = notes.findIndex(n => n.date === getDate());
+      if (idx >= 0) notes[idx].note = note; else notes.push({ date: getDate(), note: note });
+      if (notes.length > 30) notes.shift();
+      localStorage.setItem('notes-humeur', JSON.stringify(notes));
+      document.getElementById('succes-note').style.display = 'block';
+      setTimeout(() => document.getElementById('succes-note').style.display = 'none', 2000);
+      afficherGraphique();
+    }
+    function afficherGraphique() {
+      const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
+      const jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+      const auj = new Date(); const semaine = [];
+      for (let i = 6; i >= 0; i--) { const d = new Date(auj); d.setDate(auj.getDate()-i); const ds = d.toLocaleDateString('fr-FR'); const n = notes.find(x => x.date === ds); semaine.push({ jour: jours[d.getDay()], note: n ? n.note : null }); }
+      document.getElementById('graphique-semaine').innerHTML = semaine.map(s => `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;">${s.note ? `<span style="font-size:10px;color:#185FA5;font-weight:500;">${s.note}</span><div style="width:100%;background:#185FA5;border-radius:3px 3px 0 0;height:${s.note*9}px;"></div>` : `<span style="font-size:10px;color:#B5D4F4;">-</span><div style="width:100%;background:#E6F1FB;border-radius:3px 3px 0 0;height:8px;"></div>`}</div>`).join('');
+      document.getElementById('jours-labels').innerHTML = semaine.map(s => `<span style="font-size:10px;color:#85B7EB;flex:1;text-align:center;">${s.jour}</span>`).join('');
+      const np = semaine.filter(s => s.note !== null);
+      if (np.length) document.getElementById('score-semaine').textContent = (np.reduce((a,b) => a+b.note, 0)/np.length).toFixed(1) + '/10';
+    }
+
+    // DEFI
+    async function chargerDefi() {
+      const defisPredefinis = ['Écris 3 choses pour lesquelles tu es reconnaissant aujourd\'hui.', 'Offre un sourire sincère à quelqu\'un autour de toi.', 'Prends 5 minutes pour respirer profondément et ne rien faire.', 'Envoie un message d\'encouragement à quelqu\'un que tu aimes.', 'Bois un grand verre d\'eau et fais une petite marche.', 'Écris une qualité que tu aimes en toi.', 'Appelle ou écris à quelqu\'un que tu n\'as pas contacté depuis longtemps.'];
+      document.getElementById('defi-accepte-msg').style.display = 'none';
+      if (localStorage.getItem('defi-date') === getDate()) {
+        document.getElementById('defi-loading').style.display = 'none'; document.getElementById('defi-texte').style.display = 'block'; document.getElementById('defi-texte').textContent = localStorage.getItem('defi-texte'); document.getElementById('defi-accepte-msg').style.display = 'block'; return;
       }
-      const wrap = document.createElement('div');
-      wrap.className = 'bubble-wrap' + (role === 'user' ? ' user' : '');
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble ' + role;
-      bubble.textContent = texte;
-      const time = document.createElement('div');
-      time.className = 'bubble-time';
-      time.textContent = getTime();
-      wrap.appendChild(bubble);
-      wrap.appendChild(time);
-      document.getElementById('messages').appendChild(wrap);
+      const defiAlea = defisPredefinis[Math.floor(Math.random() * defisPredefinis.length)];
+      document.getElementById('defi-loading').style.display = 'none'; document.getElementById('defi-texte').style.display = 'block'; document.getElementById('defi-texte').textContent = defiAlea; document.getElementById('defi-actions').style.display = 'flex';
+      localStorage.setItem('defi-texte', defiAlea);
+      fetch('https://serveur-juste-la-pour-toi.onrender.com/message', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:100, system:'Génère UN défi bien-être simple et réalisable en une journée. Réponds UNIQUEMENT avec le défi.', messages:[{role:'user',content:'Défi du jour'}] }) }).then(r=>r.json()).then(d => { if(d.content && d.content[0]) { document.getElementById('defi-texte').textContent = d.content[0].text; localStorage.setItem('defi-texte', d.content[0].text); } }).catch(()=>{});
+    }
+    function nouveauDefi() { localStorage.removeItem('defi-texte'); localStorage.removeItem('defi-date'); chargerDefi(); }
+    function defiAccepte() {
+      localStorage.setItem('defi-date', getDate());
+      const defis = JSON.parse(localStorage.getItem('defis-completes') || '[]');
+      defis.unshift({ date: getDate(), defi: document.getElementById('defi-texte').textContent });
+      if (defis.length > 10) defis.pop();
+      localStorage.setItem('defis-completes', JSON.stringify(defis));
+      document.getElementById('defi-actions').style.display = 'none'; document.getElementById('defi-accepte-msg').style.display = 'block';
+      afficherDefisHistorique();
+    }
+    function afficherDefisHistorique() {
+      const defis = JSON.parse(localStorage.getItem('defis-completes') || '[]');
+      const c = document.getElementById('defis-historique');
+      if (!defis.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun défi complété 💙</p>'; return; }
+      c.innerHTML = defis.map(d => `<div style="padding:8px 0;border-bottom:0.5px solid #B5D4F4;display:flex;gap:8px;"><span>✅</span><div><p style="font-size:11px;color:#85B7EB;">${d.date}</p><p style="font-size:13px;color:#0C447C;">${d.defi}</p></div></div>`).join('');
+    }
+
+    // LETTRE
+    function selectionnerDelai(el, d) { document.querySelectorAll('.btn-delai').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); delaiLettre = d; }
+    function sauvegarderLettre() {
+      const texte = document.getElementById('lettre-texte').value.trim();
+      if (!texte) { alert('Écris ta lettre !'); return; }
+      if (!delaiLettre) { alert('Choisis un délai !'); return; }
+      const lettres = JSON.parse(localStorage.getItem('lettres') || '[]');
+      lettres.unshift({ date: getDate(), delai: delaiLettre, texte: texte });
+      localStorage.setItem('lettres', JSON.stringify(lettres));
+      document.getElementById('lettre-texte').value = ''; delaiLettre = '';
+      document.querySelectorAll('.btn-delai').forEach(b => b.classList.remove('selected'));
+      alert('Lettre scellée ! 💌 Elle t\'attend dans ' + delaiLettre);
+      afficherLettres();
+    }
+    function afficherLettres() {
+      const lettres = JSON.parse(localStorage.getItem('lettres') || '[]');
+      const c = document.getElementById('lettres-liste');
+      if (!lettres.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>'; return; }
+      c.innerHTML = lettres.map(l => `<div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:#85B7EB;">${l.date}</span><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Dans ${l.delai}</span></div><p style="font-size:13px;color:#0C447C;font-style:italic;">"${l.texte.substring(0,80)}${l.texte.length>80?'...':''}"</p></div>`).join('');
+    }
+
+    // CHAT
+    function suggerer(t) { document.getElementById('input').value = t; envoyer(); }
+    function ajouterMessage(role, texte) {
+      if (role === 'user') document.getElementById('suggestions').style.display = 'none';
+      const wrap = document.createElement('div'); wrap.className = 'bubble-wrap' + (role==='user'?' user':'');
+      const bubble = document.createElement('div'); bubble.className = 'bubble ' + role; bubble.textContent = texte;
+      const time = document.createElement('div'); time.className = 'bubble-time'; time.textContent = getTime();
+      wrap.appendChild(bubble); wrap.appendChild(time); document.getElementById('messages').appendChild(wrap);
       wrap.scrollIntoView({ behavior: 'smooth' });
     }
-
-    function showTyping() {
-      const div = document.createElement('div');
-      div.className = 'typing';
-      div.id = 'typing';
-      div.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-      document.getElementById('messages').appendChild(div);
-      div.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function removeTyping() {
-      const el = document.getElementById('typing');
-      if (el) el.remove();
-    }
-
+    function showTyping() { const d = document.createElement('div'); d.className = 'typing'; d.id = 'typing'; d.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>'; document.getElementById('messages').appendChild(d); d.scrollIntoView({behavior:'smooth'}); }
+    function removeTyping() { const el = document.getElementById('typing'); if (el) el.remove(); }
     async function envoyer() {
-      const input = document.getElementById('input');
-      const texte = input.value.trim();
+      const input = document.getElementById('input'); const texte = input.value.trim();
       if (!texte || document.getElementById('btn').disabled) return;
-      ajouterMessage('user', texte);
-      historique.push({ role: 'user', content: texte });
-      input.value = '';
-      input.style.height = 'auto';
-      document.getElementById('btn').disabled = true;
-      showTyping();
+      ajouterMessage('user', texte); historique.push({role:'user', content:texte}); input.value = ''; input.style.height = 'auto';
+      document.getElementById('btn').disabled = true; showTyping();
       try {
-        const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'claude-opus-4-5',
-            max_tokens: 1000,
-            system: SYSTEM + ' The user\'s first name is ' + prenom + '.',
-            messages: historique
-          })
-        });
-        const data = await res.json();
-        const reponse = data.content[0].text;
-        historique.push({ role: 'assistant', content: reponse });
-        removeTyping();
-        ajouterMessage('assistant', reponse);
-      } catch(e) {
-        removeTyping();
-        ajouterMessage('assistant', '😔 Désolé, une erreur est survenue. Réessaie dans un moment.');
-      }
-      document.getElementById('btn').disabled = false;
-      input.focus();
+        const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:1000, system: SYSTEM + ' User first name: ' + prenom, messages: historique }) });
+        const data = await res.json(); const reponse = data.content[0].text;
+        historique.push({role:'assistant', content:reponse}); removeTyping(); ajouterMessage('assistant', reponse);
+      } catch(e) { removeTyping(); ajouterMessage('assistant', '😔 Désolé, une erreur est survenue.'); }
+      document.getElementById('btn').disabled = false; input.focus();
     }
-
     document.getElementById('btn').addEventListener('click', envoyer);
-    document.getElementById('input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); envoyer(); }
-    });
-    document.getElementById('input').addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 90) + 'px';
-    });
-    document.getElementById('prenom').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') commencer();
-    });
+    document.getElementById('input').addEventListener('keydown', e => { if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); envoyer(); } });
+    document.getElementById('input').addEventListener('input', function() { this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,80)+'px'; });
+    document.getElementById('prenom').addEventListener('keydown', e => { if (e.key==='Enter') commencer(); });
   </script>
 </body>
 </html>
