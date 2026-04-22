@@ -307,6 +307,7 @@
         const citation = data.content[0].text;
         document.getElementById('citation-texte').textContent = '"' + citation + '"';
         document.getElementById('citation-chargement').style.display = 'none';
+        document.getElementById('btn-partager').style.display = 'block';
         setTimeout(() => {
           const screen = document.getElementById('citation-screen');
           screen.style.opacity = '0';
@@ -320,7 +321,16 @@
         document.getElementById('accueil').style.display = 'flex';
       }
     }
-
+function partagercitation() {
+  const citation = document.getElementById('citation-texte').textContent;
+  const texte = citation + '\n\n💙 Juste là pour toi — ton espace bienveillant\nhttps://malick043-png.github.io/Juste-l-pour-toi';
+  if (navigator.share) {
+    navigator.share({ text: texte });
+  } else {
+    navigator.clipboard.writeText(texte);
+    alert('Citation copiée ! Colle-la où tu veux 💙');
+  }
+}
     chargerCitation();
 
     function commencer() {
