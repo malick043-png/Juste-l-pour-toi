@@ -139,6 +139,47 @@
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(181,212,244,0.2); border-radius: 2px; }
+    body.light-mode { background: #f0f6ff; }
+body.light-mode #splash { background: linear-gradient(135deg, #E6F1FB 0%, #f0f6ff 50%, #fff 100%); }
+body.light-mode .splash-citation { color: #0C447C; }
+body.light-mode .splash-btn { background: rgba(24,95,165,0.1); border-color: rgba(24,95,165,0.3); color: #185FA5; }
+body.light-mode .splash-share { color: #85B7EB; }
+body.light-mode #accueil { background: linear-gradient(160deg, #E6F1FB 0%, #f0f6ff 100%); }
+body.light-mode .accueil-titre { color: #0C447C; }
+body.light-mode .accueil-sous { color: #378ADD; }
+body.light-mode .prenom-input { background: #fff; color: #0C447C; border-color: #B5D4F4; }
+body.light-mode .prenom-input::placeholder { color: #85B7EB; }
+body.light-mode .btn-commencer { background: #185FA5; }
+body.light-mode .menu-item { background: #fff; border-color: #B5D4F4; }
+body.light-mode .menu-item:hover { background: #E6F1FB; }
+body.light-mode .menu-item .label { color: #85B7EB; }
+body.light-mode .accueil-footer { color: #85B7EB; }
+body.light-mode #chat { background: #f0f6ff; }
+body.light-mode .messages { background: #f0f6ff; }
+body.light-mode .bubble.assistant { background: #fff; color: #0C447C; border-color: #B5D4F4; }
+body.light-mode .input-area { background: #fff; border-color: #B5D4F4; }
+body.light-mode .chat-textarea { background: #f7faff; color: #0C447C; border-color: #B5D4F4; }
+body.light-mode .chat-textarea::placeholder { color: #85B7EB; }
+body.light-mode .sugg-btn { background: #fff; color: #185FA5; border-color: #B5D4F4; }
+body.light-mode .suggestions { background: #f0f6ff; }
+body.light-mode .typing { background: #fff; border-color: #B5D4F4; }
+body.light-mode .chat-footer { background: #fff; }
+body.light-mode .wave-sep { background: linear-gradient(135deg,#185FA5,#1a4a7a); }
+body.light-mode .wave-sep::after { background: #f0f6ff; }
+body.light-mode .page-sec { background: #f0f6ff; }
+body.light-mode .sec-body { background: #f0f6ff; }
+body.light-mode .card { background: #fff; border-color: #B5D4F4; }
+body.light-mode .card-titre { color: #0C447C; }
+body.light-mode .btn-s { background: #fff; border-color: #B5D4F4; color: #185FA5; }
+body.light-mode .input-sec { background: #f7faff; color: #0C447C; border-color: #B5D4F4; }
+body.light-mode .textarea-sec { background: #f7faff; color: #0C447C; border-color: #B5D4F4; }
+body.light-mode .obj-btn { background: #fff; border-color: #B5D4F4; color: #185FA5; }
+body.light-mode .delai-btn { background: #fff; border-color: #B5D4F4; color: #185FA5; }
+body.light-mode .humeur-btn.selected { background: #E6F1FB; }
+body.light-mode .date-div::before, body.light-mode .date-div::after { background: #B5D4F4; }
+body.light-mode .date-div span { color: #85B7EB; }
+body.light-mode .btime { color: #85B7EB; }
+body.light-mode #canvas-bg { opacity: 0.3; }
   </style>
 </head>
 <body>
@@ -372,8 +413,12 @@ function partagercitation(){
   if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);alert('Citation copiée ! 💙');}
 }
 
-function toggleDark(){ alert('Le mode sombre est désactivé dans ce thème — l\'app est déjà en mode sombre élégant ! 🌙'); }
-
+function toggleDark(){
+  const isLight = document.body.classList.toggle('light-mode');
+  localStorage.setItem('lightMode', isLight);
+  document.getElementById('dark-btn').querySelector('.icon').textContent = isLight ? '☀️' : '🌙';
+}
+if(localStorage.getItem('lightMode')==='true'){ document.body.classList.add('light-mode'); document.getElementById('dark-btn').querySelector('.icon').textContent='☀️'; }
 function commencer(){
   prenom=document.getElementById('prenom').value.trim()||'toi';
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
