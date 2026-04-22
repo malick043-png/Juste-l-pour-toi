@@ -449,8 +449,7 @@ function reinitialiser(){
 }
 
 function ouvrirSec(id){pagePrecedente=document.getElementById('chat').style.display==='flex'?'chat':'accueil';document.getElementById(id).classList.add('open');}
-function fermerSec(id){document.getElementById(id).classList.remove('open');}
-
+function fermerSec(id){ document.getElementById(id).classList.remove('open'); ouvrirMenu(); }
 // JOURNAL
 let humeurSel2='';
 function selHumeur(el,h){document.querySelectorAll('.humeur-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');humeurSel2=h;}
