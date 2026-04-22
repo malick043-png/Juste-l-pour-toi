@@ -193,6 +193,102 @@
 <button onclick="ouvrirUrgence()" style="background:none; border:1.5px solid #e53e3e; color:#e53e3e; border-radius:24px; padding:11px 36px; font-size:15px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; max-width:300px; margin-bottom:12px;">🆘 Aide d'urgence</button>
     <button class="dark-toggle-accueil" onclick="toggleDark()">🌙 Mode sombre</button>
     <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
+  </div> 
+  <!-- SUIVI HUMEUR -->
+  <div id="suivi-humeur" style="display:none; flex-direction:column; height:100vh;">
+    <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
+      <button onclick="fermerSuiviHumeur()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
+      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">📊 Suivi de mon humeur</h2>
+    </div>
+    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
+      
+      <div style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
+        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:16px;">Note ton humeur aujourd'hui</p>
+        <p style="font-size:13px; color:#85B7EB; margin-bottom:12px; text-align:center;">Sur 10, comment te sens-tu ?</p>
+        <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+          <span id="note-display" style="font-size:48px; font-weight:500; color:#185FA5;">5</span>
+          <span style="font-size:20px; color:#85B7EB;">/10</span>
+        </div>
+        <input type="range" min="1" max="10" value="5" id="note-slider" oninput="updateNote(this.value)" style="width:100%; margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:#85B7EB; margin-bottom:16px;">
+          <span>😔 Très mal</span>
+          <span>😐 Neutre</span>
+          <span>😊 Très bien</span>
+        </div>
+        <p id="emoji-humeur" style="text-align:center; font-size:32px; margin-bottom:16px;">😐</p>
+        <button onclick="sauvegarderNote()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; font-weight:500;">Enregistrer 💙</button>
+        <p id="succes-note" style="text-align:center; font-size:13px; color:#1D9E75; margin-top:8px; display:none;">✅ Enregistré !</p>
+      </div>
+
+      <div style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
+        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:16px;">Ma semaine en cours</p>
+        <div id="graphique-semaine" style="display:flex; gap:8px; align-items:flex-end; height:120px; justify-content:center;"></div>
+        <div style="display:flex; gap:8px; justify-content:center; margin-top:6px;" id="jours-labels"></div>
+        <div style="margin-top:16px; padding:12px; background:#E6F1FB; border-radius:12px; text-align:center;">
+          <p style="font-size:12px; color:#85B7EB; margin-bottom:4px;">Score moyen de la semaine</p>
+          <p id="score-semaine" style="font-size:28px; font-weight:500; color:#185FA5;">-/10</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODE URGENCE -->
+  <div id="urgence" style="display:none; flex-direction:column; height:100vh; background:#fff5f5;">
+    <div style="background:#e53e3e; padding:14px 18px; display:flex; align-items:center; gap:12px;">
+      <button onclick="fermerUrgence()" style="background:rgba(255,255,255,0.2); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
+      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">🆘 Aide d'urgence</h2>
+    </div>
+    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
+      
+      <div style="padding:20px; border-radius:16px; background:#fff; border:1px solid #feb2b2; text-align:center;">
+        <p style="font-size:32px; margin-bottom:12px;">💙</p>
+        <p style="font-family:'Lora',serif; font-size:18px; color:#c53030; margin-bottom:8px;">Tu n'es pas seul(e)</p>
+        <p style="font-size:14px; color:#718096; line-height:1.6;">Si tu traverses une période difficile, des personnes sont là pour t'aider. Tu as le droit de demander de l'aide.</p>
+      </div>
+
+      <div style="padding:16px; border-radius:16px; background:#fff; border:1px solid #feb2b2;">
+        <p style="font-size:14px; font-weight:500; color:#c53030; margin-bottom:14px;">📞 Contacts d'urgence au Sénégal</p>
+        
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="tel:15" style="display:flex; align-items:center; gap:12px; padding:12px; background:#fff5f5; border-radius:12px; text-decoration:none; border:0.5px solid #feb2b2;">
+            <span style="font-size:24px;">🚑</span>
+            <div>
+              <p style="font-size:14px; font-weight:500; color:#c53030;">SAMU</p>
+              <p style="font-size:13px; color:#718096;">Urgences médicales — 15</p>
+            </div>
+          </a>
+          <a href="tel:17" style="display:flex; align-items:center; gap:12px; padding:12px; background:#fff5f5; border-radius:12px; text-decoration:none; border:0.5px solid #feb2b2;">
+            <span style="font-size:24px;">👮</span>
+            <div>
+              <p style="font-size:14px; font-weight:500; color:#c53030;">Police</p>
+              <p style="font-size:13px; color:#718096;">Urgences sécurité — 17</p>
+            </div>
+          </a>
+          <a href="tel:18" style="display:flex; align-items:center; gap:12px; padding:12px; background:#fff5f5; border-radius:12px; text-decoration:none; border:0.5px solid #feb2b2;">
+            <span style="font-size:24px;">🚒</span>
+            <div>
+              <p style="font-size:14px; font-weight:500; color:#c53030;">Pompiers</p>
+              <p style="font-size:13px; color:#718096;">Urgences — 18</p>
+            </div>
+          </a>
+          <a href="tel:+221338493838" style="display:flex; align-items:center; gap:12px; padding:12px; background:#fff5f5; border-radius:12px; text-decoration:none; border:0.5px solid #feb2b2;">
+            <span style="font-size:24px;">🧠</span>
+            <div>
+              <p style="font-size:14px; font-weight:500; color:#c53030;">Hôpital Psychiatrique de Thiaroye</p>
+              <p style="font-size:13px; color:#718096;">Santé mentale — +221 33 849 38 38</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div style="padding:16px; border-radius:16px; background:#fff; border:1px solid #feb2b2;">
+        <p style="font-size:14px; font-weight:500; color:#c53030; margin-bottom:12px;">💙 Parler à l'assistant maintenant</p>
+        <p style="font-size:13px; color:#718096; margin-bottom:12px;">L'assistant est disponible pour t'écouter immédiatement.</p>
+        <button onclick="parlerUrgence()" style="background:#e53e3e; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; font-weight:500;">Je veux parler à quelqu'un 💙</button>
+      </div>
+
+    </div>
   </div>
   <!-- OBJECTIFS PERSONNELS -->
   <div id="objectifs" style="display:none; flex-direction:column; height:100vh;">
