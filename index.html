@@ -498,6 +498,99 @@ function partagercitation() {
       document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
       ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
     }
+    function ouvrirSuiviHumeur() {
+      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
+      document.getElementById('accueil').style.display = 'none';
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('suivi-humeur').style.display = 'flex';
+      afficherGraphique();
+    }
+
+    function fermerSuiviHumeur() {
+      document.getElementById('suivi-humeur').style.display = 'none';
+      if (pageAvantJournal === 'chat') {
+        document.getElementById('chat').style.display = 'flex';
+      } else {
+        document.getElementById('accueil').style.display = 'flex';
+      }
+    }
+
+    function updateNote(val) {
+      document.getElementById('note-display').textContent = val;
+      const emojis = {1:'😭', 2:'😢', 3:'😔', 4:'😕', 5:'😐', 6:'🙂', 7:'😊', 8:'😄', 9:'😁', 10:'🤩'};
+      document.getElementById('emoji-humeur').textContent = emojis[val];
+    }
+
+    function sauvegarderNote() {
+      const note = document.getElementById('note-slider').value;
+      const date = new Date().toLocaleDateString('fr-FR');
+      const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
+      const existant = notes.findIndex(n => n.date === date);
+      if (existant >= 0) {
+        notes[existant].note = parseInt(note);
+      } else {
+        notes.push({ date: date, note: parseInt(note), jour: new Date().getDay() });
+      }
+      if (notes.length > 30) notes.shift();
+      localStorage.setItem('notes-humeur', JSON.stringify(notes));
+      document.getElementById('succes-note').style.display = 'block';
+      setTimeout(() => { document.getElementById('succes-note').style.display = 'none'; }, 2000);
+      afficherGraphique();
+    }
+
+    function afficherGraphique() {
+      const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
+      const jours = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+      const graphique = document.getElementById('graphique-semaine');
+      const labels = document.getElementById('jours-labels');
+      const aujourd = new Date();
+      const semaine = [];
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date(aujourd);
+        d.setDate(aujourd.getDate() - i);
+        const dateStr = d.toLocaleDateString('fr-FR');
+        const note = notes.find(n => n.date === dateStr);
+        semaine.push({ jour: jours[d.getDay()], note: note ? note.note : null });
+      }
+      graphique.innerHTML = semaine.map(s => `
+        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex:1;">
+          ${s.note ? `<span style="font-size:11px; color:#185FA5; font-weight:500;">${s.note}</span><div style="width:100%; background:#185FA5; border-radius:4px 4px 0 0; height:${s.note * 10}px;"></div>` : `<span style="font-size:11px; color:#B5D4F4;">-</span><div style="width:100%; background:#E6F1FB; border-radius:4px 4px 0 0; height:10px;"></div>`}
+        </div>
+      `).join('');
+      labels.innerHTML = semaine.map(s => `<span style="font-size:10px; color:#85B7EB; flex:1; text-align:center;">${s.jour}</span>`).join('');
+      const notesPresentes = semaine.filter(s => s.note !== null);
+      if (notesPresentes.length > 0) {
+        const moyenne = (notesPresentes.reduce((a, b) => a + b.note, 0) / notesPresentes.length).toFixed(1);
+        document.getElementById('score-semaine').textContent = moyenne + '/10';
+      }
+    }
+
+    function ouvrirUrgence() {
+      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
+      document.getElementById('accueil').style.display = 'none';
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('urgence').style.display = 'flex';
+    }
+
+    function fermerUrgence() {
+      document.getElementById('urgence').style.display = 'none';
+      if (pageAvantJournal === 'chat') {
+        document.getElementById('chat').style.display = 'flex';
+      } else {
+        document.getElementById('accueil').style.display = 'flex';
+      }
+    }
+
+    function parlerUrgence() {
+      fermerUrgence();
+      prenom = document.getElementById('prenom').value.trim() || 'toi';
+      document.getElementById('accueil').style.display = 'none';
+      document.getElementById('chat').style.display = 'flex';
+      document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
+      const message = 'J\'ai besoin d\'aide urgente, je ne me sens pas bien.';
+      document.getElementById('input').value = message;
+      envoyer();
+    }
     function ouvrirObjectifs() {
       pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
       document.getElementById('accueil').style.display = 'none';
