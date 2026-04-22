@@ -195,6 +195,70 @@
     <button class="dark-toggle-accueil" onclick="toggleDark()">🌙 Mode sombre</button>
     <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
   </div> 
+  <!-- DEFI BIEN-ETRE -->
+  <div id="defi" style="display:none; flex-direction:column; height:100vh;">
+    <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
+      <button onclick="fermerDefi()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
+      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">🎯 Défi bien-être du jour</h2>
+    </div>
+    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
+      <div style="padding:20px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4; text-align:center;">
+        <p style="font-size:13px; color:#85B7EB; margin-bottom:12px;">Ton défi d'aujourd'hui</p>
+        <div id="defi-loading" style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+          <div class="citation-point" style="width:8px; height:8px;"></div>
+          <p style="font-size:13px; color:#85B7EB;">Génération de ton défi...</p>
+        </div>
+        <p id="defi-texte" style="display:none; font-family:'Lora',serif; font-size:18px; color:#0C447C; line-height:1.7; margin-bottom:16px;"></p>
+        <div id="defi-actions" style="display:none; display:flex; flex-direction:column; gap:10px;">
+          <button onclick="defiAccepte()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; font-weight:500;">✅ J'accepte ce défi !</button>
+          <button onclick="nouveauDefi()" style="background:none; border:1px solid #B5D4F4; color:#185FA5; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer;">🔄 Nouveau défi</button>
+        </div>
+      </div>
+      <div id="defi-accepte-msg" style="display:none; padding:16px; border-radius:16px; background:#E6F1FB; border:0.5px solid #B5D4F4; text-align:center;">
+        <p style="font-size:32px; margin-bottom:8px;">🎉</p>
+        <p style="font-family:'Lora',serif; font-size:16px; color:#0C447C; margin-bottom:8px;">Bravo ! Tu as accepté le défi !</p>
+        <p style="font-size:13px; color:#85B7EB;">Reviens demain pour un nouveau défi 💙</p>
+      </div>
+      <div style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
+        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:12px;">Mes défis complétés</p>
+        <div id="defis-historique">
+          <p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucun défi complété pour le moment 💙</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LETTRE A MON FUTUR MOI -->
+  <div id="lettre" style="display:none; flex-direction:column; height:100vh;">
+    <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
+      <button onclick="fermerLettre()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
+      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">💌 Lettre à mon futur moi</h2>
+    </div>
+    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
+      
+      <div id="lettre-form" style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
+        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:8px;">Écris à ton futur toi</p>
+        <p style="font-size:13px; color:#85B7EB; margin-bottom:14px;">Dans combien de temps veux-tu recevoir ta lettre ?</p>
+        <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+          <button class="btn-delai" onclick="selectionnerDelai(this, '1 mois')">1 mois</button>
+          <button class="btn-delai" onclick="selectionnerDelai(this, '3 mois')">3 mois</button>
+          <button class="btn-delai" onclick="selectionnerDelai(this, '6 mois')">6 mois</button>
+          <button class="btn-delai" onclick="selectionnerDelai(this, '1 an')">1 an</button>
+        </div>
+        <p style="font-size:13px; color:#85B7EB; margin-bottom:8px;">Ta lettre :</p>
+        <textarea id="lettre-texte" placeholder="Cher futur moi, aujourd'hui je me sens..." style="width:100%; border:0.5px solid #B5D4F4; border-radius:12px; padding:12px 14px; font-size:14px; font-family:'DM Sans',sans-serif; resize:none; height:160px; outline:none; background:#f7faff; color:#0C447C; margin-bottom:12px;"></textarea>
+        <button onclick="sauvegarderLettre()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; font-weight:500;">Sceller ma lettre 💌</button>
+      </div>
+
+      <div id="lettres-sauvegardees" style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
+        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:12px;">Mes lettres scellées</p>
+        <div id="lettres-liste">
+          <p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune lettre pour le moment 💌</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
   <!-- SUIVI HUMEUR -->
   <div id="suivi-humeur" style="display:none; flex-direction:column; height:100vh;">
     <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
