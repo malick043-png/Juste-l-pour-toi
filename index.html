@@ -77,6 +77,8 @@
     .btn-sauvegarder:hover { opacity: 0.88; }
 .objectif-btn { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 12px; padding: 10px 14px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: left; transition: all 0.2s; }
     .objectif-btn:hover { background: #E6F1FB; }
+    .btn-delai { background: #fff; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 12px; padding: 8px 16px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-delai:hover { background: #E6F1FB; }
     .historique-section { padding: 16px; border-radius: 16px; }
     body.light .historique-section { background: #fff; border: 0.5px solid #B5D4F4; }
     body.dark .historique-section { background: #1a2d42; border: 0.5px solid #185FA5; }
@@ -562,6 +564,160 @@ function partagercitation() {
       document.getElementById('chat').style.display = 'flex';
       document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
       ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
+    }
+    let delaiLettre = '';
+
+    function ouvrirDefi() {
+      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
+      document.getElementById('accueil').style.display = 'none';
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('defi').style.display = 'flex';
+      chargerDefi();
+      afficherDefisHistorique();
+    }
+
+    function fermerDefi() {
+      document.getElementById('defi').style.display = 'none';
+      if (pageAvantJournal === 'chat') {
+        document.getElementById('chat').style.display = 'flex';
+      } else {
+        document.getElementById('accueil').style.display = 'flex';
+      }
+    }
+
+    async function chargerDefi() {
+      document.getElementById('defi-loading').style.display = 'flex';
+      document.getElementById('defi-texte').style.display = 'none';
+      document.getElementById('defi-actions').style.display = 'none';
+      document.getElementById('defi-accepte-msg').style.display = 'none';
+
+      const defiAccepteAujourdhui = localStorage.getItem('defi-date') === new Date().toLocaleDateString('fr-FR');
+      if (defiAccepteAujourdhui) {
+        document.getElementById('defi-loading').style.display = 'none';
+        document.getElementById('defi-texte').style.display = 'block';
+        document.getElementById('defi-texte').textContent = localStorage.getItem('defi-texte');
+        document.getElementById('defi-accepte-msg').style.display = 'block';
+        return;
+      }
+
+      try {
+        const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-opus-4-5',
+            max_tokens: 150,
+            system: 'Tu es un coach bien-être bienveillant. Génère UN SEUL défi bien-être simple, positif et réalisable en une journée. Le défi doit être concret, motivant et accessible à tous. Exemples: "Écris 3 choses pour lesquelles tu es reconnaissant aujourd\'hui", "Offre un sourire sincère à quelqu\'un aujourd\'hui". Réponds UNIQUEMENT avec le défi, sans introduction ni explication.',
+            messages: [{ role: 'user', content: 'Génère un défi bien-être pour aujourd\'hui.' }]
+          })
+        });
+        const data = await res.json();
+        const defi = data.content[0].text;
+        localStorage.setItem('defi-texte', defi);
+        document.getElementById('defi-loading').style.display = 'none';
+        document.getElementById('defi-texte').style.display = 'block';
+        document.getElementById('defi-texte').textContent = defi;
+        document.getElementById('defi-actions').style.display = 'flex';
+      } catch(e) {
+        document.getElementById('defi-loading').style.display = 'none';
+        document.getElementById('defi-texte').style.display = 'block';
+        document.getElementById('defi-texte').textContent = 'Écris 3 choses positives qui se sont passées aujourd\'hui, même les plus petites. 💙';
+        document.getElementById('defi-actions').style.display = 'flex';
+      }
+    }
+
+    async function nouveauDefi() {
+      localStorage.removeItem('defi-texte');
+      await chargerDefi();
+    }
+
+    function defiAccepte() {
+      const defi = document.getElementById('defi-texte').textContent;
+      localStorage.setItem('defi-date', new Date().toLocaleDateString('fr-FR'));
+      const defis = JSON.parse(localStorage.getItem('defis-completes') || '[]');
+      defis.unshift({ date: new Date().toLocaleDateString('fr-FR'), defi: defi });
+      if (defis.length > 10) defis.pop();
+      localStorage.setItem('defis-completes', JSON.stringify(defis));
+      document.getElementById('defi-actions').style.display = 'none';
+      document.getElementById('defi-accepte-msg').style.display = 'block';
+      afficherDefisHistorique();
+    }
+
+    function afficherDefisHistorique() {
+      const defis = JSON.parse(localStorage.getItem('defis-completes') || '[]');
+      const container = document.getElementById('defis-historique');
+      if (defis.length === 0) {
+        container.innerHTML = '<p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucun défi complété pour le moment 💙</p>';
+        return;
+      }
+      container.innerHTML = defis.map(d => `
+        <div style="padding:10px 0; border-bottom:0.5px solid #B5D4F4; display:flex; gap:10px; align-items:flex-start;">
+          <span style="font-size:16px;">✅</span>
+          <div>
+            <p style="font-size:11px; color:#85B7EB;">${d.date}</p>
+            <p style="font-size:13px; color:#0C447C;">${d.defi}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function ouvrirLettre() {
+      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
+      document.getElementById('accueil').style.display = 'none';
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('lettre').style.display = 'flex';
+      afficherLettres();
+    }
+
+    function fermerLettre() {
+      document.getElementById('lettre').style.display = 'none';
+      if (pageAvantJournal === 'chat') {
+        document.getElementById('chat').style.display = 'flex';
+      } else {
+        document.getElementById('accueil').style.display = 'flex';
+      }
+    }
+
+    function selectionnerDelai(el, delai) {
+      document.querySelectorAll('.btn-delai').forEach(b => b.style.background = '#fff');
+      el.style.background = '#E6F1FB';
+      delaiLettre = delai;
+    }
+
+    function sauvegarderLettre() {
+      const texte = document.getElementById('lettre-texte').value.trim();
+      if (!texte) { alert('Écris ta lettre d\'abord !'); return; }
+      if (!delaiLettre) { alert('Choisis dans combien de temps tu veux recevoir ta lettre !'); return; }
+      const lettres = JSON.parse(localStorage.getItem('lettres') || '[]');
+      lettres.unshift({
+        date: new Date().toLocaleDateString('fr-FR'),
+        delai: delaiLettre,
+        texte: texte
+      });
+      localStorage.setItem('lettres', JSON.stringify(lettres));
+      document.getElementById('lettre-texte').value = '';
+      delaiLettre = '';
+      document.querySelectorAll('.btn-delai').forEach(b => b.style.background = '#fff');
+      alert('Ta lettre a été scellée ! 💌 Elle t\'attend dans ' + delaiLettre);
+      afficherLettres();
+    }
+
+    function afficherLettres() {
+      const lettres = JSON.parse(localStorage.getItem('lettres') || '[]');
+      const container = document.getElementById('lettres-liste');
+      if (lettres.length === 0) {
+        container.innerHTML = '<p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Aucune lettre pour le moment 💌</p>';
+        return;
+      }
+      container.innerHTML = lettres.map(l => `
+        <div style="padding:12px; border-radius:12px; background:#f7faff; border:0.5px solid #B5D4F4; margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <span style="font-size:11px; color:#85B7EB;">Écrite le ${l.date}</span>
+            <span style="font-size:11px; background:#E6F1FB; color:#185FA5; padding:2px 8px; border-radius:10px;">Dans ${l.delai}</span>
+          </div>
+          <p style="font-size:13px; color:#0C447C; font-style:italic;">"${l.texte.substring(0, 80)}${l.texte.length > 80 ? '...' : ''}"</p>
+        </div>
+      `).join('');
     }
     function ouvrirSuiviHumeur() {
       pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
