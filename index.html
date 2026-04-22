@@ -191,6 +191,45 @@
     <button class="dark-toggle-accueil" onclick="toggleDark()">🌙 Mode sombre</button>
     <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
   </div>
+  <!-- OBJECTIFS PERSONNELS -->
+  <div id="objectifs" style="display:none; flex-direction:column; height:100vh;">
+    <div style="background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
+      <button onclick="fermerObjectifs()" style="background:rgba(255,255,255,0.15); border:none; color:#fff; border-radius:12px; padding:6px 12px; font-size:12px; cursor:pointer;">← Retour</button>
+      <h2 style="font-family:'Lora',serif; font-size:18px; color:#fff;">🎯 Mes objectifs</h2>
+    </div>
+    <div style="flex:1; overflow-y:auto; padding:20px 16px; display:flex; flex-direction:column; gap:16px;" id="objectifs-body">
+      
+      <div style="padding:16px; border-radius:16px;" id="objectif-card-light">
+        <p style="font-size:14px; font-weight:500; margin-bottom:12px; color:#0C447C;">Quel est ton objectif principal ?</p>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+          <button class="objectif-btn" onclick="selectionnerObjectif('Réduire mon stress')">😌 Réduire mon stress</button>
+          <button class="objectif-btn" onclick="selectionnerObjectif('Mieux dormir')">😴 Mieux dormir</button>
+          <button class="objectif-btn" onclick="selectionnerObjectif('Avoir plus confiance en moi')">💪 Avoir plus confiance en moi</button>
+          <button class="objectif-btn" onclick="selectionnerObjectif('Mieux gérer mes émotions')">💭 Mieux gérer mes émotions</button>
+          <button class="objectif-btn" onclick="selectionnerObjectif('Me sentir moins seul')">🤝 Me sentir moins seul</button>
+          <button class="objectif-btn" onclick="selectionnerObjectif('Aller de l\'avant')">🚀 Aller de l\'avant</button>
+        </div>
+        <p style="font-size:13px; color:#85B7EB; margin-bottom:8px;">Ou écris ton propre objectif :</p>
+        <input type="text" id="objectif-custom" placeholder="Mon objectif personnalisé..." style="width:100%; border:0.5px solid #B5D4F4; border-radius:20px; padding:10px 14px; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; background:#f7faff; color:#0C447C; margin-bottom:12px;">
+        <button onclick="sauvegarderObjectif()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:11px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; width:100%; font-weight:500;">Sauvegarder mon objectif 💙</button>
+      </div>
+
+      <div id="objectif-actuel" style="display:none; padding:16px; border-radius:16px; background:#E6F1FB; border:0.5px solid #B5D4F4;">
+        <p style="font-size:12px; color:#85B7EB; margin-bottom:4px;">Mon objectif actuel</p>
+        <p id="objectif-texte" style="font-size:16px; font-weight:500; color:#0C447C; margin-bottom:12px;"></p>
+        <button onclick="parlerObjectif()" style="background:#185FA5; color:#fff; border:none; border-radius:20px; padding:10px 16px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; margin-right:8px;">💙 En parler avec l'assistant</button>
+        <button onclick="changerObjectif()" style="background:none; border:1px solid #185FA5; color:#185FA5; border-radius:20px; padding:10px 16px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer;">Changer</button>
+      </div>
+
+      <div style="padding:16px; border-radius:16px; background:#fff; border:0.5px solid #B5D4F4;">
+        <p style="font-size:14px; font-weight:500; color:#0C447C; margin-bottom:12px;">Ma progression</p>
+        <div id="progression-container" style="display:flex; flex-direction:column; gap:8px;">
+          <p style="font-size:13px; color:#85B7EB; text-align:center; font-style:italic;">Fixe un objectif pour commencer 💙</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
 <!-- EXERCICE DE RESPIRATION -->
   <div id="respiration" style="display:none; flex-direction:column; height:100vh; align-items:center; justify-content:center; text-align:center; padding:30px;">
     <div style="position:absolute; top:0; left:0; right:0; background:#185FA5; padding:14px 18px; display:flex; align-items:center; gap:12px;">
