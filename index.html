@@ -44,11 +44,9 @@
 
     /* MENU GRILLE */
     .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 320px; }
-    .menu-item { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 6px; border-radius: 16px; border: 1px solid rgba(181,212,244,0.15); cursor: pointer; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); transition: all 0.25s; }
-    .menu-item:hover { background: rgba(255,255,255,0.12); border-color: rgba(181,212,244,0.4); transform: translateY(-2px); }
+.menu-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px; border-radius: 12px; border: 1px solid rgba(181,212,244,0.15); cursor: pointer; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); transition: all 0.25s; }    .menu-item:hover { background: rgba(255,255,255,0.12); border-color: rgba(181,212,244,0.4); transform: translateY(-2px); }
     .menu-item:active { transform: scale(0.95); }
-    .menu-item .icon { font-size: 22px; }
-    .menu-item .label { font-size: 9px; color: rgba(181,212,244,0.7); text-align: center; line-height: 1.3; }
+.menu-item .icon { font-size: 18px; }    .menu-item .label { font-size: 9px; color: rgba(181,212,244,0.7); text-align: center; line-height: 1.3; }
     .accueil-footer { margin-top: 18px; font-size: 11px; color: rgba(181,212,244,0.4); font-style: italic; font-family: 'Lora', serif; }
 
     /* CHAT */
@@ -203,8 +201,7 @@ body.light-mode #canvas-bg { opacity: 0.3; }
     <input type="text" class="prenom-input" id="prenom" placeholder="Ton prénom...">
   </div>
   <button class="btn-commencer" onclick="commencer()">Commencer la conversation 💙</button>
-  <div class="menu-grid">
-    <div class="menu-item" onclick="ouvrirSec('journal'); afficherHistoriqueJournal()"><span class="icon">📔</span><span class="label">Journal</span></div>
+<div class="menu-grid" style="grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 320px;">    <div class="menu-item" onclick="ouvrirSec('journal'); afficherHistoriqueJournal()"><span class="icon">📔</span><span class="label">Journal</span></div>
     <div class="menu-item" onclick="ouvrirSec('respiration')"><span class="icon">🌬️</span><span class="label">Respiration</span></div>
     <div class="menu-item" onclick="ouvrirSec('objectifs'); afficherObjectifActuel()"><span class="icon">🎯</span><span class="label">Objectifs</span></div>
     <div class="menu-item" onclick="ouvrirSec('humeur'); afficherGraphique()"><span class="icon">📊</span><span class="label">Humeur</span></div>
