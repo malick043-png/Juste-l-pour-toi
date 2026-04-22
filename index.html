@@ -359,7 +359,113 @@ function partagercitation() {
       document.getElementById('header-prenom').textContent = 'Bonjour ' + prenom + ' 💙';
       ajouterMessage('assistant', '💙 Bonjour ' + prenom + ' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
     }
+function ouvrirRespiration() {
+      pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
+      document.getElementById('accueil').style.display = 'none';
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('respiration').style.display = 'flex';
+      document.getElementById('instruction-respiration').textContent = 'Prêt ?';
+      document.getElementById('compteur-respiration').textContent = '';
+      document.getElementById('cycle-respiration').textContent = 'Appuie sur Commencer pour débuter';
+    }
 
+    function fermerRespiration() {
+      arreterRespiration();
+      document.getElementById('respiration').style.display = 'none';
+      if (pageAvantJournal === 'chat') {
+        document.getElementById('chat').style.display = 'flex';
+      } else {
+        document.getElementById('accueil').style.display = 'flex';
+      }
+    }
+
+    let respirationInterval = null;
+    let cycleCount = 0;
+
+    function demarrerRespiration() {
+      document.getElementById('btn-start-respiration').style.display = 'none';
+      document.getElementById('btn-stop-respiration').style.display = 'block';
+      cycleCount = 0;
+      executerCycle();
+    }
+
+    function arreterRespiration() {
+      if (respirationInterval) {
+        clearTimeout(respirationInterval);
+        respirationInterval = null;
+      }
+      document.getElementById('btn-start-respiration').style.display = 'block';
+      document.getElementById('btn-stop-respiration').style.display = 'none';
+      document.getElementById('instruction-respiration').textContent = 'Prêt ?';
+      document.getElementById('compteur-respiration').textContent = '';
+      document.getElementById('cycle-respiration').textContent = 'Appuie sur Commencer pour débuter';
+      const cercle = document.getElementById('cercle-respiration');
+      cercle.style.transform = 'scale(1)';
+      cercle.style.background = '#185FA5';
+    }
+
+    function executerCycle() {
+      if (cycleCount >= 5) {
+        document.getElementById('instruction-respiration').textContent = '🎉 Bravo !';
+        document.getElementById('compteur-respiration').textContent = '';
+        document.getElementById('cycle-respiration').textContent = 'Tu as terminé 5 cycles de respiration 💙';
+        document.getElementById('btn-start-respiration').style.display = 'block';
+        document.getElementById('btn-stop-respiration').style.display = 'none';
+        return;
+      }
+
+      cycleCount++;
+      document.getElementById('cycle-respiration').textContent = 'Cycle ' + cycleCount + ' sur 5';
+      const cercle = document.getElementById('cercle-respiration');
+
+      // INSPIRE - 4 secondes
+      document.getElementById('instruction-respiration').textContent = 'Inspire...';
+      cercle.style.background = '#378ADD';
+      cercle.style.transform = 'scale(1.5)';
+      let compte = 4;
+      document.getElementById('compteur-respiration').textContent = compte;
+      
+      const inspireInterval = setInterval(() => {
+        compte--;
+        if (compte > 0) {
+          document.getElementById('compteur-respiration').textContent = compte;
+        } else {
+          clearInterval(inspireInterval);
+          
+          // RETIENS - 4 secondes
+          document.getElementById('instruction-respiration').textContent = 'Retiens...';
+          cercle.style.background = '#1D9E75';
+          let compte2 = 4;
+          document.getElementById('compteur-respiration').textContent = compte2;
+          
+          const retiensInterval = setInterval(() => {
+            compte2--;
+            if (compte2 > 0) {
+              document.getElementById('compteur-respiration').textContent = compte2;
+            } else {
+              clearInterval(retiensInterval);
+              
+              // EXPIRE - 6 secondes
+              document.getElementById('instruction-respiration').textContent = 'Expire...';
+              cercle.style.background = '#185FA5';
+              cercle.style.transform = 'scale(1)';
+              let compte3 = 6;
+              document.getElementById('compteur-respiration').textContent = compte3;
+              
+              const expireInterval = setInterval(() => {
+                compte3--;
+                if (compte3 > 0) {
+                  document.getElementById('compteur-respiration').textContent = compte3;
+                } else {
+                  clearInterval(expireInterval);
+                  respirationInterval = setTimeout(executerCycle, 500);
+                }
+              }, 1000);
+            }
+          }, 1000);
+        }
+      }, 1000);
+    }
     function ouvrirJournal() {
       pageAvantJournal = document.getElementById('chat').style.display === 'flex' ? 'chat' : 'accueil';
       document.getElementById('accueil').style.display = 'none';
