@@ -517,6 +517,7 @@ function commencer(){
 }
 
 function reinitialiser(){
+  sauvegarderConversation();
   historique=[];
   document.getElementById('messages').innerHTML='<div class="date-div"><span>aujourd\'hui</span></div>';
   document.getElementById('suggestions').style.display='flex';
@@ -687,6 +688,40 @@ const BADGES=[
   {id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},
   {id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'}
 ];
+  function sauvegarderConversation() {
+  if(historique.length === 0) return;
+  const convs = JSON.parse(localStorage.getItem('conversations') || '[]');
+  convs.unshift({ date: getDate(), heure: getTime(), messages: historique.slice() });
+  if(convs.length > 10) convs.pop();
+  localStorage.setItem('conversations', JSON.stringify(convs));
+}
+
+function afficherHistoriqueConv() {
+  const convs = JSON.parse(localStorage.getItem('conversations') || '[]');
+  const c = document.getElementById('historique-conv');
+  if(!convs.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune conversation 💙</p>'; return; }
+  c.innerHTML = convs.map((conv, i) => `
+    <div style="padding:12px;border-radius:12px;border:0.5px solid #B5D4F4;margin-bottom:10px;cursor:pointer;" onclick="toggleConv(${i})">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:500;color:#0C447C;">💬 ${conv.date} à ${conv.heure}</span>
+        <span style="font-size:11px;color:#85B7EB;">${conv.messages.length} messages</span>
+      </div>
+      <p style="font-size:12px;color:#85B7EB;font-style:italic;">"${conv.messages[0]?.content?.substring(0,60)}..."</p>
+      <div id="conv-detail-${i}" style="display:none;margin-top:12px;border-top:0.5px solid #E6F1FB;padding-top:12px;">
+        ${conv.messages.map(m => `
+          <div style="margin-bottom:8px;display:flex;flex-direction:column;${m.role==='user'?'align-items:flex-end':''}">
+            <div style="max-width:85%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.5;${m.role==='user'?'background:#185FA5;color:#fff;border-radius:12px 12px 4px 12px;':'background:#f7faff;color:#0C447C;border:0.5px solid #B5D4F4;border-radius:12px 12px 12px 4px;'}">${m.content}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleConv(i) {
+  const el = document.getElementById('conv-detail-'+i);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
 function verifierBadges(){
   const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');
   const journal=JSON.parse(localStorage.getItem('journal')||'[]');
