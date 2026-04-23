@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Juste là pour toi">
+  <meta name="apple-mobile-web-app-title" content="Juste là pour toi"> 
   <title>Juste là pour toi</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -181,7 +181,50 @@
   </style>
 </head>
 <body>
+<!-- TUTORIEL -->
+<div id="tutoriel" style="display:none; position:fixed; inset:0; z-index:200; flex-direction:column; height:100vh;">
+  <div style="flex:1; overflow:hidden; position:relative;">
+    <div id="tuto-slides" style="display:flex; transition:transform 0.4s ease; height:100%;">
+      
+      <div class="tuto-slide" style="min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 30px; text-align:center;">
+        <div style="font-size:60px; margin-bottom:24px;">💙</div>
+        <h2 style="font-family:'Lora',serif; font-size:24px; color:#0C447C; margin-bottom:14px;">Bienvenue sur Juste là pour toi</h2>
+        <p style="font-size:15px; color:#378ADD; line-height:1.7; max-width:280px;">Ton espace bienveillant pour prendre soin de toi, à tout moment de la journée.</p>
+      </div>
 
+      <div class="tuto-slide" style="min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 30px; text-align:center;">
+        <div style="font-size:60px; margin-bottom:24px;">🤖</div>
+        <h2 style="font-family:'Lora',serif; font-size:24px; color:#0C447C; margin-bottom:14px;">Une IA qui t'écoute</h2>
+        <p style="font-size:15px; color:#378ADD; line-height:1.7; max-width:280px;">Parle librement en français, en anglais ou en wolof. L'assistant te répond avec empathie, sans jugement.</p>
+      </div>
+
+      <div class="tuto-slide" style="min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 30px; text-align:center;">
+        <div style="font-size:60px; margin-bottom:24px;">🌟</div>
+        <h2 style="font-family:'Lora',serif; font-size:24px; color:#0C447C; margin-bottom:14px;">Des outils pour ton bien-être</h2>
+        <p style="font-size:15px; color:#378ADD; line-height:1.7; max-width:280px;">Journal de bord, respiration guidée, objectifs personnels, défis quotidiens et bien plus encore !</p>
+      </div>
+
+      <div class="tuto-slide" style="min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 30px; text-align:center;">
+        <div style="font-size:60px; margin-bottom:24px;">🔒</div>
+        <h2 style="font-family:'Lora',serif; font-size:24px; color:#0C447C; margin-bottom:14px;">100% privé et confidentiel</h2>
+        <p style="font-size:15px; color:#378ADD; line-height:1.7; max-width:280px;">Tes conversations restent privées. Aucun jugement, aucun partage. C'est ton espace rien qu'à toi.</p>
+        <button onclick="finirTutoriel()" style="margin-top:28px; background:#185FA5; color:#fff; border:none; border-radius:24px; padding:13px 40px; font-size:15px; font-family:'DM Sans',sans-serif; cursor:pointer; font-weight:500; box-shadow:0 4px 16px rgba(24,95,165,0.3);">Commencer 💙</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="padding:20px; display:flex; align-items:center; justify-content:space-between;">
+    <button onclick="finirTutoriel()" style="background:none; border:none; font-size:13px; color:#85B7EB; cursor:pointer; font-family:'DM Sans',sans-serif;">Passer</button>
+    <div style="display:flex; gap:8px;" id="tuto-points">
+      <div class="tuto-point active" onclick="allerSlide(0)"></div>
+      <div class="tuto-point" onclick="allerSlide(1)"></div>
+      <div class="tuto-point" onclick="allerSlide(2)"></div>
+      <div class="tuto-point" onclick="allerSlide(3)"></div>
+    </div>
+    <button id="tuto-next" onclick="slideSuivant()" style="background:#185FA5; color:#fff; border:none; border-radius:16px; padding:8px 18px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer;">Suivant →</button>
+  </div>
+</div>
 <div id="splash">
   <img src="icon.png" class="splash-logo" alt="Logo">
   <p class="splash-citation" id="splash-citation"></p>
