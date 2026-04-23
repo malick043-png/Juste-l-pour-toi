@@ -256,6 +256,7 @@
       <div class="drawer-item" onclick="ouvrirSec('defi');fermerMenu();chargerDefi();afficherDefisHisto()"><span class="drawer-icon">⚡</span><span class="drawer-label">Défi du jour</span></div>
       <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
       <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
     </div>
   </div>
@@ -425,7 +426,17 @@
     </div>
   </div>
 </div>
-
+<div class="page-sec" id="historique">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('historique')">← Retour</button><h2>💬 Historique</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <p style="font-size:32px;margin-bottom:8px;">💬</p>
+      <p class="card-titre">Tes conversations passées</p>
+      <p style="font-size:13px;color:#85B7EB;">Relis tes échanges avec l'assistant 💙</p>
+    </div>
+    <div class="card"><div id="historique-conv"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune conversation 💙</p></div></div>
+  </div>
+</div>
 <div class="page-sec" id="badges">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('badges')">← Retour</button><h2>🏆 Mes récompenses</h2></div>
   <div class="sec-body">
