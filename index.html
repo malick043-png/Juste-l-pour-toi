@@ -852,6 +852,9 @@ async function envoyer(){
 document.getElementById('btn').addEventListener('click',envoyer);
 document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();envoyer();}});
 document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
+  if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/Juste-l-pour-toi/sw.js').catch(()=>{});
+}
 document.getElementById('prenom').addEventListener('keydown',e=>{if(e.key==='Enter')commencer();});
 </script>
 </body>
