@@ -441,7 +441,25 @@
 <script>
 const CITATIONS=['Chaque jour est une nouvelle chance de prendre soin de toi.','Tu n\'as pas à être parfait pour mériter d\'être aimé.','La douceur envers soi-même est le début de tout.','Tes émotions sont valides, même celles que tu n\'arrives pas à nommer.','Prendre soin de toi n\'est pas un luxe, c\'est une nécessité.','Tu es plus fort que tu ne le crois.','Chaque petit pas compte sur le chemin du bien-être.','Il est courageux de demander de l\'aide.','Tu mérites la paix intérieure.','Respire. Tu es là. C\'est déjà beaucoup.'];
 const SYSTEM=`You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. If the user writes in Wolof, respond in Wolof with warmth and empathy. If the user writes in French, respond in French. If the user writes in English, respond in English. Keep responses to 2-4 sentences. Address user by first name when natural.`;let historique=[],prenom='',humeurSel2='',delaiLettre='',pagePrecedente='accueil';
-
+// TUTORIEL
+let slideActuel = 0;
+function allerSlide(n) {
+  slideActuel = n;
+  document.getElementById('tuto-slides').style.transform = 'translateX(-'+n*100+'%)';
+  document.querySelectorAll('.tuto-point').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.getElementById('tuto-next').textContent = n === 3 ? '' : 'Suivant →';
+  document.getElementById('tuto-next').style.display = n === 3 ? 'none' : 'block';
+}
+function slideSuivant() { if(slideActuel < 3) allerSlide(slideActuel + 1); }
+function finirTutoriel() {
+  localStorage.setItem('tutoriel-vu', 'true');
+  document.getElementById('tutoriel').style.display = 'none';
+  document.getElementById('splash').style.display = 'flex';
+}
+if(!localStorage.getItem('tutoriel-vu')) {
+  document.getElementById('tutoriel').style.display = 'flex';
+  document.getElementById('splash').style.display = 'none';
+}
 if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark');}
 
 function toggleDark(){
