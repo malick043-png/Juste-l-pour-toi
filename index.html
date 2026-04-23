@@ -682,37 +682,6 @@ async function envoyer(){
 document.getElementById('btn').addEventListener('click',envoyer);
 document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();envoyer();}});
 document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
- 
-  if(isListening){ recognition.stop(); return; }
-  recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  recognition.lang = 'fr-FR';
-  recognition.continuous = false;
-  recognition.interimResults = true;
-  recognition.onstart = () => {
-    isListening = true;
-    document.getElementById('mic-btn').textContent = '🔴';
-    document.getElementById('mic-btn').style.background = 'rgba(229,62,62,0.1)';
-    document.getElementById('mic-btn').style.borderColor = '#e53e3e';
-  };
-  recognition.onresult = (e) => {
-    const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
-    document.getElementById('input').value = transcript;
-    document.getElementById('input').style.height = 'auto';
-    document.getElementById('input').style.height = Math.min(document.getElementById('input').scrollHeight, 80) + 'px';
-  };
-  recognition.onend = () => {
-    isListening = false;
-    document.getElementById('mic-btn').textContent = '🎤';
-    document.getElementById('mic-btn').style.background = 'rgba(24,95,165,0.1)';
-    document.getElementById('mic-btn').style.borderColor = '#B5D4F4';
-    if(document.getElementById('input').value.trim()) envoyer();
-  };
-  recognition.onerror = () => {
-    isListening = false;
-    document.getElementById('mic-btn').textContent = '🎤';
-  };
-  recognition.start();
-}
 document.getElementById('prenom').addEventListener('keydown',e=>{if(e.key==='Enter')commencer();});
 </script>
 </body>
