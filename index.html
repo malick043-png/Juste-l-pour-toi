@@ -972,6 +972,14 @@ if(localStorage.getItem('son')!=='off'){
   }catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}
   document.getElementById('btn').disabled=false;inp.focus();
 }
+  function toggleSon(){
+  const mute=localStorage.getItem('son')==='off';
+  localStorage.setItem('son', mute?'on':'off');
+  document.getElementById('son-btn').textContent=mute?'🔊':'🔇';
+}
+if(localStorage.getItem('son')==='off'){
+  document.getElementById('son-btn').textContent='🔇';
+}
 document.getElementById('btn').addEventListener('click',envoyer);
 document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();envoyer();}});
 document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
