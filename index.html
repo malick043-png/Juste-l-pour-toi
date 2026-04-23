@@ -113,8 +113,9 @@
     .sugg-btn { border-radius: 14px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     body:not(.dark) .sugg-btn { background: #fff; color: #185FA5; border: 1px solid #B5D4F4; }
     body.dark .sugg-btn { background: rgba(255,255,255,0.07); color: rgba(181,212,244,0.8); border: 1px solid rgba(181,212,244,0.2); }
-    .typing { display: flex; gap: 5px; align-items: center; padding: 10px 14px; border-radius: 14px 14px 14px 4px; align-self: flex-start; }
-    body:not(.dark) .typing { background: #fff; border: 0.5px solid #B5D4F4; }
+.typing { display: flex; gap: 5px; align-items: center; padding: 10px 14px; border-radius: 14px 14px 14px 4px; align-self: flex-start; position: relative; overflow: hidden; }
+.typing::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(24,95,165,0.05), transparent); animation: shimmer 1.5s infinite; }
+@keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }    body:not(.dark) .typing { background: #fff; border: 0.5px solid #B5D4F4; }
     body.dark .typing { background: rgba(255,255,255,0.07); border: 0.5px solid rgba(181,212,244,0.15); }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: #85B7EB; animation: bounce 1.2s infinite; }
     .dot:nth-child(2){animation-delay:.2s} .dot:nth-child(3){animation-delay:.4s}
@@ -933,8 +934,24 @@ function ajouterMsg(role,texte){
   w.scrollIntoView({behavior:'smooth'});
 }
 function showTyping(){const d=document.createElement('div');d.className='typing';d.id='typing';d.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';document.getElementById('messages').appendChild(d);d.scrollIntoView({behavior:'smooth'});}
-function removeTyping(){const el=document.getElementById('typing');if(el)el.remove();}
-async function envoyer(){
+function removeTyping(){
+  const el=document.getElementById('typing');
+  if(el)el.remove();
+  // Son doux
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator();
+    const g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.frequency.setValueAtTime(520,ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(440,ctx.currentTime+0.3);
+    g.gain.setValueAtTime(0.1,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4);
+    o.start(ctx.currentTime);o.stop(ctx.currentTime+0.4);
+  }catch(e){}
+  // Vibration
+  try{if(navigator.vibrate)navigator.vibrate([30,10,30]);}catch(e){}
+}async function envoyer(){
   const inp=document.getElementById('input');const t=inp.value.trim();
   if(!t||document.getElementById('btn').disabled)return;
   ajouterMsg('user',t);historique.push({role:'user',content:t});inp.value='';inp.style.height='auto';
