@@ -176,6 +176,15 @@
     body:not(.dark) .delai-btn { background: #fff; border-color: #B5D4F4; color: #185FA5; }
     body.dark .delai-btn { background: rgba(255,255,255,0.05); border-color: rgba(181,212,244,0.2); color: rgba(181,212,244,0.8); }
     .delai-btn.selected { background: #185FA5; border-color: #185FA5; color: #fff; }
+    .groupe-theme { background: none; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 16px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+.groupe-theme.active { background: #185FA5; color: #fff; border-color: #185FA5; }
+.msg-groupe { display: flex; flex-direction: column; gap: 2px; }
+.msg-groupe.moi { align-items: flex-end; }
+.msg-groupe .auteur { font-size: 10px; color: #85B7EB; }
+.msg-groupe .texte { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+.msg-groupe.moi .texte { background: #185FA5; color: #fff; border-radius: 12px 12px 4px 12px; }
+.msg-groupe.autre .texte { background: #fff; color: #0C447C; border: 0.5px solid #B5D4F4; border-radius: 12px 12px 12px 4px; }
+.msg-groupe.ia .texte { background: #E6F1FB; color: #0C447C; border-radius: 12px; font-style: italic; }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(181,212,244,0.3); border-radius: 2px; }
@@ -260,6 +269,7 @@
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
       <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
       <div class="drawer-item" onclick="ouvrirSec('confidentialite');fermerMenu()"><span class="drawer-icon">🔒</span><span class="drawer-label">Confidentialité</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('groupe-salle');fermerMenu();chargerSalles()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>
       <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
       <div class="drawer-item" onclick="ouvrirSec('apropos');fermerMenu()"><span class="drawer-icon">ℹ️</span><span class="drawer-label">À propos</span></div>
       <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
@@ -445,6 +455,47 @@
     <div class="card">
       <p class="card-titre">💙 Pensées de la communauté</p>
       <div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
+    </div>
+  </div>
+</div>
+  <div class="page-sec" id="groupe-salle">
+  <div class="sec-header"><button class="btn-back" onclick="quitterSalle();fermerSec('groupe-salle')">← Retour</button><h2>🤝 Session de groupe</h2></div>
+  <div class="sec-body" id="groupe-accueil">
+    <div class="card" style="text-align:center;">
+      <p style="font-size:40px;margin-bottom:12px;">🤝</p>
+      <p class="card-titre">Rejoins une salle de soutien</p>
+      <p style="font-size:13px;color:#85B7EB;line-height:1.6;">Discute anonymement avec d'autres personnes. L'IA modère et guide la conversation 💙</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Créer une nouvelle salle</p>
+      <p style="font-size:13px;color:#85B7EB;margin-bottom:10px;">Choisis un thème :</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+        <button class="groupe-theme active" onclick="selTheme(this,'😰 Stress')">😰 Stress</button>
+        <button class="groupe-theme" onclick="selTheme(this,'😴 Sommeil')">😴 Sommeil</button>
+        <button class="groupe-theme" onclick="selTheme(this,'💪 Confiance')">💪 Confiance</button>
+        <button class="groupe-theme" onclick="selTheme(this,'💔 Relations')">💔 Relations</button>
+        <button class="groupe-theme" onclick="selTheme(this,'🌱 Développement')">🌱 Développement</button>
+      </div>
+      <button class="btn-p" onclick="creerSalle()">Créer une salle 💙</button>
+    </div>
+    <div class="card">
+      <p class="card-titre">Salles disponibles</p>
+      <div id="salles-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
+    </div>
+  </div>
+
+  <div id="groupe-chat" style="display:none;flex:1;flex-direction:column;height:100%;">
+    <div style="padding:10px 16px;background:#E6F1FB;border-bottom:0.5px solid #B5D4F4;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <p id="salle-titre" style="font-size:14px;font-weight:500;color:#0C447C;"></p>
+        <p id="salle-membres" style="font-size:12px;color:#85B7EB;"></p>
+      </div>
+      <button onclick="quitterSalle()" style="background:none;border:1px solid #B5D4F4;border-radius:10px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">Quitter</button>
+    </div>
+    <div id="groupe-messages" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:#f0f6ff;"></div>
+    <div style="padding:10px 12px;border-top:0.5px solid #B5D4F4;display:flex;gap:8px;align-items:flex-end;background:#fff;">
+      <textarea id="groupe-input" placeholder="Écris ton message..." rows="1" class="chat-textarea" style="flex:1;"></textarea>
+      <button onclick="envoyerGroupeMsg()" class="send-btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
     </div>
   </div>
 </div>
