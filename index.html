@@ -241,6 +241,7 @@
   </div>
   <div class="input-area">
     <textarea class="chat-textarea" id="input" placeholder="Écris ce que tu ressens..." rows="1"></textarea>
+    <button id="mic-btn" onclick="toggleVoice()" style="width:36px;height:36px;border-radius:50%;background:rgba(24,95,165,0.1);border:1px solid #B5D4F4;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;" title="Parler">🎤</button>
     <button class="send-btn" id="btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
   </div>
   <div class="chat-footer"><span>un espace bienveillant, rien que pour toi</span></div>
@@ -682,6 +683,43 @@ async function envoyer(){
 document.getElementById('btn').addEventListener('click',envoyer);
 document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();envoyer();}});
 document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
+  let recognition = null;
+let isListening = false;
+function toggleVoice(){
+  if(!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)){
+    alert('La reconnaissance vocale n\'est pas supportée sur ce navigateur. Utilise Chrome ou Safari.');
+    return;
+  }
+  if(isListening){ recognition.stop(); return; }
+  recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = 'fr-FR';
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.onstart = () => {
+    isListening = true;
+    document.getElementById('mic-btn').textContent = '🔴';
+    document.getElementById('mic-btn').style.background = 'rgba(229,62,62,0.1)';
+    document.getElementById('mic-btn').style.borderColor = '#e53e3e';
+  };
+  recognition.onresult = (e) => {
+    const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
+    document.getElementById('input').value = transcript;
+    document.getElementById('input').style.height = 'auto';
+    document.getElementById('input').style.height = Math.min(document.getElementById('input').scrollHeight, 80) + 'px';
+  };
+  recognition.onend = () => {
+    isListening = false;
+    document.getElementById('mic-btn').textContent = '🎤';
+    document.getElementById('mic-btn').style.background = 'rgba(24,95,165,0.1)';
+    document.getElementById('mic-btn').style.borderColor = '#B5D4F4';
+    if(document.getElementById('input').value.trim()) envoyer();
+  };
+  recognition.onerror = () => {
+    isListening = false;
+    document.getElementById('mic-btn').textContent = '🎤';
+  };
+  recognition.start();
+}
 document.getElementById('prenom').addEventListener('keydown',e=>{if(e.key==='Enter')commencer();});
 </script>
 </body>
