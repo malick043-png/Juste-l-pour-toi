@@ -257,6 +257,7 @@
       <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
       <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('apropos');fermerMenu()"><span class="drawer-icon">ℹ️</span><span class="drawer-label">À propos</span></div>
       <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
     </div>
   </div>
@@ -439,6 +440,60 @@
     <div class="card">
       <p class="card-titre">💙 Pensées de la communauté</p>
       <div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
+    </div>
+  </div>
+</div>
+  <div class="page-sec" id="apropos">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('apropos')">← Retour</button><h2>ℹ️ À propos</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <img src="icon.png" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #B5D4F4;margin-bottom:16px;">
+      <h2 style="font-family:'Lora',serif;font-size:20px;color:#0C447C;margin-bottom:4px;">Juste là pour toi</h2>
+      <p style="font-size:13px;color:#85B7EB;font-style:italic;">Ton espace bienveillant de bien-être</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Notre mission</p>
+      <p style="font-size:14px;color:#378ADD;line-height:1.7;">Pour toute personne qui a besoin de parler mais qui ne sait pas à qui. Pour toute personne qui a du mal à gérer son stress, qui vit une solitude, qui manque de confiance en elle ou qui a du mal à gérer ses émotions.</p>
+      <p style="font-size:14px;color:#378ADD;line-height:1.7;margin-top:10px;">Notre assistant empathique est là juste pour toi — pour t'écouter, te comprendre, t'accompagner sans te juger et te guider à aller de l'avant. 💙</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Le créateur</p>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:20px;border:1.5px solid #B5D4F4;">👤</div>
+        <div>
+          <p style="font-size:15px;font-weight:500;color:#0C447C;">El Hadj Malick THIOUNE</p>
+          <p style="font-size:12px;color:#85B7EB;">Fondateur & Créateur</p>
+        </div>
+      </div>
+      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Juriste d'entreprise spécialisé en droit des affaires et en droit et gouvernance des énergies et des mines. Entrepreneur, idéologiste, créateur et penseur.</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Nous contacter</p>
+      <a href="mailto:malick043@gmail.com" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;">
+        <span style="font-size:20px;">📧</span>
+        <div>
+          <p style="font-size:13px;font-weight:500;color:#0C447C;">Email</p>
+          <p style="font-size:12px;color:#85B7EB;">malick043@gmail.com</p>
+        </div>
+      </a>
+      <a href="https://wa.me/00221778844799" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;">
+        <span style="font-size:20px;">💬</span>
+        <div>
+          <p style="font-size:13px;font-weight:500;color:#0C447C;">WhatsApp</p>
+          <p style="font-size:12px;color:#85B7EB;">+221 77 884 47 99</p>
+        </div>
+      </a>
+      <a href="https://snapchat.com/add/pthioune23" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;text-decoration:none;">
+        <span style="font-size:20px;">👻</span>
+        <div>
+          <p style="font-size:13px;font-weight:500;color:#0C447C;">Snapchat</p>
+          <p style="font-size:12px;color:#85B7EB;">pthioune23</p>
+        </div>
+      </a>
+    </div>
+    <div class="card" style="text-align:center;">
+      <p style="font-size:12px;color:#85B7EB;font-style:italic;font-family:'Lora',serif;">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p>
+      <p style="font-size:12px;color:#B5D4F4;margin-top:4px;">Tous droits réservés</p>
     </div>
   </div>
 </div>
