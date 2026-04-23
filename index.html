@@ -664,13 +664,42 @@ async function chargerCommunaute(){
 async function partagerPensee(){
   const pensee=document.getElementById('pensee-input').value.trim();
   if(!pensee){alert('Écris une pensée !');return;}
+  if(pensee.length>200){alert('Maximum 200 caractères !');return;}
+  
+  document.querySelector('#communaute .btn-p').textContent='Vérification... 💙';
+  document.querySelector('#communaute .btn-p').disabled=true;
+
   try{
-    await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee,prenom:prenom||'Anonyme'})});
+    const verif=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-opus-4-5',max_tokens:50,
+        system:'Tu es un modérateur bienveillant. Réponds UNIQUEMENT par "OUI" si le message est positif, bienveillant et approprié, ou "NON" si le message contient des insultes, discours haineux, contenu inapproprié ou négatif.',
+        messages:[{role:'user',content:'Ce message est-il approprié pour une communauté bienveillante ? "'+pensee+'"'}]
+      })
+    });
+    const verifData=await verif.json();
+    const decision=verifData.content[0].text.trim().toUpperCase();
+    
+    if(decision.includes('NON')){
+      alert('😔 Cette pensée ne semble pas bienveillante. Essaie de partager quelque chose de positif et encourageant 💙');
+      document.querySelector('#communaute .btn-p').textContent='Partager 💙';
+      document.querySelector('#communaute .btn-p').disabled=false;
+      return;
+    }
+
+    await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({pensee,prenom:prenom||'Anonyme'})
+    });
     document.getElementById('pensee-input').value='';
     document.getElementById('succes-pensee').style.display='block';
     setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);
     chargerCommunaute();
   }catch(e){alert('Erreur 😔');}
+  
+  document.querySelector('#communaute .btn-p').textContent='Partager 💙';
+  document.querySelector('#communaute .btn-p').disabled=false;
 }
 async function envoyerCoeur(id,btn){
   try{
