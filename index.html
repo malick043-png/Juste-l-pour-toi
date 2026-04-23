@@ -273,6 +273,7 @@
       <div class="chat-acts">
         <button class="chat-btn" onclick="allerAccueil()">🏠</button>
         <button class="chat-btn" onclick="ouvrirMenu()">☰ Menu</button>
+        <button class="chat-btn" onclick="toggleSon()" id="son-btn">🔊</button>
         <button class="chat-btn" onclick="reinitialiser()">↺</button>
       </div>
     </div>
@@ -938,22 +939,24 @@ function removeTyping(){
   const el=document.getElementById('typing');
   if(el)el.remove();
  // Son doux
-try{
-  const ctx=new (window.AudioContext||window.webkitAudioContext)();
-  const notes=[523,659,784];
-  notes.forEach((freq,i)=>{
-    const o=ctx.createOscillator();
-    const g=ctx.createGain();
-    o.type='sine';
-    o.connect(g);g.connect(ctx.destination);
-    o.frequency.setValueAtTime(freq,ctx.currentTime+i*0.12);
-    g.gain.setValueAtTime(0,ctx.currentTime+i*0.12);
-    g.gain.linearRampToValueAtTime(0.08,ctx.currentTime+i*0.12+0.05);
-    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.12+0.3);
-    o.start(ctx.currentTime+i*0.12);
-    o.stop(ctx.currentTime+i*0.12+0.3);
-  });
-}catch(e){}
+if(localStorage.getItem('son')!=='off'){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const notes=[523,659,784];
+    notes.forEach((freq,i)=>{
+      const o=ctx.createOscillator();
+      const g=ctx.createGain();
+      o.type='sine';
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.setValueAtTime(freq,ctx.currentTime+i*0.12);
+      g.gain.setValueAtTime(0,ctx.currentTime+i*0.12);
+      g.gain.linearRampToValueAtTime(0.08,ctx.currentTime+i*0.12+0.05);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.12+0.3);
+      o.start(ctx.currentTime+i*0.12);
+      o.stop(ctx.currentTime+i*0.12+0.3);
+    });
+  }catch(e){}
+}
   // Vibration
   try{if(navigator.vibrate)navigator.vibrate([30,10,30]);}catch(e){}
 }async function envoyer(){
