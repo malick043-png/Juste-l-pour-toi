@@ -667,14 +667,33 @@ function afficherLettres(){
   if(!l.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>';return;}
   c.innerHTML=l.map(x=>`<div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:#85B7EB;">${x.date}</span><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Dans ${x.delai}</span></div><p style="font-size:13px;color:#0C447C;font-style:italic;">"${x.texte.substring(0,80)}${x.texte.length>80?'...':''}"</p></div>`).join('');
 }
+let groupeFiltre = 'Tous';
+let groupePubli = '😰 Stress';
 
+function selGroupe(el, groupe) {
+  groupeFiltre = groupe;
+  document.querySelectorAll('.groupe-btn').forEach(b => {
+    b.style.background = 'none'; b.style.color = '#185FA5'; b.style.borderColor = '#B5D4F4';
+  });
+  el.style.background = '#185FA5'; el.style.color = '#fff'; el.style.borderColor = '#185FA5';
+  chargerCommunaute();
+}
+
+function selGroupePubli(el, groupe) {
+  groupePubli = groupe;
+  document.querySelectorAll('.groupe-sel').forEach(b => {
+    b.style.background = 'none'; b.style.color = '#185FA5'; b.style.borderColor = '#B5D4F4';
+  });
+  el.style.background = '#185FA5'; el.style.color = '#fff'; el.style.borderColor = '#185FA5';
+}
 async function chargerCommunaute(){
   try{
     const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');
     const data=await res.json();
     const c=document.getElementById('communaute-liste');
-    if(!data.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Sois le premier à partager une pensée 💙</p>';return;}
-    c.innerHTML=data.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');
+    const filtered = groupeFiltre === 'Tous' ? data : data.filter(p => p.groupe === groupeFiltre);
+    if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';return;}
+    c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');
   }catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
 }
 async function partagerPensee(){
@@ -706,7 +725,7 @@ async function partagerPensee(){
 
     await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({pensee,prenom:prenom||'Anonyme'})
+      body:JSON.stringify({pensee,prenom:prenom||'Anonyme',groupe:groupePubli})
     });
     document.getElementById('pensee-input').value='';
     document.getElementById('succes-pensee').style.display='block';
