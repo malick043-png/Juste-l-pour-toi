@@ -641,7 +641,7 @@ function commencer(){
   document.getElementById('accueil').style.display='none';
   document.getElementById('chat').style.display='flex';
   document.getElementById('chat-sub').textContent='Bonjour '+prenom+' 💙';
-  pagePrecedente='chat';
+  pagePrecedente='chat';incrementerCompteur();
   ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
 }
 
@@ -985,6 +985,44 @@ if(localStorage.getItem('son')!=='off'){
   }catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}
   document.getElementById('btn').disabled=false;inp.focus();
 }
+  async function chargerCompteur(){
+  try{
+    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');
+    const data=await res.json();
+    document.getElementById('compteur-affiche').textContent='💙 Rejoins '+data.compteur+' personnes qui prennent soin d\'elles';
+  }catch(e){}
+}
+
+async function incrementerCompteur(){
+  try{
+    await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur',{method:'POST'});
+  }catch(e){}
+}
+
+async function chargerTemoignages(){
+  try{
+    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/temoignages');
+    const data=await res.json();
+    const c=document.getElementById('temoignages-liste');
+    const compteurRes=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');
+    const compteurData=await compteurRes.json();
+    document.getElementById('compteur-detail').textContent='💙 '+compteurData.compteur+' personnes utilisent déjà Juste là pour toi';
+    c.innerHTML=data.map(t=>`
+      <div class="card" style="margin-bottom:4px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:18px;border:1.5px solid #B5D4F4;">${t.pays}</div>
+          <div>
+            <p style="font-size:14px;font-weight:500;color:#0C447C;">${t.nom}</p>
+            <p style="font-size:12px;color:#f59e0b;">${'⭐'.repeat(t.note)}</p>
+          </div>
+        </div>
+        <p style="font-size:13px;color:#378ADD;line-height:1.6;font-style:italic;">"${t.avis}"</p>
+      </div>
+    `).join('');
+  }catch(e){}
+}
+
+chargerCompteur();
   function toggleSon(){
   const mute=localStorage.getItem('son')==='off';
   localStorage.setItem('son', mute?'on':'off');
