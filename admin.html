@@ -155,10 +155,17 @@ const SERVEUR = 'https://serveur-juste-la-pour-toi.onrender.com';
 
 function seConnecter() {
   const mdp = document.getElementById('mdp-input').value;
-  if (mdp === MDP) {
-    localStorage.setItem('admin-auth', 'true');
+  const user = UTILISATEURS[mdp];
+  if (user) {
+    localStorage.setItem('admin-auth', mdp);
+    utilisateurConnecte = user;
     document.getElementById('login').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
+    document.querySelector('.header-admin h1').textContent = '🔐 ' + user.nom;
+    document.querySelector('.header-admin p').textContent = user.role + ' — Juste là pour toi';
+    if (user.acces === 'moderateur') {
+      document.querySelector('.stats-grid').style.display = 'none';
+    }
     chargerDashboard();
   } else {
     alert('Mot de passe incorrect !');
