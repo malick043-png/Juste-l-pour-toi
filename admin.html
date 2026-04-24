@@ -179,7 +179,9 @@ function seDeconnecter() {
   document.getElementById('mdp-input').value = '';
 }
 
-const savedAuth = localStorage.getItem('admin-auth'); if (savedAuth && UTILISATEURS[savedAuth]) {   utilisateurConnecte = UTILISATEURS[savedAuth]; {
+const savedAuth = localStorage.getItem('admin-auth');
+if (savedAuth && UTILISATEURS[savedAuth]) {
+  utilisateurConnecte = UTILISATEURS[savedAuth];
   document.getElementById('login').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   chargerDashboard();
