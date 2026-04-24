@@ -257,8 +257,7 @@
       <div class="drawer-item" onclick="ouvrirSec('defi');fermerMenu();chargerDefi();afficherDefisHisto()"><span class="drawer-icon">⚡</span><span class="drawer-label">Défi du jour</span></div>
       <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('groupe-salle');fermerMenu();chargerSalles()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
+<div class="drawer-item" onclick="ouvrirSec('groupe-premium');fermerMenu()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>      <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
       <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
       <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
       <div class="drawer-item" onclick="ouvrirSec('apropos');fermerMenu()"><span class="drawer-icon">ℹ️</span><span class="drawer-label">À propos</span></div>
@@ -451,6 +450,74 @@
 </div>
 
 <!-- GROUPE SALLE -->
+  <div class="page-sec" id="groupe-premium">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('groupe-premium')">← Retour</button><h2>🤝 Sessions de groupe</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#185FA5,#1a4a7a);border:none;">
+      <p style="font-size:40px;margin-bottom:12px;">🤝</p>
+      <h2 style="font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:8px;">Sessions de soutien en groupe</h2>
+      <p style="font-size:13px;color:#B5D4F4;line-height:1.6;">Un espace bienveillant et anonyme pour partager, s'écouter et avancer ensemble 💙</p>
+    </div>
+
+    <div class="card">
+      <p class="card-titre">✨ Ce qui vous attend</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">👥</span><p style="font-size:13px;color:#378ADD;">Groupes de 5 à 10 personnes maximum</p></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">🎯</span><p style="font-size:13px;color:#378ADD;">Un modérateur bienveillant pour guider la discussion</p></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">🔒</span><p style="font-size:13px;color:#378ADD;">100% anonyme et confidentiel</p></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">📅</span><p style="font-size:13px;color:#378ADD;">2 à 3 séances par semaine de 1h à 2h</p></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💙</span><p style="font-size:13px;color:#378ADD;">Thèmes : stress, confiance, relations, développement</p></div>
+      </div>
+    </div>
+
+    <div class="card" style="background:#E6F1FB;border-color:#185FA5;">
+      <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:4px;text-align:center;">Abonnement mensuel</p>
+      <p style="font-size:36px;font-weight:700;color:#185FA5;text-align:center;margin-bottom:4px;">5$</p>
+      <p style="font-size:12px;color:#85B7EB;text-align:center;margin-bottom:12px;">≈ 3 000 FCFA / mois</p>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+        <p style="font-size:13px;color:#0C447C;">✅ 2 à 3 séances par semaine</p>
+        <p style="font-size:13px;color:#0C447C;">✅ 1h à 2h par séance</p>
+        <p style="font-size:13px;color:#0C447C;">✅ Accès à tous les groupes thématiques</p>
+        <p style="font-size:13px;color:#0C447C;">✅ Suivi personnalisé entre les séances</p>
+        <p style="font-size:13px;color:#0C447C;">✅ Annulation à tout moment</p>
+      </div>
+      <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20veux%20m%27inscrire%20aux%20sessions%20de%20groupe%20de%20Juste%20l%C3%A0%20pour%20toi%20%285%24%2Fmois%29" style="display:block;background:#185FA5;color:#fff;text-align:center;padding:13px;border-radius:16px;text-decoration:none;font-size:15px;font-weight:500;margin-bottom:10px;">S'inscrire via WhatsApp 💙</a>
+      <a href="mailto:malick043@gmail.com?subject=Inscription sessions de groupe Juste là pour toi&body=Bonjour Malick, je souhaite m'inscrire aux sessions de groupe (5$/mois). Mon prénom : " style="display:block;background:none;border:1px solid #185FA5;color:#185FA5;text-align:center;padding:11px;border-radius:16px;text-decoration:none;font-size:14px;">S'inscrire via Email 📧</a>
+    </div>
+
+    <div class="card">
+      <p class="card-titre">📅 Prochaines sessions</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <p style="font-size:13px;font-weight:500;color:#0C447C;">😰 Gestion du stress</p>
+            <span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Lundi 19h</span>
+          </div>
+          <p style="font-size:12px;color:#85B7EB;">Durée : 1h30 · Max 8 personnes</p>
+        </div>
+        <div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <p style="font-size:13px;font-weight:500;color:#0C447C;">💪 Confiance en soi</p>
+            <span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Mercredi 20h</span>
+          </div>
+          <p style="font-size:12px;color:#85B7EB;">Durée : 1h · Max 6 personnes</p>
+        </div>
+        <div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <p style="font-size:13px;font-weight:500;color:#0C447C;">🌱 Développement personnel</p>
+            <span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Vendredi 19h</span>
+          </div>
+          <p style="font-size:12px;color:#85B7EB;">Durée : 2h · Max 10 personnes</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center;">
+      <p style="font-size:13px;color:#85B7EB;line-height:1.7;font-style:italic;">"Ensemble, on va plus loin. Dans nos sessions, chaque voix compte et chaque histoire inspire." 💙</p>
+      <p style="font-size:12px;color:#B5D4F4;margin-top:8px;">— El Hadj Malick THIOUNE, Fondateur</p>
+    </div>
+  </div>
+</div>
 <div class="page-sec" id="groupe-salle">
   <div class="sec-header"><button class="btn-back" onclick="quitterSalle();fermerSec('groupe-salle')">← Retour</button><h2>🤝 Session de groupe</h2></div>
   <div class="sec-body" id="groupe-accueil">
