@@ -179,7 +179,7 @@ function seDeconnecter() {
   document.getElementById('mdp-input').value = '';
 }
 
-if (localStorage.getItem('admin-auth') === 'true') {
+const savedAuth = localStorage.getItem('admin-auth'); if (savedAuth && UTILISATEURS[savedAuth]) {   utilisateurConnecte = UTILISATEURS[savedAuth]; {
   document.getElementById('login').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   chargerDashboard();
