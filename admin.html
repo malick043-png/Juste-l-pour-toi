@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Juste là pour toi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', Arial, sans-serif; background: #f0f6ff; min-height: 100vh; }
+    #login { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 30px; text-align: center; background: linear-gradient(160deg, #E6F1FB, #f0f6ff); }
+    #dashboard { display: none; padding: 20px; max-width: 800px; margin: 0 auto; }
+    .login-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #B5D4F4; margin-bottom: 20px; }
+    .login-titre { font-family: 'Lora', serif; font-size: 22px; color: #0C447C; margin-bottom: 6px; }
+    .login-sous { font-size: 13px; color: #85B7EB; margin-bottom: 24px; }
+    .login-input { width: 100%; max-width: 280px; border: 1.5px solid #B5D4F4; border-radius: 20px; padding: 12px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; background: #fff; color: #0C447C; margin-bottom: 12px; }
+    .login-btn { background: #185FA5; color: #fff; border: none; border-radius: 20px; padding: 12px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; }
+    .header-admin { background: linear-gradient(135deg, #185FA5, #1a4a7a); padding: 16px 20px; border-radius: 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+    .header-admin h1 { font-family: 'Lora', serif; font-size: 18px; color: #fff; }
+    .header-admin button { background: rgba(255,255,255,0.15); border: none; color: #fff; border-radius: 10px; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+    .stat-card { background: #fff; border: 0.5px solid #B5D4F4; border-radius: 14px; padding: 16px; text-align: center; }
+    .stat-nombre { font-size: 32px; font-weight: 700; color: #185FA5; }
+    .stat-label { font-size: 12px; color: #85B7EB; margin-top: 4px; }
+    .section { background: #fff; border: 0.5px solid #B5D4F4; border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+    .section-titre { font-size: 14px; font-weight: 500; color: #0C447C; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .btn-add { background: #185FA5; color: #fff; border: none; border-radius: 12px; padding: 6px 12px; font-size: 12px; cursor: pointer; }
+    .btn-danger { background: #e53e3e; color: #fff; border: none; border-radius: 10px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
+    .btn-success { background: #1D9E75; color: #fff; border: none; border-radius: 10px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
+    .item-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid #E6F1FB; font-size: 13px; color: #0C447C; gap: 8px; }
+    .item-row:last-child { border-bottom: none; }
+    .badge-role { font-size: 11px; background: #E6F1FB; color: #185FA5; padding: 2px 8px; border-radius: 8px; }
+    .input-admin { width: 100%; border: 0.5px solid #B5D4F4; border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: #f7faff; color: #0C447C; margin-bottom: 8px; }
+    .select-admin { width: 100%; border: 0.5px solid #B5D4F4; border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: #f7faff; color: #0C447C; margin-bottom: 8px; }
+    .session-card { padding: 12px; border-radius: 12px; background: #f7faff; border: 0.5px solid #B5D4F4; margin-bottom:10px; }
+    .pensee-card { padding: 10px; border-radius: 10px; background: #f7faff; border: 0.5px solid #B5D4F4; margin-bottom: 8px; }
+    .tag { font-size: 11px; background: #E6F1FB; color: #185FA5; padding: 2px 8px; border-radius: 8px; display: inline-block; margin-bottom: 4px; }
+    .succes-msg { color: #1D9E75; font-size: 13px; text-align: center; padding: 6px; display: none; }
+  </style>
+</head>
+<body>
+
+<div id="login">
+  <img src="icon.png" class="login-logo" alt="Logo">
+  <h1 class="login-titre">Panel Administrateur</h1>
+  <p class="login-sous">Juste là pour toi — Accès réservé</p>
+  <input type="password" class="login-input" id="mdp-input" placeholder="Mot de passe..." onkeydown="if(event.key==='Enter')seConnecter()">
+  <button class="login-btn" onclick="seConnecter()">Se connecter 🔐</button>
+</div>
+
+<div id="dashboard">
+  <div class="header-admin">
+    <div>
+      <h1>🔐 Panel Admin</h1>
+      <p style="font-size:12px;color:#B5D4F4;margin-top:2px;">Juste là pour toi — El Hadj Malick THIOUNE</p>
+    </div>
+    <button onclick="seDeconnecter()">Déconnexion</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-nombre" id="stat-compteur">-</div><div class="stat-label">👥 Utilisateurs</div></div>
+    <div class="stat-card"><div class="stat-nombre" id="stat-communaute">-</div><div class="stat-label">🌍 Pensées communauté</div></div>
+    <div class="stat-card"><div class="stat-nombre" id="stat-sessions">3</div><div class="stat-label">📅 Sessions programmées</div></div>
+    <div class="stat-card"><div class="stat-nombre" id="stat-inscrits">0</div><div class="stat-label">💰 Abonnés sessions</div></div>
+  </div>
+
+  <!-- SESSIONS -->
+  <div class="section">
+    <div class="section-titre">
+      <span>📅 Gestion des sessions</span>
+      <button class="btn-add" onclick="toggleAjoutSession()">+ Ajouter</button>
+    </div>
+    <div id="form-session" style="display:none;margin-bottom:14px;padding:12px;background:#E6F1FB;border-radius:10px;">
+      <select class="select-admin" id="new-session-theme">
+        <option>😰 Gestion du stress</option>
+        <option>💪 Confiance en soi</option>
+        <option>😴 Mieux dormir</option>
+        <option>💔 Relations</option>
+        <option>🌱 Développement personnel</option>
+        <option>😔 Solitude</option>
+      </select>
+      <input type="text" class="input-admin" id="new-session-jour" placeholder="Jour et heure (ex: Lundi 19h00)">
+      <input type="number" class="input-admin" id="new-session-duree" placeholder="Durée en minutes (ex: 90)">
+      <input type="number" class="input-admin" id="new-session-max" placeholder="Max participants (ex: 8)">
+      <select class="select-admin" id="new-session-modo">
+        <option>El Hadj Malick THIOUNE</option>
+        <option>Modérateur 2</option>
+        <option>Modérateur 3</option>
+      </select>
+      <button class="btn-add" onclick="ajouterSession()" style="width:100%;padding:10px;">Enregistrer la session</button>
+      <p class="succes-msg" id="succes-session">✅ Session ajoutée !</p>
+    </div>
+    <div id="liste-sessions"></div>
+  </div>
+
+  <!-- MODERATEURS -->
+  <div class="section">
+    <div class="section-titre">
+      <span>👥 Modérateurs (3 max)</span>
+      <button class="btn-add" onclick="toggleAjoutModo()">+ Ajouter</button>
+    </div>
+    <div id="form-modo" style="display:none;margin-bottom:14px;padding:12px;background:#E6F1FB;border-radius:10px;">
+      <input type="text" class="input-admin" id="new-modo-nom" placeholder="Nom du modérateur">
+      <input type="text" class="input-admin" id="new-modo-contact" placeholder="WhatsApp ou email">
+      <select class="select-admin" id="new-modo-role">
+        <option>Modérateur principal</option>
+        <option>Modérateur junior</option>
+      </select>
+      <button class="btn-add" onclick="ajouterModo()" style="width:100%;padding:10px;">Ajouter le modérateur</button>
+    </div>
+    <div id="liste-modos"></div>
+  </div>
+
+  <!-- COMMUNAUTE -->
+  <div class="section">
+    <div class="section-titre"><span>🌍 Pensées communauté</span><button class="btn-add" onclick="chargerCommunauteAdmin()">↺ Actualiser</button></div>
+    <div id="liste-communaute"><p style="font-size:13px;color:#85B7EB;text-align:center;">Chargement...</p></div>
+  </div>
+
+  <!-- INSCRITS -->
+  <div class="section">
+    <div class="section-titre">
+      <span>💰 Inscrits aux sessions</span>
+      <button class="btn-add" onclick="toggleAjoutInscrit()">+ Ajouter</button>
+    </div>
+    <div id="form-inscrit" style="display:none;margin-bottom:14px;padding:12px;background:#E6F1FB;border-radius:10px;">
+      <input type="text" class="input-admin" id="new-inscrit-nom" placeholder="Prénom">
+      <input type="text" class="input-admin" id="new-inscrit-contact" placeholder="WhatsApp ou email">
+      <input type="text" class="input-admin" id="new-inscrit-date" placeholder="Date d'inscription">
+      <select class="select-admin" id="new-inscrit-statut">
+        <option>Actif</option>
+        <option>En attente de paiement</option>
+        <option>Expiré</option>
+      </select>
+      <button class="btn-add" onclick="ajouterInscrit()" style="width:100%;padding:10px;">Ajouter</button>
+    </div>
+    <div id="liste-inscrits"></div>
+  </div>
+
+  <div style="text-align:center;padding:20px;">
+    <p style="font-size:11px;color:#85B7EB;font-style:italic;">© 2026 Juste là pour toi — Panel Admin v1.0</p>
+    <a href="https://malick043-png.github.io/Juste-l-pour-toi" style="font-size:12px;color:#185FA5;text-decoration:none;">← Retour à l'application</a>
+  </div>
+</div>
+
+<script>
+const MDP = 'Joiedevivre';
+const SERVEUR = 'https://serveur-juste-la-pour-toi.onrender.com';
+
+function seConnecter() {
+  const mdp = document.getElementById('mdp-input').value;
+  if (mdp === MDP) {
+    localStorage.setItem('admin-auth', 'true');
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    chargerDashboard();
+  } else {
+    alert('Mot de passe incorrect !');
+  }
+}
+
+function seDeconnecter() {
+  localStorage.removeItem('admin-auth');
+  document.getElementById('login').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('mdp-input').value = '';
+}
+
+if (localStorage.getItem('admin-auth') === 'true') {
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  chargerDashboard();
+}
+
+async function chargerDashboard() {
+  try {
+    const res = await fetch(SERVEUR + '/compteur');
+    const data = await res.json();
+    document.getElementById('stat-compteur').textContent = data.compteur;
+  } catch(e) {}
+  try {
+    const res = await fetch(SERVEUR + '/communaute');
+    const data = await res.json();
+    document.getElementById('stat-communaute').textContent = data.length;
+  } catch(e) {}
+  afficherSessions();
+  afficherModos();
+  afficherInscrits();
+  chargerCommunauteAdmin();
+}
+
+// SESSIONS
+function getSessions() { return JSON.parse(localStorage.getItem('admin-sessions') || '[]'); }
+function saveSessions(s) { localStorage.setItem('admin-sessions', JSON.stringify(s)); }
+
+function afficherSessions() {
+  const sessions = getSessions();
+  document.getElementById('stat-sessions').textContent = sessions.length;
+  const c = document.getElementById('liste-sessions');
+  if (!sessions.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune session programmée</p>'; return; }
+  c.innerHTML = sessions.map((s, i) => `
+    <div class="session-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <p style="font-size:14px;font-weight:500;color:#0C447C;">${s.theme}</p>
+        <button class="btn-danger" onclick="supprimerSession(${i})">Supprimer</button>
+      </div>
+      <p style="font-size:12px;color:#85B7EB;">📅 ${s.jour} · ⏱ ${s.duree} min · 👥 Max ${s.max}</p>
+      <p style="font-size:12px;color:#85B7EB;margin-top:4px;">🎤 Modérateur : ${s.modo}</p>
+    </div>
+  `).join('');
+  mettreAjourAppli(sessions);
+}
+
+function toggleAjoutSession() {
+  const f = document.getElementById('form-session');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+function ajouterSession() {
+  const theme = document.getElementById('new-session-theme').value;
+  const jour = document.getElementById('new-session-jour').value.trim();
+  const duree = document.getElementById('new-session-duree').value;
+  const max = document.getElementById('new-session-max').value;
+  const modo = document.getElementById('new-session-modo').value;
+  if (!jour) { alert('Indique le jour et l\'heure !'); return; }
+  const sessions = getSessions();
+  sessions.push({ theme, jour, duree: duree || 90, max: max || 8, modo });
+  saveSessions(sessions);
+  document.getElementById('new-session-jour').value = '';
+  document.getElementById('succes-session').style.display = 'block';
+  setTimeout(() => document.getElementById('succes-session').style.display = 'none', 2000);
+  afficherSessions();
+}
+
+function supprimerSession(i) {
+  if (!confirm('Supprimer cette session ?')) return;
+  const sessions = getSessions();
+  sessions.splice(i, 1);
+  saveSessions(sessions);
+  afficherSessions();
+}
+
+async function mettreAjourAppli(sessions) {
+  try {
+    await fetch(SERVEUR + '/sessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessions })
+    });
+  } catch(e) {}
+}
+
+// MODERATEURS
+function getModos() { return JSON.parse(localStorage.getItem('admin-modos') || '[{"nom":"El Hadj Malick THIOUNE","contact":"malick043@gmail.com","role":"Modérateur principal"}]'); }
+function saveModos(m) { localStorage.setItem('admin-modos', JSON.stringify(m)); }
+
+function afficherModos() {
+  const modos = getModos();
+  const c = document.getElementById('liste-modos');
+  c.innerHTML = modos.map((m, i) => `
+    <div class="item-row">
+      <div>
+        <p style="font-weight:500;">${m.nom}</p>
+        <p style="font-size:11px;color:#85B7EB;">${m.contact}</p>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="badge-role">${m.role}</span>
+        ${i > 0 ? `<button class="btn-danger" onclick="supprimerModo(${i})">✕</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleAjoutModo() {
+  const modos = getModos();
+  if (modos.length >= 3) { alert('Maximum 3 modérateurs !'); return; }
+  const f = document.getElementById('form-modo');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+function ajouterModo() {
+  const nom = document.getElementById('new-modo-nom').value.trim();
+  const contact = document.getElementById('new-modo-contact').value.trim();
+  const role = document.getElementById('new-modo-role').value;
+  if (!nom) { alert('Indique le nom !'); return; }
+  const modos = getModos();
+  if (modos.length >= 3) { alert('Maximum 3 modérateurs !'); return; }
+  modos.push({ nom, contact, role });
+  saveModos(modos);
+  document.getElementById('new-modo-nom').value = '';
+  document.getElementById('new-modo-contact').value = '';
+  document.getElementById('form-modo').style.display = 'none';
+  afficherModos();
+}
+
+function supprimerModo(i) {
+  if (!confirm('Supprimer ce modérateur ?')) return;
+  const modos = getModos();
+  modos.splice(i, 1);
+  saveModos(modos);
+  afficherModos();
+}
+
+// COMMUNAUTE
+async function chargerCommunauteAdmin() {
+  try {
+    const res = await fetch(SERVEUR + '/communaute');
+    const data = await res.json();
+    const c = document.getElementById('liste-communaute');
+    if (!data.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;">Aucune pensée</p>'; return; }
+    c.innerHTML = data.map(p => `
+      <div class="pensee-card">
+        <span class="tag">${p.groupe || 'Général'}</span>
+        <p style="font-size:13px;color:#0C447C;margin-bottom:6px;">"${p.pensee}"</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date} · ${p.coeurs} ❤️</span>
+          <button class="btn-danger" onclick="supprimerPensee(${p.id})">Supprimer</button>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) { document.getElementById('liste-communaute').innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur de chargement</p>'; }
+}
+
+async function supprimerPensee(id) {
+  if (!confirm('Supprimer cette pensée ?')) return;
+  try {
+    await fetch(SERVEUR + '/communaute/' + id, { method: 'DELETE' });
+    chargerCommunauteAdmin();
+  } catch(e) { alert('Erreur !'); }
+}
+
+// INSCRITS
+function getInscrits() { return JSON.parse(localStorage.getItem('admin-inscrits') || '[]'); }
+function saveInscrits(i) { localStorage.setItem('admin-inscrits', JSON.stringify(i)); }
+
+function afficherInscrits() {
+  const inscrits = getInscrits();
+  document.getElementById('stat-inscrits').textContent = inscrits.filter(i => i.statut === 'Actif').length;
+  const c = document.getElementById('liste-inscrits');
+  if (!inscrits.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun inscrit pour le moment</p>'; return; }
+  c.innerHTML = inscrits.map((ins, i) => `
+    <div class="item-row">
+      <div>
+        <p style="font-weight:500;">${ins.nom}</p>
+        <p style="font-size:11px;color:#85B7EB;">${ins.contact} · ${ins.date}</p>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:11px;background:${ins.statut==='Actif'?'#E6F5EF':ins.statut==='Expiré'?'#FEE2E2':'#FEF3C7'};color:${ins.statut==='Actif'?'#1D9E75':ins.statut==='Expiré'?'#e53e3e':'#D97706'};padding:2px 8px;border-radius:8px;">${ins.statut}</span>
+        <button class="btn-danger" onclick="supprimerInscrit(${i})">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleAjoutInscrit() {
+  const f = document.getElementById('form-inscrit');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+function ajouterInscrit() {
+  const nom = document.getElementById('new-inscrit-nom').value.trim();
+  const contact = document.getElementById('new-inscrit-contact').value.trim();
+  const date = document.getElementById('new-inscrit-date').value.trim() || new Date().toLocaleDateString('fr-FR');
+  const statut = document.getElementById('new-inscrit-statut').value;
+  if (!nom) { alert('Indique le prénom !'); return; }
+  const inscrits = getInscrits();
+  inscrits.push({ nom, contact, date, statut });
+  saveInscrits(inscrits);
+  document.getElementById('new-inscrit-nom').value = '';
+  document.getElementById('new-inscrit-contact').value = '';
+  document.getElementById('new-inscrit-date').value = '';
+  document.getElementById('form-inscrit').style.display = 'none';
+  afficherInscrits();
+}
+
+function supprimerInscrit(i) {
+  if (!confirm('Supprimer cet inscrit ?')) return;
+  const inscrits = getInscrits();
+  inscrits.splice(i, 1);
+  saveInscrits(inscrits);
+  afficherInscrits();
+}
+</script>
+</body>
+</html>
