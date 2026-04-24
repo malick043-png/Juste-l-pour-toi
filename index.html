@@ -6,14 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Juste là pour toi"> 
+  <meta name="apple-mobile-web-app-title" content="Juste là pour toi">
   <title>Juste là pour toi</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'DM Sans', Arial, sans-serif; height: 100vh; overflow: hidden; background: #f0f6ff; transition: background 0.4s; }
     body.dark { background: #0a1628; }
-    #splash { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 30px; text-align: center; transition: opacity 1s; }
+    #tutoriel { position: fixed; inset: 0; z-index: 200; flex-direction: column; height: 100vh; }
+    .tuto-slide { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); min-width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 30px; text-align: center; height: 100%; }
+    body.dark .tuto-slide { background: linear-gradient(135deg, #0a1628, #112233); }
+    body.dark .tuto-slide h2 { color: #e8f2ff; }
+    body.dark .tuto-slide p { color: rgba(181,212,244,0.7); }
+    .tuto-point { width: 8px; height: 8px; border-radius: 50%; background: #B5D4F4; cursor: pointer; transition: all 0.3s; }
+    .tuto-point.active { width: 20px; border-radius: 4px; background: #185FA5; }
+    #splash { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 30px; text-align: center; }
     body:not(.dark) #splash { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
     body.dark #splash { background: linear-gradient(135deg, #0a1628, #1a2d4a, #0d2137); }
     .splash-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(181,212,244,0.5); margin-bottom: 28px; box-shadow: 0 4px 20px rgba(24,95,165,0.2); }
@@ -31,7 +38,7 @@
     .accueil-titre { font-family: 'Lora', serif; font-size: 28px; margin-bottom: 8px; }
     body:not(.dark) .accueil-titre { color: #0C447C; }
     body.dark .accueil-titre { color: #e8f2ff; }
-    .accueil-sous { font-size: 14px; margin-bottom: 32px; }
+    .accueil-sous { font-size: 14px; margin-bottom: 8px; }
     body:not(.dark) .accueil-sous { color: #378ADD; }
     body.dark .accueil-sous { color: rgba(181,212,244,0.6); }
     .prenom-input { width: 100%; max-width: 300px; border-radius: 24px; padding: 13px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; margin-bottom: 14px; }
@@ -113,9 +120,10 @@
     .sugg-btn { border-radius: 14px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     body:not(.dark) .sugg-btn { background: #fff; color: #185FA5; border: 1px solid #B5D4F4; }
     body.dark .sugg-btn { background: rgba(255,255,255,0.07); color: rgba(181,212,244,0.8); border: 1px solid rgba(181,212,244,0.2); }
-.typing { display: flex; gap: 5px; align-items: center; padding: 10px 14px; border-radius: 14px 14px 14px 4px; align-self: flex-start; position: relative; overflow: hidden; }
-.typing::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(24,95,165,0.05), transparent); animation: shimmer 1.5s infinite; }
-@keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }    body:not(.dark) .typing { background: #fff; border: 0.5px solid #B5D4F4; }
+    .typing { display: flex; gap: 5px; align-items: center; padding: 10px 14px; border-radius: 14px 14px 14px 4px; align-self: flex-start; position: relative; overflow: hidden; }
+    .typing::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(24,95,165,0.05), transparent); animation: shimmer 1.5s infinite; }
+    @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+    body:not(.dark) .typing { background: #fff; border: 0.5px solid #B5D4F4; }
     body.dark .typing { background: rgba(255,255,255,0.07); border: 0.5px solid rgba(181,212,244,0.15); }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: #85B7EB; animation: bounce 1.2s infinite; }
     .dot:nth-child(2){animation-delay:.2s} .dot:nth-child(3){animation-delay:.4s}
@@ -177,64 +185,44 @@
     body.dark .delai-btn { background: rgba(255,255,255,0.05); border-color: rgba(181,212,244,0.2); color: rgba(181,212,244,0.8); }
     .delai-btn.selected { background: #185FA5; border-color: #185FA5; color: #fff; }
     .groupe-theme { background: none; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 16px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
-.groupe-theme.active { background: #185FA5; color: #fff; border-color: #185FA5; }
-.msg-groupe { display: flex; flex-direction: column; gap: 2px; }
-.msg-groupe.moi { align-items: flex-end; }
-.msg-groupe .auteur { font-size: 10px; color: #85B7EB; }
-.msg-groupe .texte { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
-.msg-groupe.moi .texte { background: #185FA5; color: #fff; border-radius: 12px 12px 4px 12px; }
-.msg-groupe.autre .texte { background: #fff; color: #0C447C; border: 0.5px solid #B5D4F4; border-radius: 12px 12px 12px 4px; }
-.msg-groupe.ia .texte { background: #E6F1FB; color: #0C447C; border-radius: 12px; font-style: italic; }
+    .groupe-theme.active { background: #185FA5; color: #fff; border-color: #185FA5; }
+    .msg-groupe { display: flex; flex-direction: column; gap: 2px; }
+    .msg-groupe.moi { align-items: flex-end; }
+    .msg-groupe .auteur { font-size: 10px; color: #85B7EB; }
+    .msg-groupe .texte { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+    .msg-groupe.moi .texte { background: #185FA5; color: #fff; border-radius: 12px 12px 4px 12px; }
+    .msg-groupe.autre .texte { background: #fff; color: #0C447C; border: 0.5px solid #B5D4F4; border-radius: 12px 12px 12px 4px; }
+    .msg-groupe.ia .texte { background: #E6F1FB; color: #0C447C; border-radius: 12px; font-style: italic; }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(181,212,244,0.3); border-radius: 2px; }
   </style>
 </head>
 <body>
+
 <!-- TUTORIEL -->
 <div id="tutoriel" style="display:none; position:fixed; inset:0; z-index:200; flex-direction:column; height:100vh;">
   <div style="flex:1; overflow:hidden; position:relative;">
     <div id="tuto-slides" style="display:flex; transition:transform 0.4s ease; height:100%;">
-      
-      <div class="tuto-slide" style="min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 30px; text-align:center;">
-        <div style="font-size:60px; margin-bottom:24px;">💙</div>
-        <h2 style="font-family:'Lora',serif; font-size:24px; color:#0C447C; margin-bottom:14px;">Bienvenue sur Juste là pour toi</h2>
-        <p style="font-size:15px; color:#378ADD; line-height:1.7; max-width:280px;">Ton espace bienveillant pour prendre soin de toi, à tout moment de la journée.</p>
-      </div>
-
-      <div class="tuto-slide" style="min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 30px; text-align:center;">
-        <div style="font-size:60px; margin-bottom:24px;">🤖</div>
-        <h2 style="font-family:'Lora',serif; font-size:24px; color:#0C447C; margin-bottom:14px;">Une IA qui t'écoute</h2>
-        <p style="font-size:15px; color:#378ADD; line-height:1.7; max-width:280px;">Parle librement en français, en anglais ou en wolof. L'assistant te répond avec empathie, sans jugement.</p>
-      </div>
-
-      <div class="tuto-slide" style="min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 30px; text-align:center;">
-        <div style="font-size:60px; margin-bottom:24px;">🌟</div>
-        <h2 style="font-family:'Lora',serif; font-size:24px; color:#0C447C; margin-bottom:14px;">Des outils pour ton bien-être</h2>
-        <p style="font-size:15px; color:#378ADD; line-height:1.7; max-width:280px;">Journal de bord, respiration guidée, objectifs personnels, défis quotidiens et bien plus encore !</p>
-      </div>
-
-      <div class="tuto-slide" style="min-width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 30px; text-align:center;">
-        <div style="font-size:60px; margin-bottom:24px;">🔒</div>
-        <h2 style="font-family:'Lora',serif; font-size:24px; color:#0C447C; margin-bottom:14px;">100% privé et confidentiel</h2>
-        <p style="font-size:15px; color:#378ADD; line-height:1.7; max-width:280px;">Tes conversations restent privées. Aucun jugement, aucun partage. C'est ton espace rien qu'à toi.</p>
-        <button onclick="finirTutoriel()" style="margin-top:28px; background:#185FA5; color:#fff; border:none; border-radius:24px; padding:13px 40px; font-size:15px; font-family:'DM Sans',sans-serif; cursor:pointer; font-weight:500; box-shadow:0 4px 16px rgba(24,95,165,0.3);">Commencer 💙</button>
-      </div>
-
+      <div class="tuto-slide"><div style="font-size:60px;margin-bottom:24px;">💙</div><h2 style="font-family:'Lora',serif;font-size:24px;color:#0C447C;margin-bottom:14px;">Bienvenue sur Juste là pour toi</h2><p style="font-size:15px;color:#378ADD;line-height:1.7;max-width:280px;">Ton espace bienveillant pour prendre soin de toi, à tout moment.</p></div>
+      <div class="tuto-slide"><div style="font-size:60px;margin-bottom:24px;">🤖</div><h2 style="font-family:'Lora',serif;font-size:24px;color:#0C447C;margin-bottom:14px;">Une IA qui t'écoute</h2><p style="font-size:15px;color:#378ADD;line-height:1.7;max-width:280px;">Parle en français, anglais ou wolof. L'assistant te répond avec empathie, sans jugement.</p></div>
+      <div class="tuto-slide"><div style="font-size:60px;margin-bottom:24px;">🌟</div><h2 style="font-family:'Lora',serif;font-size:24px;color:#0C447C;margin-bottom:14px;">Des outils pour ton bien-être</h2><p style="font-size:15px;color:#378ADD;line-height:1.7;max-width:280px;">Journal, respiration, objectifs, défis quotidiens et bien plus encore !</p></div>
+      <div class="tuto-slide"><div style="font-size:60px;margin-bottom:24px;">🔒</div><h2 style="font-family:'Lora',serif;font-size:24px;color:#0C447C;margin-bottom:14px;">100% privé et confidentiel</h2><p style="font-size:15px;color:#378ADD;line-height:1.7;max-width:280px;">Tes conversations restent privées. Aucun jugement, aucun partage.</p><button onclick="finirTutoriel()" style="margin-top:28px;background:#185FA5;color:#fff;border:none;border-radius:24px;padding:13px 40px;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;">Commencer 💙</button></div>
     </div>
   </div>
-
-  <div style="padding:20px; display:flex; align-items:center; justify-content:space-between;">
-    <button onclick="finirTutoriel()" style="background:none; border:none; font-size:13px; color:#85B7EB; cursor:pointer; font-family:'DM Sans',sans-serif;">Passer</button>
-    <div style="display:flex; gap:8px;" id="tuto-points">
+  <div style="padding:20px;display:flex;align-items:center;justify-content:space-between;">
+    <button onclick="finirTutoriel()" style="background:none;border:none;font-size:13px;color:#85B7EB;cursor:pointer;font-family:'DM Sans',sans-serif;">Passer</button>
+    <div style="display:flex;gap:8px;" id="tuto-points">
       <div class="tuto-point active" onclick="allerSlide(0)"></div>
       <div class="tuto-point" onclick="allerSlide(1)"></div>
       <div class="tuto-point" onclick="allerSlide(2)"></div>
       <div class="tuto-point" onclick="allerSlide(3)"></div>
     </div>
-    <button id="tuto-next" onclick="slideSuivant()" style="background:#185FA5; color:#fff; border:none; border-radius:16px; padding:8px 18px; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer;">Suivant →</button>
+    <button id="tuto-next" onclick="slideSuivant()" style="background:#185FA5;color:#fff;border:none;border-radius:16px;padding:8px 18px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;">Suivant →</button>
   </div>
 </div>
+
+<!-- SPLASH -->
 <div id="splash">
   <img src="icon.png" class="splash-logo" alt="Logo">
   <p class="splash-citation" id="splash-citation"></p>
@@ -242,11 +230,12 @@
   <button class="splash-share" onclick="partagercitation()">✨ Partager cette citation</button>
 </div>
 
+<!-- ACCUEIL -->
 <div id="accueil" style="display:none; position:fixed; inset:0; z-index:10; flex-direction:column; align-items:center; justify-content:center; padding:30px 24px; text-align:center;">
   <img src="icon.png" class="accueil-logo" alt="Logo">
   <h1 class="accueil-titre">Juste là pour toi</h1>
   <p class="accueil-sous">Ton espace bienveillant de bien-être</p>
-<p id="compteur-affiche" style="font-size:13px;color:#185FA5;margin-bottom:8px;font-weight:500;">💙 Rejoins notre communauté bienveillante</p>
+  <p id="compteur-affiche" style="font-size:13px;color:#185FA5;margin-bottom:16px;font-weight:500;">💙 Rejoins notre communauté bienveillante</p>
   <input type="text" class="prenom-input" id="prenom" placeholder="Ton prénom...">
   <button class="btn-commencer" onclick="commencer()">Commencer la conversation 💙</button>
   <button class="btn-dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Mode sombre</button>
@@ -254,6 +243,7 @@
   <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
 </div>
 
+<!-- MENU DRAWER -->
 <div id="menu-drawer">
   <div class="drawer-overlay" onclick="fermerMenu()"></div>
   <div class="drawer-content">
@@ -267,16 +257,17 @@
       <div class="drawer-item" onclick="ouvrirSec('defi');fermerMenu();chargerDefi();afficherDefisHisto()"><span class="drawer-icon">⚡</span><span class="drawer-label">Défi du jour</span></div>
       <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('confidentialite');fermerMenu()"><span class="drawer-icon">🔒</span><span class="drawer-label">Confidentialité</span></div>
       <div class="drawer-item" onclick="ouvrirSec('groupe-salle');fermerMenu();chargerSalles()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
       <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
       <div class="drawer-item" onclick="ouvrirSec('apropos');fermerMenu()"><span class="drawer-icon">ℹ️</span><span class="drawer-label">À propos</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('confidentialite');fermerMenu()"><span class="drawer-icon">🔒</span><span class="drawer-label">Confidentialité</span></div>
     </div>
   </div>
 </div>
 
+<!-- CHAT -->
 <div id="chat" style="display:none; position:fixed; inset:0; z-index:10; flex-direction:column; height:100vh;">
   <div class="chat-header">
     <div class="chat-top">
@@ -284,8 +275,8 @@
       <div><p class="chat-title">Juste là pour toi</p><p class="chat-sub" id="chat-sub">Ton espace de bien-être</p></div>
       <div class="chat-acts">
         <button class="chat-btn" onclick="allerAccueil()">🏠</button>
-        <button class="chat-btn" onclick="ouvrirMenu()">☰ Menu</button>
         <button class="chat-btn" onclick="toggleSon()" id="son-btn">🔊</button>
+        <button class="chat-btn" onclick="ouvrirMenu()">☰ Menu</button>
         <button class="chat-btn" onclick="reinitialiser()">↺</button>
       </div>
     </div>
@@ -306,6 +297,7 @@
   <div class="chat-footer"><span>un espace bienveillant, rien que pour toi</span></div>
 </div>
 
+<!-- JOURNAL -->
 <div class="page-sec" id="journal">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('journal')">← Retour</button><h2>📔 Journal de bord</h2></div>
   <div class="sec-body">
@@ -326,6 +318,7 @@
   </div>
 </div>
 
+<!-- RESPIRATION -->
 <div class="page-sec" id="respiration">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('respiration');arreterResp()">← Retour</button><h2>🌬️ Respiration guidée</h2></div>
   <div class="sec-body" style="align-items:center;justify-content:center;text-align:center;">
@@ -338,6 +331,7 @@
   </div>
 </div>
 
+<!-- OBJECTIFS -->
 <div class="page-sec" id="objectifs">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('objectifs')">← Retour</button><h2>🎯 Mes objectifs</h2></div>
   <div class="sec-body">
@@ -361,6 +355,7 @@
   </div>
 </div>
 
+<!-- HUMEUR -->
 <div class="page-sec" id="humeur">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('humeur')">← Retour</button><h2>📊 Suivi de mon humeur</h2></div>
   <div class="sec-body">
@@ -388,6 +383,7 @@
   </div>
 </div>
 
+<!-- DEFI -->
 <div class="page-sec" id="defi">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('defi')">← Retour</button><h2>⚡ Défi bien-être du jour</h2></div>
   <div class="sec-body">
@@ -399,16 +395,13 @@
         <button class="btn-p" onclick="defiOk()">✅ J'accepte ce défi !</button>
         <button class="btn-s" onclick="nouveauDefi()">🔄 Nouveau défi</button>
       </div>
-      <div id="defi-ok-msg" style="display:none;">
-        <p style="font-size:32px;margin-bottom:8px;">🎉</p>
-        <p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;">Bravo !</p>
-        <p style="font-size:12px;color:#85B7EB;margin-top:4px;">Reviens demain 💙</p>
-      </div>
+      <div id="defi-ok-msg" style="display:none;"><p style="font-size:32px;margin-bottom:8px;">🎉</p><p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;">Bravo !</p><p style="font-size:12px;color:#85B7EB;margin-top:4px;">Reviens demain 💙</p></div>
     </div>
     <div class="card"><p class="card-titre">Mes défis complétés</p><div id="defi-histo"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun défi 💙</p></div></div>
   </div>
 </div>
 
+<!-- LETTRE -->
 <div class="page-sec" id="lettre">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('lettre')">← Retour</button><h2>💌 Lettre à mon futur moi</h2></div>
   <div class="sec-body">
@@ -427,44 +420,44 @@
   </div>
 </div>
 
+<!-- COMMUNAUTE -->
 <div class="page-sec" id="communaute">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('communaute')">← Retour</button><h2>🌍 Communauté</h2></div>
   <div class="sec-body">
     <div class="card" style="text-align:center;">
       <p style="font-size:13px;color:#85B7EB;margin-bottom:12px;">Partage une pensée positive anonymement 💙</p>
-<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;" id="groupes-btns">
-  <button class="groupe-btn active" onclick="selGroupe(this,'Tous')" style="background:#185FA5;color:#fff;border:1px solid #185FA5;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">Tous</button>
-  <button class="groupe-btn" onclick="selGroupe(this,'😰 Stress')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">😰 Stress</button>
-  <button class="groupe-btn" onclick="selGroupe(this,'😴 Sommeil')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">😴 Sommeil</button>
-  <button class="groupe-btn" onclick="selGroupe(this,'💪 Confiance')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">💪 Confiance</button>
-  <button class="groupe-btn" onclick="selGroupe(this,'💔 Relations')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">💔 Relations</button>
-  <button class="groupe-btn" onclick="selGroupe(this,'🌱 Développement')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">🌱 Développement</button>
-</div>
-<p style="font-size:12px;color:#85B7EB;margin-bottom:8px;">Choisis un groupe pour ta pensée :</p>
-<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;" id="groupe-select">
-  <button class="groupe-sel active" onclick="selGroupePubli(this,'😰 Stress')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">😰 Stress</button>
-  <button class="groupe-sel" onclick="selGroupePubli(this,'😴 Sommeil')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">😴 Sommeil</button>
-  <button class="groupe-sel" onclick="selGroupePubli(this,'💪 Confiance')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">💪 Confiance</button>
-  <button class="groupe-sel" onclick="selGroupePubli(this,'💔 Relations')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">💔 Relations</button>
-  <button class="groupe-sel" onclick="selGroupePubli(this,'🌱 Développement')" style="background:none;color:#185FA5;border:1px solid #B5D4F4;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">🌱 Développement</button>
-</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;" id="groupes-btns">
+        <button class="groupe-theme active" onclick="selGroupe(this,'Tous')">Tous</button>
+        <button class="groupe-theme" onclick="selGroupe(this,'😰 Stress')">😰 Stress</button>
+        <button class="groupe-theme" onclick="selGroupe(this,'😴 Sommeil')">😴 Sommeil</button>
+        <button class="groupe-theme" onclick="selGroupe(this,'💪 Confiance')">💪 Confiance</button>
+        <button class="groupe-theme" onclick="selGroupe(this,'💔 Relations')">💔 Relations</button>
+        <button class="groupe-theme" onclick="selGroupe(this,'🌱 Développement')">🌱 Développement</button>
+      </div>
+      <p style="font-size:12px;color:#85B7EB;margin-bottom:8px;">Choisis un groupe pour ta pensée :</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;">
+        <button class="groupe-theme active" onclick="selGroupePubli(this,'😰 Stress')">😰 Stress</button>
+        <button class="groupe-theme" onclick="selGroupePubli(this,'😴 Sommeil')">😴 Sommeil</button>
+        <button class="groupe-theme" onclick="selGroupePubli(this,'💪 Confiance')">💪 Confiance</button>
+        <button class="groupe-theme" onclick="selGroupePubli(this,'💔 Relations')">💔 Relations</button>
+        <button class="groupe-theme" onclick="selGroupePubli(this,'🌱 Développement')">🌱 Développement</button>
+      </div>
       <textarea class="textarea-sec" id="pensee-input" placeholder="Une pensée bienveillante à partager..." style="height:80px;margin-bottom:10px;"></textarea>
       <button class="btn-p" onclick="partagerPensee()">Partager 💙</button>
       <p class="succes" id="succes-pensee">✅ Partagé !</p>
     </div>
-    <div class="card">
-      <p class="card-titre">💙 Pensées de la communauté</p>
-      <div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
-    </div>
+    <div class="card"><p class="card-titre">💙 Pensées de la communauté</p><div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div></div>
   </div>
 </div>
-  <div class="page-sec" id="groupe-salle">
+
+<!-- GROUPE SALLE -->
+<div class="page-sec" id="groupe-salle">
   <div class="sec-header"><button class="btn-back" onclick="quitterSalle();fermerSec('groupe-salle')">← Retour</button><h2>🤝 Session de groupe</h2></div>
   <div class="sec-body" id="groupe-accueil">
     <div class="card" style="text-align:center;">
       <p style="font-size:40px;margin-bottom:12px;">🤝</p>
       <p class="card-titre">Rejoins une salle de soutien</p>
-      <p style="font-size:13px;color:#85B7EB;line-height:1.6;">Discute anonymement avec d'autres personnes. L'IA modère et guide la conversation 💙</p>
+      <p style="font-size:13px;color:#85B7EB;line-height:1.6;">Discute anonymement avec d'autres personnes. L'IA modère et guide 💙</p>
     </div>
     <div class="card">
       <p class="card-titre">Créer une nouvelle salle</p>
@@ -478,82 +471,50 @@
       </div>
       <button class="btn-p" onclick="creerSalle()">Créer une salle 💙</button>
     </div>
-    <div class="card">
-      <p class="card-titre">Salles disponibles</p>
-      <div id="salles-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
-    </div>
+    <div class="card"><p class="card-titre">Salles disponibles</p><div id="salles-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div></div>
   </div>
-
-  <div id="groupe-chat" style="display:none;flex:1;flex-direction:column;height:100%;">
-    <div style="padding:10px 16px;background:#E6F1FB;border-bottom:0.5px solid #B5D4F4;display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <p id="salle-titre" style="font-size:14px;font-weight:500;color:#0C447C;"></p>
-        <p id="salle-membres" style="font-size:12px;color:#85B7EB;"></p>
-      </div>
+  <div id="groupe-chat" style="display:none;flex:1;flex-direction:column;height:calc(100vh - 60px);overflow:hidden;">
+    <div style="padding:10px 16px;background:#E6F1FB;border-bottom:0.5px solid #B5D4F4;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div><p id="salle-titre" style="font-size:14px;font-weight:500;color:#0C447C;"></p><p id="salle-membres" style="font-size:12px;color:#85B7EB;"></p></div>
       <button onclick="quitterSalle()" style="background:none;border:1px solid #B5D4F4;border-radius:10px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">Quitter</button>
     </div>
-    <div id="groupe-messages" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:#f0f6ff;"></div>
-    <div style="padding:10px 12px;border-top:0.5px solid #B5D4F4;display:flex;gap:8px;align-items:flex-end;background:#fff;">
-      <textarea id="groupe-input" placeholder="Écris ton message..." rows="1" class="chat-textarea" style="flex:1;"></textarea>
+    <div id="groupe-messages" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:#f0f6ff;-webkit-overflow-scrolling:touch;"></div>
+    <div style="padding:10px 12px;border-top:0.5px solid #B5D4F4;display:flex;gap:8px;align-items:flex-end;background:#fff;flex-shrink:0;">
+      <textarea id="groupe-input" placeholder="Écris ton message..." rows="1" class="chat-textarea" style="flex:1;" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();envoyerGroupeMsg();}"></textarea>
       <button onclick="envoyerGroupeMsg()" class="send-btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
     </div>
   </div>
 </div>
-  <div class="page-sec" id="temoignages-page">
+
+<!-- BADGES -->
+<div class="page-sec" id="badges">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('badges')">← Retour</button><h2>🏆 Mes récompenses</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;"><p style="font-size:32px;margin-bottom:8px;">🏆</p><p class="card-titre">Tes badges bien-être</p><p style="font-size:13px;color:#85B7EB;">Utilise l'app pour débloquer des badges !</p></div>
+    <div class="card"><div id="badges-liste"></div></div>
+  </div>
+</div>
+
+<!-- HISTORIQUE -->
+<div class="page-sec" id="historique">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('historique')">← Retour</button><h2>💬 Historique</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;"><p style="font-size:32px;margin-bottom:8px;">💬</p><p class="card-titre">Tes conversations passées</p><p style="font-size:13px;color:#85B7EB;">Relis tes échanges avec l'assistant 💙</p></div>
+    <div class="card"><div id="historique-conv"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune conversation 💙</p></div></div>
+  </div>
+</div>
+
+<!-- TEMOIGNAGES -->
+<div class="page-sec" id="temoignages-page">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('temoignages-page')">← Retour</button><h2>⭐ Témoignages</h2></div>
   <div class="sec-body">
-    <div class="card" style="text-align:center;">
-      <p style="font-size:32px;margin-bottom:8px;">⭐</p>
-      <p class="card-titre">Ce que disent nos utilisateurs</p>
-      <p id="compteur-detail" style="font-size:13px;color:#85B7EB;">Chargement...</p>
-    </div>
+    <div class="card" style="text-align:center;"><p style="font-size:32px;margin-bottom:8px;">⭐</p><p class="card-titre">Ce que disent nos utilisateurs</p><p id="compteur-detail" style="font-size:13px;color:#85B7EB;">Chargement...</p></div>
     <div id="temoignages-liste"></div>
   </div>
 </div>
-  <div class="page-sec" id="confidentialite">
-  <div class="sec-header"><button class="btn-back" onclick="fermerSec('confidentialite')">← Retour</button><h2>🔒 Confidentialité & CGU</h2></div>
-  <div class="sec-body">
-    <div class="card" style="text-align:center;">
-      <p style="font-size:32px;margin-bottom:8px;">🔒</p>
-      <h2 style="font-family:'Lora',serif;font-size:18px;color:#0C447C;margin-bottom:8px;">Politique de confidentialité</h2>
-      <p style="font-size:12px;color:#85B7EB;">Dernière mise à jour : Avril 2026</p>
-    </div>
-    <div class="card">
-      <p class="card-titre">1. Collecte des données</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Juste là pour toi ne collecte aucune donnée personnelle identifiable. Toutes vos données (journal, humeur, objectifs, conversations) sont stockées uniquement sur votre appareil et ne sont jamais transmises à nos serveurs.</p>
-    </div>
-    <div class="card">
-      <p class="card-titre">2. Conversations avec l'IA</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Vos conversations avec l'assistant sont traitées par l'API Anthropic (Claude) pour générer des réponses. Nous ne stockons pas le contenu de vos conversations sur nos serveurs. Chaque conversation est indépendante.</p>
-    </div>
-    <div class="card">
-      <p class="card-titre">3. Communauté anonyme</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Les pensées partagées dans la communauté sont anonymes. Seul votre prénom (que vous choisissez) est affiché. Nous nous réservons le droit de supprimer tout contenu inapproprié.</p>
-    </div>
-    <div class="card">
-      <p class="card-titre">4. Sécurité</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Notre application utilise le protocole HTTPS pour sécuriser toutes les communications. Vos données locales sont protégées par les mécanismes de sécurité de votre appareil.</p>
-    </div>
-    <div class="card">
-      <p class="card-titre">5. Conditions d'utilisation</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">En utilisant Juste là pour toi, vous acceptez de :</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;margin-top:8px;">• Utiliser l'application de manière bienveillante</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">• Ne pas partager de contenu inapproprié dans la communauté</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">• Ne pas utiliser l'application à des fins malveillantes</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;margin-top:8px;">Cette application n'est pas un service médical ou psychologique professionnel. En cas de détresse sévère, consultez un professionnel de santé.</p>
-    </div>
-    <div class="card">
-      <p class="card-titre">6. Contact</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Pour toute question concernant la confidentialité :</p>
-      <p style="font-size:13px;color:#185FA5;margin-top:6px;">📧 malick043@gmail.com</p>
-    </div>
-    <div class="card" style="text-align:center;">
-      <p style="font-size:12px;color:#85B7EB;font-style:italic;font-family:'Lora',serif;">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p>
-      <p style="font-size:12px;color:#B5D4F4;margin-top:4px;">Tous droits réservés</p>
-    </div>
-  </div>
-</div>
-  <div class="page-sec" id="apropos">
+
+<!-- A PROPOS -->
+<div class="page-sec" id="apropos">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('apropos')">← Retour</button><h2>ℹ️ À propos</h2></div>
   <div class="sec-body">
     <div class="card" style="text-align:center;">
@@ -569,94 +530,50 @@
     <div class="card">
       <p class="card-titre">Le créateur</p>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-<img src="malick.jpeg" style="width:80px;height:100px;border-radius:12px;object-fit:cover;object-position:top;border:1.5px solid #B5D4F4;">        <div>
-          <p style="font-size:15px;font-weight:500;color:#0C447C;">El Hadj Malick THIOUNE</p>
-          <p style="font-size:12px;color:#85B7EB;">Fondateur & Créateur</p>
-        </div>
+        <img src="malick.jpeg" style="width:80px;height:100px;border-radius:12px;object-fit:cover;object-position:top;border:1.5px solid #B5D4F4;">
+        <div><p style="font-size:15px;font-weight:500;color:#0C447C;">El Hadj Malick THIOUNE</p><p style="font-size:12px;color:#85B7EB;">Fondateur & Créateur</p></div>
       </div>
       <p style="font-size:13px;color:#378ADD;line-height:1.7;">Juriste d'entreprise spécialisé en droit des affaires et en droit et gouvernance des énergies et des mines. Entrepreneur, idéologiste, créateur et penseur.</p>
     </div>
     <div class="card">
       <p class="card-titre">Nous contacter</p>
-      <a href="mailto:malick043@gmail.com" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;">
-        <span style="font-size:20px;">📧</span>
-        <div>
-          <p style="font-size:13px;font-weight:500;color:#0C447C;">Email</p>
-          <p style="font-size:12px;color:#85B7EB;">malick043@gmail.com</p>
-        </div>
-      </a>
-<a href="https://wa.me/00221778844799?text=Bonjour%2C%20j%27ai%20besoin%20d%27aide%20avec%20l%27application%20Juste%20l%C3%A0%20pour%20toi" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;">        <span style="font-size:20px;">💬</span>
-        <div>
-          <p style="font-size:13px;font-weight:500;color:#0C447C;">WhatsApp</p>
-          <p style="font-size:12px;color:#85B7EB;">+221 77 884 47 99</p>
-        </div>
-      </a>
-      <a href="https://snapchat.com/add/pthioune23" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;text-decoration:none;">
-        <span style="font-size:20px;">👻</span>
-        <div>
-          <p style="font-size:13px;font-weight:500;color:#0C447C;">Snapchat</p>
-          <p style="font-size:12px;color:#85B7EB;">pthioune23</p>
-        </div>
-      </a>
+      <a href="mailto:malick043@gmail.com" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;"><span style="font-size:20px;">📧</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Email</p><p style="font-size:12px;color:#85B7EB;">malick043@gmail.com</p></div></a>
+      <a href="https://wa.me/00221778844799?text=Bonjour%2C%20j%27ai%20besoin%20d%27aide%20avec%20l%27application%20Juste%20l%C3%A0%20pour%20toi" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;"><span style="font-size:20px;">💬</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">WhatsApp</p><p style="font-size:12px;color:#85B7EB;">+221 77 884 47 99</p></div></a>
+      <a href="https://snapchat.com/add/pthioune23" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;text-decoration:none;"><span style="font-size:20px;">👻</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Snapchat</p><p style="font-size:12px;color:#85B7EB;">pthioune23</p></div></a>
     </div>
-    <div class="card" style="text-align:center;">
-      <p style="font-size:12px;color:#85B7EB;font-style:italic;font-family:'Lora',serif;">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p>
-      <p style="font-size:12px;color:#B5D4F4;margin-top:4px;">Tous droits réservés</p>
-    </div>
+    <div class="card" style="text-align:center;"><p style="font-size:12px;color:#85B7EB;font-style:italic;font-family:'Lora',serif;">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p><p style="font-size:12px;color:#B5D4F4;margin-top:4px;">Tous droits réservés</p></div>
   </div>
 </div>
-<div class="page-sec" id="historique">
-  <div class="sec-header"><button class="btn-back" onclick="fermerSec('historique')">← Retour</button><h2>💬 Historique</h2></div>
+
+<!-- CONFIDENTIALITE -->
+<div class="page-sec" id="confidentialite">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('confidentialite')">← Retour</button><h2>🔒 Confidentialité & CGU</h2></div>
   <div class="sec-body">
-    <div class="card" style="text-align:center;">
-      <p style="font-size:32px;margin-bottom:8px;">💬</p>
-      <p class="card-titre">Tes conversations passées</p>
-      <p style="font-size:13px;color:#85B7EB;">Relis tes échanges avec l'assistant 💙</p>
-    </div>
-    <div class="card"><div id="historique-conv"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune conversation 💙</p></div></div>
-  </div>
-</div>
-<div class="page-sec" id="badges">
-  <div class="sec-header"><button class="btn-back" onclick="fermerSec('badges')">← Retour</button><h2>🏆 Mes récompenses</h2></div>
-  <div class="sec-body">
-    <div class="card" style="text-align:center;">
-      <p style="font-size:32px;margin-bottom:8px;">🏆</p>
-      <p class="card-titre">Tes badges bien-être</p>
-      <p style="font-size:13px;color:#85B7EB;">Utilise l'app pour débloquer des badges !</p>
-    </div>
-    <div class="card"><div id="badges-liste"></div></div>
+    <div class="card" style="text-align:center;"><p style="font-size:32px;margin-bottom:8px;">🔒</p><h2 style="font-family:'Lora',serif;font-size:18px;color:#0C447C;margin-bottom:8px;">Politique de confidentialité</h2><p style="font-size:12px;color:#85B7EB;">Dernière mise à jour : Avril 2026</p></div>
+    <div class="card"><p class="card-titre">1. Collecte des données</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Juste là pour toi ne collecte aucune donnée personnelle identifiable. Toutes vos données sont stockées uniquement sur votre appareil.</p></div>
+    <div class="card"><p class="card-titre">2. Conversations avec l'IA</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Vos conversations sont traitées par l'API Anthropic (Claude). Nous ne stockons pas le contenu de vos conversations sur nos serveurs.</p></div>
+    <div class="card"><p class="card-titre">3. Communauté anonyme</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Les pensées partagées dans la communauté sont anonymes. Seul votre prénom est affiché. Nous modérons le contenu inapproprié.</p></div>
+    <div class="card"><p class="card-titre">4. Conditions d'utilisation</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Cette application n'est pas un service médical ou psychologique professionnel. En cas de détresse sévère, consultez un professionnel de santé.</p></div>
+    <div class="card"><p class="card-titre">5. Contact</p><p style="font-size:13px;color:#185FA5;">📧 malick043@gmail.com</p></div>
+    <div class="card" style="text-align:center;"><p style="font-size:12px;color:#85B7EB;font-style:italic;font-family:'Lora',serif;">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p></div>
   </div>
 </div>
 
 <script>
 const CITATIONS=['Chaque jour est une nouvelle chance de prendre soin de toi.','Tu n\'as pas à être parfait pour mériter d\'être aimé.','La douceur envers soi-même est le début de tout.','Tes émotions sont valides, même celles que tu n\'arrives pas à nommer.','Prendre soin de toi n\'est pas un luxe, c\'est une nécessité.','Tu es plus fort que tu ne le crois.','Chaque petit pas compte sur le chemin du bien-être.','Il est courageux de demander de l\'aide.','Tu mérites la paix intérieure.','Respire. Tu es là. C\'est déjà beaucoup.'];
-const SYSTEM=`You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. If the user writes in Wolof, respond in Wolof with warmth and empathy. If the user writes in French, respond in French. If the user writes in English, respond in English. Keep responses to 2-4 sentences. Address user by first name when natural.`;let historique=[],prenom='',humeurSel2='',delaiLettre='',pagePrecedente='accueil';
-// TUTORIEL
-let slideActuel = 0;
-function allerSlide(n) {
-  slideActuel = n;
-  document.getElementById('tuto-slides').style.transform = 'translateX(-'+n*100+'%)';
-  document.querySelectorAll('.tuto-point').forEach((p,i) => p.classList.toggle('active', i===n));
-  document.getElementById('tuto-next').textContent = n === 3 ? '' : 'Suivant →';
-  document.getElementById('tuto-next').style.display = n === 3 ? 'none' : 'block';
-}
-function slideSuivant() { if(slideActuel < 3) allerSlide(slideActuel + 1); }
-function finirTutoriel() {
-  localStorage.setItem('tutoriel-vu', 'true');
-  document.getElementById('tutoriel').style.display = 'none';
-  document.getElementById('splash').style.display = 'flex';
-}
-if(!localStorage.getItem('tutoriel-vu')) {
-  document.getElementById('tutoriel').style.display = 'flex';
-  document.getElementById('splash').style.display = 'none';
-}
+const SYSTEM=`You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. If the user writes in Wolof, respond in Wolof. Keep responses to 2-4 sentences. Address user by first name when natural.`;
+let historique=[],prenom='',humeurSel2='',delaiLettre='',pagePrecedente='accueil';
+let socket=null,salleActuelle=null,themeChoisi='😰 Stress';
+let groupeFiltre='Tous',groupePubli='😰 Stress';
+
+let slideActuel=0;
+function allerSlide(n){slideActuel=n;document.getElementById('tuto-slides').style.transform='translateX(-'+n*100+'%)';document.querySelectorAll('.tuto-point').forEach((p,i)=>p.classList.toggle('active',i===n));document.getElementById('tuto-next').style.display=n===3?'none':'block';}
+function slideSuivant(){if(slideActuel<3)allerSlide(slideActuel+1);}
+function finirTutoriel(){localStorage.setItem('tutoriel-vu','true');document.getElementById('tutoriel').style.display='none';document.getElementById('splash').style.display='flex';}
+if(!localStorage.getItem('tutoriel-vu')){document.getElementById('tutoriel').style.display='flex';document.getElementById('splash').style.display='none';}
 if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark');}
 
-function toggleDark(){
-  const isDark=document.body.classList.toggle('dark');
-  localStorage.setItem('darkMode',isDark);
-  document.getElementById('dark-btn').textContent=isDark?'☀️ Mode clair':'🌙 Mode sombre';
-}
+function toggleDark(){const isDark=document.body.classList.toggle('dark');localStorage.setItem('darkMode',isDark);document.getElementById('dark-btn').textContent=isDark?'☀️ Mode clair':'🌙 Mode sombre';}
 
 const citation=CITATIONS[Math.floor(Math.random()*CITATIONS.length)];
 const mots=('"'+citation+'"').split(' ');
@@ -664,25 +581,13 @@ let idx=0;
 const citEl=document.getElementById('splash-citation');
 function motSuivant(){if(idx<mots.length){citEl.textContent+=(idx>0?' ':'')+mots[idx];idx++;setTimeout(motSuivant,110);}}
 motSuivant();
-
 fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:'Génère UNE citation courte et bienveillante. Réponds UNIQUEMENT avec la citation, sans guillemets.',messages:[{role:'user',content:'Citation'}]})}).then(r=>r.json()).then(d=>{if(d.content&&d.content[0])citEl.textContent='"'+d.content[0].text+'"';}).catch(()=>{});
 
 function getTime(){return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
 function getDate(){return new Date().toLocaleDateString('fr-FR');}
 
-function allerAccueil(){
-  document.getElementById('splash').style.display='none';
-  document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));
-  document.getElementById('chat').style.display='none';
-  document.getElementById('accueil').style.display='flex';
-  pagePrecedente='accueil';
-}
-
-function partagercitation(){
-  const t=citEl.textContent+'\n\n💙 Juste là pour toi\nhttps://malick043-png.github.io/Juste-l-pour-toi';
-  if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);alert('Citation copiée ! 💙');}
-}
-
+function allerAccueil(){document.getElementById('splash').style.display='none';document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));document.getElementById('chat').style.display='none';document.getElementById('accueil').style.display='flex';pagePrecedente='accueil';}
+function partagercitation(){const t=citEl.textContent+'\n\n💙 Juste là pour toi\nhttps://malick043-png.github.io/Juste-l-pour-toi';if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);alert('Citation copiée ! 💙');}}
 function ouvrirMenu(){document.getElementById('menu-drawer').classList.add('open');}
 function fermerMenu(){document.getElementById('menu-drawer').classList.remove('open');}
 
@@ -691,17 +596,12 @@ function commencer(){
   document.getElementById('accueil').style.display='none';
   document.getElementById('chat').style.display='flex';
   document.getElementById('chat-sub').textContent='Bonjour '+prenom+' 💙';
-  pagePrecedente='chat';incrementerCompteur();
+  pagePrecedente='chat';
+  incrementerCompteur();
   ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
 }
 
-function reinitialiser(){
-  sauvegarderConversation();
-  historique=[];
-  document.getElementById('messages').innerHTML='<div class="date-div"><span>aujourd\'hui</span></div>';
-  document.getElementById('suggestions').style.display='flex';
-  ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Comment te sens-tu ?');
-}
+function reinitialiser(){sauvegarderConversation();historique=[];document.getElementById('messages').innerHTML='<div class="date-div"><span>aujourd\'hui</span></div>';document.getElementById('suggestions').style.display='flex';ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Comment te sens-tu ?');}
 
 function ouvrirSec(id){pagePrecedente=document.getElementById('chat').style.display==='flex'?'chat':'accueil';document.getElementById(id).classList.add('open');}
 function fermerSec(id){document.getElementById(id).classList.remove('open');ouvrirMenu();}
@@ -718,462 +618,102 @@ function sauvegarderJournal(){
   setTimeout(()=>document.getElementById('succes-j').style.display='none',2000);
   document.getElementById('note-journal').value='';humeurSel2='';
   document.querySelectorAll('.humeur-btn').forEach(b=>b.classList.remove('selected'));
-  afficherHistoriqueJournal();
+  afficherHistoriqueJournal();verifierBadges();
 }
-function afficherHistoriqueJournal(){
-  const j=JSON.parse(localStorage.getItem('journal')||'[]');
-  const c=document.getElementById('histo-journal');
-  if(!j.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune entrée 💙</p>';return;}
-  c.innerHTML=j.slice(0,10).map(e=>`<div class="entree-j"><div class="entree-date">${e.date}</div><div><span style="font-size:16px;">${e.humeur}</span>${e.note?'<p style="font-size:12px;color:#85B7EB;margin-top:2px;">'+e.note+'</p>':''}</div></div>`).join('');
-}
+function afficherHistoriqueJournal(){const j=JSON.parse(localStorage.getItem('journal')||'[]');const c=document.getElementById('histo-journal');if(!j.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune entrée 💙</p>';return;}c.innerHTML=j.slice(0,10).map(e=>`<div class="entree-j"><div class="entree-date">${e.date}</div><div><span style="font-size:16px;">${e.humeur}</span>${e.note?'<p style="font-size:12px;color:#85B7EB;margin-top:2px;">'+e.note+'</p>':''}</div></div>`).join('');}
 
 let respInt=null,cycleN=0;
 function demarrerResp(){document.getElementById('btn-start-resp').style.display='none';document.getElementById('btn-stop-resp').style.display='block';cycleN=0;execCycle();}
 function arreterResp(){if(respInt){clearTimeout(respInt);respInt=null;}document.getElementById('btn-start-resp').style.display='block';document.getElementById('btn-stop-resp').style.display='none';document.getElementById('instr-resp').textContent='Prêt ?';document.getElementById('compte-resp').textContent='';document.getElementById('cycle-resp').textContent='Appuie sur Commencer';document.getElementById('cercle').style.transform='scale(1)';document.getElementById('cercle').style.background='linear-gradient(135deg,#185FA5,#1a6db5)';}
-function execCycle(){
-  if(cycleN>=5){document.getElementById('instr-resp').textContent='🎉 Bravo !';document.getElementById('compte-resp').textContent='';document.getElementById('cycle-resp').textContent='5 cycles complétés 💙';document.getElementById('btn-start-resp').style.display='block';document.getElementById('btn-stop-resp').style.display='none';return;}
-  cycleN++;document.getElementById('cycle-resp').textContent='Cycle '+cycleN+' / 5';
-  const c=document.getElementById('cercle');
-  document.getElementById('instr-resp').textContent='Inspire...';c.style.background='linear-gradient(135deg,#378ADD,#1a9ddb)';c.style.transform='scale(1.5)';
-  let n=4;document.getElementById('compte-resp').textContent=n;
-  const i1=setInterval(()=>{n--;if(n>0)document.getElementById('compte-resp').textContent=n;else{clearInterval(i1);document.getElementById('instr-resp').textContent='Retiens...';c.style.background='linear-gradient(135deg,#1D9E75,#0f7a5a)';let n2=4;document.getElementById('compte-resp').textContent=n2;const i2=setInterval(()=>{n2--;if(n2>0)document.getElementById('compte-resp').textContent=n2;else{clearInterval(i2);document.getElementById('instr-resp').textContent='Expire...';c.style.background='linear-gradient(135deg,#185FA5,#1a6db5)';c.style.transform='scale(1)';let n3=6;document.getElementById('compte-resp').textContent=n3;const i3=setInterval(()=>{n3--;if(n3>0)document.getElementById('compte-resp').textContent=n3;else{clearInterval(i3);respInt=setTimeout(execCycle,500);}},1000);}},1000);}},1000);
-}
+function execCycle(){if(cycleN>=5){document.getElementById('instr-resp').textContent='🎉 Bravo !';document.getElementById('compte-resp').textContent='';document.getElementById('cycle-resp').textContent='5 cycles complétés 💙';document.getElementById('btn-start-resp').style.display='block';document.getElementById('btn-stop-resp').style.display='none';return;}cycleN++;document.getElementById('cycle-resp').textContent='Cycle '+cycleN+' / 5';const c=document.getElementById('cercle');document.getElementById('instr-resp').textContent='Inspire...';c.style.background='linear-gradient(135deg,#378ADD,#1a9ddb)';c.style.transform='scale(1.5)';let n=4;document.getElementById('compte-resp').textContent=n;const i1=setInterval(()=>{n--;if(n>0)document.getElementById('compte-resp').textContent=n;else{clearInterval(i1);document.getElementById('instr-resp').textContent='Retiens...';c.style.background='linear-gradient(135deg,#1D9E75,#0f7a5a)';let n2=4;document.getElementById('compte-resp').textContent=n2;const i2=setInterval(()=>{n2--;if(n2>0)document.getElementById('compte-resp').textContent=n2;else{clearInterval(i2);document.getElementById('instr-resp').textContent='Expire...';c.style.background='linear-gradient(135deg,#185FA5,#1a6db5)';c.style.transform='scale(1)';let n3=6;document.getElementById('compte-resp').textContent=n3;const i3=setInterval(()=>{n3--;if(n3>0)document.getElementById('compte-resp').textContent=n3;else{clearInterval(i3);respInt=setTimeout(execCycle,500);}},1000);}},1000);}},1000);}
 
 function selObj(o){document.getElementById('obj-input').value=o;}
-function sauvegarderObj(){
-  const o=document.getElementById('obj-input').value.trim();
-  if(!o){alert('Choisis un objectif !');return;}
-  localStorage.setItem('objectif',JSON.stringify({texte:o,date:getDate()}));
-  afficherObjectifActuel();alert('Objectif sauvegardé ! 💙');
-}
-function afficherObjectifActuel(){
-  const d=JSON.parse(localStorage.getItem('objectif')||'null');
-  if(d){document.getElementById('obj-actuel').style.display='block';document.getElementById('obj-texte').textContent='🎯 '+d.texte;}
-}
-function parlerObj(){
-  const d=JSON.parse(localStorage.getItem('objectif')||'null');
-  if(!d)return;
-  fermerSec('objectifs');fermerMenu();
-  document.getElementById('accueil').style.display='none';
-  document.getElementById('chat').style.display='flex';
-  pagePrecedente='chat';
-  document.getElementById('input').value='Je travaille sur mon objectif : '+d.texte+'. Peux-tu m\'aider ?';
-  envoyer();
-}
+function sauvegarderObj(){const o=document.getElementById('obj-input').value.trim();if(!o){alert('Choisis un objectif !');return;}localStorage.setItem('objectif',JSON.stringify({texte:o,date:getDate()}));afficherObjectifActuel();alert('Objectif sauvegardé ! 💙');}
+function afficherObjectifActuel(){const d=JSON.parse(localStorage.getItem('objectif')||'null');if(d){document.getElementById('obj-actuel').style.display='block';document.getElementById('obj-texte').textContent='🎯 '+d.texte;}}
+function parlerObj(){const d=JSON.parse(localStorage.getItem('objectif')||'null');if(!d)return;fermerSec('objectifs');fermerMenu();document.getElementById('accueil').style.display='none';document.getElementById('chat').style.display='flex';pagePrecedente='chat';document.getElementById('input').value='Je travaille sur mon objectif : '+d.texte+'. Peux-tu m\'aider ?';envoyer();}
 function changerObj(){localStorage.removeItem('objectif');document.getElementById('obj-actuel').style.display='none';document.getElementById('obj-input').value='';}
 
 function updateNote(v){document.getElementById('note-disp').textContent=v;const e={1:'😭',2:'😢',3:'😔',4:'😕',5:'😐',6:'🙂',7:'😊',8:'😄',9:'😁',10:'🤩'};document.getElementById('emoji-hum').textContent=e[v];}
-function sauvegarderNote(){
-  const n=parseInt(document.getElementById('note-slider').value);
-  const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
-  const i=notes.findIndex(x=>x.date===getDate());
-  if(i>=0)notes[i].note=n;else notes.push({date:getDate(),note:n});
-  if(notes.length>30)notes.shift();
-  localStorage.setItem('notes-humeur',JSON.stringify(notes));
-  document.getElementById('succes-note').style.display='block';
-  setTimeout(()=>document.getElementById('succes-note').style.display='none',2000);
-  afficherGraphique();
-}
-function afficherGraphique(){
-  const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
-  const jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-  const auj=new Date();const sem=[];
-  for(let i=6;i>=0;i--){const d=new Date(auj);d.setDate(auj.getDate()-i);const ds=d.toLocaleDateString('fr-FR');const n=notes.find(x=>x.date===ds);sem.push({j:jours[d.getDay()],n:n?n.note:null});}
-  document.getElementById('graph-sem').innerHTML=sem.map(s=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;">${s.n?`<span style="font-size:10px;color:#185FA5;font-weight:500;">${s.n}</span><div style="width:100%;background:linear-gradient(to top,#185FA5,#378ADD);border-radius:3px 3px 0 0;height:${s.n*9}px;"></div>`:`<span style="font-size:10px;color:#B5D4F4;">-</span><div style="width:100%;background:#E6F1FB;border-radius:3px 3px 0 0;height:8px;"></div>`}</div>`).join('');
-  document.getElementById('jours-lab').innerHTML=sem.map(s=>`<span style="font-size:10px;color:#85B7EB;flex:1;text-align:center;">${s.j}</span>`).join('');
-  const np=sem.filter(s=>s.n!==null);
-  if(np.length)document.getElementById('score-sem').textContent=(np.reduce((a,b)=>a+b.n,0)/np.length).toFixed(1)+'/10';
-}
+function sauvegarderNote(){const n=parseInt(document.getElementById('note-slider').value);const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const i=notes.findIndex(x=>x.date===getDate());if(i>=0)notes[i].note=n;else notes.push({date:getDate(),note:n});if(notes.length>30)notes.shift();localStorage.setItem('notes-humeur',JSON.stringify(notes));document.getElementById('succes-note').style.display='block';setTimeout(()=>document.getElementById('succes-note').style.display='none',2000);afficherGraphique();}
+function afficherGraphique(){const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];const auj=new Date();const sem=[];for(let i=6;i>=0;i--){const d=new Date(auj);d.setDate(auj.getDate()-i);const ds=d.toLocaleDateString('fr-FR');const n=notes.find(x=>x.date===ds);sem.push({j:jours[d.getDay()],n:n?n.note:null});}document.getElementById('graph-sem').innerHTML=sem.map(s=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;">${s.n?`<span style="font-size:10px;color:#185FA5;font-weight:500;">${s.n}</span><div style="width:100%;background:linear-gradient(to top,#185FA5,#378ADD);border-radius:3px 3px 0 0;height:${s.n*9}px;"></div>`:`<span style="font-size:10px;color:#B5D4F4;">-</span><div style="width:100%;background:#E6F1FB;border-radius:3px 3px 0 0;height:8px;"></div>`}</div>`).join('');document.getElementById('jours-lab').innerHTML=sem.map(s=>`<span style="font-size:10px;color:#85B7EB;flex:1;text-align:center;">${s.j}</span>`).join('');const np=sem.filter(s=>s.n!==null);if(np.length)document.getElementById('score-sem').textContent=(np.reduce((a,b)=>a+b.n,0)/np.length).toFixed(1)+'/10';}
 
 const DEFIS=['Écris 3 choses pour lesquelles tu es reconnaissant aujourd\'hui.','Offre un sourire sincère à quelqu\'un autour de toi.','Prends 5 minutes pour respirer profondément.','Envoie un message d\'encouragement à quelqu\'un que tu aimes.','Bois un grand verre d\'eau et fais une petite marche.','Écris une qualité que tu aimes en toi.','Appelle quelqu\'un que tu n\'as pas contacté depuis longtemps.'];
-async function chargerDefi(){
-  document.getElementById('defi-ok-msg').style.display='none';
-  if(localStorage.getItem('defi-date')===getDate()){
-    document.getElementById('defi-load').style.display='none';document.getElementById('defi-txt').style.display='block';document.getElementById('defi-txt').textContent=localStorage.getItem('defi-txt');document.getElementById('defi-ok-msg').style.display='block';return;
-  }
-  const d=DEFIS[Math.floor(Math.random()*DEFIS.length)];
-  document.getElementById('defi-load').style.display='none';document.getElementById('defi-txt').style.display='block';document.getElementById('defi-txt').textContent=d;document.getElementById('defi-acts').style.display='flex';localStorage.setItem('defi-txt',d);
-  fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:'Génère UN défi bien-être simple réalisable en une journée. Réponds UNIQUEMENT avec le défi.',messages:[{role:'user',content:'Défi'}]})}).then(r=>r.json()).then(d=>{if(d.content&&d.content[0]){document.getElementById('defi-txt').textContent=d.content[0].text;localStorage.setItem('defi-txt',d.content[0].text);}}).catch(()=>{});
-}
+async function chargerDefi(){document.getElementById('defi-ok-msg').style.display='none';if(localStorage.getItem('defi-date')===getDate()){document.getElementById('defi-load').style.display='none';document.getElementById('defi-txt').style.display='block';document.getElementById('defi-txt').textContent=localStorage.getItem('defi-txt');document.getElementById('defi-ok-msg').style.display='block';return;}const d=DEFIS[Math.floor(Math.random()*DEFIS.length)];document.getElementById('defi-load').style.display='none';document.getElementById('defi-txt').style.display='block';document.getElementById('defi-txt').textContent=d;document.getElementById('defi-acts').style.display='flex';localStorage.setItem('defi-txt',d);fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:'Génère UN défi bien-être simple réalisable en une journée. Réponds UNIQUEMENT avec le défi.',messages:[{role:'user',content:'Défi'}]})}).then(r=>r.json()).then(d=>{if(d.content&&d.content[0]){document.getElementById('defi-txt').textContent=d.content[0].text;localStorage.setItem('defi-txt',d.content[0].text);}}).catch(()=>{});}
 function nouveauDefi(){localStorage.removeItem('defi-txt');localStorage.removeItem('defi-date');document.getElementById('defi-load').style.display='block';document.getElementById('defi-txt').style.display='none';document.getElementById('defi-acts').style.display='none';chargerDefi();}
-function defiOk(){
-  localStorage.setItem('defi-date',getDate());
-  const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');
-  defis.unshift({date:getDate(),defi:document.getElementById('defi-txt').textContent});
-  if(defis.length>10)defis.pop();
-  localStorage.setItem('defis-ok',JSON.stringify(defis));
-  document.getElementById('defi-acts').style.display='none';document.getElementById('defi-ok-msg').style.display='block';
-  afficherDefisHisto();verifierBadges();
-}
-function afficherDefisHisto(){
-  const d=JSON.parse(localStorage.getItem('defis-ok')||'[]');
-  const c=document.getElementById('defi-histo');
-  if(!d.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun défi 💙</p>';return;}
-  c.innerHTML=d.map(x=>`<div style="padding:8px 0;border-bottom:0.5px solid #E6F1FB;display:flex;gap:8px;"><span>✅</span><div><p style="font-size:11px;color:#85B7EB;">${x.date}</p><p style="font-size:13px;color:#0C447C;">${x.defi}</p></div></div>`).join('');
-}
+function defiOk(){localStorage.setItem('defi-date',getDate());const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');defis.unshift({date:getDate(),defi:document.getElementById('defi-txt').textContent});if(defis.length>10)defis.pop();localStorage.setItem('defis-ok',JSON.stringify(defis));document.getElementById('defi-acts').style.display='none';document.getElementById('defi-ok-msg').style.display='block';afficherDefisHisto();verifierBadges();}
+function afficherDefisHisto(){const d=JSON.parse(localStorage.getItem('defis-ok')||'[]');const c=document.getElementById('defi-histo');if(!d.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun défi 💙</p>';return;}c.innerHTML=d.map(x=>`<div style="padding:8px 0;border-bottom:0.5px solid #E6F1FB;display:flex;gap:8px;"><span>✅</span><div><p style="font-size:11px;color:#85B7EB;">${x.date}</p><p style="font-size:13px;color:#0C447C;">${x.defi}</p></div></div>`).join('');}
 
 function selDelai(el,d){document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');delaiLettre=d;}
-function sauvegarderLettre(){
-  const t=document.getElementById('lettre-txt').value.trim();
-  if(!t){alert('Écris ta lettre !');return;}if(!delaiLettre){alert('Choisis un délai !');return;}
-  const l=JSON.parse(localStorage.getItem('lettres')||'[]');
-  l.unshift({date:getDate(),delai:delaiLettre,texte:t});
-  localStorage.setItem('lettres',JSON.stringify(l));
-  document.getElementById('lettre-txt').value='';delaiLettre='';
-  document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));
-  alert('Lettre scellée ! 💌 Elle t\'attend dans '+delaiLettre);
-  afficherLettres();verifierBadges();
-}
-function afficherLettres(){
-  const l=JSON.parse(localStorage.getItem('lettres')||'[]');
-  const c=document.getElementById('lettres-list');
-  if(!l.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>';return;}
-  c.innerHTML=l.map(x=>`<div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:#85B7EB;">${x.date}</span><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Dans ${x.delai}</span></div><p style="font-size:13px;color:#0C447C;font-style:italic;">"${x.texte.substring(0,80)}${x.texte.length>80?'...':''}"</p></div>`).join('');
-}
-let groupeFiltre = 'Tous';
-let groupePubli = '😰 Stress';
+function sauvegarderLettre(){const t=document.getElementById('lettre-txt').value.trim();if(!t){alert('Écris ta lettre !');return;}if(!delaiLettre){alert('Choisis un délai !');return;}const l=JSON.parse(localStorage.getItem('lettres')||'[]');l.unshift({date:getDate(),delai:delaiLettre,texte:t});localStorage.setItem('lettres',JSON.stringify(l));document.getElementById('lettre-txt').value='';delaiLettre='';document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));alert('Lettre scellée ! 💌 Elle t\'attend dans '+delaiLettre);afficherLettres();verifierBadges();}
+function afficherLettres(){const l=JSON.parse(localStorage.getItem('lettres')||'[]');const c=document.getElementById('lettres-list');if(!l.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>';return;}c.innerHTML=l.map(x=>`<div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:#85B7EB;">${x.date}</span><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Dans ${x.delai}</span></div><p style="font-size:13px;color:#0C447C;font-style:italic;">"${x.texte.substring(0,80)}${x.texte.length>80?'...':''}"</p></div>`).join('');}
 
-function selGroupe(el, groupe) {
-  groupeFiltre = groupe;
-  document.querySelectorAll('.groupe-btn').forEach(b => {
-    b.style.background = 'none'; b.style.color = '#185FA5'; b.style.borderColor = '#B5D4F4';
-  });
-  el.style.background = '#185FA5'; el.style.color = '#fff'; el.style.borderColor = '#185FA5';
-  chargerCommunaute();
-}
+function selGroupe(el,groupe){groupeFiltre=groupe;document.querySelectorAll('#groupes-btns .groupe-theme').forEach(b=>{b.style.background='none';b.style.color='#185FA5';b.style.borderColor='#B5D4F4';});el.style.background='#185FA5';el.style.color='#fff';el.style.borderColor='#185FA5';chargerCommunaute();}
+function selGroupePubli(el,groupe){groupePubli=groupe;document.querySelectorAll('#communaute .groupe-theme:not(#groupes-btns .groupe-theme)').forEach(b=>{b.style.background='none';b.style.color='#185FA5';b.style.borderColor='#B5D4F4';});el.style.background='#185FA5';el.style.color='#fff';el.style.borderColor='#185FA5';}
 
-function selGroupePubli(el, groupe) {
-  groupePubli = groupe;
-  document.querySelectorAll('.groupe-sel').forEach(b => {
-    b.style.background = 'none'; b.style.color = '#185FA5'; b.style.borderColor = '#B5D4F4';
-  });
-  el.style.background = '#185FA5'; el.style.color = '#fff'; el.style.borderColor = '#185FA5';
-}
-async function chargerCommunaute(){
-  try{
-    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');
-    const data=await res.json();
-    const c=document.getElementById('communaute-liste');
-    const filtered = groupeFiltre === 'Tous' ? data : data.filter(p => p.groupe === groupeFiltre);
-    if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';return;}
-    c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');
-  }catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
-}
-async function partagerPensee(){
-  const pensee=document.getElementById('pensee-input').value.trim();
-  if(!pensee){alert('Écris une pensée !');return;}
-  if(pensee.length>200){alert('Maximum 200 caractères !');return;}
-  
-  document.querySelector('#communaute .btn-p').textContent='Vérification... 💙';
-  document.querySelector('#communaute .btn-p').disabled=true;
+async function chargerCommunaute(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');const data=await res.json();const c=document.getElementById('communaute-liste');const filtered=groupeFiltre==='Tous'?data:data.filter(p=>p.groupe===groupeFiltre);if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';return;}c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="margin-bottom:6px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');}catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
 
-  try{
-    const verif=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-opus-4-5',max_tokens:50,
-        system:'Tu es un modérateur bienveillant. Réponds UNIQUEMENT par "OUI" si le message est positif, bienveillant et approprié, ou "NON" si le message contient des insultes, discours haineux, contenu inapproprié ou négatif.',
-        messages:[{role:'user',content:'Ce message est-il approprié pour une communauté bienveillante ? "'+pensee+'"'}]
-      })
-    });
-    const verifData=await verif.json();
-    const decision=verifData.content[0].text.trim().toUpperCase();
-    
-    if(decision.includes('NON')){
-      alert('😔 Cette pensée ne semble pas bienveillante. Essaie de partager quelque chose de positif et encourageant 💙');
-      document.querySelector('#communaute .btn-p').textContent='Partager 💙';
-      document.querySelector('#communaute .btn-p').disabled=false;
-      return;
-    }
+async function partagerPensee(){const pensee=document.getElementById('pensee-input').value.trim();if(!pensee){alert('Écris une pensée !');return;}if(pensee.length>200){alert('Maximum 200 caractères !');return;}document.querySelector('#communaute .btn-p').textContent='Vérification... 💙';document.querySelector('#communaute .btn-p').disabled=true;try{const verif=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:50,system:'Tu es un modérateur bienveillant. Réponds UNIQUEMENT par "OUI" si le message est positif et approprié, ou "NON" si inapproprié.',messages:[{role:'user',content:'Ce message est-il approprié ? "'+pensee+'"'}]})});const verifData=await verif.json();const decision=verifData.content[0].text.trim().toUpperCase();if(decision.includes('NON')){alert('😔 Cette pensée ne semble pas bienveillante. Essaie de partager quelque chose de positif 💙');document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;return;}await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee,prenom:prenom||'Anonyme',groupe:groupePubli})});document.getElementById('pensee-input').value='';document.getElementById('succes-pensee').style.display='block';setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);chargerCommunaute();}catch(e){alert('Erreur 😔');}document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;}
+async function envoyerCoeur(id,btn){try{const res=await fetch(`https://serveur-juste-la-pour-toi.onrender.com/communaute/${id}/coeur`,{method:'POST'});const data=await res.json();btn.textContent='💙 '+data.coeurs;}catch(e){}}
 
-    await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({pensee,prenom:prenom||'Anonyme',groupe:groupePubli})
-    });
-    document.getElementById('pensee-input').value='';
-    document.getElementById('succes-pensee').style.display='block';
-    setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);
-    chargerCommunaute();
-  }catch(e){alert('Erreur 😔');}
-  
-  document.querySelector('#communaute .btn-p').textContent='Partager 💙';
-  document.querySelector('#communaute .btn-p').disabled=false;
-}
-async function envoyerCoeur(id,btn){
-  try{
-    const res=await fetch(`https://serveur-juste-la-pour-toi.onrender.com/communaute/${id}/coeur`,{method:'POST'});
-    const data=await res.json();
-    btn.textContent='💙 '+data.coeurs;
-  }catch(e){}
-}
+function selTheme(el,theme){themeChoisi=theme;document.querySelectorAll('#groupe-salle .groupe-theme').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
+async function chargerSalles(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/salles');const data=await res.json();const c=document.getElementById('salles-liste');if(!data.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune salle disponible — crée la première ! 💙</p>';return;}c.innerHTML=data.map(s=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div><p style="font-size:14px;font-weight:500;color:#0C447C;">${s.theme}</p><p style="font-size:12px;color:#85B7EB;">${s.membres}/5 membres</p></div><button onclick="rejoindreSalle('${s.id}','${s.theme}')" class="btn-p" style="width:auto;padding:7px 14px;margin-top:0;font-size:12px;">Rejoindre</button></div>`).join('');}catch(e){document.getElementById('salles-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
+function creerSalle(){const id='salle-'+Date.now();rejoindreSalle(id,themeChoisi);}
+function rejoindreSalle(salleId,theme){salleActuelle=salleId;localStorage.setItem('derniere-salle',JSON.stringify({salleId,theme}));if(window.io){connecterSocket(salleId,theme);}else{const script=document.createElement('script');script.src='https://cdn.socket.io/4.7.2/socket.io.min.js';script.onload=()=>connecterSocket(salleId,theme);document.head.appendChild(script);}}
+function connecterSocket(salleId,theme){if(socket)socket.disconnect();socket=io('https://serveur-juste-la-pour-toi.onrender.com');socket.emit('rejoindre-salle',{salleId,prenom:prenom||'Anonyme',theme});socket.on('salle-pleine',()=>{alert('Cette salle est pleine !');});socket.on('membres-update',(membres)=>{document.getElementById('salle-membres').textContent=membres.length+'/5 membres : '+membres.join(', ');});socket.on('nouveau-message',(msg)=>{afficherMsgGroupe(msg);const msgs=JSON.parse(localStorage.getItem('groupe-msgs-'+salleId)||'[]');msgs.push(msg);if(msgs.length>50)msgs.shift();localStorage.setItem('groupe-msgs-'+salleId,JSON.stringify(msgs));});document.getElementById('salle-titre').textContent='🤝 '+theme;document.getElementById('groupe-accueil').style.display='none';document.getElementById('groupe-chat').style.display='flex';const msgsSauvegardes=JSON.parse(localStorage.getItem('groupe-msgs-'+salleId)||'[]');document.getElementById('groupe-messages').innerHTML='';msgsSauvegardes.forEach(m=>afficherMsgGroupe(m));}
+function afficherMsgGroupe(msg){const c=document.getElementById('groupe-messages');const estMoi=msg.auteur===(prenom||'Anonyme');const estIA=msg.auteur==='💙 Assistant';const div=document.createElement('div');div.className='msg-groupe '+(estIA?'ia':estMoi?'moi':'autre');div.innerHTML=`<span class="auteur">${msg.auteur} · ${msg.timestamp}</span><div class="texte">${msg.texte}</div>`;c.appendChild(div);div.scrollIntoView({behavior:'smooth'});}
+function envoyerGroupeMsg(){const inp=document.getElementById('groupe-input');const texte=inp.value.trim();if(!texte||!socket)return;socket.emit('envoyer-message',{texte});inp.value='';}
+function quitterSalle(){if(socket){socket.disconnect();socket=null;}salleActuelle=null;document.getElementById('groupe-accueil').style.display='block';document.getElementById('groupe-chat').style.display='none';document.getElementById('groupe-messages').innerHTML='';}
 
-const BADGES=[
-  {id:'premier-pas',icon:'💙',nom:'Premier pas',desc:'Première conversation'},
-  {id:'objectif-fixe',icon:'🎯',nom:'Objectif fixé',desc:'Premier objectif créé'},
-  {id:'journaliste',icon:'📔',nom:'Journaliste',desc:'5 entrées dans le journal'},
-  {id:'challenger',icon:'⚡',nom:'Challenger',desc:'5 défis acceptés'},
-  {id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},
-  {id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'}
-];
-  function sauvegarderConversation() {
-  if(historique.length === 0) return;
-  const convs = JSON.parse(localStorage.getItem('conversations') || '[]');
-  convs.unshift({ date: getDate(), heure: getTime(), messages: historique.slice() });
-  if(convs.length > 10) convs.pop();
-  localStorage.setItem('conversations', JSON.stringify(convs));
-}
+const BADGES=[{id:'premier-pas',icon:'💙',nom:'Premier pas',desc:'Première conversation'},{id:'objectif-fixe',icon:'🎯',nom:'Objectif fixé',desc:'Premier objectif créé'},{id:'journaliste',icon:'📔',nom:'Journaliste',desc:'5 entrées dans le journal'},{id:'challenger',icon:'⚡',nom:'Challenger',desc:'5 défis acceptés'},{id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},{id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'}];
+function verifierBadges(){const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');const objectif=localStorage.getItem('objectif');const visites=JSON.parse(localStorage.getItem('visites')||'[]');const aujourd=getDate();if(!visites.includes(aujourd)){visites.push(aujourd);if(visites.length>30)visites.shift();localStorage.setItem('visites',JSON.stringify(visites));}const nouveaux=[];if(!obtenus.includes('premier-pas')&&historique.length>0){obtenus.push('premier-pas');nouveaux.push('premier-pas');}if(!obtenus.includes('objectif-fixe')&&objectif){obtenus.push('objectif-fixe');nouveaux.push('objectif-fixe');}if(!obtenus.includes('journaliste')&&journal.length>=5){obtenus.push('journaliste');nouveaux.push('journaliste');}if(!obtenus.includes('challenger')&&defis.length>=5){obtenus.push('challenger');nouveaux.push('challenger');}if(!obtenus.includes('futur-moi')&&lettres.length>0){obtenus.push('futur-moi');nouveaux.push('futur-moi');}if(!obtenus.includes('semaine')&&visites.length>=7){obtenus.push('semaine');nouveaux.push('semaine');}localStorage.setItem('badges',JSON.stringify(obtenus));nouveaux.forEach(id=>{const b=BADGES.find(x=>x.id===id);afficherNotifBadge(b);});}
+function afficherNotifBadge(badge){const notif=document.createElement('div');notif.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#185FA5;color:#fff;border-radius:20px;padding:12px 20px;font-size:14px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;display:flex;align-items:center;gap:10px;white-space:nowrap;';notif.innerHTML=`<span style="font-size:24px;">${badge.icon}</span><div><p style="font-weight:500;font-size:13px;">Badge obtenu !</p><p style="font-size:12px;opacity:0.85;">${badge.nom}</p></div>`;document.body.appendChild(notif);setTimeout(()=>{notif.style.opacity='0';notif.style.transition='opacity 0.5s';setTimeout(()=>notif.remove(),500);},3000);}
+function afficherBadges(){const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');const c=document.getElementById('badges-liste');c.innerHTML=BADGES.map(b=>{const ok=obtenus.includes(b.id);return `<div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:${ok?'rgba(24,95,165,0.08)':'transparent'};border:0.5px solid ${ok?'#B5D4F4':'#e0e0e0'};margin-bottom:8px;opacity:${ok?'1':'0.4'};"><span style="font-size:28px;">${b.icon}</span><div><p style="font-size:14px;font-weight:500;color:${ok?'#0C447C':'#999'};">${b.nom}</p><p style="font-size:12px;color:#85B7EB;">${b.desc}</p></div>${ok?'<span style="margin-left:auto;font-size:12px;color:#1D9E75;font-weight:500;">✓</span>':''}</div>`;}).join('');}
 
-function afficherHistoriqueConv() {
-  const convs = JSON.parse(localStorage.getItem('conversations') || '[]');
-  const c = document.getElementById('historique-conv');
-  if(!convs.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune conversation 💙</p>'; return; }
-  c.innerHTML = convs.map((conv, i) => `
-    <div style="padding:12px;border-radius:12px;border:0.5px solid #B5D4F4;margin-bottom:10px;cursor:pointer;" onclick="toggleConv(${i})">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <span style="font-size:13px;font-weight:500;color:#0C447C;">💬 ${conv.date} à ${conv.heure}</span>
-        <span style="font-size:11px;color:#85B7EB;">${conv.messages.length} messages</span>
-      </div>
-      <p style="font-size:12px;color:#85B7EB;font-style:italic;">"${conv.messages[0]?.content?.substring(0,60)}..."</p>
-      <div id="conv-detail-${i}" style="display:none;margin-top:12px;border-top:0.5px solid #E6F1FB;padding-top:12px;">
-        ${conv.messages.map(m => `
-          <div style="margin-bottom:8px;display:flex;flex-direction:column;${m.role==='user'?'align-items:flex-end':''}">
-            <div style="max-width:85%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.5;${m.role==='user'?'background:#185FA5;color:#fff;border-radius:12px 12px 4px 12px;':'background:#f7faff;color:#0C447C;border:0.5px solid #B5D4F4;border-radius:12px 12px 12px 4px;'}">${m.content}</div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  `).join('');
-}
+function sauvegarderConversation(){if(historique.length===0)return;const convs=JSON.parse(localStorage.getItem('conversations')||'[]');convs.unshift({date:getDate(),heure:getTime(),messages:historique.slice()});if(convs.length>10)convs.pop();localStorage.setItem('conversations',JSON.stringify(convs));}
+function afficherHistoriqueConv(){const convs=JSON.parse(localStorage.getItem('conversations')||'[]');const c=document.getElementById('historique-conv');if(!convs.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune conversation 💙</p>';return;}c.innerHTML=convs.map((conv,i)=>`<div style="padding:12px;border-radius:12px;border:0.5px solid #B5D4F4;margin-bottom:10px;cursor:pointer;" onclick="toggleConv(${i})"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;color:#0C447C;">💬 ${conv.date} à ${conv.heure}</span><span style="font-size:11px;color:#85B7EB;">${conv.messages.length} messages</span></div><p style="font-size:12px;color:#85B7EB;font-style:italic;">"${conv.messages[0]?.content?.substring(0,60)}..."</p><div id="conv-detail-${i}" style="display:none;margin-top:12px;border-top:0.5px solid #E6F1FB;padding-top:12px;">${conv.messages.map(m=>`<div style="margin-bottom:8px;display:flex;flex-direction:column;${m.role==='user'?'align-items:flex-end':''}"><div style="max-width:85%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.5;${m.role==='user'?'background:#185FA5;color:#fff;':'background:#f7faff;color:#0C447C;border:0.5px solid #B5D4F4;'}">${m.content}</div></div>`).join('')}</div></div>`).join('');}
+function toggleConv(i){const el=document.getElementById('conv-detail-'+i);el.style.display=el.style.display==='none'?'block':'none';}
 
-function toggleConv(i) {
-  const el = document.getElementById('conv-detail-'+i);
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-function verifierBadges(){
-  const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');
-  const journal=JSON.parse(localStorage.getItem('journal')||'[]');
-  const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');
-  const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');
-  const objectif=localStorage.getItem('objectif');
-  const visites=JSON.parse(localStorage.getItem('visites')||'[]');
-  const aujourd=getDate();
-  if(!visites.includes(aujourd)){visites.push(aujourd);if(visites.length>30)visites.shift();localStorage.setItem('visites',JSON.stringify(visites));}
-  const nouveaux=[];
-  if(!obtenus.includes('premier-pas')&&historique.length>0){obtenus.push('premier-pas');nouveaux.push('premier-pas');}
-  if(!obtenus.includes('objectif-fixe')&&objectif){obtenus.push('objectif-fixe');nouveaux.push('objectif-fixe');}
-  if(!obtenus.includes('journaliste')&&journal.length>=5){obtenus.push('journaliste');nouveaux.push('journaliste');}
-  if(!obtenus.includes('challenger')&&defis.length>=5){obtenus.push('challenger');nouveaux.push('challenger');}
-  if(!obtenus.includes('futur-moi')&&lettres.length>0){obtenus.push('futur-moi');nouveaux.push('futur-moi');}
-  if(!obtenus.includes('semaine')&&visites.length>=7){obtenus.push('semaine');nouveaux.push('semaine');}
-  localStorage.setItem('badges',JSON.stringify(obtenus));
-  nouveaux.forEach(id=>{const b=BADGES.find(x=>x.id===id);afficherNotifBadge(b);});
-}
-function afficherNotifBadge(badge){
-  const notif=document.createElement('div');
-  notif.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#185FA5;color:#fff;border-radius:20px;padding:12px 20px;font-size:14px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;display:flex;align-items:center;gap:10px;white-space:nowrap;';
-  notif.innerHTML=`<span style="font-size:24px;">${badge.icon}</span><div><p style="font-weight:500;font-size:13px;">Badge obtenu !</p><p style="font-size:12px;opacity:0.85;">${badge.nom}</p></div>`;
-  document.body.appendChild(notif);
-  setTimeout(()=>{notif.style.opacity='0';notif.style.transition='opacity 0.5s';setTimeout(()=>notif.remove(),500);},3000);
-}
-function afficherBadges(){
-  const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');
-  const c=document.getElementById('badges-liste');
-  c.innerHTML=BADGES.map(b=>{
-    const ok=obtenus.includes(b.id);
-    return `<div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:${ok?'rgba(24,95,165,0.08)':'transparent'};border:0.5px solid ${ok?'#B5D4F4':'#e0e0e0'};margin-bottom:8px;opacity:${ok?'1':'0.4'};">
-      <span style="font-size:28px;">${b.icon}</span>
-      <div><p style="font-size:14px;font-weight:500;color:${ok?'#0C447C':'#999'};">${b.nom}</p><p style="font-size:12px;color:#85B7EB;">${b.desc}</p></div>
-      ${ok?'<span style="margin-left:auto;font-size:12px;color:#1D9E75;font-weight:500;">✓</span>':''}
-    </div>`;
-  }).join('');
-}
+async function chargerCompteur(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const data=await res.json();document.getElementById('compteur-affiche').textContent='💙 Rejoins '+data.compteur+' personnes qui prennent soin d\'elles';}catch(e){}}
+async function incrementerCompteur(){try{await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur',{method:'POST'});}catch(e){}}
+async function chargerTemoignages(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/temoignages');const data=await res.json();const c=document.getElementById('temoignages-liste');const compteurRes=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const compteurData=await compteurRes.json();document.getElementById('compteur-detail').textContent='💙 '+compteurData.compteur+' personnes utilisent déjà Juste là pour toi';c.innerHTML=data.map(t=>`<div class="card" style="margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div style="width:40px;height:40px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:18px;border:1.5px solid #B5D4F4;">${t.pays}</div><div><p style="font-size:14px;font-weight:500;color:#0C447C;">${t.nom}</p><p style="font-size:12px;color:#f59e0b;">${'⭐'.repeat(t.note)}</p></div></div><p style="font-size:13px;color:#378ADD;line-height:1.6;font-style:italic;">"${t.avis}"</p></div>`).join('');}catch(e){}}
+chargerCompteur();
+
+function toggleSon(){const mute=localStorage.getItem('son')==='off';localStorage.setItem('son',mute?'on':'off');document.getElementById('son-btn').textContent=mute?'🔊':'🔇';}
+if(localStorage.getItem('son')==='off'){document.getElementById('son-btn').textContent='🔇';}
 
 function suggerer(t){document.getElementById('input').value=t;envoyer();}
-function ajouterMsg(role,texte){
-  if(role==='user')document.getElementById('suggestions').style.display='none';
-  const w=document.createElement('div');w.className='bwrap'+(role==='user'?' user':'');
-  const b=document.createElement('div');b.className='bubble '+role;b.textContent=texte;
-  const t=document.createElement('div');t.className='btime';t.textContent=getTime();
-  w.appendChild(b);w.appendChild(t);document.getElementById('messages').appendChild(w);
-  w.scrollIntoView({behavior:'smooth'});
-}
+function ajouterMsg(role,texte){if(role==='user')document.getElementById('suggestions').style.display='none';const w=document.createElement('div');w.className='bwrap'+(role==='user'?' user':'');const b=document.createElement('div');b.className='bubble '+role;b.textContent=texte;const t=document.createElement('div');t.className='btime';t.textContent=getTime();w.appendChild(b);w.appendChild(t);document.getElementById('messages').appendChild(w);w.scrollIntoView({behavior:'smooth'});}
 function showTyping(){const d=document.createElement('div');d.className='typing';d.id='typing';d.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';document.getElementById('messages').appendChild(d);d.scrollIntoView({behavior:'smooth'});}
 function removeTyping(){
   const el=document.getElementById('typing');
   if(el)el.remove();
- // Son doux
-if(localStorage.getItem('son')!=='off'){
-  try{
-    const ctx=new (window.AudioContext||window.webkitAudioContext)();
-    const notes=[523,659,784];
-    notes.forEach((freq,i)=>{
-      const o=ctx.createOscillator();
-      const g=ctx.createGain();
-      o.type='sine';
-      o.connect(g);g.connect(ctx.destination);
-      o.frequency.setValueAtTime(freq,ctx.currentTime+i*0.12);
-      g.gain.setValueAtTime(0,ctx.currentTime+i*0.12);
-      g.gain.linearRampToValueAtTime(0.08,ctx.currentTime+i*0.12+0.05);
-      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.12+0.3);
-      o.start(ctx.currentTime+i*0.12);
-      o.stop(ctx.currentTime+i*0.12+0.3);
-    });
-  }catch(e){}
-}
-  // Vibration
-  try{if(navigator.vibrate)navigator.vibrate([30,10,30]);}catch(e){}
-}async function envoyer(){
-  const inp=document.getElementById('input');const t=inp.value.trim();
-  if(!t||document.getElementById('btn').disabled)return;
-  ajouterMsg('user',t);historique.push({role:'user',content:t});inp.value='';inp.style.height='auto';
-  document.getElementById('btn').disabled=true;showTyping();
-  try{
-    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:1000,system:SYSTEM+' User first name: '+prenom,messages:historique})});
-    const data=await res.json();const rep=data.content[0].text;
-    historique.push({role:'assistant',content:rep});removeTyping();ajouterMsg('assistant',rep);
-    verifierBadges();
-  }catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}
-  document.getElementById('btn').disabled=false;inp.focus();
-}
-  // SESSION DE GROUPE
-let socket = null;
-let salleActuelle = null;
-let themeChoisi = '😰 Stress';
-
-function selTheme(el, theme) {
-  themeChoisi = theme;
-  document.querySelectorAll('.groupe-theme').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-}
-
-async function chargerSalles() {
-  try {
-    const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/salles');
-    const data = await res.json();
-    const c = document.getElementById('salles-liste');
-    if (!data.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune salle disponible — crée la première ! 💙</p>'; return; }
-    c.innerHTML = data.map(s => `
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;">
-        <div>
-          <p style="font-size:14px;font-weight:500;color:#0C447C;">${s.theme}</p>
-          <p style="font-size:12px;color:#85B7EB;">${s.membres}/5 membres</p>
-        </div>
-        <button onclick="rejoindreSalle('${s.id}','${s.theme}')" class="btn-p" style="width:auto;padding:7px 14px;margin-top:0;font-size:12px;">Rejoindre</button>
-      </div>
-    `).join('');
-  } catch(e) { document.getElementById('salles-liste').innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>'; }
-}
-
-function creerSalle() {
-  const id = 'salle-' + Date.now();
-  rejoindreSalle(id, themeChoisi);
-}
-
-function rejoindreSalle(salleId, theme) {   salleActuelle = salleId;   localStorage.setItem('derniere-salle', JSON.stringify({salleId, theme}));      if(window.io) {     connecterSocket(salleId, theme);   } else {     const script = document.createElement('script');     script.src = 'https://cdn.socket.io/4.7.2/socket.io.min.js';     script.onload = () => connecterSocket(salleId, theme);     document.head.appendChild(script);   } }  function connecterSocket(salleId, theme) {   if(socket) socket.disconnect();   socket = io('https://serveur-juste-la-pour-toi.onrender.com');   socket.emit('rejoindre-salle', { salleId, prenom: prenom || 'Anonyme', theme });   socket.on('salle-pleine', () => { alert('Cette salle est pleine !'); });   socket.on('membres-update', (membres) => {     document.getElementById('salle-membres').textContent = membres.length + '/5 membres : ' + membres.join(', ');   });   socket.on('nouveau-message', (msg) => {     afficherMsgGroupe(msg);     // Sauvegarde locale des messages     const msgs = JSON.parse(localStorage.getItem('groupe-msgs-'+salleId)||'[]');     msgs.push(msg);     if(msgs.length > 50) msgs.shift();     localStorage.setItem('groupe-msgs-'+salleId, JSON.stringify(msgs));   });   socket.on('historique', (msgs) => {     msgs.forEach(m => afficherMsgGroupe(m));   });   document.getElementById('salle-titre').textContent = '🤝 ' + theme;   document.getElementById('groupe-accueil').style.display = 'none';   document.getElementById('groupe-chat').style.display = 'flex';      // Restaurer les messages locaux   const msgsSauvegardes = JSON.parse(localStorage.getItem('groupe-msgs-'+salleId)||'[]');   document.getElementById('groupe-messages').innerHTML = '';   msgsSauvegardes.forEach(m => afficherMsgGroupe(m)); } {
-  salleActuelle = salleId;
-  const script = document.createElement('script');
-  script.src = 'https://cdn.socket.io/4.7.2/socket.io.min.js';
-  script.onload = () => {
-    socket = io('https://serveur-juste-la-pour-toi.onrender.com');
-    socket.emit('rejoindre-salle', { salleId, prenom: prenom || 'Anonyme', theme });
-    socket.on('salle-pleine', () => { alert('Cette salle est pleine ! Rejoins une autre salle.'); });
-    socket.on('membres-update', (membres) => {
-      document.getElementById('salle-membres').textContent = membres.length + '/5 membres : ' + membres.join(', ');
-    });
-    socket.on('nouveau-message', (msg) => { afficherMsgGroupe(msg); });
-    document.getElementById('salle-titre').textContent = '🤝 ' + theme;
-    document.getElementById('groupe-accueil').style.display = 'none';
-    document.getElementById('groupe-chat').style.display = 'flex';
-    document.getElementById('groupe-messages').innerHTML = '';
-  };
-  document.head.appendChild(script);
-}
-
-function afficherMsgGroupe(msg) {
-  const c = document.getElementById('groupe-messages');
-  const estMoi = msg.auteur === (prenom || 'Anonyme');
-  const estIA = msg.auteur === '💙 Assistant';
-  const div = document.createElement('div');
-  div.className = 'msg-groupe ' + (estIA ? 'ia' : estMoi ? 'moi' : 'autre');
-  div.innerHTML = `<span class="auteur">${msg.auteur} · ${msg.timestamp}</span><div class="texte">${msg.texte}</div>`;
-  c.appendChild(div);
-  div.scrollIntoView({ behavior: 'smooth' });
-}
-
-function envoyerGroupeMsg() {
-  const inp = document.getElementById('groupe-input');
-  const texte = inp.value.trim();
-  if (!texte || !socket) return;
-  socket.emit('envoyer-message', { texte });
-  inp.value = '';
-}
-
-function quitterSalle() {
-  if (socket) { socket.disconnect(); socket = null; }
-  salleActuelle = null;
-  document.getElementById('groupe-accueil').style.display = 'block';
-  document.getElementById('groupe-chat').style.display = 'none';
-  document.getElementById('groupe-messages').innerHTML = '';
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey && document.getElementById('groupe-input') === document.activeElement) {
-    e.preventDefault(); envoyerGroupeMsg();
+  if(localStorage.getItem('son')!=='off'){
+    try{
+      const ctx=new (window.AudioContext||window.webkitAudioContext)();
+      const notes=[523,659,784];
+      notes.forEach((freq,i)=>{
+        const o=ctx.createOscillator();
+        const g=ctx.createGain();
+        o.type='sine';
+        o.connect(g);g.connect(ctx.destination);
+        o.frequency.setValueAtTime(freq,ctx.currentTime+i*0.12);
+        g.gain.setValueAtTime(0,ctx.currentTime+i*0.12);
+        g.gain.linearRampToValueAtTime(0.08,ctx.currentTime+i*0.12+0.05);
+        g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.12+0.3);
+        o.start(ctx.currentTime+i*0.12);
+        o.stop(ctx.currentTime+i*0.12+0.3);
+      });
+    }catch(e){}
   }
-});
-  async function chargerCompteur(){
-  try{
-    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');
-    const data=await res.json();
-    document.getElementById('compteur-affiche').textContent='💙 Rejoins '+data.compteur+' personnes qui prennent soin d\'elles';
-  }catch(e){}
+  try{if(navigator.vibrate)navigator.vibrate([30,10,30]);}catch(e){}
 }
-
-async function incrementerCompteur(){
-  try{
-    await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur',{method:'POST'});
-  }catch(e){}
-}
-
-async function chargerTemoignages(){
-  try{
-    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/temoignages');
-    const data=await res.json();
-    const c=document.getElementById('temoignages-liste');
-    const compteurRes=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');
-    const compteurData=await compteurRes.json();
-    document.getElementById('compteur-detail').textContent='💙 '+compteurData.compteur+' personnes utilisent déjà Juste là pour toi';
-    c.innerHTML=data.map(t=>`
-      <div class="card" style="margin-bottom:4px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <div style="width:40px;height:40px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:18px;border:1.5px solid #B5D4F4;">${t.pays}</div>
-          <div>
-            <p style="font-size:14px;font-weight:500;color:#0C447C;">${t.nom}</p>
-            <p style="font-size:12px;color:#f59e0b;">${'⭐'.repeat(t.note)}</p>
-          </div>
-        </div>
-        <p style="font-size:13px;color:#378ADD;line-height:1.6;font-style:italic;">"${t.avis}"</p>
-      </div>
-    `).join('');
-  }catch(e){}
-}
-
-chargerCompteur();
-  function toggleSon(){
-  const mute=localStorage.getItem('son')==='off';
-  localStorage.setItem('son', mute?'on':'off');
-  document.getElementById('son-btn').textContent=mute?'🔊':'🔇';
-}
-if(localStorage.getItem('son')==='off'){
-  document.getElementById('son-btn').textContent='🔇';
-}
+async function envoyer(){const inp=document.getElementById('input');const t=inp.value.trim();if(!t||document.getElementById('btn').disabled)return;ajouterMsg('user',t);historique.push({role:'user',content:t});inp.value='';inp.style.height='auto';document.getElementById('btn').disabled=true;showTyping();try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:1000,system:SYSTEM+' User first name: '+prenom,messages:historique})});const data=await res.json();const rep=data.content[0].text;historique.push({role:'assistant',content:rep});removeTyping();ajouterMsg('assistant',rep);verifierBadges();}catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}document.getElementById('btn').disabled=false;inp.focus();}
 document.getElementById('btn').addEventListener('click',envoyer);
 document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();envoyer();}});
 document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
-  if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/Juste-l-pour-toi/sw.js').catch(()=>{});
-}
 document.getElementById('prenom').addEventListener('keydown',e=>{if(e.key==='Enter')commencer();});
+
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/Juste-l-pour-toi/sw.js').catch(()=>{});}
 </script>
 </body>
 </html>
