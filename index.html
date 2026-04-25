@@ -251,6 +251,10 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
   <p id="compteur-affiche" style="font-size:13px;color:#185FA5;margin-bottom:16px;font-weight:500;">💙 Rejoins notre communauté bienveillante</p>
   <input type="text" class="prenom-input" id="prenom" placeholder="Ton prénom...">
   <button class="btn-commencer" onclick="commencer()">Commencer la conversation 💙</button>
+  <div style="display:flex;gap:8px;margin-bottom:14px;">
+  <button onclick="changerLangue('fr')" id="lang-fr" style="background:#185FA5;color:#fff;border:none;border-radius:16px;padding:6px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🇫🇷 Français</button>
+  <button onclick="changerLangue('en')" id="lang-en" style="background:none;border:1.5px solid #B5D4F4;color:#85B7EB;border-radius:16px;padding:6px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🇬🇧 English</button>
+</div>
   <button class="btn-dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Mode sombre</button>
   <button class="btn-explorer" onclick="ouvrirMenu()">☰ Explorer les fonctionnalités</button>
   <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
@@ -690,6 +694,49 @@ function validerMdp(){
 }
 function ignorerMdp(){localStorage.setItem('user-mdp-ignore','true');document.getElementById('mdp-screen').style.display='none';}
 initMdp();
+const TRADUCTIONS = {
+  fr: {
+    titre: 'Juste là pour toi',
+    sous: 'Ton espace bienveillant de bien-être',
+    prenom: 'Ton prénom...',
+    commencer: 'Commencer la conversation 💙',
+    explorer: '☰ Explorer les fonctionnalités',
+    footer: 'un espace bienveillant, rien que pour toi',
+    dark: '🌙 Mode sombre',
+    clair: '☀️ Mode clair'
+  },
+  en: {
+    titre: 'Just here for you',
+    sous: 'Your caring wellness space',
+    prenom: 'Your first name...',
+    commencer: 'Start the conversation 💙',
+    explorer: '☰ Explore features',
+    footer: 'a caring space, just for you',
+    dark: '🌙 Dark mode',
+    clair: '☀️ Light mode'
+  }
+};
+
+function changerLangue(langue) {
+  localStorage.setItem('langue', langue);
+  const t = TRADUCTIONS[langue];
+  document.querySelector('.accueil-titre').textContent = t.titre;
+  document.querySelector('.accueil-sous').textContent = t.sous;
+  document.getElementById('prenom').placeholder = t.prenom;
+  document.querySelector('.btn-commencer').textContent = t.commencer;
+  document.querySelector('.btn-explorer').textContent = t.explorer;
+  document.querySelector('.accueil-footer').textContent = t.footer;
+  document.getElementById('dark-btn').textContent = darkMode ? t.clair : t.dark;
+  document.getElementById('lang-fr').style.background = langue === 'fr' ? '#185FA5' : 'none';
+  document.getElementById('lang-fr').style.color = langue === 'fr' ? '#fff' : '#85B7EB';
+  document.getElementById('lang-fr').style.border = langue === 'fr' ? 'none' : '1.5px solid #B5D4F4';
+  document.getElementById('lang-en').style.background = langue === 'en' ? '#185FA5' : 'none';
+  document.getElementById('lang-en').style.color = langue === 'en' ? '#fff' : '#85B7EB';
+  document.getElementById('lang-en').style.border = langue === 'en' ? 'none' : '1.5px solid #B5D4F4';
+}
+
+const langueSauvegardee = localStorage.getItem('langue') || 'fr';
+changerLangue(langueSauvegardee);
 let slideActuel=0;
 function allerSlide(n){slideActuel=n;document.getElementById('tuto-slides').style.transform='translateX(-'+n*100+'%)';document.querySelectorAll('.tuto-point').forEach((p,i)=>p.classList.toggle('active',i===n));document.getElementById('tuto-next').style.display=n===3?'none':'block';}
 function slideSuivant(){if(slideActuel<3)allerSlide(slideActuel+1);}
