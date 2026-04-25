@@ -256,6 +256,7 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
   <button onclick="changerLangue('en')" id="lang-en" style="background:none;border:1.5px solid #B5D4F4;color:#85B7EB;border-radius:16px;padding:6px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🇬🇧 English</button>
 </div>
   <button class="btn-dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Mode sombre</button>
+  <button onclick="inviterAmi()" style="background:none;border:1.5px solid #1D9E75;color:#1D9E75;border-radius:24px;padding:8px 20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:10px;">🤝 Inviter un ami</button>
   <button class="btn-explorer" onclick="ouvrirMenu()">☰ Explorer les fonctionnalités</button>
   <p class="accueil-footer">un espace bienveillant, rien que pour toi</p>
 </div>
@@ -716,7 +717,16 @@ const TRADUCTIONS = {
     clair: '☀️ Light mode'
   }
 };
-
+function inviterAmi(){
+  const prenom_save = localStorage.getItem('user-prenom-save') || '';
+  const message = `💙 Salut ! Je t'invite à essayer *Juste là pour toi* — une application bienveillante pour prendre soin de toi.\n\n✅ Chat IA empathique\n✅ Journal de bord\n✅ Exercices de respiration\n✅ Sessions de groupe\n✅ Et bien plus encore !\n\n👉 https://malick043-png.github.io/Juste-l-pour-toi\n\nC'est gratuit et disponible maintenant ! 💙`;
+  if(navigator.share){
+    navigator.share({text: message});
+  } else {
+    const url = 'https://wa.me/?text=' + encodeURIComponent(message);
+    window.open(url, '_blank');
+  }
+}
 function changerLangue(langue) {
   localStorage.setItem('langue', langue);
   const t = TRADUCTIONS[langue];
