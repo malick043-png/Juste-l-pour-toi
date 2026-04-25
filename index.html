@@ -199,7 +199,17 @@
   </style>
 </head>
 <body>
-
+<!-- MOT DE PASSE -->
+<div id="mdp-screen" style="display:none; position:fixed; inset:0; z-index:300; flex-direction:column; align-items:center; justify-content:center; padding:30px; text-align:center;">
+  <img src="icon.png" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #B5D4F4;margin-bottom:20px;box-shadow:0 4px 20px rgba(24,95,165,0.2);">
+  <h2 style="font-family:'Lora',serif;font-size:22px;margin-bottom:8px;" id="mdp-titre">Bienvenue 💙</h2>
+  <p style="font-size:13px;color:#85B7EB;margin-bottom:24px;max-width:280px;" id="mdp-sous">Crée un mot de passe pour protéger ton espace</p>
+  <input type="password" id="mdp-user-input" placeholder="Ton mot de passe..." style="width:100%;max-width:300px;border:1.5px solid #B5D4F4;border-radius:20px;padding:12px 20px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;text-align:center;background:#fff;color:#0C447C;margin-bottom:12px;">
+  <input type="password" id="mdp-user-confirm" placeholder="Confirme ton mot de passe..." style="width:100%;max-width:300px;border:1.5px solid #B5D4F4;border-radius:20px;padding:12px 20px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;text-align:center;background:#fff;color:#0C447C;margin-bottom:16px;display:none;">
+  <p id="mdp-erreur" style="font-size:12px;color:#e53e3e;margin-bottom:12px;display:none;">Mot de passe incorrect. Réessaie !</p>
+  <button onclick="validerMdp()" style="width:100%;max-width:300px;background:#185FA5;color:#fff;border:none;border-radius:24px;padding:13px;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;box-shadow:0 4px 16px rgba(24,95,165,0.3);margin-bottom:12px;" id="mdp-btn">Créer mon mot de passe 💙</button>
+  <button onclick="ignorerMdp()" style="background:none;border:none;font-size:12px;color:#85B7EB;cursor:pointer;font-family:'DM Sans',sans-serif;" id="mdp-ignorer">Passer cette étape</button>
+</div>
 <!-- TUTORIEL -->
 <div id="tutoriel" style="display:none; position:fixed; inset:0; z-index:200; flex-direction:column; height:100vh;">
   <div style="flex:1; overflow:hidden; position:relative;">
