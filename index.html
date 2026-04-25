@@ -950,7 +950,7 @@ function changerLangue(langue) {
   document.querySelector('.btn-commencer').textContent = t.commencer;
   document.querySelector('.btn-explorer').textContent = t.explorer;
   document.querySelector('.accueil-footer').textContent = t.footer;
-  document.getElementById('dark-btn').textContent = darkMode ? t.clair : t.dark;
+  document.getElementById('dark-btn').textContent = document.body.classList.contains('dark') ? t.clair : t.dark;
   document.getElementById('lang-fr').style.background = langue === 'fr' ? '#185FA5' : 'none';
   document.getElementById('lang-fr').style.color = langue === 'fr' ? '#fff' : '#85B7EB';
   document.getElementById('lang-fr').style.border = langue === 'fr' ? 'none' : '1.5px solid #B5D4F4';
