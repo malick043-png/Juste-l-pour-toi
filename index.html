@@ -787,6 +787,81 @@ const TRADUCTIONS = {
     clair: '☀️ Light mode'
   }
 };
+  async function chargerProgramme(){
+  const prog=JSON.parse(localStorage.getItem('programme')||'null');
+  if(!prog){
+    document.getElementById('programme-accueil').style.display='block';
+    document.getElementById('programme-actif').style.display='none';
+  } else {
+    document.getElementById('programme-accueil').style.display='none';
+    document.getElementById('programme-actif').style.display='block';
+    afficherProgramme(prog);
+    await chargerContenuJour(prog);
+  }
+}
+
+function demarrerProgramme(){
+  const objectif=document.getElementById('prog-objectif').value;
+  const prog={objectif,dateDebut:getDate(),joursCompletes:[],jourActuel:1};
+  localStorage.setItem('programme',JSON.stringify(prog));
+  chargerProgramme();
+  alert('Programme lancé ! 💙 Bonne chance pour ces 30 jours !');
+}
+
+function afficherProgramme(prog){
+  document.getElementById('prog-objectif-affiche').textContent=prog.objectif;
+  document.getElementById('prog-jour-actuel').textContent=prog.jourActuel;
+  document.getElementById('prog-date-debut').textContent='Commencé le '+prog.dateDebut;
+  document.getElementById('prog-barre').style.width=(prog.jourActuel/30*100)+'%';
+  document.getElementById('prog-titre-jour').textContent='Jour '+prog.jourActuel+' — Contenu du jour';
+  const deja=prog.joursCompletes.includes(prog.jourActuel);
+  document.getElementById('prog-valider-btn').style.display=deja?'none':'block';
+  const grille=document.getElementById('prog-grille');
+  grille.innerHTML='';
+  for(let i=1;i<=30;i++){
+    const div=document.createElement('div');
+    div.style.cssText=`width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;${prog.joursCompletes.includes(i)?'background:#185FA5;color:#fff;':i===prog.jourActuel?'background:#E6F1FB;color:#185FA5;border:2px solid #185FA5;':'background:#f7faff;color:#85B7EB;border:0.5px solid #B5D4F4;'}`;
+    div.textContent=prog.joursCompletes.includes(i)?'✓':i;
+    grille.appendChild(div);
+  }
+}
+
+async function chargerContenuJour(prog){
+  const cache=localStorage.getItem('prog-contenu-'+prog.jourActuel);
+  if(cache){document.getElementById('prog-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;">${cache}</p>`;return;}
+  try{
+    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-opus-4-5',max_tokens:200,
+        system:'Tu es un coach bienveillant. Génère le contenu du jour pour un programme bien-être de 30 jours. Réponds avec: 1 exercice pratique simple, 1 conseil bienveillant, et 1 question de réflexion. Sois concis et inspirant. Réponds en français.',
+        messages:[{role:'user',content:`Jour ${prog.jourActuel}/30 du programme "${prog.objectif}". Génère le contenu de ce jour.`}]
+      })
+    });
+    const data=await res.json();
+    const contenu=data.content[0].text;
+    localStorage.setItem('prog-contenu-'+prog.jourActuel,contenu);
+    document.getElementById('prog-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;">${contenu}</p>`;
+  }catch(e){document.getElementById('prog-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur de chargement 😔</p>';}
+}
+
+function validerJourProgramme(){
+  const prog=JSON.parse(localStorage.getItem('programme')||'null');
+  if(!prog)return;
+  if(!prog.joursCompletes.includes(prog.jourActuel))prog.joursCompletes.push(prog.jourActuel);
+  if(prog.jourActuel<30)prog.jourActuel++;
+  else{alert('🎉 Félicitations ! Tu as complété le programme 30 jours ! Tu es incroyable 💙');abandonnerProgramme();return;}
+  localStorage.setItem('programme',JSON.stringify(prog));
+  afficherProgramme(prog);
+  chargerContenuJour(prog);
+  verifierBadges();
+}
+
+function abandonnerProgramme(){
+  if(!confirm('Abandonner le programme ? Ta progression sera perdue.'))return;
+  localStorage.removeItem('programme');
+  chargerProgramme();
+}
   async function genererBilan(){
   const aujourd = new Date();
   const debutSemaine = new Date(aujourd);
