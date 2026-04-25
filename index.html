@@ -193,6 +193,9 @@
     .msg-groupe.moi .texte { background: #185FA5; color: #fff; border-radius: 12px 12px 4px 12px; }
     .msg-groupe.autre .texte { background: #fff; color: #0C447C; border: 0.5px solid #B5D4F4; border-radius: 12px 12px 12px 4px; }
     .msg-groupe.ia .texte { background: #E6F1FB; color: #0C447C; border-radius: 12px; font-style: italic; }
+    #mdp-screen { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
+body.dark #mdp-screen { background: linear-gradient(135deg, #0a1628, #112233); }
+body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,255,255,0.07); color: #e8f2ff; border-color: rgba(181,212,244,0.2); }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(181,212,244,0.3); border-radius: 2px; }
@@ -642,7 +645,51 @@ const SYSTEM=`You are a compassionate wellness assistant for "Juste là pour toi
 let historique=[],prenom='',humeurSel2='',delaiLettre='',pagePrecedente='accueil';
 let socket=null,salleActuelle=null,themeChoisi='😰 Stress';
 let groupeFiltre='Tous',groupePubli='😰 Stress';
-
+let mdpMode='setup';
+function initMdp(){
+  const mdpSauvegarde=localStorage.getItem('user-mdp');
+  const mdpIgnore=localStorage.getItem('user-mdp-ignore');
+  if(mdpIgnore)return;
+  if(mdpSauvegarde){
+    mdpMode='login';
+    document.getElementById('mdp-titre').textContent='Bon retour 💙';
+    document.getElementById('mdp-sous').textContent='Entre ton mot de passe pour accéder à ton espace';
+    document.getElementById('mdp-user-confirm').style.display='none';
+    document.getElementById('mdp-btn').textContent='Se connecter 💙';
+    document.getElementById('mdp-ignorer').style.display='none';
+    const p=localStorage.getItem('user-prenom-save');
+    if(p)document.getElementById('mdp-titre').textContent='Bon retour '+p+' 💙';
+  }else{
+    mdpMode='setup';
+    document.getElementById('mdp-user-confirm').style.display='block';
+  }
+  document.getElementById('mdp-screen').style.display='flex';
+}
+function validerMdp(){
+  const inp=document.getElementById('mdp-user-input').value;
+  const confirm=document.getElementById('mdp-user-confirm').value;
+  const erreur=document.getElementById('mdp-erreur');
+  if(mdpMode==='setup'){
+    if(inp.length<4){erreur.textContent='Minimum 4 caractères !';erreur.style.display='block';return;}
+    if(inp!==confirm){erreur.textContent='Les mots de passe ne correspondent pas !';erreur.style.display='block';return;}
+    localStorage.setItem('user-mdp',btoa(inp));
+    document.getElementById('mdp-screen').style.display='none';
+    alert('Mot de passe créé ! 💙 N\'oublie pas de le retenir.');
+  }else{
+    const mdpSauvegarde=localStorage.getItem('user-mdp');
+    if(btoa(inp)===mdpSauvegarde){
+      erreur.style.display='none';
+      document.getElementById('mdp-screen').style.display='none';
+      document.getElementById('mdp-user-input').value='';
+    }else{
+      erreur.textContent='Mot de passe incorrect. Réessaie !';
+      erreur.style.display='block';
+      document.getElementById('mdp-user-input').value='';
+    }
+  }
+}
+function ignorerMdp(){localStorage.setItem('user-mdp-ignore','true');document.getElementById('mdp-screen').style.display='none';}
+initMdp();
 let slideActuel=0;
 function allerSlide(n){slideActuel=n;document.getElementById('tuto-slides').style.transform='translateX(-'+n*100+'%)';document.querySelectorAll('.tuto-point').forEach((p,i)=>p.classList.toggle('active',i===n));document.getElementById('tuto-next').style.display=n===3?'none':'block';}
 function slideSuivant(){if(slideActuel<3)allerSlide(slideActuel+1);}
