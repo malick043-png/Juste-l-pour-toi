@@ -992,6 +992,7 @@ function commencer(){
   document.getElementById('chat').style.display='flex';
   document.getElementById('chat-sub').textContent='Bonjour '+prenom+' 💙';
   pagePrecedente='chat';
+  localStorage.setItem('user-prenom-save', prenom);
   incrementerCompteur();
   ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
 }
