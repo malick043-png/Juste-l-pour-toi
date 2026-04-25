@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Admin — Juste là pour toi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', Arial, sans-serif; background: #0a1628; color: #e8f2ff; min-height: 100vh; }
+    #login { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 30px; text-align: center; background: linear-gradient(135deg, #0a1628, #1a2d4a); }
+    .login-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(181,212,244,0.4); margin-bottom: 20px; box-shadow: 0 0 30px rgba(24,95,165,0.4); }
+    .login-titre { font-family: 'Lora', serif; font-size: 24px; color: #e8f2ff; margin-bottom: 6px; }
+    .login-sous { font-size: 13px; color: rgba(181,212,244,0.5); margin-bottom: 28px; }
+    .login-input { width: 100%; max-width: 280px; border: 1.5px solid rgba(181,212,244,0.2); border-radius: 20px; padding: 12px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; background: rgba(255,255,255,0.07); color: #e8f2ff; margin-bottom: 12px; }
+    .login-input::placeholder { color: rgba(181,212,244,0.3); }
+    .login-btn { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border: none; border-radius: 20px; padding: 12px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; box-shadow: 0 4px 20px rgba(24,95,165,0.4); }
+
+    #dashboard { display: none; }
+    .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; background: #0d1f35; border-right: 0.5px solid rgba(181,212,244,0.1); padding: 20px 0; z-index: 100; }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 0 20px 20px; border-bottom: 0.5px solid rgba(181,212,244,0.1); margin-bottom: 16px; }
+    .sidebar-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .sidebar-logo-text { font-family: 'Lora', serif; font-size: 13px; color: #e8f2ff; }
+    .sidebar-logo-sub { font-size: 10px; color: rgba(181,212,244,0.4); }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 20px; cursor: pointer; transition: all 0.2s; font-size: 13px; color: rgba(181,212,244,0.6); border-left: 3px solid transparent; }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: #e8f2ff; }
+    .nav-item.active { background: rgba(24,95,165,0.2); color: #e8f2ff; border-left-color: #185FA5; }
+    .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+    .nav-separator { height: 0.5px; background: rgba(181,212,244,0.1); margin: 10px 20px; }
+    .nav-label { font-size: 10px; color: rgba(181,212,244,0.3); padding: 6px 20px; text-transform: uppercase; letter-spacing: 1px; }
+
+    .main { margin-left: 220px; padding: 24px; }
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .top-bar h1 { font-family: 'Lora', serif; font-size: 22px; color: #e8f2ff; }
+    .top-bar-right { display: flex; align-items: center; gap: 12px; }
+    .user-badge { background: rgba(24,95,165,0.3); border: 0.5px solid rgba(181,212,244,0.2); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: #B5D4F4; }
+    .btn-logout { background: rgba(229,62,62,0.15); border: 0.5px solid rgba(229,62,62,0.3); color: #fc8181; border-radius: 12px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stat-card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(181,212,244,0.1); border-radius: 14px; padding: 16px; }
+    .stat-icon { font-size: 24px; margin-bottom: 8px; }
+    .stat-nombre { font-size: 28px; font-weight: 700; color: #378ADD; }
+    .stat-label { font-size: 12px; color: rgba(181,212,244,0.5); margin-top: 4px; }
+    .stat-trend { font-size: 11px; color: #5DCAA5; margin-top: 4px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(181,212,244,0.1); border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+    .card-titre { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .btn-primary { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border: none; border-radius: 10px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-danger { background: rgba(229,62,62,0.2); color: #fc8181; border: 0.5px solid rgba(229,62,62,0.3); border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
+    .btn-success { background: rgba(29,158,117,0.2); color: #5DCAA5; border: 0.5px solid rgba(29,158,117,0.3); border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
+    .btn-warning { background: rgba(245,158,11,0.2); color: #FCD34D; border: 0.5px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
+
+    .input-dark { width: 100%; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: rgba(255,255,255,0.07); color: #e8f2ff; margin-bottom: 8px; }
+    .input-dark::placeholder { color: rgba(181,212,244,0.3); }
+    .select-dark { width: 100%; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: #0d1f35; color: #e8f2ff; margin-bottom: 8px; }
+    .textarea-dark { width: 100%; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: rgba(255,255,255,0.07); color: #e8f2ff; resize: none; height: 80px; }
+
+    .item-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid rgba(181,212,244,0.08); font-size: 13px; gap: 8px; }
+    .item-row:last-child { border-bottom: none; }
+    .badge { font-size: 11px; padding: 2px 8px; border-radius: 8px; }
+    .badge-blue { background: rgba(24,95,165,0.3); color: #85B7EB; }
+    .badge-green { background: rgba(29,158,117,0.2); color: #5DCAA5; }
+    .badge-red { background: rgba(229,62,62,0.2); color: #fc8181; }
+    .badge-yellow { background: rgba(245,158,11,0.2); color: #FCD34D; }
+
+    .alert-card { background: rgba(229,62,62,0.1); border: 0.5px solid rgba(229,62,62,0.2); border-radius: 10px; padding: 10px 14px; margin-bottom:8px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #fc8181; }
+    .notif-dot { width: 8px; height: 8px; border-radius: 50%; background: #e53e3e; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .msg-item { padding: 10px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(181,212,244,0.08); margin-bottom: 8px; }
+    .msg-auteur { font-size: 12px; color: #378ADD; font-weight: 500; margin-bottom: 4px; }
+    .msg-texte { font-size: 13px; color: rgba(181,212,244,0.8); }
+    .msg-time { font-size: 10px; color: rgba(181,212,244,0.3); margin-top: 4px; }
+
+    .calendrier-item { padding: 12px; border-radius: 10px; background: rgba(24,95,165,0.1); border: 0.5px solid rgba(24,95,165,0.3); margin-bottom:8px; }
+    .cal-theme { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom:4px; }
+    .cal-info { font-size: 12px; color: rgba(181,212,244,0.6); }
+
+    .revenu-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid rgba(181,212,244,0.08); }
+    .revenu-nom { font-size: 13px; color: #e8f2ff; }
+    .revenu-montant { font-size: 14px; font-weight: 500; color: #5DCAA5; }
+
+    .annonce-preview { padding: 12px; border-radius: 10px; background: rgba(24,95,165,0.1); border: 0.5px solid rgba(181,212,244,0.1); margin-top:8px; font-size:13px; color: rgba(181,212,244,0.8); font-style:italic; }
+
+    canvas { max-height: 200px; }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="login">
+  <img src="icon.png" class="login-logo" alt="Logo">
+  <h1 class="login-titre">Super Admin</h1>
+  <p class="login-sous">Juste là pour toi — Accès Fondateur uniquement</p>
+  <input type="password" class="login-input" id="mdp-input" placeholder="Mot de passe fondateur..." onkeydown="if(event.key==='Enter')seConnecter()">
+  <button class="login-btn" onclick="seConnecter()">Accéder au panel 🔐</button>
+</div>
+
+<div id="dashboard">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <img src="icon.png" alt="Logo">
+      <div>
+        <div class="sidebar-logo-text">Juste là pour toi</div>
+        <div class="sidebar-logo-sub">Super Admin</div>
+      </div>
+    </div>
+    <div class="nav-label">Principal</div>
+    <div class="nav-item active" onclick="afficherPage('vue-ensemble')"><span class="nav-icon">📊</span> Vue d'ensemble</div>
+    <div class="nav-item" onclick="afficherPage('alertes')"><span class="nav-icon">🔔</span> Alertes <span id="nb-alertes" style="background:#e53e3e;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:auto;">0</span></div>
+    <div class="nav-separator"></div>
+    <div class="nav-label">Gestion</div>
+    <div class="nav-item" onclick="afficherPage('sessions')"><span class="nav-icon">📅</span> Sessions</div>
+    <div class="nav-item" onclick="afficherPage('moderateurs')"><span class="nav-icon">👥</span> Modérateurs</div>
+    <div class="nav-item" onclick="afficherPage('inscrits')"><span class="nav-icon">💰</span> Abonnés</div>
+    <div class="nav-item" onclick="afficherPage('revenus')"><span class="nav-icon">📈</span> Revenus</div>
+    <div class="nav-separator"></div>
+    <div class="nav-label">Communauté</div>
+    <div class="nav-item" onclick="afficherPage('communaute')"><span class="nav-icon">🌍</span> Pensées</div>
+    <div class="nav-item" onclick="afficherPage('messagerie')"><span class="nav-icon">💬</span> Messagerie</div>
+    <div class="nav-item" onclick="afficherPage('annonces')"><span class="nav-icon">📢</span> Annonces</div>
+    <div class="nav-separator"></div>
+    <div class="nav-label">Paramètres</div>
+    <div class="nav-item" onclick="afficherPage('parametres')"><span class="nav-icon">⚙️</span> Paramètres</div>
+    <div class="nav-item" onclick="seDeconnecter()" style="color:rgba(229,62,62,0.7);margin-top:auto;"><span class="nav-icon">🚪</span> Déconnexion</div>
+  </div>
+
+  <div class="main">
+
+    <!-- VUE D'ENSEMBLE -->
+    <div class="page-section active" id="page-vue-ensemble">
+      <div class="top-bar">
+        <h1>📊 Vue d'ensemble</h1>
+        <div class="top-bar-right">
+          <span class="user-badge">👑 El Hadj Malick THIOUNE</span>
+          <button class="btn-logout" onclick="seDeconnecter()">Déconnexion</button>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-nombre" id="stat-users">-</div><div class="stat-label">Utilisateurs total</div><div class="stat-trend">↑ En croissance</div></div>
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-nombre" id="stat-abonnes">0</div><div class="stat-label">Abonnés actifs</div><div class="stat-trend" id="stat-revenu-total">0$ ce mois</div></div>
+        <div class="stat-card"><div class="stat-icon">🌍</div><div class="stat-nombre" id="stat-pensees">-</div><div class="stat-label">Pensées communauté</div></div>
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-nombre" id="stat-sessions-nb">0</div><div class="stat-label">Sessions programmées</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-titre">📈 Évolution des utilisateurs</div>
+          <canvas id="chart-users"></canvas>
+        </div>
+        <div class="card">
+          <div class="card-titre">💰 Revenus mensuels</div>
+          <canvas id="chart-revenus"></canvas>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-titre">📅 Prochaines sessions</div>
+          <div id="overview-sessions"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p></div>
+        </div>
+        <div class="card">
+          <div class="card-titre">🔔 Dernières alertes</div>
+          <div id="overview-alertes"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERTES -->
+    <div class="page-section" id="page-alertes">
+      <div class="top-bar"><h1>🔔 Alertes</h1></div>
+      <div class="card">
+        <div class="card-titre">Alertes récentes <button class="btn-primary" onclick="effacerAlertes()">Tout effacer</button></div>
+        <div id="liste-alertes"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte</p></div>
+      </div>
+    </div>
+
+    <!-- SESSIONS -->
+    <div class="page-section" id="page-sessions">
+      <div class="top-bar"><h1>📅 Gestion des sessions</h1></div>
+      <div class="card">
+        <div class="card-titre">Ajouter une session <button class="btn-primary" onclick="toggleForm('form-new-session')">+ Nouvelle</button></div>
+        <div id="form-new-session" style="display:none;padding:14px;background:rgba(24,95,165,0.1);border-radius:10px;margin-bottom:14px;">
+          <select class="select-dark" id="s-theme">
+            <option>😰 Gestion du stress</option>
+            <option>💪 Confiance en soi</option>
+            <option>😴 Mieux dormir</option>
+            <option>💔 Relations</option>
+            <option>🌱 Développement personnel</option>
+            <option>😔 Solitude</option>
+          </select>
+          <input type="text" class="input-dark" id="s-jour" placeholder="Jour et heure (ex: Lundi 19h00)">
+          <input type="text" class="input-dark" id="s-date" placeholder="Date (ex: 05/05/2026)">
+          <input type="number" class="input-dark" id="s-duree" placeholder="Durée en minutes">
+          <input type="number" class="input-dark" id="s-max" placeholder="Max participants">
+          <select class="select-dark" id="s-modo">
+            <option>El Hadj Malick THIOUNE</option>
+            <option>Cheikh Bakary THIOUNE</option>
+            <option>Aisha DIA</option>
+          </select>
+          <input type="text" class="input-dark" id="s-lien" placeholder="Lien de la session (optionnel)">
+          <button class="btn-primary" onclick="ajouterSession()" style="width:100%;padding:10px;margin-top:4px;">✅ Enregistrer</button>
+        </div>
+        <div id="liste-sessions-admin"></div>
+      </div>
+    </div>
+
+    <!-- MODERATEURS -->
+    <div class="page-section" id="page-moderateurs">
+      <div class="top-bar"><h1>👥 Modérateurs</h1></div>
+      <div class="card">
+        <div class="card-titre">Équipe de modération <button class="btn-primary" onclick="toggleForm('form-new-modo')">+ Ajouter</button></div>
+        <div id="form-new-modo" style="display:none;padding:14px;background:rgba(24,95,165,0.1);border-radius:10px;margin-bottom:14px;">
+          <input type="text" class="input-dark" id="m-nom" placeholder="Nom complet">
+          <input type="text" class="input-dark" id="m-contact" placeholder="WhatsApp ou email">
+          <select class="select-dark" id="m-role">
+            <option>Modérateur principal</option>
+            <option>Modérateur junior</option>
+            <option>Responsable marketing</option>
+          </select>
+          <button class="btn-primary" onclick="ajouterModo()" style="width:100%;padding:10px;">✅ Ajouter</button>
+        </div>
+        <div id="liste-modos-admin"></div>
+      </div>
+    </div>
+
+    <!-- INSCRITS -->
+    <div class="page-section" id="page-inscrits">
+      <div class="top-bar"><h1>💰 Abonnés aux sessions</h1></div>
+      <div class="card">
+        <div class="card-titre">Liste des abonnés <button class="btn-primary" onclick="toggleForm('form-new-inscrit')">+ Ajouter</button></div>
+        <div id="form-new-inscrit" style="display:none;padding:14px;background:rgba(24,95,165,0.1);border-radius:10px;margin-bottom:14px;">
+          <input type="text" class="input-dark" id="i-nom" placeholder="Prénom">
+          <input type="text" class="input-dark" id="i-contact" placeholder="WhatsApp ou email">
+          <input type="text" class="input-dark" id="i-date" placeholder="Date d'inscription">
+          <input type="number" class="input-dark" id="i-montant" placeholder="Montant payé ($)">
+          <select class="select-dark" id="i-statut">
+            <option>Actif</option>
+            <option>En attente de paiement</option>
+            <option>Expiré</option>
+          </select>
+          <button class="btn-primary" onclick="ajouterInscrit()" style="width:100%;padding:10px;">✅ Ajouter</button>
+        </div>
+        <div id="liste-inscrits-admin"></div>
+      </div>
+    </div>
+
+    <!-- REVENUS -->
+    <div class="page-section" id="page-revenus">
+      <div class="top-bar"><h1>📈 Revenus</h1></div>
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-nombre" id="rev-total">0$</div><div class="stat-label">Total encaissé</div></div>
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-nombre" id="rev-mois">0$</div><div class="stat-label">Ce mois-ci</div></div>
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-nombre" id="rev-abonnes">0</div><div class="stat-label">Abonnés actifs</div></div>
+      </div>
+      <div class="card">
+        <div class="card-titre">Historique des paiements</div>
+        <div id="liste-revenus"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun paiement enregistré</p></div>
+      </div>
+    </div>
+
+    <!-- COMMUNAUTE -->
+    <div class="page-section" id="page-communaute">
+      <div class="top-bar"><h1>🌍 Modération communauté</h1><button class="btn-primary" onclick="chargerCommunauteAdmin()">↺ Actualiser</button></div>
+      <div class="card">
+        <div class="card-titre">Pensées publiées</div>
+        <div id="liste-communaute-admin"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Chargement...</p></div>
+      </div>
+    </div>
+
+    <!-- MESSAGERIE -->
+    <div class="page-section" id="page-messagerie">
+      <div class="top-bar"><h1>💬 Messagerie interne</h1></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-titre">Nouveau message</div>
+          <select class="select-dark" id="msg-destinataire">
+            <option>Cheikh Bakary THIOUNE</option>
+            <option>Aisha DIA</option>
+            <option>Tous les modérateurs</option>
+          </select>
+          <textarea class="textarea-dark" id="msg-texte" placeholder="Votre message..."></textarea>
+          <button class="btn-primary" onclick="envoyerMessage()" style="width:100%;padding:10px;margin-top:8px;">Envoyer 💙</button>
+        </div>
+        <div class="card">
+          <div class="card-titre">Messages récents</div>
+          <div id="liste-messages"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun message</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANNONCES -->
+    <div class="page-section" id="page-annonces">
+      <div class="top-bar"><h1>📢 Annonces</h1></div>
+      <div class="card">
+        <div class="card-titre">Créer une annonce</div>
+        <p style="font-size:13px;color:rgba(181,212,244,0.5);margin-bottom:10px;">Cette annonce s'affichera sur la page d'accueil de l'application</p>
+        <input type="text" class="input-dark" id="annonce-titre" placeholder="Titre de l'annonce">
+        <textarea class="textarea-dark" id="annonce-texte" placeholder="Contenu de l'annonce..."></textarea>
+        <select class="select-dark" id="annonce-type" style="margin-top:8px;">
+          <option value="info">ℹ️ Information</option>
+          <option value="session">📅 Nouvelle session</option>
+          <option value="promo">🎉 Promotion</option>
+          <option value="urgent">🚨 Urgent</option>
+        </select>
+        <div class="annonce-preview" id="annonce-preview">Aperçu de l'annonce...</div>
+        <button class="btn-primary" onclick="publierAnnonce()" style="width:100%;padding:10px;margin-top:10px;">📢 Publier l'annonce</button>
+      </div>
+      <div class="card">
+        <div class="card-titre">Annonces publiées <button class="btn-danger" onclick="effacerAnnonces()">Tout effacer</button></div>
+        <div id="liste-annonces"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune annonce</p></div>
+      </div>
+    </div>
+
+    <!-- PARAMETRES -->
+    <div class="page-section" id="page-parametres">
+      <div class="top-bar"><h1>⚙️ Paramètres</h1></div>
+      <div class="card">
+        <div class="card-titre">Informations de l'application</div>
+        <input type="text" class="input-dark" value="Juste là pour toi" placeholder="Nom de l'app">
+        <input type="text" class="input-dark" value="malick043@gmail.com" placeholder="Email de contact">
+        <input type="text" class="input-dark" value="+221 77 884 47 99" placeholder="WhatsApp">
+        <input type="number" class="input-dark" id="param-prix" value="5" placeholder="Prix abonnement ($)">
+        <button class="btn-primary" onclick="alert('Paramètres sauvegardés !')" style="width:100%;padding:10px;">💾 Sauvegarder</button>
+      </div>
+      <div class="card">
+        <div class="card-titre">Accès rapides</div>
+        <a href="https://malick043-png.github.io/Juste-l-pour-toi" target="_blank" style="display:block;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;margin-bottom:8px;font-size:13px;">🌐 Voir l'application</a>
+        <a href="https://malick043-png.github.io/Juste-l-pour-toi/admin.html" target="_blank" style="display:block;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;margin-bottom:8px;font-size:13px;">🔐 Panel modérateurs</a>
+        <a href="https://dashboard.render.com" target="_blank" style="display:block;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;margin-bottom:8px;font-size:13px;">⚙️ Render (serveur)</a>
+        <a href="https://github.com/malick043-png/Juste-l-pour-toi" target="_blank" style="display:block;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;font-size:13px;">💻 GitHub (code)</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const MDP_FONDATEUR = 'VOTRE_MOT_DE_PASSE_SUPERADMIN';
+const SERVEUR = 'https://serveur-juste-la-pour-toi.onrender.com';
+
+function seConnecter(){
+  const mdp = document.getElementById('mdp-input').value;
+  if(mdp === MDP_FONDATEUR){
+    localStorage.setItem('superadmin-auth','true');
+    document.getElementById('login').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    chargerDashboard();
+  } else { alert('Accès refusé !'); }
+}
+
+function seDeconnecter(){
+  localStorage.removeItem('superadmin-auth');
+  document.getElementById('login').style.display='flex';
+  document.getElementById('dashboard').style.display='none';
+}
+
+if(localStorage.getItem('superadmin-auth')==='true'){
+  document.getElementById('login').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  chargerDashboard();
+}
+
+function afficherPage(page){
+  document.querySelectorAll('.page-section').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if(page==='communaute') chargerCommunauteAdmin();
+  if(page==='revenus') calculerRevenus();
+  if(page==='vue-ensemble') chargerVueEnsemble();
+  if(page==='messagerie') afficherMessages();
+  if(page==='annonces') afficherAnnonces();
+  if(page==='sessions') afficherSessions();
+  if(page==='moderateurs') afficherModos();
+  if(page==='inscrits') afficherInscrits();
+  if(page==='alertes') afficherAlertes();
+}
+
+function toggleForm(id){const f=document.getElementById(id);f.style.display=f.style.display==='none'?'block':'none';}
+
+async function chargerDashboard(){
+  try{const r=await fetch(SERVEUR+'/compteur');const d=await r.json();document.getElementById('stat-users').textContent=d.compteur;}catch(e){}
+  try{const r=await fetch(SERVEUR+'/communaute');const d=await r.json();document.getElementById('stat-pensees').textContent=d.length;}catch(e){}
+  const inscrits=getInscrits();
+  const actifs=inscrits.filter(i=>i.statut==='Actif');
+  document.getElementById('stat-abonnes').textContent=actifs.length;
+  const sessions=getSessions();
+  document.getElementById('stat-sessions-nb').textContent=sessions.length;
+  const revTotal=inscrits.reduce((a,b)=>a+(parseFloat(b.montant)||5),0);
+  document.getElementById('stat-revenu-total').textContent=revTotal.toFixed(0)+'$ total';
+  chargerGraphiques();
+  chargerVueEnsemble();
+  verifierAlertes();
+}
+
+function chargerGraphiques(){
+  const ctx1=document.getElementById('chart-users').getContext('2d');
+  new Chart(ctx1,{type:'line',data:{labels:['Jan','Fév','Mar','Avr','Mai','Juin'],datasets:[{label:'Utilisateurs',data:[10,25,45,80,120,parseInt(document.getElementById('stat-users').textContent)||150],borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.1)',tension:0.4,fill:true}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}},y:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}}}}});
+  const ctx2=document.getElementById('chart-revenus').getContext('2d');
+  const inscrits=getInscrits();
+  const revMois=inscrits.filter(i=>i.statut==='Actif').length*5;
+  new Chart(ctx2,{type:'bar',data:{labels:['Jan','Fév','Mar','Avr','Mai','Juin'],datasets:[{label:'Revenus ($)',data:[0,0,0,0,0,revMois],backgroundColor:'rgba(29,158,117,0.4)',borderColor:'#1D9E75',borderWidth:1}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}},y:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}}}}});
+}
+
+function chargerVueEnsemble(){
+  const sessions=getSessions();
+  const c=document.getElementById('overview-sessions');
+  if(!sessions.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p>';return;}
+  c.innerHTML=sessions.slice(0,3).map(s=>`<div class="calendrier-item"><div class="cal-theme">${s.theme}</div><div class="cal-info">📅 ${s.jour} · 🎤 ${s.modo}</div></div>`).join('');
+  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
+  const ca=document.getElementById('overview-alertes');
+  if(!alertes.length){ca.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte 🎉</p>';return;}
+  ca.innerHTML=alertes.slice(0,3).map(a=>`<div class="alert-card"><div class="notif-dot"></div>${a.texte}</div>`).join('');
+}
+
+function verifierAlertes(){
+  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
+  document.getElementById('nb-alertes').textContent=alertes.length;
+}
+
+function afficherAlertes(){
+  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
+  const c=document.getElementById('liste-alertes');
+  if(!alertes.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte 🎉</p>';return;}
+  c.innerHTML=alertes.map(a=>`<div class="alert-card"><div class="notif-dot"></div><span>${a.texte}</span><span style="font-size:11px;color:rgba(181,212,244,0.3);margin-left:auto;">${a.date}</span></div>`).join('');
+}
+
+function effacerAlertes(){localStorage.removeItem('alertes');afficherAlertes();document.getElementById('nb-alertes').textContent='0';}
+
+function getSessions(){return JSON.parse(localStorage.getItem('superadmin-sessions')||'[]');}
+function saveSessions(s){localStorage.setItem('superadmin-sessions',JSON.stringify(s));}
+
+function afficherSessions(){
+  const sessions=getSessions();
+  const c=document.getElementById('liste-sessions-admin');
+  if(!sessions.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session programmée</p>';return;}
+  c.innerHTML=sessions.map((s,i)=>`<div class="calendrier-item" style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><div class="cal-theme">${s.theme}</div><div class="cal-info">📅 ${s.jour} ${s.date?'('+s.date+')':''} · ⏱ ${s.duree} min · 👥 Max ${s.max}</div><div class="cal-info">🎤 ${s.modo} ${s.lien?'· <a href="'+s.lien+'" target="_blank" style="color:#85B7EB;">Lien</a>':''}</div></div><button class="btn-danger" onclick="supprimerSession(${i})">✕</button></div></div>`).join('');
+}
+
+function ajouterSession(){
+  const theme=document.getElementById('s-theme').value;
+  const jour=document.getElementById('s-jour').value.trim();
+  const date=document.getElementById('s-date').value.trim();
+  const duree=document.getElementById('s-duree').value||90;
+  const max=document.getElementById('s-max').value||8;
+  const modo=document.getElementById('s-modo').value;
+  const lien=document.getElementById('s-lien').value.trim();
+  if(!jour){alert('Indique le jour et l\'heure !');return;}
+  const sessions=getSessions();
+  sessions.push({theme,jour,date,duree,max,modo,lien});
+  saveSessions(sessions);
+  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
+  alertes.unshift({texte:'Nouvelle session ajoutée : '+theme+' — '+jour,date:new Date().toLocaleDateString('fr-FR')});
+  localStorage.setItem('alertes',JSON.stringify(alertes));
+  document.getElementById('s-jour').value='';document.getElementById('s-date').value='';document.getElementById('s-lien').value='';
+  afficherSessions();
+  document.getElementById('stat-sessions-nb').textContent=sessions.length;
+  alert('Session ajoutée ! 💙');
+}
+
+function supprimerSession(i){if(!confirm('Supprimer ?'))return;const s=getSessions();s.splice(i,1);saveSessions(s);afficherSessions();}
+
+function getModos(){return JSON.parse(localStorage.getItem('superadmin-modos')||'[{"nom":"El Hadj Malick THIOUNE","contact":"malick043@gmail.com","role":"Fondateur"},{"nom":"Cheikh Bakary THIOUNE","contact":"","role":"Associé & Modérateur"},{"nom":"Aisha DIA","contact":"","role":"Responsable Marketing & Modératrice"}]');}
+function saveModos(m){localStorage.setItem('superadmin-modos',JSON.stringify(m));}
+
+function afficherModos(){
+  const modos=getModos();
+  const c=document.getElementById('liste-modos-admin');
+  c.innerHTML=modos.map((m,i)=>`<div class="item-row"><div><p style="font-weight:500;color:#e8f2ff;">${m.nom}</p><p style="font-size:11px;color:rgba(181,212,244,0.4);">${m.contact||'Contact non renseigné'}</p></div><div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-blue">${m.role}</span>${i>0?`<button class="btn-danger" onclick="supprimerModo(${i})">✕</button>`:''}</div></div>`).join('');
+}
+
+function ajouterModo(){
+  const nom=document.getElementById('m-nom').value.trim();
+  const contact=document.getElementById('m-contact').value.trim();
+  const role=document.getElementById('m-role').value;
+  if(!nom){alert('Indique le nom !');return;}
+  const modos=getModos();
+  modos.push({nom,contact,role});
+  saveModos(modos);
+  document.getElementById('m-nom').value='';document.getElementById('m-contact').value='';
+  afficherModos();
+}
+
+function supprimerModo(i){if(!confirm('Supprimer ?'))return;const m=getModos();m.splice(i,1);saveModos(m);afficherModos();}
+
+function getInscrits(){return JSON.parse(localStorage.getItem('superadmin-inscrits')||'[]');}
+function saveInscrits(i){localStorage.setItem('superadmin-inscrits',JSON.stringify(i));}
+
+function afficherInscrits(){
+  const inscrits=getInscrits();
+  const actifs=inscrits.filter(i=>i.statut==='Actif').length;
+  document.getElementById('stat-abonnes').textContent=actifs;
+  const c=document.getElementById('liste-inscrits-admin');
+  if(!inscrits.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun abonné</p>';return;}
+  c.innerHTML=inscrits.map((ins,i)=>`<div class="item-row"><div><p style="font-weight:500;color:#e8f2ff;">${ins.nom}</p><p style="font-size:11px;color:rgba(181,212,244,0.4);">${ins.contact} · ${ins.date}</p></div><div style="display:flex;gap:6px;align-items:center;"><span style="font-size:13px;color:#5DCAA5;">${ins.montant||5}$</span><span class="badge ${ins.statut==='Actif'?'badge-green':ins.statut==='Expiré'?'badge-red':'badge-yellow'}">${ins.statut}</span><button class="btn-danger" onclick="supprimerInscrit(${i})">✕</button></div></div>`).join('');
+}
+
+function ajouterInscrit(){
+  const nom=document.getElementById('i-nom').value.trim();
+  const contact=document.getElementById('i-contact').value.trim();
+  const date=document.getElementById('i-date').value.trim()||new Date().toLocaleDateString('fr-FR');
+  const montant=document.getElementById('i-montant').value||5;
+  const statut=document.getElementById('i-statut').value;
+  if(!nom){alert('Indique le prénom !');return;}
+  const inscrits=getInscrits();
+  inscrits.push({nom,contact,date,montant,statut});
+  saveInscrits(inscrits);
+  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
+  alertes.unshift({texte:'Nouvel abonné : '+nom+' ('+montant+'$)',date:new Date().toLocaleDateString('fr-FR')});
+  localStorage.setItem('alertes',JSON.stringify(alertes));
+  document.getElementById('i-nom').value='';document.getElementById('i-contact').value='';document.getElementById('i-montant').value='';
+  afficherInscrits();calculerRevenus();
+  alert('Abonné ajouté ! 💙');
+}
+
+function supprimerInscrit(i){if(!confirm('Supprimer ?'))return;const ins=getInscrits();ins.splice(i,1);saveInscrits(ins);afficherInscrits();calculerRevenus();}
+
+function calculerRevenus(){
+  const inscrits=getInscrits();
+  const total=inscrits.reduce((a,b)=>a+(parseFloat(b.montant)||5),0);
+  const actifs=inscrits.filter(i=>i.statut==='Actif');
+  const mois=actifs.reduce((a,b)=>a+(parseFloat(b.montant)||5),0);
+  document.getElementById('rev-total').textContent=total.toFixed(0)+'$';
+  document.getElementById('rev-mois').textContent=mois.toFixed(0)+'$';
+  document.getElementById('rev-abonnes').textContent=actifs.length;
+  const c=document.getElementById('liste-revenus');
+  if(!inscrits.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun paiement</p>';return;}
+  c.innerHTML=inscrits.map(ins=>`<div class="revenu-item"><div><div class="revenu-nom">${ins.nom}</div><div style="font-size:11px;color:rgba(181,212,244,0.4);">${ins.date} · <span class="badge ${ins.statut==='Actif'?'badge-green':ins.statut==='Expiré'?'badge-red':'badge-yellow'}">${ins.statut}</span></div></div><div class="revenu-montant">${ins.montant||5}$</div></div>`).join('');
+}
+
+async function chargerCommunauteAdmin(){
+  try{
+    const res=await fetch(SERVEUR+'/communaute');
+    const data=await res.json();
+    const c=document.getElementById('liste-communaute-admin');
+    if(!data.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune pensée</p>';return;}
+    c.innerHTML=data.map(p=>`<div style="padding:10px;border-radius:10px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(181,212,244,0.08);margin-bottom:8px;"><span class="badge badge-blue" style="margin-bottom:6px;display:inline-block;">${p.groupe||'Général'}</span><p style="font-size:13px;color:rgba(181,212,244,0.8);margin-bottom:6px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:rgba(181,212,244,0.3);">💙 ${p.prenom} · ${p.date} · ❤️ ${p.coeurs}</span><button class="btn-danger" onclick="supprimerPensee(${p.id})">Supprimer</button></div></div>`).join('');
+  }catch(e){document.getElementById('liste-communaute-admin').innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Erreur</p>';}
+}
+
+async function supprimerPensee(id){
+  if(!confirm('Supprimer cette pensée ?'))return;
+  try{await fetch(SERVEUR+'/communaute/'+id,{method:'DELETE'});chargerCommunauteAdmin();}catch(e){alert('Erreur !');}
+}
+
+function envoyerMessage(){
+  const dest=document.getElementById('msg-destinataire').value;
+  const texte=document.getElementById('msg-texte').value.trim();
+  if(!texte){alert('Écris un message !');return;}
+  const messages=JSON.parse(localStorage.getItem('messages-internes')||'[]');
+  messages.unshift({de:'El Hadj Malick THIOUNE',pour:dest,texte,date:new Date().toLocaleString('fr-FR')});
+  if(messages.length>20)messages.pop();
+  localStorage.setItem('messages-internes',JSON.stringify(messages));
+  document.getElementById('msg-texte').value='';
+  afficherMessages();
+  alert('Message envoyé à '+dest+' ! 💙');
+}
+
+function afficherMessages(){
+  const messages=JSON.parse(localStorage.getItem('messages-internes')||'[]');
+  const c=document.getElementById('liste-messages');
+  if(!messages.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun message</p>';return;}
+  c.innerHTML=messages.map(m=>`<div class="msg-item"><div class="msg-auteur">→ ${m.pour}</div><div class="msg-texte">${m.texte}</div><div class="msg-time">${m.date}</div></div>`).join('');
+}
+
+document.getElementById('annonce-texte').addEventListener('input',function(){
+  const titre=document.getElementById('annonce-titre').value;
+  const texte=this.value;
+  document.getElementById('annonce-preview').textContent=titre?(titre+' — '+texte):texte;
+});
+
+function publierAnnonce(){
+  const titre=document.getElementById('annonce-titre').value.trim();
+  const texte=document.getElementById('annonce-texte').value.trim();
+  const type=document.getElementById('annonce-type').value;
+  if(!texte){alert('Écris une annonce !');return;}
+  const annonces=JSON.parse(localStorage.getItem('annonces')||'[]');
+  annonces.unshift({titre,texte,type,date:new Date().toLocaleDateString('fr-FR')});
+  localStorage.setItem('annonces',JSON.stringify(annonces));
+  document.getElementById('annonce-titre').value='';
+  document.getElementById('annonce-texte').value='';
+  document.getElementById('annonce-preview').textContent='Aperçu de l\'annonce...';
+  afficherAnnonces();
+  alert('Annonce publiée ! 💙');
+}
+
+function afficherAnnonces(){
+  const annonces=JSON.parse(localStorage.getItem('annonces')||'[]');
+  const c=document.getElementById('liste-annonces');
+  if(!annonces.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune annonce</p>';return;}
+  const icons={info:'ℹ️',session:'📅',promo:'🎉',urgent:'🚨'};
+  c.innerHTML=annonces.map((a,i)=>`<div style="padding:12px;border-radius:10px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(181,212,244,0.08);margin-bottom:8px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">${icons[a.type]||'📢'} ${a.titre||'Annonce'}</p><p style="font-size:12px;color:rgba(181,212,244,0.6);margin-top:4px;">${a.texte}</p><p style="font-size:10px;color:rgba(181,212,244,0.3);margin-top:4px;">${a.date}</p></div><button class="btn-danger" onclick="supprimerAnnonce(${i})">✕</button></div></div>`).join('');
+}
+
+function supprimerAnnonce(i){const a=JSON.parse(localStorage.getItem('annonces')||'[]');a.splice(i,1);localStorage.setItem('annonces',JSON.stringify(a));afficherAnnonces();}
+function effacerAnnonces(){if(!confirm('Effacer toutes les annonces ?'))return;localStorage.removeItem('annonces');afficherAnnonces();}
+</script>
+</body>
+</html>
