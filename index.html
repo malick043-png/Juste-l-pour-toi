@@ -276,6 +276,7 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
       <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
 <div class="drawer-item" onclick="ouvrirSec('groupe-premium');fermerMenu()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>      <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('bilan');fermerMenu();genererBilan()"><span class="drawer-icon">📋</span><span class="drawer-label">Bilan semaine</span></div>
       <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
       <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
       <div class="drawer-item" onclick="ouvrirSec('apropos');fermerMenu()"><span class="drawer-icon">ℹ️</span><span class="drawer-label">À propos</span></div>
@@ -581,6 +582,24 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
 </div>
 
 <!-- HISTORIQUE -->
+  <div class="page-sec" id="bilan">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('bilan')">← Retour</button><h2>📋 Bilan de la semaine</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <p style="font-size:32px;margin-bottom:8px;">📋</p>
+      <p class="card-titre">Ton bilan personnalisé</p>
+      <p style="font-size:13px;color:#85B7EB;" id="bilan-date">Semaine du ...</p>
+    </div>
+    <div class="card" id="bilan-contenu" style="text-align:center;">
+      <p style="font-size:13px;color:#85B7EB;">Génération de ton bilan...</p>
+    </div>
+    <div class="card" id="bilan-stats" style="display:none;">
+      <p class="card-titre">Tes chiffres de la semaine</p>
+      <div id="bilan-chiffres"></div>
+    </div>
+    <button class="btn-p" id="bilan-partager" style="display:none;" onclick="partagerBilan()">Partager mon bilan 🌟</button>
+  </div>
+</div>
 <div class="page-sec" id="historique">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('historique')">← Retour</button><h2>💬 Historique</h2></div>
   <div class="sec-body">
@@ -717,6 +736,75 @@ const TRADUCTIONS = {
     clair: '☀️ Light mode'
   }
 };
+  async function genererBilan(){
+  const aujourd = new Date();
+  const debutSemaine = new Date(aujourd);
+  debutSemaine.setDate(aujourd.getDate() - aujourd.getDay());
+  const finSemaine = new Date(debutSemaine);
+  finSemaine.setDate(debutSemaine.getDate() + 6);
+  document.getElementById('bilan-date').textContent = 'Semaine du ' + debutSemaine.toLocaleDateString('fr-FR') + ' au ' + finSemaine.toLocaleDateString('fr-FR');
+
+  const notes = JSON.parse(localStorage.getItem('notes-humeur') || '[]');
+  const defis = JSON.parse(localStorage.getItem('defis-ok') || '[]');
+  const journal = JSON.parse(localStorage.getItem('journal') || '[]');
+  const objectif = JSON.parse(localStorage.getItem('objectif') || 'null');
+
+  const notesSemaine = notes.filter(n => {
+    const d = n.date.split('/');
+    const date = new Date(d[2], d[1]-1, d[0]);
+    return date >= debutSemaine && date <= finSemaine;
+  });
+  const moyenne = notesSemaine.length ? (notesSemaine.reduce((a,b) => a+b.note, 0)/notesSemaine.length).toFixed(1) : null;
+  const defisSemaine = defis.filter(d => {
+    const parts = d.date.split('/');
+    const date = new Date(parts[2], parts[1]-1, parts[0]);
+    return date >= debutSemaine && date <= finSemaine;
+  });
+  const journalSemaine = journal.filter(j => {
+    const parts = j.date.split('/');
+    const date = new Date(parts[2], parts[1]-1, parts[0]);
+    return date >= debutSemaine && date <= finSemaine;
+  });
+
+  document.getElementById('bilan-stats').style.display = 'block';
+  document.getElementById('bilan-chiffres').innerHTML = `
+    <div style="display:flex;justify-content:space-around;margin-bottom:8px;">
+      <div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${moyenne||'-'}</p><p style="font-size:11px;color:#85B7EB;">Humeur /10</p></div>
+      <div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${defisSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Défis complétés</p></div>
+      <div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${journalSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Entrées journal</p></div>
+    </div>
+  `;
+
+  document.getElementById('bilan-contenu').innerHTML = '<p style="font-size:13px;color:#85B7EB;">L\'IA analyse ta semaine... 💙</p>';
+
+  try {
+    const contexte = `L'utilisateur s'appelle ${prenom||'toi'}. Cette semaine : humeur moyenne ${moyenne||'non renseignée'}/10, ${defisSemaine.length} défi(s) complété(s), ${journalSemaine.length} entrée(s) dans le journal. Objectif actuel : ${objectif?objectif.texte:'non défini'}.`;
+    const res = await fetch('https://serveur-juste-la-pour-toi.onrender.com/message', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-opus-4-5',
+        max_tokens: 300,
+        system: 'Tu es un coach bienveillant. Génère un bilan hebdomadaire personnalisé et encourageant en 3-4 phrases. Commence par féliciter l\'utilisateur pour ses efforts, analyse ses données et termine par un encouragement pour la semaine prochaine. Réponds en français.',
+        messages: [{role: 'user', content: contexte}]
+      })
+    });
+    const data = await res.json();
+    const bilan = data.content[0].text;
+    localStorage.setItem('dernier-bilan', bilan);
+    document.getElementById('bilan-contenu').innerHTML = `<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;font-style:italic;">"${bilan}"</p>`;
+    document.getElementById('bilan-partager').style.display = 'block';
+  } catch(e) {
+    document.getElementById('bilan-contenu').innerHTML = '<p style="font-size:13px;color:#85B7EB;">Erreur de génération 😔</p>';
+  }
+}
+
+function partagerBilan(){
+  const bilan = localStorage.getItem('dernier-bilan') || '';
+  const texte = `📋 Mon bilan de la semaine sur Juste là pour toi :\n\n"${bilan}"\n\n💙 https://malick043-png.github.io/Juste-l-pour-toi`;
+  if(navigator.share){navigator.share({text:texte});}
+  else{navigator.clipboard.writeText(texte);alert('Bilan copié ! 💙');}
+}
 function inviterAmi(){
   const prenom_save = localStorage.getItem('user-prenom-save') || '';
   const message = `💙 Salut ! Je t'invite à essayer *Juste là pour toi* — une application bienveillante pour prendre soin de toi.\n\n✅ Chat IA empathique\n✅ Journal de bord\n✅ Exercices de respiration\n✅ Sessions de groupe\n✅ Et bien plus encore !\n\n👉 https://malick043-png.github.io/Juste-l-pour-toi\n\nC'est gratuit et disponible maintenant ! 💙`;
