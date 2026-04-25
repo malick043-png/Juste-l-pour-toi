@@ -163,9 +163,9 @@ function seConnecter() {
     document.getElementById('dashboard').style.display = 'block';
     document.querySelector('.header-admin h1').textContent = '🔐 ' + user.nom;
     document.querySelector('.header-admin p').textContent = user.role + ' — Juste là pour toi';
-    if (user.acces === 'moderateur') {
-      document.querySelector('.stats-grid').style.display = 'none';
-    }
+   if (user.acces === 'moderateur') {
+  document.getElementById('stat-inscrits').parentElement.style.display = 'none';
+}
     chargerDashboard();
   } else {
     alert('Mot de passe incorrect !');
