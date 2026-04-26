@@ -1078,8 +1078,25 @@ function toggleSon(){const mute=localStorage.getItem('son')==='off';localStorage
 if(localStorage.getItem('son')==='off'){document.getElementById('son-btn').textContent='🔇';}
 
 function suggerer(t){document.getElementById('input').value=t;envoyer();}
-function ajouterMsg(role,texte){if(role==='user')document.getElementById('suggestions').style.display='none';const w=document.createElement('div');w.className='bwrap'+(role==='user'?' user':'');const b=document.createElement('div');b.className='bubble '+role;b.textContent=texte;const t=document.createElement('div');t.className='btime';t.textContent=getTime();w.appendChild(b);w.appendChild(t);document.getElementById('messages').appendChild(w);w.scrollIntoView({behavior:'smooth'});}
-function showTyping(){const d=document.createElement('div');d.className='typing';d.id='typing';d.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';document.getElementById('messages').appendChild(d);d.scrollIntoView({behavior:'smooth'});}
+function ajouterMsg(role,texte,index){
+  if(role==='user')document.getElementById('suggestions').style.display='none';
+  const w=document.createElement('div');w.className='bwrap'+(role==='user'?' user':'');
+  const b=document.createElement('div');b.className='bubble '+role;b.textContent=texte;
+  const t=document.createElement('div');t.className='btime';t.textContent=getTime();
+  if(role==='user'){
+    b.style.cursor='pointer';
+    b.title='Appuie pour modifier';
+    b.onclick=()=>{
+      const nouveau=prompt('Modifier ton message :',texte);
+      if(nouveau&&nouveau.trim()&&nouveau!==texte){
+        b.textContent=nouveau;
+        if(index!==undefined&&historique[index])historique[index].content=nouveau;
+      }
+    };
+  }
+  w.appendChild(b);w.appendChild(t);document.getElementById('messages').appendChild(w);
+  w.scrollIntoView({behavior:'smooth'});
+}function showTyping(){const d=document.createElement('div');d.className='typing';d.id='typing';d.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';document.getElementById('messages').appendChild(d);d.scrollIntoView({behavior:'smooth'});}
 function removeTyping(){
   const el=document.getElementById('typing');
   if(el)el.remove();
@@ -1103,7 +1120,7 @@ function removeTyping(){
   }
   try{if(navigator.vibrate)navigator.vibrate([30,10,30]);}catch(e){}
 }
-async function envoyer(){const inp=document.getElementById('input');const t=inp.value.trim();if(!t||document.getElementById('btn').disabled)return;ajouterMsg('user',t);historique.push({role:'user',content:t});inp.value='';inp.style.height='auto';document.getElementById('btn').disabled=true;showTyping();try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:1000,system:SYSTEM+' User first name: '+prenom,messages:historique})});const data=await res.json();const rep=data.content[0].text;historique.push({role:'assistant',content:rep});removeTyping();ajouterMsg('assistant',rep);verifierBadges();}catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}document.getElementById('btn').disabled=false;inp.focus();}
+async function envoyer(){const inp=document.getElementById('input');const t=inp.value.trim();if(!t||document.getElementById('btn').disabled)return;ajouterMsg('user',t,historique.length);historique.push({role:'user',content:t});inp.value='';inp.style.height='auto';document.getElementById('btn').disabled=true;showTyping();try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:1000,system:SYSTEM+' User first name: '+prenom,messages:historique})});const data=await res.json();const rep=data.content[0].text;historique.push({role:'assistant',content:rep});removeTyping();ajouterMsg('assistant',rep);verifierBadges();}catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}document.getElementById('btn').disabled=false;inp.focus();}
 document.getElementById('btn').addEventListener('click',envoyer);
 document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();envoyer();}});
 document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';});
