@@ -1111,7 +1111,7 @@ function demarrerEcoute(){
     document.getElementById('mic-btn').textContent='🎤';
     document.getElementById('mic-btn').style.background='rgba(24,95,165,0.1)';
     document.getElementById('mic-btn').style.borderColor='#B5D4F4';
-    if(document.getElementById('input').value.trim())envoyer();
+    document.getElementById('input').focus();
   };
   reconnaissance.onerror=()=>{
     enEcoute=false;
