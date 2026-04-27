@@ -1130,15 +1130,22 @@ function iaLireReponse(texte){
   if(!iaParle)return;
   if('speechSynthesis' in window){
     window.speechSynthesis.cancel();
-    const utterance=new SpeechSynthesisUtterance(texte);
-    utterance.lang='fr-FR';
-    utterance.rate=0.9;
-    utterance.pitch=1.1;
-    utterance.volume=0.9;
-    const voix=window.speechSynthesis.getVoices();
-    const voixFR=voix.find(v=>v.lang.startsWith('fr'));
-    if(voixFR)utterance.voice=voixFR;
-    window.speechSynthesis.speak(utterance);
+    const parler=()=>{
+      const utterance=new SpeechSynthesisUtterance(texte);
+      utterance.lang='fr-FR';
+      utterance.rate=0.9;
+      utterance.pitch=1.1;
+      utterance.volume=1;
+      const voix=window.speechSynthesis.getVoices();
+      const voixFR=voix.find(v=>v.lang.startsWith('fr'));
+      if(voixFR)utterance.voice=voixFR;
+      window.speechSynthesis.speak(utterance);
+    };
+    if(window.speechSynthesis.getVoices().length===0){
+      window.speechSynthesis.onvoiceschanged=parler;
+    } else {
+      parler();
+    }
   }
 }
 function toggleSon(){
