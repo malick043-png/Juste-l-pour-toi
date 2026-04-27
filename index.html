@@ -1131,7 +1131,7 @@ function iaLireReponse(texte){
   if('speechSynthesis' in window){
     window.speechSynthesis.cancel();
     const parler=()=>{
-      const texteNettoye=texte.replace(/💙/g,'').replace(/😔/g,'').replace(/🎉/g,'').replace(/✅/g,'').trim();
+      const texteNettoye=texte.replace(/[\u{1F000}-\u{1FFFF}]/gu,'').replace(/[\u{2600}-\u{26FF}]/gu,'').replace(/[\u{2700}-\u{27BF}]/gu,'').trim();
 const utterance=new SpeechSynthesisUtterance(texteNettoye);
       
       utterance.lang='fr-FR';
