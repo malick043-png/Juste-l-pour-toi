@@ -296,8 +296,8 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
       <div><p class="chat-title">Juste là pour toi</p><p class="chat-sub" id="chat-sub">Ton espace de bien-être</p></div>
       <div class="chat-acts">
         <button class="chat-btn" onclick="allerAccueil()">🏠</button>
-        <button class="chat-btn" onclick="toggleSon()" id="son-btn">🔊</button> <button class="chat-btn" onclick="toggleIaParle()" id="ia-parle-btn">🗣️</button>
-        <button class="chat-btn" onclick="ouvrirMenu()">☰ Menu</button>
+<button class="chat-btn" onclick="toggleSon()" id="son-btn">🔊</button>
+<button class="chat-btn" onclick="toggleIaParle()" id="ia-parle-btn">🗣️</button>        <button class="chat-btn" onclick="ouvrirMenu()">☰ Menu</button>
         <button class="chat-btn" onclick="reinitialiser()">↺</button>
       </div>
     </div>
@@ -1164,8 +1164,15 @@ function ajouterMsg(role,texte,index){
     b.style.cursor='pointer';
     b.title='Appuie pour modifier';
     b.onclick=()=>{
-      const nouveau=prompt('Modifier ton message :',texte);
+const nouveau=prompt('✏️ Modifier ton message :',texte);
       if(nouveau&&nouveau.trim()&&nouveau!==texte){
+        b.textContent=nouveau;
+        if(index!==undefined&&historique[index])historique[index].content=nouveau;
+        const modif=document.createElement('span');
+        modif.textContent=' ✏️';
+        modif.style.cssText='font-size:10px;opacity:0.6;';
+        b.appendChild(modif);
+      }      if(nouveau&&nouveau.trim()&&nouveau!==texte){
         b.textContent=nouveau;
         if(index!==undefined&&historique[index])historique[index].content=nouveau;
       }
