@@ -296,7 +296,7 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
       <div><p class="chat-title">Juste là pour toi</p><p class="chat-sub" id="chat-sub">Ton espace de bien-être</p></div>
       <div class="chat-acts">
         <button class="chat-btn" onclick="allerAccueil()">🏠</button>
-        <button class="chat-btn" onclick="toggleSon()" id="son-btn">🔊</button>
+        <button class="chat-btn" onclick="toggleSon()" id="son-btn">🔊</button> <button class="chat-btn" onclick="toggleIaParle()" id="ia-parle-btn">🗣️</button>
         <button class="chat-btn" onclick="ouvrirMenu()">☰ Menu</button>
         <button class="chat-btn" onclick="reinitialiser()">↺</button>
       </div>
@@ -313,6 +313,7 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
   </div>
   <div class="input-area">
     <textarea class="chat-textarea" id="input" placeholder="Écris ce que tu ressens..." rows="1"></textarea>
+    <button id="mic-btn" onclick="toggleVoix()" style="width:36px;height:36px;border-radius:50%;background:rgba(24,95,165,0.1);border:1px solid #B5D4F4;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🎤</button>
     <button class="send-btn" id="btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
   </div>
   <div class="chat-footer"><span>Application de bien-être · Non substituable à un professionnel de santé</span></div>
@@ -1074,10 +1075,85 @@ async function chargerCompteur(){try{const res=await fetch('https://serveur-just
 async function incrementerCompteur(){try{await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur',{method:'POST'});}catch(e){}}
 async function chargerTemoignages(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/temoignages');const data=await res.json();const c=document.getElementById('temoignages-liste');const compteurRes=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const compteurData=await compteurRes.json();document.getElementById('compteur-detail').textContent='💙 '+compteurData.compteur+' personnes utilisent déjà Juste là pour toi';c.innerHTML=data.map(t=>`<div class="card" style="margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div style="width:40px;height:40px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:18px;border:1.5px solid #B5D4F4;">${t.pays}</div><div><p style="font-size:14px;font-weight:500;color:#0C447C;">${t.nom}</p><p style="font-size:12px;color:#f59e0b;">${'⭐'.repeat(t.note)}</p></div></div><p style="font-size:13px;color:#378ADD;line-height:1.6;font-style:italic;">"${t.avis}"</p></div>`).join('');}catch(e){}}
 chargerCompteur();
+// VOCAL
+let reconnaissance=null;
+let iaParle=localStorage.getItem('ia-parle')!=='off';
+let enEcoute=false;
 
-function toggleSon(){const mute=localStorage.getItem('son')==='off';localStorage.setItem('son',mute?'on':'off');document.getElementById('son-btn').textContent=mute?'🔊':'🔇';}
+function toggleVoix(){
+  if(enEcoute){arreterEcoute();return;}
+  demarrerEcoute();
+}
+
+function demarrerEcoute(){
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){
+    alert('La reconnaissance vocale n\'est pas supportée sur ce navigateur. Utilise Chrome.');
+    return;
+  }
+  reconnaissance=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
+  reconnaissance.lang='fr-FR';
+  reconnaissance.continuous=false;
+  reconnaissance.interimResults=true;
+  reconnaissance.onstart=()=>{
+    enEcoute=true;
+    document.getElementById('mic-btn').textContent='🔴';
+    document.getElementById('mic-btn').style.background='rgba(229,62,62,0.15)';
+    document.getElementById('mic-btn').style.borderColor='#e53e3e';
+  };
+  reconnaissance.onresult=(e)=>{
+    const transcript=Array.from(e.results).map(r=>r[0].transcript).join('');
+    document.getElementById('input').value=transcript;
+    document.getElementById('input').style.height='auto';
+    document.getElementById('input').style.height=Math.min(document.getElementById('input').scrollHeight,160)+'px';
+  };
+  reconnaissance.onend=()=>{
+    enEcoute=false;
+    document.getElementById('mic-btn').textContent='🎤';
+    document.getElementById('mic-btn').style.background='rgba(24,95,165,0.1)';
+    document.getElementById('mic-btn').style.borderColor='#B5D4F4';
+    if(document.getElementById('input').value.trim())envoyer();
+  };
+  reconnaissance.onerror=()=>{
+    enEcoute=false;
+    document.getElementById('mic-btn').textContent='🎤';
+    document.getElementById('mic-btn').style.background='rgba(24,95,165,0.1)';
+    document.getElementById('mic-btn').style.borderColor='#B5D4F4';
+  };
+  reconnaissance.start();
+}
+
+function arreterEcoute(){
+  if(reconnaissance)reconnaissance.stop();
+}
+
+function iaLireReponse(texte){
+  if(!iaParle)return;
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(texte);
+    utterance.lang='fr-FR';
+    utterance.rate=0.9;
+    utterance.pitch=1.1;
+    utterance.volume=0.9;
+    const voix=window.speechSynthesis.getVoices();
+    const voixFR=voix.find(v=>v.lang.startsWith('fr'));
+    if(voixFR)utterance.voice=voixFR;
+    window.speechSynthesis.speak(utterance);
+  }
+}
+function toggleSon(){
+  const mute=localStorage.getItem('son')==='off';
+  localStorage.setItem('son',mute?'on':'off');
+  document.getElementById('son-btn').textContent=mute?'🔊':'🔇';
+}
 if(localStorage.getItem('son')==='off'){document.getElementById('son-btn').textContent='🔇';}
-
+function toggleIaParle(){
+  iaParle=!iaParle;
+  localStorage.setItem('ia-parle',iaParle?'on':'off');
+  document.getElementById('ia-parle-btn').textContent=iaParle?'🗣️':'🔇';
+  if(!iaParle)window.speechSynthesis.cancel();
+}
+if(localStorage.getItem('ia-parle')==='off'){iaParle=false;document.getElementById('ia-parle-btn').textContent='🔇';}
 function suggerer(t){document.getElementById('input').value=t;envoyer();}
 function ajouterMsg(role,texte,index){
   if(role==='user')document.getElementById('suggestions').style.display='none';
