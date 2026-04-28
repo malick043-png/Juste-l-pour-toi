@@ -67,7 +67,7 @@
     .drawer-titre { font-family: 'Lora', serif; font-size: 16px; margin-bottom: 16px; text-align: center; }
     body:not(.dark) .drawer-titre { color: #0C447C; }
     body.dark .drawer-titre { color: #e8f2ff; }
-    .drawer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .drawer-grid { display: grid; grid-template-columns: repeat(3, 1fr); max-height: 70vh; overflow-y: auto; gap: 10px; }
     .drawer-item { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px; border-radius: 14px; cursor: pointer; border: 0.5px solid; }
     body:not(.dark) .drawer-item { background: #f7faff; border-color: #B5D4F4; }
     body:not(.dark) .drawer-item:hover { background: #E6F1FB; }
