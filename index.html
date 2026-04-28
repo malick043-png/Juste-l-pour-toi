@@ -283,6 +283,7 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
       <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
       <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
       <div class="drawer-item" onclick="ouvrirSec('apropos');fermerMenu()"><span class="drawer-icon">ℹ️</span><span class="drawer-label">À propos</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('wolof-beta');fermerMenu()"><span class="drawer-icon">🇸🇳</span><span class="drawer-label">Wolof Beta</span></div>
       <div class="drawer-item" onclick="ouvrirSec('confidentialite');fermerMenu()"><span class="drawer-icon">🔒</span><span class="drawer-label">Confidentialité</span></div>
     </div>
   </div>
@@ -703,6 +704,23 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
 </div>
 
 <!-- CONFIDENTIALITE -->
+  <div class="page-sec" id="wolof-beta">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('wolof-beta')">← Retour</button><h2>🇸🇳 Wolof Beta</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <p style="font-size:32px;margin-bottom:8px;">🇸🇳</p>
+      <p class="card-titre">Le wolof en version bêta</p>
+    </div>
+    <div class="card">
+      <p style="font-size:14px;color:#378ADD;line-height:1.8;">💙 Notre assistant peut communiquer en wolof mais cette fonctionnalité est encore en cours d'amélioration. Le wolof est une langue magnifique et nous travaillons activement à mieux la supporter.</p>
+      <p style="font-size:14px;color:#378ADD;line-height:1.8;margin-top:10px;">🌍 Aucune application de bien-être dans le monde ne propose encore le wolof — nous sommes pionniers et fiers de valoriser notre langue et notre culture.</p>
+      <p style="font-size:14px;color:#378ADD;line-height:1.8;margin-top:10px;">📩 Si vous avez des suggestions pour améliorer le wolof dans l'app, contactez-nous sur WhatsApp ou par email — votre aide est précieuse ! 💙</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <a href="https://wa.me/00221778844799" style="display:block;background:#185FA5;color:#fff;text-align:center;padding:13px;border-radius:16px;text-decoration:none;font-size:15px;font-weight:500;margin-bottom:10px;">Suggérer une amélioration 💙</a>
+    </div>
+  </div>
+</div>
 <div class="page-sec" id="confidentialite">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('confidentialite')">← Retour</button><h2>🔒 Confidentialité & CGU</h2></div>
   <div class="sec-body">
@@ -718,7 +736,7 @@ body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,25
 
 <script>
 const CITATIONS=['Chaque jour est une nouvelle chance de prendre soin de toi.','Tu n\'as pas à être parfait pour mériter d\'être aimé.','La douceur envers soi-même est le début de tout.','Tes émotions sont valides, même celles que tu n\'arrives pas à nommer.','Prendre soin de toi n\'est pas un luxe, c\'est une nécessité.','Tu es plus fort que tu ne le crois.','Chaque petit pas compte sur le chemin du bien-être.','Il est courageux de demander de l\'aide.','Tu mérites la paix intérieure.','Respire. Tu es là. C\'est déjà beaucoup.'];
-const SYSTEM=`You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. If the user writes in Wolof, respond in Wolof. Keep responses to 2-4 sentences. Address user by first name when natural. IMPORTANT: If the user mentions severe distress, suicidal thoughts, or serious mental health issues, always gently remind them that you are not a mental health professional and encourage them to consult a doctor or mental health professional. You are an emotional support assistant only.`;let historique=[],prenom='',humeurSel2='',delaiLettre='',pagePrecedente='accueil';
+const SYSTEM=`You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. ALWAYS respond in the SAME language the user writes in. If the user writes in Wolof, respond in Wolof using common Wolof expressions and words. Common Wolof phrases to use naturally: "Mangi dem" (je vais bien), "Jërejëf" (merci), "Waaw" (oui), "Déedéet" (non), "Ndank ndank" (doucement), "Baal ma" (excuse-moi), "Xam nga" (tu sais), "Yëgël ma" (explique-moi), "Dafa rafet" (c'est beau), "Soxor" (méchant). Mix Wolof with French naturally if needed, as many Senegalese speakers do in daily conversation. Keep responses to 2-4 sentences. Address user by first name when natural. IMPORTANT: If the user mentions severe distress, suicidal thoughts, or serious mental health issues, always gently remind them that you are not a mental health professional and encourage them to consult a doctor or mental health professional. You are an emotional support assistant only.`;let historique=[],prenom='',humeurSel2='',delaiLettre='',pagePrecedente='accueil';
 let socket=null,salleActuelle=null,themeChoisi='😰 Stress';
 let groupeFiltre='Tous',groupePubli='😰 Stress';
 let mdpMode='setup';
