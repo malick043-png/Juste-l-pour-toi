@@ -987,7 +987,12 @@ document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Ente
 document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,160)+'px';});
 document.getElementById('prenom').addEventListener('keydown',e=>{if(e.key==='Enter')commencer();});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('mdp-screen').style.display==='flex'){validerMdp();}});
-
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey&&(e.key==='u'||e.key==='s'||e.key==='U'||e.key==='S'))e.preventDefault();
+});
+/* © 2026 JUSTE-LA-POUR-TOI - EL HADJ MALICK THIOUNE - SENEGAL - ORIGINAL - TOUS DROITS RESERVES */
+console.log('%c© 2026 Juste là pour toi — El Hadj Malick THIOUNE. Tous droits réservés.','color:#185FA5;font-size:14px;font-weight:bold;');  
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/Juste-l-pour-toi/sw.js').catch(()=>{});}
 </script>
 </body>
