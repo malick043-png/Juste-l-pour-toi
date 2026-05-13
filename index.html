@@ -271,25 +271,36 @@
   <div class="drawer-content">
     <div class="drawer-handle"></div>
     <p class="drawer-titre">Explore ton espace bien-être 💙</p>
-    <div class="drawer-grid">
-      <div class="drawer-item" onclick="ouvrirSec('journal');fermerMenu();afficherHistoriqueJournal()"><span class="drawer-icon">📔</span><span class="drawer-label">Journal</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('respiration');fermerMenu()"><span class="drawer-icon">🌬️</span><span class="drawer-label">Respiration</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('objectifs');fermerMenu();afficherObjectifActuel()"><span class="drawer-icon">🎯</span><span class="drawer-label">Objectifs</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('humeur');fermerMenu();afficherGraphique()"><span class="drawer-icon">📊</span><span class="drawer-label">Humeur</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('defi');fermerMenu();chargerDefi();afficherDefisHisto()"><span class="drawer-icon">⚡</span><span class="drawer-label">Défi du jour</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('groupe-premium');fermerMenu()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('programme');fermerMenu();chargerProgramme()"><span class="drawer-icon">💪</span><span class="drawer-label">30 jours</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('bilan');fermerMenu();genererBilan()"><span class="drawer-icon">📋</span><span class="drawer-label">Bilan semaine</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('wolof-beta');fermerMenu()"><span class="drawer-icon">🇸🇳</span><span class="drawer-label">Wolof Beta</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('apropos');fermerMenu()"><span class="drawer-icon">ℹ️</span><span class="drawer-label">À propos</span></div>
-      <div class="drawer-item" onclick="ouvrirSec('confidentialite');fermerMenu()"><span class="drawer-icon">🔒</span><span class="drawer-label">Confidentialité</span></div>
-    </div>
-  </div>
+    <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Mon bien-être</p>
+<div class="drawer-grid" style="margin-bottom:14px;">
+  <div class="drawer-item" onclick="ouvrirSec('journal');fermerMenu();afficherHistoriqueJournal()"><span class="drawer-icon">📔</span><span class="drawer-label">Journal</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('humeur');fermerMenu();afficherGraphique()"><span class="drawer-icon">📊</span><span class="drawer-label">Humeur</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('objectifs');fermerMenu();afficherObjectifActuel()"><span class="drawer-icon">🎯</span><span class="drawer-label">Objectifs</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('respiration');fermerMenu()"><span class="drawer-icon">🌬️</span><span class="drawer-label">Respiration</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('defi');fermerMenu();chargerDefi();afficherDefisHisto()"><span class="drawer-icon">⚡</span><span class="drawer-label">Défi du jour</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('bilan');fermerMenu();genererBilan()"><span class="drawer-icon">📋</span><span class="drawer-label">Bilan semaine</span></div>
+</div>
+
+<p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Mes outils</p>
+<div class="drawer-grid" style="margin-bottom:14px;">
+  <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('programme');fermerMenu();chargerProgramme()"><span class="drawer-icon">💪</span><span class="drawer-label">30 jours</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
+</div>
+
+<p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Communauté</p>
+<div class="drawer-grid" style="margin-bottom:14px;">
+  <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('groupe-premium');fermerMenu()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
+</div>
+
+<p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Informations</p>
+<div class="drawer-grid">
+  <div class="drawer-item" onclick="ouvrirSec('wolof-beta');fermerMenu()"><span class="drawer-icon">🇸🇳</span><span class="drawer-label">Wolof Beta</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('apropos');fermerMenu()"><span class="drawer-icon">ℹ️</span><span class="drawer-label">À propos</span></div>
+  <div class="drawer-item" onclick="ouvrirSec('confidentialite');fermerMenu()"><span class="drawer-icon">🔒</span><span class="drawer-label">Confidentialité</span></div>
 </div>
 
 <!-- CHAT -->
