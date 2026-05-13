@@ -196,6 +196,13 @@
     #mdp-screen { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
     body.dark #mdp-screen { background: linear-gradient(135deg, #0a1628, #112233); }
     body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,255,255,0.07); color: #e8f2ff; border-color: rgba(181,212,244,0.2); }
+    #nav-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; display: none; background: #fff; border-top: 0.5px solid #B5D4F4; padding: 8px 0 12px; }
+body.dark #nav-bar { background: #0d1f35; border-top-color: rgba(181,212,244,0.1); }
+.nav-bar-grid { display: flex; justify-content: space-around; align-items: center; }
+.nav-bar-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 4px 16px; border-radius: 12px; border: none; background: none; }
+.nav-bar-icon { font-size: 22px; }
+.nav-bar-label { font-size: 10px; font-weight: 500; color: #85B7EB; }
+.nav-bar-btn.active .nav-bar-label { color: #185FA5; }
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(181,212,244,0.3); border-radius: 2px; }
@@ -238,7 +245,27 @@
     <button id="tuto-next" onclick="slideSuivant()" style="background:#185FA5;color:#fff;border:none;border-radius:16px;padding:8px 18px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;">Suivant →</button>
   </div>
 </div>
-
+<!-- BARRE DE NAVIGATION -->
+<div id="nav-bar">
+  <div class="nav-bar-grid">
+    <button class="nav-bar-btn" id="nav-accueil" onclick="allerAccueil();setNavActif('nav-accueil')">
+      <span class="nav-bar-icon">🏠</span>
+      <span class="nav-bar-label">Accueil</span>
+    </button>
+    <button class="nav-bar-btn" id="nav-chat" onclick="allerChat();setNavActif('nav-chat')">
+      <span class="nav-bar-icon">💬</span>
+      <span class="nav-bar-label">Chat</span>
+    </button>
+    <button class="nav-bar-btn" id="nav-communaute" onclick="ouvrirSec('communaute');chargerCommunaute();setNavActif('nav-communaute')">
+      <span class="nav-bar-icon">🌍</span>
+      <span class="nav-bar-label">Communauté</span>
+    </button>
+    <button class="nav-bar-btn" id="nav-menu" onclick="ouvrirMenu();setNavActif('nav-menu')">
+      <span class="nav-bar-icon">☰</span>
+      <span class="nav-bar-label">Plus</span>
+    </button>
+  </div>
+</div>
 <!-- SPLASH -->
 <div id="splash">
   <img src="icon.png" class="splash-logo" alt="Logo">
@@ -821,17 +848,37 @@ fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',he
 function getTime(){return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
 function getDate(){return new Date().toLocaleDateString('fr-FR');}
 
-function allerAccueil(){document.getElementById('splash').style.display='none';document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));document.getElementById('chat').style.display='none';document.getElementById('accueil').style.display='flex';pagePrecedente='accueil';}
-function partagercitation(){const t=citEl.textContent+'\n\n💙 Juste là pour toi\nhttps://malick043-png.github.io/Juste-l-pour-toi';if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);alert('Citation copiée ! 💙');}}
-function ouvrirMenu(){document.getElementById('menu-drawer').classList.add('open');}
-function fermerMenu(){document.getElementById('menu-drawer').classList.remove('open');}
+function allerAccueil(){
+  document.getElementById('splash').style.display='none';
+  document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));
+  document.getElementById('chat').style.display='none';
+  document.getElementById('accueil').style.display='flex';
+  document.getElementById('nav-bar').style.display='block';
+  pagePrecedente='accueil';
+  setNavActif('nav-accueil');
+}
+
+function allerChat(){
+  if(!prenom){commencer();return;}
+  document.getElementById('accueil').style.display='none';
+  document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));
+  document.getElementById('chat').style.display='flex';
+  pagePrecedente='chat';
+}
+
+function setNavActif(id){
+  document.querySelectorAll('.nav-bar-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el)el.classList.add('active');
+}
 
 function commencer(){
   prenom=document.getElementById('prenom').value.trim()||'toi';
   document.getElementById('accueil').style.display='none';
   document.getElementById('chat').style.display='flex';
   document.getElementById('chat-sub').textContent='Bonjour '+prenom+' 💙';
-  pagePrecedente='chat';
+  pagePrecedente='chat';document.getElementById('nav-bar').style.display='block';
+setNavActif('nav-chat');
   localStorage.setItem('user-prenom-save',prenom);
   incrementerCompteur();
   ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
