@@ -511,6 +511,11 @@
       <button class="btn-p" onclick="partagerPensee()">Partager 💙</button>
       <p class="succes" id="succes-pensee">✅ Partagé !</p>
     </div>
+    <div class="card">
+  <p class="card-titre">🏅 Classement de la semaine</p>
+  <p style="font-size:12px;color:#85B7EB;margin-bottom:12px;">Les membres les plus bienveillants 💙</p>
+  <div id="classement-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
+</div>
     <div class="card"><p class="card-titre">💙 Pensées de la communauté</p><div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div></div>
   </div>
 </div>
@@ -929,8 +934,37 @@ function afficherLettres(){const l=JSON.parse(localStorage.getItem('lettres')||'
 
 function selGroupe(el,groupe){groupeFiltre=groupe;document.querySelectorAll('#groupes-btns .groupe-theme').forEach(b=>{b.style.background='none';b.style.color='#185FA5';b.style.borderColor='#B5D4F4';});el.style.background='#185FA5';el.style.color='#fff';el.style.borderColor='#185FA5';chargerCommunaute();}
 function selGroupePubli(el,groupe){groupePubli=groupe;document.querySelectorAll('#communaute .groupe-theme:not(#groupes-btns .groupe-theme)').forEach(b=>{b.style.background='none';b.style.color='#185FA5';b.style.borderColor='#B5D4F4';});el.style.background='#185FA5';el.style.color='#fff';el.style.borderColor='#185FA5';}
-
-async function chargerCommunaute(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');const data=await res.json();const c=document.getElementById('communaute-liste');const filtered=groupeFiltre==='Tous'?data:data.filter(p=>p.groupe===groupeFiltre);if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';return;}c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="margin-bottom:6px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');}catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
+async function chargerClassement(){
+  try{
+    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');
+    const data=await res.json();
+    const c=document.getElementById('classement-liste');
+    if(!data.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun classement 💙</p>';return;}
+    const scores={};
+    data.forEach(p=>{
+      const nom=p.prenom||'Anonyme';
+      if(!scores[nom])scores[nom]={pensees:0,coeurs:0};
+      scores[nom].pensees++;
+      scores[nom].coeurs+=p.coeurs||0;
+    });
+    const classement=Object.entries(scores)
+      .map(([nom,s])=>({nom,score:s.pensees*2+s.coeurs,pensees:s.pensees,coeurs:s.coeurs}))
+      .sort((a,b)=>b.score-a.score)
+      .slice(0,5);
+    const medailles=['🥇','🥈','🥉','4️⃣','5️⃣'];
+    c.innerHTML=classement.map((m,i)=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:${i===0?'rgba(24,95,165,0.1)':'transparent'};margin-bottom:6px;">
+        <span style="font-size:20px;">${medailles[i]}</span>
+        <div style="flex:1;">
+          <p style="font-size:14px;font-weight:500;color:#0C447C;">${m.nom}</p>
+          <p style="font-size:11px;color:#85B7EB;">${m.pensees} pensée(s) · ${m.coeurs} 💙</p>
+        </div>
+        <span style="font-size:13px;font-weight:700;color:#185FA5;">${m.score} pts</span>
+      </div>
+    `).join('');
+  }catch(e){document.getElementById('classement-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
+}
+async function chargerCommunaute(){try{chargerClassement();const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');const data=await res.json();const c=document.getElementById('communaute-liste');const filtered=groupeFiltre==='Tous'?data:data.filter(p=>p.groupe===groupeFiltre);if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';return;}c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="margin-bottom:6px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');}catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
 
 async function partagerPensee(){const pensee=document.getElementById('pensee-input').value.trim();if(!pensee){alert('Écris une pensée !');return;}if(pensee.length>200){alert('Maximum 200 caractères !');return;}document.querySelector('#communaute .btn-p').textContent='Vérification... 💙';document.querySelector('#communaute .btn-p').disabled=true;try{const verif=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:50,system:'Tu es un modérateur bienveillant. Réponds UNIQUEMENT par "OUI" si le message est positif et approprié, ou "NON" si inapproprié.',messages:[{role:'user',content:'Ce message est-il approprié ? "'+pensee+'"'}]})});const verifData=await verif.json();const decision=verifData.content[0].text.trim().toUpperCase();if(decision.includes('NON')){alert('😔 Cette pensée ne semble pas bienveillante. Essaie de partager quelque chose de positif 💙');document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;return;}await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee,prenom:prenom||'Anonyme',groupe:groupePubli})});document.getElementById('pensee-input').value='';document.getElementById('succes-pensee').style.display='block';setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);chargerCommunaute();}catch(e){alert('Erreur 😔');}document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;}
 async function envoyerCoeur(id,btn){try{const res=await fetch(`https://serveur-juste-la-pour-toi.onrender.com/communaute/${id}/coeur`,{method:'POST'});const data=await res.json();btn.textContent='💙 '+data.coeurs;}catch(e){}}
