@@ -288,7 +288,7 @@ body.dark #nav-bar { background: #0d1f35; border-top-color: rgba(181,212,244,0.1
   </div>
   <button class="btn-dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Mode sombre</button>
   <button onclick="inviterAmi()" style="background:none;border:1.5px solid #1D9E75;color:#1D9E75;border-radius:24px;padding:8px 20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:10px;">🤝 Inviter un ami</button>
-  <button class="btn-explorer" onclick="ouvrirMenu()">☰ Explorer les fonctionnalités</button>
+  <button class="btn-explorer" onclick="ouvrirMenu()" style="display:none;">☰ Explorer les fonctionnalités</button>☰ Explorer les fonctionnalités</button>
   <p class="accueil-footer">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p>
 </div>
 
@@ -859,13 +859,19 @@ function allerAccueil(){
 }
 
 function allerChat(){
-  if(!prenom){commencer();return;}
+  if(!prenom||prenom==='toi'){
+    document.getElementById('accueil').style.display='flex';
+    document.getElementById('chat').style.display='none';
+    document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));
+    setNavActif('nav-accueil');
+    return;
+  }
   document.getElementById('accueil').style.display='none';
   document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));
   document.getElementById('chat').style.display='flex';
   pagePrecedente='chat';
+  setNavActif('nav-chat');
 }
-
 function setNavActif(id){
   document.querySelectorAll('.nav-bar-btn').forEach(b=>b.classList.remove('active'));
   const el=document.getElementById(id);
