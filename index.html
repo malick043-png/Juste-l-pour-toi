@@ -247,22 +247,10 @@
 <!-- BARRE DE NAVIGATION -->
 <div id="nav-bar">
   <div class="nav-bar-grid">
-    <button class="nav-bar-btn active" id="nav-accueil" onclick="allerAccueil()">
-      <span class="nav-bar-icon">🏠</span>
-      <span class="nav-bar-label">Accueil</span>
-    </button>
-    <button class="nav-bar-btn" id="nav-chat" onclick="allerChat()">
-      <span class="nav-bar-icon">💬</span>
-      <span class="nav-bar-label">Chat</span>
-    </button>
-    <button class="nav-bar-btn" id="nav-communaute" onclick="ouvrirSec('communaute');chargerCommunaute();setNavActif('nav-communaute')">
-      <span class="nav-bar-icon">🌍</span>
-      <span class="nav-bar-label">Communauté</span>
-    </button>
-    <button class="nav-bar-btn" id="nav-menu" onclick="ouvrirMenu();setNavActif('nav-menu')">
-      <span class="nav-bar-icon">☰</span>
-      <span class="nav-bar-label">Plus</span>
-    </button>
+    <button class="nav-bar-btn active" id="nav-accueil" onclick="allerAccueil()"><span class="nav-bar-icon">🏠</span><span class="nav-bar-label">Accueil</span></button>
+    <button class="nav-bar-btn" id="nav-chat" onclick="allerChat()"><span class="nav-bar-icon">💬</span><span class="nav-bar-label">Chat</span></button>
+    <button class="nav-bar-btn" id="nav-communaute" onclick="ouvrirSec('communaute');chargerCommunaute();setNavActif('nav-communaute')"><span class="nav-bar-icon">🌍</span><span class="nav-bar-label">Communauté</span></button>
+    <button class="nav-bar-btn" id="nav-menu" onclick="ouvrirMenu();setNavActif('nav-menu')"><span class="nav-bar-icon">☰</span><span class="nav-bar-label">Plus</span></button>
   </div>
 </div>
 
@@ -297,7 +285,6 @@
   <div class="drawer-content">
     <div class="drawer-handle"></div>
     <p class="drawer-titre">Explore ton espace bien-être 💙</p>
-
     <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Mon bien-être</p>
     <div class="drawer-grid" style="margin-bottom:14px;">
       <div class="drawer-item" onclick="ouvrirSec('journal');fermerMenu();afficherHistoriqueJournal()"><span class="drawer-icon">📔</span><span class="drawer-label">Journal</span></div>
@@ -307,7 +294,6 @@
       <div class="drawer-item" onclick="ouvrirSec('defi');fermerMenu();chargerDefi();afficherDefisHisto()"><span class="drawer-icon">⚡</span><span class="drawer-label">Défi du jour</span></div>
       <div class="drawer-item" onclick="ouvrirSec('bilan');fermerMenu();genererBilan()"><span class="drawer-icon">📋</span><span class="drawer-label">Bilan semaine</span></div>
     </div>
-
     <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Mes outils</p>
     <div class="drawer-grid" style="margin-bottom:14px;">
       <div class="drawer-item" onclick="ouvrirSec('lettre');fermerMenu();afficherLettres()"><span class="drawer-icon">💌</span><span class="drawer-label">Ma lettre</span></div>
@@ -315,14 +301,12 @@
       <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
       <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
     </div>
-
     <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Communauté</p>
     <div class="drawer-grid" style="margin-bottom:14px;">
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
       <div class="drawer-item" onclick="ouvrirSec('groupe-premium');fermerMenu()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>
       <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
     </div>
-
     <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Informations</p>
     <div class="drawer-grid">
       <div class="drawer-item" onclick="ouvrirSec('wolof-beta');fermerMenu()"><span class="drawer-icon">🇸🇳</span><span class="drawer-label">Wolof Beta</span></div>
@@ -511,12 +495,12 @@
       <button class="btn-p" onclick="partagerPensee()">Partager 💙</button>
       <p class="succes" id="succes-pensee">✅ Partagé !</p>
     </div>
-    <div class="card">
-  <p class="card-titre">🏅 Classement de la semaine</p>
-  <p style="font-size:12px;color:#85B7EB;margin-bottom:12px;">Les membres les plus bienveillants 💙</p>
-  <div id="classement-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
-</div>
     <div class="card"><p class="card-titre">💙 Pensées de la communauté</p><div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div></div>
+    <div class="card">
+      <p class="card-titre">🏅 Classement de la semaine</p>
+      <p style="font-size:12px;color:#85B7EB;margin-bottom:12px;">Les membres les plus bienveillants 💙</p>
+      <div id="classement-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
+    </div>
   </div>
 </div>
 
@@ -647,7 +631,8 @@
     <div class="card" style="text-align:center;"><p style="font-size:32px;margin-bottom:8px;">📋</p><p class="card-titre">Ton bilan personnalisé</p><p style="font-size:13px;color:#85B7EB;" id="bilan-date">Semaine du ...</p></div>
     <div class="card" id="bilan-contenu" style="text-align:center;"><p style="font-size:13px;color:#85B7EB;">Génération de ton bilan...</p></div>
     <div class="card" id="bilan-stats" style="display:none;"><p class="card-titre">Tes chiffres de la semaine</p><div id="bilan-chiffres"></div></div>
-    <button class="btn-p" id="bilan-partager" style="display:none;" onclick="partagerBilan()">Partager mon bilan 🌟</button> <button class="btn-p" id="carte-partager" style="display:none;background:linear-gradient(135deg,#1D9E75,#0f7a5a);margin-top:8px;" onclick="genererCarte()">📸 Générer ma carte bien-être</button> style="display:none;" onclick="partagerBilan()">Partager mon bilan 🌟</button> <button class="btn-p" id="carte-partager" style="display:none;background:linear-gradient(135deg,#1D9E75,#0f7a5a);margin-top:8px;" onclick="genererCarte()">📸 Générer ma carte bien-être</button> style="display:none;" onclick="partagerBilan()">Partager mon bilan 🌟</button> <button class="btn-p" id="carte-partager" style="display:none;background:linear-gradient(135deg,#1D9E75,#0f7a5a);margin-top:8px;" onclick="genererCarte()">📸 Générer ma carte bien-être</button> style="display:none;" onclick="partagerBilan()">Partager mon bilan 🌟</button>
+    <button class="btn-p" id="bilan-partager" style="display:none;" onclick="partagerBilan()">Partager mon bilan 🌟</button>
+    <button class="btn-p" id="carte-partager" style="display:none;background:linear-gradient(135deg,#1D9E75,#0f7a5a);margin-top:8px;" onclick="genererCarte()">📸 Générer ma carte bien-être</button>
   </div>
 </div>
 
@@ -838,11 +823,7 @@ fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',he
 function getTime(){return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
 function getDate(){return new Date().toLocaleDateString('fr-FR');}
 
-function setNavActif(id){
-  document.querySelectorAll('.nav-bar-btn').forEach(b=>b.classList.remove('active'));
-  const el=document.getElementById(id);
-  if(el)el.classList.add('active');
-}
+function setNavActif(id){document.querySelectorAll('.nav-bar-btn').forEach(b=>b.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');}
 
 function allerAccueil(){
   document.getElementById('splash').style.display='none';
@@ -934,6 +915,7 @@ function afficherLettres(){const l=JSON.parse(localStorage.getItem('lettres')||'
 
 function selGroupe(el,groupe){groupeFiltre=groupe;document.querySelectorAll('#groupes-btns .groupe-theme').forEach(b=>{b.style.background='none';b.style.color='#185FA5';b.style.borderColor='#B5D4F4';});el.style.background='#185FA5';el.style.color='#fff';el.style.borderColor='#185FA5';chargerCommunaute();}
 function selGroupePubli(el,groupe){groupePubli=groupe;document.querySelectorAll('#communaute .groupe-theme:not(#groupes-btns .groupe-theme)').forEach(b=>{b.style.background='none';b.style.color='#185FA5';b.style.borderColor='#B5D4F4';});el.style.background='#185FA5';el.style.color='#fff';el.style.borderColor='#185FA5';}
+
 async function chargerClassement(){
   try{
     const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');
@@ -941,30 +923,24 @@ async function chargerClassement(){
     const c=document.getElementById('classement-liste');
     if(!data.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun classement 💙</p>';return;}
     const scores={};
-    data.forEach(p=>{
-      const nom=p.prenom||'Anonyme';
-      if(!scores[nom])scores[nom]={pensees:0,coeurs:0};
-      scores[nom].pensees++;
-      scores[nom].coeurs+=p.coeurs||0;
-    });
-    const classement=Object.entries(scores)
-      .map(([nom,s])=>({nom,score:s.pensees*2+s.coeurs,pensees:s.pensees,coeurs:s.coeurs}))
-      .sort((a,b)=>b.score-a.score)
-      .slice(0,5);
+    data.forEach(p=>{const nom=p.prenom||'Anonyme';if(!scores[nom])scores[nom]={pensees:0,coeurs:0};scores[nom].pensees++;scores[nom].coeurs+=p.coeurs||0;});
+    const classement=Object.entries(scores).map(([nom,s])=>({nom,score:s.pensees*2+s.coeurs,pensees:s.pensees,coeurs:s.coeurs})).sort((a,b)=>b.score-a.score).slice(0,5);
     const medailles=['🥇','🥈','🥉','4️⃣','5️⃣'];
-    c.innerHTML=classement.map((m,i)=>`
-      <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:${i===0?'rgba(24,95,165,0.1)':'transparent'};margin-bottom:6px;">
-        <span style="font-size:20px;">${medailles[i]}</span>
-        <div style="flex:1;">
-          <p style="font-size:14px;font-weight:500;color:#0C447C;">${m.nom}</p>
-          <p style="font-size:11px;color:#85B7EB;">${m.pensees} pensée(s) · ${m.coeurs} 💙</p>
-        </div>
-        <span style="font-size:13px;font-weight:700;color:#185FA5;">${m.score} pts</span>
-      </div>
-    `).join('');
+    c.innerHTML=classement.map((m,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:${i===0?'rgba(24,95,165,0.1)':'transparent'};margin-bottom:6px;"><span style="font-size:20px;">${medailles[i]}</span><div style="flex:1;"><p style="font-size:14px;font-weight:500;color:#0C447C;">${m.nom}</p><p style="font-size:11px;color:#85B7EB;">${m.pensees} pensée(s) · ${m.coeurs} 💙</p></div><span style="font-size:13px;font-weight:700;color:#185FA5;">${m.score} pts</span></div>`).join('');
   }catch(e){document.getElementById('classement-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
 }
-async function chargerCommunaute(){try{chargerClassement();const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');const data=await res.json();const c=document.getElementById('communaute-liste');const filtered=groupeFiltre==='Tous'?data:data.filter(p=>p.groupe===groupeFiltre);if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';return;}c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="margin-bottom:6px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');}catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
+
+async function chargerCommunaute(){
+  try{
+    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');
+    const data=await res.json();
+    const c=document.getElementById('communaute-liste');
+    const filtered=groupeFiltre==='Tous'?data:data.filter(p=>p.groupe===groupeFiltre);
+    if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';}
+    else{c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="margin-bottom:6px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');}
+    chargerClassement();
+  }catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
+}
 
 async function partagerPensee(){const pensee=document.getElementById('pensee-input').value.trim();if(!pensee){alert('Écris une pensée !');return;}if(pensee.length>200){alert('Maximum 200 caractères !');return;}document.querySelector('#communaute .btn-p').textContent='Vérification... 💙';document.querySelector('#communaute .btn-p').disabled=true;try{const verif=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:50,system:'Tu es un modérateur bienveillant. Réponds UNIQUEMENT par "OUI" si le message est positif et approprié, ou "NON" si inapproprié.',messages:[{role:'user',content:'Ce message est-il approprié ? "'+pensee+'"'}]})});const verifData=await verif.json();const decision=verifData.content[0].text.trim().toUpperCase();if(decision.includes('NON')){alert('😔 Cette pensée ne semble pas bienveillante. Essaie de partager quelque chose de positif 💙');document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;return;}await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee,prenom:prenom||'Anonyme',groupe:groupePubli})});document.getElementById('pensee-input').value='';document.getElementById('succes-pensee').style.display='block';setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);chargerCommunaute();}catch(e){alert('Erreur 😔');}document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;}
 async function envoyerCoeur(id,btn){try{const res=await fetch(`https://serveur-juste-la-pour-toi.onrender.com/communaute/${id}/coeur`,{method:'POST'});const data=await res.json();btn.textContent='💙 '+data.coeurs;}catch(e){}}
@@ -981,9 +957,10 @@ async function chargerContenuJour(prog){const cache=localStorage.getItem('prog-c
 function validerJourProgramme(){const prog=JSON.parse(localStorage.getItem('programme')||'null');if(!prog)return;if(!prog.joursCompletes.includes(prog.jourActuel))prog.joursCompletes.push(prog.jourActuel);if(prog.jourActuel<30)prog.jourActuel++;else{alert('🎉 Félicitations ! Tu as complété le programme 30 jours !');abandonnerProgramme();return;}localStorage.setItem('programme',JSON.stringify(prog));afficherProgramme(prog);chargerContenuJour(prog);verifierBadges();}
 function abandonnerProgramme(){if(!confirm('Abandonner le programme ?'))return;localStorage.removeItem('programme');chargerProgramme();}
 
-async function genererBilan(){const aujourd=new Date();const debutSemaine=new Date(aujourd);debutSemaine.setDate(aujourd.getDate()-aujourd.getDay());const finSemaine=new Date(debutSemaine);finSemaine.setDate(debutSemaine.getDate()+6);document.getElementById('bilan-date').textContent='Semaine du '+debutSemaine.toLocaleDateString('fr-FR')+' au '+finSemaine.toLocaleDateString('fr-FR');const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const objectif=JSON.parse(localStorage.getItem('objectif')||'null');const notesSemaine=notes.filter(n=>{const d=n.date.split('/');const date=new Date(d[2],d[1]-1,d[0]);return date>=debutSemaine&&date<=finSemaine;});const moyenne=notesSemaine.length?(notesSemaine.reduce((a,b)=>a+b.note,0)/notesSemaine.length).toFixed(1):null;const defisSemaine=defis.filter(d=>{const parts=d.date.split('/');const date=new Date(parts[2],parts[1]-1,parts[0]);return date>=debutSemaine&&date<=finSemaine;});const journalSemaine=journal.filter(j=>{const parts=j.date.split('/');const date=new Date(parts[2],parts[1]-1,parts[0]);return date>=debutSemaine&&date<=finSemaine;});document.getElementById('bilan-stats').style.display='block';document.getElementById('bilan-chiffres').innerHTML=`<div style="display:flex;justify-content:space-around;margin-bottom:8px;"><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${moyenne||'-'}</p><p style="font-size:11px;color:#85B7EB;">Humeur /10</p></div><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${defisSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Défis complétés</p></div><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${journalSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Entrées journal</p></div></div>`;document.getElementById('bilan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;">L\'IA analyse ta semaine... 💙</p>';try{const contexte=`L'utilisateur s'appelle ${prenom||'toi'}. Cette semaine : humeur moyenne ${moyenne||'non renseignée'}/10, ${defisSemaine.length} défi(s) complété(s), ${journalSemaine.length} entrée(s) dans le journal. Objectif actuel : ${objectif?objectif.texte:'non défini'}.`;const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:300,system:'Tu es un coach bienveillant. Génère un bilan hebdomadaire personnalisé et encourageant en 3-4 phrases. Réponds en français.',messages:[{role:'user',content:contexte}]})});const data=await res.json();const bilan=data.content[0].text;localStorage.setItem('dernier-bilan',bilan);document.getElementById('bilan-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;font-style:italic;">"${bilan}"</p>`;document.getElementById('bilan-partager').style.display='block';}catch(e){document.getElementById('bilan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;">Erreur 😔</p>';}}
+async function genererBilan(){const aujourd=new Date();const debutSemaine=new Date(aujourd);debutSemaine.setDate(aujourd.getDate()-aujourd.getDay());const finSemaine=new Date(debutSemaine);finSemaine.setDate(debutSemaine.getDate()+6);document.getElementById('bilan-date').textContent='Semaine du '+debutSemaine.toLocaleDateString('fr-FR')+' au '+finSemaine.toLocaleDateString('fr-FR');const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const objectif=JSON.parse(localStorage.getItem('objectif')||'null');const notesSemaine=notes.filter(n=>{const d=n.date.split('/');const date=new Date(d[2],d[1]-1,d[0]);return date>=debutSemaine&&date<=finSemaine;});const moyenne=notesSemaine.length?(notesSemaine.reduce((a,b)=>a+b.note,0)/notesSemaine.length).toFixed(1):null;const defisSemaine=defis.filter(d=>{const parts=d.date.split('/');const date=new Date(parts[2],parts[1]-1,parts[0]);return date>=debutSemaine&&date<=finSemaine;});const journalSemaine=journal.filter(j=>{const parts=j.date.split('/');const date=new Date(parts[2],parts[1]-1,parts[0]);return date>=debutSemaine&&date<=finSemaine;});document.getElementById('bilan-stats').style.display='block';document.getElementById('bilan-chiffres').innerHTML=`<div style="display:flex;justify-content:space-around;margin-bottom:8px;"><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${moyenne||'-'}</p><p style="font-size:11px;color:#85B7EB;">Humeur /10</p></div><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${defisSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Défis complétés</p></div><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${journalSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Entrées journal</p></div></div>`;document.getElementById('bilan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;">L\'IA analyse ta semaine... 💙</p>';try{const contexte=`L'utilisateur s'appelle ${prenom||'toi'}. Cette semaine : humeur moyenne ${moyenne||'non renseignée'}/10, ${defisSemaine.length} défi(s) complété(s), ${journalSemaine.length} entrée(s) dans le journal. Objectif actuel : ${objectif?objectif.texte:'non défini'}.`;const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:300,system:'Tu es un coach bienveillant. Génère un bilan hebdomadaire personnalisé et encourageant en 3-4 phrases. Réponds en français.',messages:[{role:'user',content:contexte}]})});const data=await res.json();const bilan=data.content[0].text;localStorage.setItem('dernier-bilan',bilan);document.getElementById('bilan-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;font-style:italic;">"${bilan}"</p>`;document.getElementById('bilan-partager').style.display='block';document.getElementById('carte-partager').style.display='block';}catch(e){document.getElementById('bilan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;">Erreur 😔</p>';}}
+
 function partagerBilan(){const bilan=localStorage.getItem('dernier-bilan')||'';const texte=`📋 Mon bilan de la semaine sur Juste là pour toi :\n\n"${bilan}"\n\n💙 https://malick043-png.github.io/Juste-l-pour-toi`;if(navigator.share){navigator.share({text:texte});}else{navigator.clipboard.writeText(texte);alert('Bilan copié ! 💙');}}
-  document.getElementById('carte-partager').style.display='block';
+
 function genererCarte(){
   const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
   const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');
@@ -999,31 +976,26 @@ function genererCarte(){
   ctx.beginPath();ctx.arc(700,50,200,0,Math.PI*2);ctx.fill();
   ctx.beginPath();ctx.arc(100,400,150,0,Math.PI*2);ctx.fill();
   ctx.fillStyle='#fff';
-  ctx.font='bold 28px DM Sans, Arial';ctx.textAlign='left';
+  ctx.font='bold 28px Arial';ctx.textAlign='left';
   ctx.fillText('Juste là pour toi 💙',50,60);
-  ctx.font='16px DM Sans, Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
+  ctx.font='16px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
   ctx.fillText('Ma carte bien-être · '+(prenom||'Anonyme'),50,90);
   ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(50,120,200,160,16);ctx.fill();
   ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(280,120,200,160,16);ctx.fill();
   ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(510,120,200,160,16);ctx.fill();
-  ctx.fillStyle='#fff';ctx.font='bold 48px DM Sans, Arial';ctx.textAlign='center';
+  ctx.fillStyle='#fff';ctx.font='bold 48px Arial';ctx.textAlign='center';
   ctx.fillText(moyenne,150,210);ctx.fillText(defis.length,380,210);ctx.fillText(journal.length,610,210);
-  ctx.font='14px DM Sans, Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
+  ctx.font='14px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
   ctx.fillText('Humeur /10',150,245);ctx.fillText('Défis complétés',380,245);ctx.fillText('Entrées journal',610,245);
   ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(50,320,700,1);
-  ctx.fillStyle='rgba(181,212,244,0.6)';ctx.font='14px DM Sans, Arial';ctx.textAlign='left';
-  ctx.fillText('© 2026 Juste là pour toi — malick043-png.github.io/Juste-l-pour-toi',50,360);
-  ctx.fillStyle='#5DCAA5';ctx.font='bold 16px DM Sans, Arial';ctx.textAlign='right';
+  ctx.fillStyle='rgba(181,212,244,0.6)';ctx.font='13px Arial';ctx.textAlign='left';
+  ctx.fillText('© 2026 Juste là pour toi',50,360);
+  ctx.fillStyle='#5DCAA5';ctx.font='bold 16px Arial';ctx.textAlign='right';
   ctx.fillText('Prends soin de toi 💙',750,360);
   const dataURL=canvas.toDataURL('image/png');
   const a=document.createElement('a');a.href=dataURL;a.download='ma-carte-bien-etre.png';a.click();
-  if(navigator.share){
-    canvas.toBlob(blob=>{
-      const file=new File([blob],'carte-bien-etre.png',{type:'image/png'});
-      navigator.share({files:[file],text:'Mon bilan bien-être sur Juste là pour toi 💙\nhttps://malick043-png.github.io/Juste-l-pour-toi'}).catch(()=>{});
-    });
-  }
 }
+
 function inviterAmi(){const message=`💙 Salut ! Je t'invite à essayer *Juste là pour toi* — une application bienveillante pour prendre soin de toi.\n\n✅ Chat IA empathique\n✅ Journal de bord\n✅ Exercices de respiration\n✅ Sessions de groupe\n✅ Et bien plus encore !\n\n👉 https://malick043-png.github.io/Juste-l-pour-toi\n\nC'est gratuit et disponible maintenant ! 💙`;if(navigator.share){navigator.share({text:message});}else{const url='https://wa.me/?text='+encodeURIComponent(message);window.open(url,'_blank');}}
 
 function sauvegarderConversation(){if(historique.length===0)return;const convs=JSON.parse(localStorage.getItem('conversations')||'[]');convs.unshift({date:getDate(),heure:getTime(),messages:historique.slice()});if(convs.length>10)convs.pop();localStorage.setItem('conversations',JSON.stringify(convs));}
