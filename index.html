@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://serveur-juste-la-pour-toi.onrender.com https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.socket.io wss://serveur-juste-la-pour-toi.onrender.com">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Juste là pour toi">
   <title>Juste là pour toi</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -119,6 +119,9 @@
     .btime { font-size: 10px; margin-top: 2px; }
     body:not(.dark) .btime { color: #85B7EB; }
     body.dark .btime { color: rgba(181,212,244,0.3); }
+    .avatar-bubble { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; margin-bottom: 2px; }
+    .msg-row { display: flex; align-items: flex-end; gap: 6px; }
+    .msg-row.user { flex-direction: row-reverse; }
     .suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px; flex-shrink: 0; }
     body:not(.dark) .suggestions { background: #f0f6ff; }
     body.dark .suggestions { background: #0d1f35; }
@@ -151,7 +154,7 @@
     body:not(.dark) .chat-footer span { color: #B5D4F4; }
     body.dark .chat-footer span { color: rgba(181,212,244,0.3); }
     .page-sec { position: fixed; inset: 0; z-index: 30; display: none; flex-direction: column; height: 100vh; animation: fadeIn 0.35s ease; }
-    .page-sec.open { display: flex; } 
+    .page-sec.open { display: flex; }
     #communaute .sec-body { padding-bottom: 80px; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
     body:not(.dark) .page-sec { background: #f0f6ff; }
@@ -192,13 +195,6 @@
     .delai-btn.selected { background: #185FA5; border-color: #185FA5; color: #fff; }
     .groupe-theme { background: none; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 16px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
     .groupe-theme.active { background: #185FA5; color: #fff; border-color: #185FA5; }
-    .msg-groupe { display: flex; flex-direction: column; gap: 2px; }
-    .msg-groupe.moi { align-items: flex-end; }
-    .msg-groupe .auteur { font-size: 10px; color: #85B7EB; }
-    .msg-groupe .texte { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
-    .msg-groupe.moi .texte { background: #185FA5; color: #fff; border-radius: 12px 12px 4px 12px; }
-    .msg-groupe.autre .texte { background: #fff; color: #0C447C; border: 0.5px solid #B5D4F4; border-radius: 12px 12px 12px 4px; }
-    .msg-groupe.ia .texte { background: #E6F1FB; color: #0C447C; border-radius: 12px; font-style: italic; }
     #mdp-screen { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
     body.dark #mdp-screen { background: linear-gradient(135deg, #0a1628, #112233); }
     body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,255,255,0.07); color: #e8f2ff; border-color: rgba(181,212,244,0.2); }
@@ -229,7 +225,7 @@
       <div class="tuto-slide"><div style="font-size:60px;margin-bottom:24px;">🤖</div><h2 style="font-family:'Lora',serif;font-size:24px;color:#0C447C;margin-bottom:14px;">Une IA qui t'écoute</h2><p style="font-size:15px;color:#378ADD;line-height:1.7;max-width:280px;">Parle en français, anglais ou wolof. L'assistant te répond avec empathie, sans jugement.</p></div>
       <div class="tuto-slide"><div style="font-size:60px;margin-bottom:24px;">🌟</div><h2 style="font-family:'Lora',serif;font-size:24px;color:#0C447C;margin-bottom:14px;">Des outils pour ton bien-être</h2><p style="font-size:15px;color:#378ADD;line-height:1.7;max-width:280px;">Journal, respiration, objectifs, défis quotidiens et bien plus encore !</p></div>
       <div class="tuto-slide"><div style="font-size:60px;margin-bottom:24px;">🔒</div><h2 style="font-family:'Lora',serif;font-size:24px;color:#0C447C;margin-bottom:14px;">100% privé et confidentiel</h2><p style="font-size:15px;color:#378ADD;line-height:1.7;max-width:280px;">Tes conversations restent privées. Aucun jugement, aucun partage.</p>
-      <div style="margin-top:16px;padding:12px;background:rgba(24,95,165,0.08);border-radius:12px;max-width:280px;"><p style="font-size:11px;color:#85B7EB;line-height:1.6;">⚠️ <strong>Important :</strong> Juste là pour toi est une application de bien-être. Elle ne remplace pas un professionnel de santé mentale. En cas de détresse sévère, consultez un médecin.</p></div>
+      <div style="margin-top:16px;padding:12px;background:rgba(24,95,165,0.08);border-radius:12px;max-width:280px;"><p style="font-size:11px;color:#85B7EB;line-height:1.6;">⚠️ <strong>Important :</strong> Juste là pour toi est une application de bien-être. Elle ne remplace pas un professionnel de santé mentale.</p></div>
       <button onclick="finirTutoriel()" style="margin-top:28px;background:#185FA5;color:#fff;border:none;border-radius:24px;padding:13px 40px;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;">Commencer 💙</button></div>
     </div>
   </div>
@@ -526,8 +522,8 @@
     </div>
     <div class="card" style="background:rgba(29,158,117,0.05);border-color:#1D9E75;">
       <p class="card-titre" style="color:#1D9E75;">🤝 Comment fonctionnent nos groupes ?</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Nos sessions fonctionnent comme des <strong>groupes de soutien anonymes</strong>. Un espace bienveillant où chacun peut s'exprimer librement, partager ce qui lui pèse et découvrir que d'autres traversent des épreuves similaires — parce que savoir qu'on n'est pas seul est déjà un grand pas vers l'apaisement.</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;margin-top:8px;">Chaque session est animée par un <strong>coach de vie bienveillant</strong> — et non par un professionnel de santé mentale.</p>
+      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Nos sessions fonctionnent comme des <strong>groupes de soutien anonymes</strong>. Un espace bienveillant où chacun peut s'exprimer librement, partager ce qui lui pèse et découvrir que d'autres traversent des épreuves similaires.</p>
+      <p style="font-size:13px;color:#378ADD;line-height:1.7;margin-top:8px;">Chaque session est animée par un <strong>coach de vie bienveillant</strong>.</p>
       <p style="font-size:13px;color:#e53e3e;line-height:1.7;margin-top:8px;">⚠️ Ces sessions ne remplacent pas un suivi psychologique ou médical professionnel.</p>
     </div>
     <div class="card" style="background:#E6F1FB;border-color:#185FA5;">
@@ -560,10 +556,6 @@
           <p style="font-size:12px;color:#85B7EB;">Durée : 2h · Max 10 personnes</p>
         </div>
       </div>
-    </div>
-    <div class="card" style="text-align:center;">
-      <p style="font-size:13px;color:#85B7EB;line-height:1.7;font-style:italic;">"Ensemble, on va plus loin. Dans nos sessions, chaque voix compte et chaque histoire inspire." 💙</p>
-      <p style="font-size:12px;color:#B5D4F4;margin-top:8px;">— El Hadj Malick THIOUNE, Fondateur</p>
     </div>
   </div>
 </div>
@@ -682,7 +674,7 @@
     </div>
     <div class="card">
       <p class="card-titre">Notre mission</p>
-      <p style="font-size:14px;color:#378ADD;line-height:1.7;">Juste là pour toi est né d'une conviction profonde : chaque personne mérite un espace où il peut s'exprimer librement, sans crainte d'être jugé. Nous avons créé cette application pour toute personne qui ressent le besoin de parler mais ne sait pas à qui se confier, pour celui ou celle qui lutte contre le stress, qui traverse une période de solitude, qui manque de confiance en lui ou en elle, ou qui peine à gérer ses émotions. Notre assistant bienveillant est disponible pour toi à tout moment — pour t'écouter, te comprendre et t'accompagner pas à pas vers une vie plus sereine et épanouie. Parce que tu mérites un espace rien qu'à toi. 💙</p>
+      <p style="font-size:14px;color:#378ADD;line-height:1.7;">Juste là pour toi est né d'une conviction profonde : chaque personne mérite un espace où il peut s'exprimer librement, sans crainte d'être jugé. Notre assistant bienveillant est disponible pour toi à tout moment — pour t'écouter, te comprendre et t'accompagner pas à pas vers une vie plus sereine et épanouie. 💙</p>
       <div style="margin-top:12px;padding:10px;background:rgba(229,62,62,0.05);border-radius:10px;border:0.5px solid rgba(229,62,62,0.2);">
         <p style="font-size:13px;color:#e53e3e;line-height:1.7;">⚠️ <strong>Avertissement :</strong> Juste là pour toi est une application de bien-être uniquement. Elle ne remplace en aucun cas un professionnel de santé mentale.</p>
       </div>
@@ -698,7 +690,7 @@
     <div class="card">
       <p class="card-titre">Nous contacter</p>
       <a href="mailto:malick043@gmail.com" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;"><span style="font-size:20px;">📧</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Email</p><p style="font-size:12px;color:#85B7EB;">malick043@gmail.com</p></div></a>
-      <a href="https://wa.me/00221778844799?text=Bonjour%2C%20j%27ai%20besoin%20d%27aide%20avec%20l%27application%20Juste%20l%C3%A0%20pour%20toi" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;"><span style="font-size:20px;">💬</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">WhatsApp</p><p style="font-size:12px;color:#85B7EB;">+221 77 884 47 99</p></div></a>
+      <a href="https://wa.me/00221778844799" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;text-decoration:none;"><span style="font-size:20px;">💬</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">WhatsApp</p><p style="font-size:12px;color:#85B7EB;">+221 77 884 47 99</p></div></a>
       <a href="https://snapchat.com/add/pthioune23" style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;text-decoration:none;"><span style="font-size:20px;">👻</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Snapchat</p><p style="font-size:12px;color:#85B7EB;">pthioune23</p></div></a>
     </div>
     <div class="card" style="text-align:center;"><p style="font-size:12px;color:#85B7EB;font-style:italic;font-family:'Lora',serif;">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p><p style="font-size:12px;color:#B5D4F4;margin-top:4px;">Tous droits réservés</p></div>
@@ -729,11 +721,16 @@ console.log('%c© 2026 Juste là pour toi — El Hadj Malick THIOUNE. Tous droit
 const CITATIONS=['Chaque jour est une nouvelle chance de prendre soin de toi.','Tu n\'as pas à être parfait pour mériter d\'être aimé.','La douceur envers soi-même est le début de tout.','Tes émotions sont valides, même celles que tu n\'arrives pas à nommer.','Prendre soin de toi n\'est pas un luxe, c\'est une nécessité.','Tu es plus fort que tu ne le crois.','Chaque petit pas compte sur le chemin du bien-être.','Il est courageux de demander de l\'aide.','Tu mérites la paix intérieure.','Respire. Tu es là. C\'est déjà beaucoup.'];
 const SYSTEM=`You are a compassionate wellness assistant for "Juste là pour toi". Listen with empathy, ask open-ended questions, give simple kind advice. STRICT LANGUAGE RULES: 1) If the user writes ONLY in French, respond ONLY in French - NEVER add any Wolof words. 2) If the user writes ONLY in Wolof, respond ONLY in Wolof. 3) If the user mixes French and Wolof, respond by mixing French and Wolof naturally. 4) If the user writes in English, respond ONLY in English. NEVER mix languages unless the user does it first. Keep responses to 2-4 sentences. Address user by first name when natural. IMPORTANT: If the user mentions severe distress, suicidal thoughts, or serious mental health issues, always gently remind them that you are not a mental health professional and encourage them to consult a doctor or mental health professional. You are an emotional support assistant only.`;
 let historique=[],prenom='',humeurSel2='',delaiLettre='',pagePrecedente='accueil';
-let socket=null,salleActuelle=null,themeChoisi='😰 Stress';
 let groupeFiltre='Tous',groupePubli='😰 Stress';
 let mdpMode='setup';
 let reconnaissance=null,enEcoute=false;
 let iaParle=localStorage.getItem('ia-parle')!=='off';
+
+// AVATAR SYSTEM
+const AVATAR_COLORS=['#185FA5','#1D9E75','#E07B39','#9B59B6','#E74C3C','#16A085','#2980B9','#8E44AD','#27AE60','#D35400','#C0392B','#1ABC9C'];
+function getAvatarColor(nom){let hash=0;for(let i=0;i<nom.length;i++)hash=nom.charCodeAt(i)+((hash<<5)-hash);return AVATAR_COLORS[Math.abs(hash)%AVATAR_COLORS.length];}
+function getInitiale(nom){return nom?nom.charAt(0).toUpperCase():'?';}
+function creerAvatar(nom,taille=28){const color=getAvatarColor(nom);const initiale=getInitiale(nom);return `<div style="width:${taille}px;height:${taille}px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:${Math.round(taille*0.43)}px;font-weight:700;color:#fff;flex-shrink:0;">${initiale}</div>`;}
 
 function initMdp(){
   const mdpSauvegarde=localStorage.getItem('user-mdp');
@@ -927,7 +924,17 @@ async function chargerClassement(){
     data.forEach(p=>{const nom=p.prenom||'Anonyme';if(!scores[nom])scores[nom]={pensees:0,coeurs:0};scores[nom].pensees++;scores[nom].coeurs+=p.coeurs||0;});
     const classement=Object.entries(scores).map(([nom,s])=>({nom,score:s.pensees*2+s.coeurs,pensees:s.pensees,coeurs:s.coeurs})).sort((a,b)=>b.score-a.score).slice(0,5);
     const medailles=['🥇','🥈','🥉','4️⃣','5️⃣'];
-    c.innerHTML=classement.map((m,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:${i===0?'rgba(24,95,165,0.1)':'transparent'};margin-bottom:6px;"><span style="font-size:20px;">${medailles[i]}</span><div style="flex:1;"><p style="font-size:14px;font-weight:500;color:#0C447C;">${m.nom}</p><p style="font-size:11px;color:#85B7EB;">${m.pensees} pensée(s) · ${m.coeurs} 💙</p></div><span style="font-size:13px;font-weight:700;color:#185FA5;">${m.score} pts</span></div>`).join('');
+    c.innerHTML=classement.map((m,i)=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:${i===0?'rgba(24,95,165,0.1)':'transparent'};margin-bottom:6px;">
+        <span style="font-size:20px;">${medailles[i]}</span>
+        ${creerAvatar(m.nom,32)}
+        <div style="flex:1;">
+          <p style="font-size:14px;font-weight:500;color:#0C447C;">${m.nom}</p>
+          <p style="font-size:11px;color:#85B7EB;">${m.pensees} pensée(s) · ${m.coeurs} 💙</p>
+        </div>
+        <span style="font-size:13px;font-weight:700;color:#185FA5;">${m.score} pts</span>
+      </div>
+    `).join('');
   }catch(e){document.getElementById('classement-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
 }
 
@@ -938,7 +945,19 @@ async function chargerCommunaute(){
     const c=document.getElementById('communaute-liste');
     const filtered=groupeFiltre==='Tous'?data:data.filter(p=>p.groupe===groupeFiltre);
     if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';}
-    else{c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="margin-bottom:6px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:8px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date}</span><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div>`).join('');}
+    else{c.innerHTML=filtered.map(p=>`
+      <div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;">
+        <div style="margin-bottom:8px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div>
+        <p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:10px;">"${p.pensee}"</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            ${creerAvatar(p.prenom||'Anonyme',24)}
+            <span style="font-size:11px;color:#85B7EB;">${p.prenom} · ${p.date}</span>
+          </div>
+          <button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button>
+        </div>
+      </div>
+    `).join('');}
     chargerClassement();
   }catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
 }
@@ -976,23 +995,27 @@ function genererCarte(){
   ctx.fillStyle='rgba(255,255,255,0.05)';
   ctx.beginPath();ctx.arc(700,50,200,0,Math.PI*2);ctx.fill();
   ctx.beginPath();ctx.arc(100,400,150,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#fff';
-  ctx.font='bold 28px Arial';ctx.textAlign='left';
-  ctx.fillText('Juste là pour toi 💙',50,60);
-  ctx.font='16px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
-  ctx.fillText('Ma carte bien-être · '+(prenom||'Anonyme'),50,90);
-  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(50,120,200,160,16);ctx.fill();
-  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(280,120,200,160,16);ctx.fill();
-  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(510,120,200,160,16);ctx.fill();
+  // Avatar de l'utilisateur
+  const color=getAvatarColor(prenom||'toi');
+  ctx.fillStyle=color;ctx.beginPath();ctx.arc(90,60,30,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#fff';ctx.font='bold 24px Arial';ctx.textAlign='center';
+  ctx.fillText(getInitiale(prenom||'toi'),90,69);
+  ctx.fillStyle='#fff';ctx.font='bold 26px Arial';ctx.textAlign='left';
+  ctx.fillText('Juste là pour toi 💙',130,55);
+  ctx.font='15px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
+  ctx.fillText('Ma carte bien-être · '+(prenom||'Anonyme'),130,75);
+  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(50,110,200,160,16);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(280,110,200,160,16);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(510,110,200,160,16);ctx.fill();
   ctx.fillStyle='#fff';ctx.font='bold 48px Arial';ctx.textAlign='center';
-  ctx.fillText(moyenne,150,210);ctx.fillText(defis.length,380,210);ctx.fillText(journal.length,610,210);
-  ctx.font='14px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
-  ctx.fillText('Humeur /10',150,245);ctx.fillText('Défis complétés',380,245);ctx.fillText('Entrées journal',610,245);
-  ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(50,320,700,1);
+  ctx.fillText(moyenne,150,200);ctx.fillText(defis.length,380,200);ctx.fillText(journal.length,610,200);
+  ctx.font='13px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
+  ctx.fillText('Humeur /10',150,235);ctx.fillText('Défis complétés',380,235);ctx.fillText('Entrées journal',610,235);
+  ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(50,310,700,1);
   ctx.fillStyle='rgba(181,212,244,0.6)';ctx.font='13px Arial';ctx.textAlign='left';
-  ctx.fillText('© 2026 Juste là pour toi',50,360);
-  ctx.fillStyle='#5DCAA5';ctx.font='bold 16px Arial';ctx.textAlign='right';
-  ctx.fillText('Prends soin de toi 💙',750,360);
+  ctx.fillText('© 2026 Juste là pour toi',50,350);
+  ctx.fillStyle='#5DCAA5';ctx.font='bold 15px Arial';ctx.textAlign='right';
+  ctx.fillText('Prends soin de toi 💙',750,350);
   const dataURL=canvas.toDataURL('image/png');
   const a=document.createElement('a');a.href=dataURL;a.download='ma-carte-bien-etre.png';a.click();
 }
@@ -1005,7 +1028,7 @@ function toggleConv(i){const el=document.getElementById('conv-detail-'+i);el.sty
 
 async function chargerCompteur(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const data=await res.json();document.getElementById('compteur-affiche').textContent='💙 Rejoins '+data.compteur+' personnes qui prennent soin d\'elles';}catch(e){}}
 async function incrementerCompteur(){try{await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur',{method:'POST'});}catch(e){}}
-async function chargerTemoignages(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/temoignages');const data=await res.json();const c=document.getElementById('temoignages-liste');const compteurRes=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const compteurData=await compteurRes.json();document.getElementById('compteur-detail').textContent='💙 '+compteurData.compteur+' personnes utilisent déjà Juste là pour toi';c.innerHTML=data.map(t=>`<div class="card" style="margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div style="width:40px;height:40px;border-radius:50%;background:#E6F1FB;display:flex;align-items:center;justify-content:center;font-size:18px;border:1.5px solid #B5D4F4;">${t.pays}</div><div><p style="font-size:14px;font-weight:500;color:#0C447C;">${t.nom}</p><p style="font-size:12px;color:#f59e0b;">${'⭐'.repeat(t.note)}</p></div></div><p style="font-size:13px;color:#378ADD;line-height:1.6;font-style:italic;">"${t.avis}"</p></div>`).join('');}catch(e){}}
+async function chargerTemoignages(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/temoignages');const data=await res.json();const c=document.getElementById('temoignages-liste');const compteurRes=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const compteurData=await compteurRes.json();document.getElementById('compteur-detail').textContent='💙 '+compteurData.compteur+' personnes utilisent déjà Juste là pour toi';c.innerHTML=data.map(t=>`<div class="card" style="margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">${creerAvatar(t.nom,40)}<div><p style="font-size:14px;font-weight:500;color:#0C447C;">${t.nom}</p><p style="font-size:12px;color:#f59e0b;">${'⭐'.repeat(t.note)}</p></div></div><p style="font-size:13px;color:#378ADD;line-height:1.6;font-style:italic;">"${t.avis}"</p></div>`).join('');}catch(e){}}
 chargerCompteur();
 
 function toggleVoix(){if(enEcoute){arreterEcoute();return;}demarrerEcoute();}
@@ -1047,24 +1070,34 @@ function toggleIaParle(){iaParle=!iaParle;localStorage.setItem('ia-parle',iaParl
 if(localStorage.getItem('ia-parle')==='off'){iaParle=false;document.getElementById('ia-parle-btn').textContent='🔇';}
 
 function suggerer(t){document.getElementById('input').value=t;envoyer();}
+
 function ajouterMsg(role,texte,index){
   if(role==='user')document.getElementById('suggestions').style.display='none';
   const w=document.createElement('div');w.className='bwrap'+(role==='user'?' user':'');
+  const row=document.createElement('div');row.className='msg-row'+(role==='user'?' user':'');
   const b=document.createElement('div');b.className='bubble '+role;b.textContent=texte;
   const t=document.createElement('div');t.className='btime';t.textContent=getTime();
   if(role==='user'){
+    const av=document.createElement('div');av.innerHTML=creerAvatar(prenom||'M',28);
+    row.appendChild(b);row.appendChild(av.firstChild);
     b.style.cursor='pointer';b.title='Appuie pour modifier ✏️';
     b.onclick=()=>{
       const nouveau=prompt('✏️ Modifier ton message :',texte);
       if(nouveau&&nouveau.trim()&&nouveau!==texte){
         b.textContent=nouveau;
         if(index!==undefined&&historique[index])historique[index].content=nouveau;
-        const modif=document.createElement('span');modif.textContent=' ✏️';modif.style.cssText='font-size:10px;opacity:0.6;';b.appendChild(modif);
       }
     };
+  }else{
+    const av=document.createElement('div');av.innerHTML=creerAvatar('J',28);
+    av.firstChild.style.background='linear-gradient(135deg,#185FA5,#1a4a7a)';
+    av.firstChild.textContent='💙';av.firstChild.style.fontSize='14px';
+    row.appendChild(av.firstChild);row.appendChild(b);
   }
-  w.appendChild(b);w.appendChild(t);document.getElementById('messages').appendChild(w);w.scrollIntoView({behavior:'smooth'});
+  w.appendChild(row);w.appendChild(t);
+  document.getElementById('messages').appendChild(w);w.scrollIntoView({behavior:'smooth'});
 }
+
 function showTyping(){const d=document.createElement('div');d.className='typing';d.id='typing';d.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';document.getElementById('messages').appendChild(d);d.scrollIntoView({behavior:'smooth'});}
 function removeTyping(){
   const el=document.getElementById('typing');if(el)el.remove();
