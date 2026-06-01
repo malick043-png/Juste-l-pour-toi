@@ -119,7 +119,6 @@
     .btime { font-size: 10px; margin-top: 2px; }
     body:not(.dark) .btime { color: #85B7EB; }
     body.dark .btime { color: rgba(181,212,244,0.3); }
-    .avatar-bubble { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; margin-bottom: 2px; }
     .msg-row { display: flex; align-items: flex-end; gap: 6px; }
     .msg-row.user { flex-direction: row-reverse; }
     .suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px; flex-shrink: 0; }
@@ -195,6 +194,8 @@
     .delai-btn.selected { background: #185FA5; border-color: #185FA5; color: #fff; }
     .groupe-theme { background: none; border: 1px solid #B5D4F4; color: #185FA5; border-radius: 16px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
     .groupe-theme.active { background: #185FA5; color: #fff; border-color: #185FA5; }
+    .couleur-btn { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.2s; }
+    .couleur-btn.selected { border-color: #fff; box-shadow: 0 0 0 2px #185FA5; transform: scale(1.2); }
     #mdp-screen { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
     body.dark #mdp-screen { background: linear-gradient(135deg, #0a1628, #112233); }
     body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,255,255,0.07); color: #e8f2ff; border-color: rgba(181,212,244,0.2); }
@@ -264,6 +265,7 @@
   <img src="icon.png" class="accueil-logo" alt="Logo">
   <h1 class="accueil-titre">Juste là pour toi</h1>
   <p class="accueil-sous">Ton espace bienveillant de bien-être</p>
+  <div id="streak-accueil" style="display:none;background:linear-gradient(135deg,#E07B39,#d4520a);color:#fff;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:500;margin-bottom:12px;">🔥 <span id="streak-nb">0</span> jours de suite !</div>
   <p id="compteur-affiche" style="font-size:13px;color:#185FA5;margin-bottom:16px;font-weight:500;">💙 Rejoins notre communauté bienveillante</p>
   <input type="text" class="prenom-input" id="prenom" placeholder="Ton prénom...">
   <button class="btn-commencer" onclick="commencer()">Commencer la conversation 💙</button>
@@ -272,7 +274,10 @@
     <button onclick="changerLangue('en')" id="lang-en" style="background:none;border:1.5px solid #B5D4F4;color:#85B7EB;border-radius:16px;padding:6px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🇬🇧 English</button>
   </div>
   <button class="btn-dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Mode sombre</button>
-  <button onclick="inviterAmi()" style="background:none;border:1.5px solid #1D9E75;color:#1D9E75;border-radius:24px;padding:8px 20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:10px;">🤝 Inviter un ami</button>
+  <div style="display:flex;gap:8px;margin-bottom:10px;">
+    <button onclick="inviterAmi()" style="background:none;border:1.5px solid #1D9E75;color:#1D9E75;border-radius:24px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🤝 Inviter</button>
+    <button onclick="ouvrirSec('profil');fermerMenu();afficherProfil()" style="background:none;border:1.5px solid #185FA5;color:#185FA5;border-radius:24px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">👤 Profil</button>
+  </div>
   <p class="accueil-footer">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p>
 </div>
 
@@ -297,6 +302,7 @@
       <div class="drawer-item" onclick="ouvrirSec('programme');fermerMenu();chargerProgramme()"><span class="drawer-icon">💪</span><span class="drawer-label">30 jours</span></div>
       <div class="drawer-item" onclick="ouvrirSec('historique');fermerMenu();afficherHistoriqueConv()"><span class="drawer-icon">💬</span><span class="drawer-label">Historique</span></div>
       <div class="drawer-item" onclick="ouvrirSec('badges');fermerMenu();afficherBadges();verifierBadges()"><span class="drawer-icon">🏆</span><span class="drawer-label">Mes badges</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('profil');fermerMenu();afficherProfil()"><span class="drawer-icon">👤</span><span class="drawer-label">Mon profil</span></div>
     </div>
     <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Communauté</p>
     <div class="drawer-grid" style="margin-bottom:14px;">
@@ -325,7 +331,7 @@
         <button class="chat-btn" onclick="reinitialiser()">↺</button>
       </div>
     </div>
-    <div class="status-bar"><div class="status-dot"></div><span class="status-txt">Disponible · toujours là pour t'écouter</span></div>
+    <div class="status-bar"><div class="status-dot"></div><span class="status-txt" id="streak-chat">Disponible · toujours là pour t'écouter</span></div>
   </div>
   <div class="wave-sep"></div>
   <div class="messages" id="messages"><div class="date-div"><span>aujourd'hui</span></div></div>
@@ -341,6 +347,32 @@
     <button class="send-btn" id="btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
   </div>
   <div class="chat-footer"><span>Application de bien-être · Non substituable à un professionnel de santé</span></div>
+</div>
+
+<!-- PROFIL -->
+<div class="page-sec" id="profil">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('profil')">← Retour</button><h2>👤 Mon profil</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;">
+      <div id="profil-avatar" style="width:80px;height:80px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;color:#fff;"></div>
+      <p id="profil-prenom" style="font-size:20px;font-weight:500;color:#0C447C;margin-bottom:4px;"></p>
+      <div id="profil-streak" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E07B39,#d4520a);color:#fff;border-radius:16px;padding:4px 12px;font-size:13px;font-weight:500;margin-top:6px;">🔥 <span id="profil-streak-nb">0</span> jours de suite</div>
+    </div>
+    <div class="card">
+      <p class="card-titre">Modifier mon prénom</p>
+      <input type="text" class="input-sec" id="profil-prenom-input" placeholder="Ton prénom...">
+      <button class="btn-p" onclick="sauvegarderProfil()">Sauvegarder 💙</button>
+      <p class="succes" id="succes-profil">✅ Profil mis à jour !</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Choisir ma couleur d'avatar</p>
+      <div id="couleurs-avatar" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px;"></div>
+    </div>
+    <div class="card">
+      <p class="card-titre">📊 Mes statistiques globales</p>
+      <div id="profil-stats" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+  </div>
 </div>
 
 <!-- JOURNAL -->
@@ -509,22 +541,6 @@
       <p style="font-size:40px;margin-bottom:12px;">🤝</p>
       <h2 style="font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:8px;">Sessions de soutien en groupe</h2>
       <p style="font-size:13px;color:#B5D4F4;line-height:1.6;">Un espace bienveillant et anonyme pour partager, s'écouter et avancer ensemble 💙</p>
-    </div>
-    <div class="card">
-      <p class="card-titre">✨ Ce qui vous attend</p>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">👥</span><p style="font-size:13px;color:#378ADD;">Groupes de 5 à 10 personnes maximum</p></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">🎯</span><p style="font-size:13px;color:#378ADD;">Un modérateur bienveillant pour guider la discussion</p></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">🔒</span><p style="font-size:13px;color:#378ADD;">100% anonyme et confidentiel</p></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">📅</span><p style="font-size:13px;color:#378ADD;">2 à 3 séances par semaine de 1h à 2h</p></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💙</span><p style="font-size:13px;color:#378ADD;">Thèmes : stress, confiance, relations, développement</p></div>
-      </div>
-    </div>
-    <div class="card" style="background:rgba(29,158,117,0.05);border-color:#1D9E75;">
-      <p class="card-titre" style="color:#1D9E75;">🤝 Comment fonctionnent nos groupes ?</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Nos sessions fonctionnent comme des <strong>groupes de soutien anonymes</strong>. Un espace bienveillant où chacun peut s'exprimer librement, partager ce qui lui pèse et découvrir que d'autres traversent des épreuves similaires.</p>
-      <p style="font-size:13px;color:#378ADD;line-height:1.7;margin-top:8px;">Chaque session est animée par un <strong>coach de vie bienveillant</strong>.</p>
-      <p style="font-size:13px;color:#e53e3e;line-height:1.7;margin-top:8px;">⚠️ Ces sessions ne remplacent pas un suivi psychologique ou médical professionnel.</p>
     </div>
     <div class="card" style="background:#E6F1FB;border-color:#185FA5;">
       <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:4px;text-align:center;">Abonnement mensuel</p>
@@ -705,7 +721,7 @@
     <div class="card"><p class="card-titre">1. Collecte des données</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Juste là pour toi ne collecte aucune donnée personnelle identifiable. Toutes vos données sont stockées uniquement sur votre appareil.</p></div>
     <div class="card"><p class="card-titre">2. Conversations avec l'IA</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Vos conversations sont traitées par l'API Anthropic (Claude). Nous ne stockons pas le contenu de vos conversations sur nos serveurs.</p></div>
     <div class="card"><p class="card-titre">3. Communauté anonyme</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Les pensées partagées dans la communauté sont anonymes. Seul votre prénom est affiché. Nous modérons le contenu inapproprié.</p></div>
-    <div class="card"><p class="card-titre">4. Conditions d'utilisation</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Juste là pour toi est une application de bien-être uniquement. Elle ne remplace en aucun cas un psychologue ou médecin. En cas de détresse sévère, consultez un professionnel de santé.</p></div>
+    <div class="card"><p class="card-titre">4. Conditions d'utilisation</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Juste là pour toi est une application de bien-être uniquement. Elle ne remplace en aucun cas un psychologue ou médecin.</p></div>
     <div class="card"><p class="card-titre">5. Contact</p><p style="font-size:13px;color:#185FA5;">📧 malick043@gmail.com</p></div>
     <div class="card"><p class="card-titre">6. Propriété intellectuelle</p><p style="font-size:13px;color:#378ADD;line-height:1.7;">Juste là pour toi et l'ensemble de son contenu sont la propriété exclusive de El Hadj Malick THIOUNE. Toute reproduction sans autorisation écrite est interdite et passible de poursuites judiciaires. © 2026 Juste là pour toi.</p></div>
     <div class="card" style="text-align:center;"><p style="font-size:12px;color:#85B7EB;font-style:italic;font-family:'Lora',serif;">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p></div>
@@ -728,9 +744,127 @@ let iaParle=localStorage.getItem('ia-parle')!=='off';
 
 // AVATAR SYSTEM
 const AVATAR_COLORS=['#185FA5','#1D9E75','#E07B39','#9B59B6','#E74C3C','#16A085','#2980B9','#8E44AD','#27AE60','#D35400','#C0392B','#1ABC9C'];
-function getAvatarColor(nom){let hash=0;for(let i=0;i<nom.length;i++)hash=nom.charCodeAt(i)+((hash<<5)-hash);return AVATAR_COLORS[Math.abs(hash)%AVATAR_COLORS.length];}
+function getAvatarColor(nom){
+  const couleurSauvegardee=localStorage.getItem('avatar-couleur');
+  if(couleurSauvegardee&&nom===prenom)return couleurSauvegardee;
+  let hash=0;for(let i=0;i<nom.length;i++)hash=nom.charCodeAt(i)+((hash<<5)-hash);
+  return AVATAR_COLORS[Math.abs(hash)%AVATAR_COLORS.length];
+}
 function getInitiale(nom){return nom?nom.charAt(0).toUpperCase():'?';}
 function creerAvatar(nom,taille=28){const color=getAvatarColor(nom);const initiale=getInitiale(nom);return `<div style="width:${taille}px;height:${taille}px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:${Math.round(taille*0.43)}px;font-weight:700;color:#fff;flex-shrink:0;">${initiale}</div>`;}
+
+// STREAK SYSTEM
+function calculerStreak(){
+  const visites=JSON.parse(localStorage.getItem('visites')||'[]');
+  if(!visites.length)return 0;
+  const auj=new Date();
+  let streak=0;
+  for(let i=0;i<30;i++){
+    const d=new Date(auj);d.setDate(auj.getDate()-i);
+    const ds=d.toLocaleDateString('fr-FR');
+    if(visites.includes(ds))streak++;
+    else break;
+  }
+  return streak;
+}
+function afficherStreak(){
+  const streak=calculerStreak();
+  if(streak>=2){
+    document.getElementById('streak-accueil').style.display='block';
+    document.getElementById('streak-nb').textContent=streak;
+    document.getElementById('profil-streak-nb').textContent=streak;
+    document.getElementById('streak-chat').textContent='🔥 '+streak+' jours de suite · toujours là pour toi';
+  }
+}
+
+// PROFIL
+function afficherProfil(){
+  const p=localStorage.getItem('user-prenom-save')||prenom||'Anonyme';
+  const couleur=localStorage.getItem('avatar-couleur')||getAvatarColor(p);
+  document.getElementById('profil-prenom').textContent=p;
+  document.getElementById('profil-prenom-input').value=p;
+  const av=document.getElementById('profil-avatar');
+  av.style.background=couleur;av.textContent=getInitiale(p);av.style.fontSize='32px';av.style.fontWeight='700';
+  afficherStreak();
+  // Couleurs
+  const c=document.getElementById('couleurs-avatar');
+  c.innerHTML=AVATAR_COLORS.map(col=>`<div class="couleur-btn ${col===couleur?'selected':''}" style="background:${col};" onclick="selCouleur('${col}',this)"></div>`).join('');
+  // Stats
+  const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
+  const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');
+  const journal=JSON.parse(localStorage.getItem('journal')||'[]');
+  const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');
+  const badges=JSON.parse(localStorage.getItem('badges')||'[]');
+  const moyenne=notes.length?(notes.reduce((a,b)=>a+b.note,0)/notes.length).toFixed(1):'-';
+  document.getElementById('profil-stats').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">📊 Humeur moyenne</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${moyenne}/10</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">⚡ Défis complétés</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${defis.length}</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">📔 Entrées journal</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${journal.length}</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">💌 Lettres scellées</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${lettres.length}</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#85B7EB;">🏆 Badges obtenus</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${badges.length}/${BADGES.length}</span></div>
+  `;
+}
+function selCouleur(couleur,el){
+  localStorage.setItem('avatar-couleur',couleur);
+  document.querySelectorAll('.couleur-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  const p=localStorage.getItem('user-prenom-save')||prenom||'Anonyme';
+  const av=document.getElementById('profil-avatar');
+  av.style.background=couleur;
+}
+function sauvegarderProfil(){
+  const nouveauPrenom=document.getElementById('profil-prenom-input').value.trim();
+  if(!nouveauPrenom){alert('Entre ton prénom !');return;}
+  prenom=nouveauPrenom;
+  localStorage.setItem('user-prenom-save',nouveauPrenom);
+  document.getElementById('profil-prenom').textContent=nouveauPrenom;
+  document.getElementById('chat-sub').textContent='Bonjour '+nouveauPrenom+' 💙';
+  document.getElementById('succes-profil').style.display='block';
+  setTimeout(()=>document.getElementById('succes-profil').style.display='none',2000);
+  afficherProfil();
+}
+
+// NOTIFICATION DE RAPPEL
+function demanderNotifications(){
+  if('Notification' in window&&Notification.permission==='default'){
+    Notification.requestPermission().then(p=>{
+      if(p==='granted')planifierNotification();
+    });
+  }else if(Notification.permission==='granted'){
+    planifierNotification();
+  }
+}
+function planifierNotification(){
+  const derniere=localStorage.getItem('derniere-notif');
+  const auj=new Date().toLocaleDateString('fr-FR');
+  if(derniere===auj)return;
+  const messages=['💙 Comment vas-tu aujourd\'hui ? Je suis là pour toi !','🌟 N\'oublie pas de prendre soin de toi aujourd\'hui !','💪 Un petit défi t\'attend sur Juste là pour toi !','🌸 Prends 5 minutes pour toi aujourd\'hui 💙'];
+  const msg=messages[Math.floor(Math.random()*messages.length)];
+  setTimeout(()=>{
+    if(Notification.permission==='granted'){
+      new Notification('Juste là pour toi 💙',{body:msg,icon:'/Juste-l-pour-toi/icon.png'});
+      localStorage.setItem('derniere-notif',auj);
+    }
+  },3000);
+}
+
+// CITATION PERSONNALISÉE
+async function chargerCitationPersonnalisee(){
+  const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
+  const derniereNote=notes.length?notes[notes.length-1].note:null;
+  const citEl=document.getElementById('splash-citation');
+  let contexte='bienveillante et inspirante';
+  if(derniereNote){
+    if(derniereNote<=3)contexte='réconfortante et encourageante pour quelqu\'un qui traverse une période difficile';
+    else if(derniereNote<=6)contexte='motivante et positive';
+    else contexte='joyeuse et célébrant les petites victoires';
+  }
+  try{
+    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:`Génère UNE citation courte ${contexte}. Réponds UNIQUEMENT avec la citation, sans guillemets, en français.`,messages:[{role:'user',content:'Citation'}]})});
+    const d=await res.json();
+    if(d.content&&d.content[0])citEl.textContent='"'+d.content[0].text+'"';
+  }catch(e){}
+}
 
 function initMdp(){
   const mdpSauvegarde=localStorage.getItem('user-mdp');
@@ -810,13 +944,14 @@ function changerLangue(langue){
 const langueSauvegardee=localStorage.getItem('langue')||'fr';
 changerLangue(langueSauvegardee);
 
+// Citation avec animation
 const citation=CITATIONS[Math.floor(Math.random()*CITATIONS.length)];
 const mots=('"'+citation+'"').split(' ');
 let idx=0;
 const citEl=document.getElementById('splash-citation');
 function motSuivant(){if(idx<mots.length){citEl.textContent+=(idx>0?' ':'')+mots[idx];idx++;setTimeout(motSuivant,110);}}
 motSuivant();
-fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:'Génère UNE citation courte et bienveillante. Réponds UNIQUEMENT avec la citation, sans guillemets.',messages:[{role:'user',content:'Citation'}]})}).then(r=>r.json()).then(d=>{if(d.content&&d.content[0])citEl.textContent='"'+d.content[0].text+'"';}).catch(()=>{});
+chargerCitationPersonnalisee();
 
 function getTime(){return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
 function getDate(){return new Date().toLocaleDateString('fr-FR');}
@@ -831,6 +966,11 @@ function allerAccueil(){
   document.getElementById('nav-bar').style.display='block';
   pagePrecedente='accueil';
   setNavActif('nav-accueil');
+  afficherStreak();
+  demanderNotifications();
+  // Récupérer prénom sauvegardé
+  const prenomSauve=localStorage.getItem('user-prenom-save');
+  if(prenomSauve){prenom=prenomSauve;document.getElementById('prenom').value=prenomSauve;}
 }
 
 function allerChat(){
@@ -862,6 +1002,8 @@ function commencer(){
   setNavActif('nav-chat');
   localStorage.setItem('user-prenom-save',prenom);
   incrementerCompteur();
+  verifierBadges();
+  afficherStreak();
   ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');
 }
 
@@ -924,17 +1066,7 @@ async function chargerClassement(){
     data.forEach(p=>{const nom=p.prenom||'Anonyme';if(!scores[nom])scores[nom]={pensees:0,coeurs:0};scores[nom].pensees++;scores[nom].coeurs+=p.coeurs||0;});
     const classement=Object.entries(scores).map(([nom,s])=>({nom,score:s.pensees*2+s.coeurs,pensees:s.pensees,coeurs:s.coeurs})).sort((a,b)=>b.score-a.score).slice(0,5);
     const medailles=['🥇','🥈','🥉','4️⃣','5️⃣'];
-    c.innerHTML=classement.map((m,i)=>`
-      <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:${i===0?'rgba(24,95,165,0.1)':'transparent'};margin-bottom:6px;">
-        <span style="font-size:20px;">${medailles[i]}</span>
-        ${creerAvatar(m.nom,32)}
-        <div style="flex:1;">
-          <p style="font-size:14px;font-weight:500;color:#0C447C;">${m.nom}</p>
-          <p style="font-size:11px;color:#85B7EB;">${m.pensees} pensée(s) · ${m.coeurs} 💙</p>
-        </div>
-        <span style="font-size:13px;font-weight:700;color:#185FA5;">${m.score} pts</span>
-      </div>
-    `).join('');
+    c.innerHTML=classement.map((m,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:${i===0?'rgba(24,95,165,0.1)':'transparent'};margin-bottom:6px;"><span style="font-size:20px;">${medailles[i]}</span>${creerAvatar(m.nom,32)}<div style="flex:1;"><p style="font-size:14px;font-weight:500;color:#0C447C;">${m.nom}</p><p style="font-size:11px;color:#85B7EB;">${m.pensees} pensée(s) · ${m.coeurs} 💙</p></div><span style="font-size:13px;font-weight:700;color:#185FA5;">${m.score} pts</span></div>`).join('');
   }catch(e){document.getElementById('classement-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
 }
 
@@ -950,11 +1082,11 @@ async function chargerCommunaute(){
         <div style="margin-bottom:8px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div>
         <p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:10px;">"${p.pensee}"</p>
         <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            ${creerAvatar(p.prenom||'Anonyme',24)}
-            <span style="font-size:11px;color:#85B7EB;">${p.prenom} · ${p.date}</span>
+          <div style="display:flex;align-items:center;gap:8px;">${creerAvatar(p.prenom||'Anonyme',24)}<span style="font-size:11px;color:#85B7EB;">${p.prenom} · ${p.date}</span></div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button onclick="repondreAPensee(${p.id},'${p.prenom}')" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#85B7EB;cursor:pointer;">💬 Répondre</button>
+            <button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button>
           </div>
-          <button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button>
         </div>
       </div>
     `).join('');}
@@ -962,11 +1094,20 @@ async function chargerCommunaute(){
   }catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}
 }
 
+function repondreAPensee(id,auteur){
+  const reponse=prompt('💙 Réponds à '+auteur+' :');
+  if(!reponse||!reponse.trim())return;
+  const penseeAvecReponse='↩️ En réponse à '+auteur+' : '+reponse.trim();
+  document.getElementById('pensee-input').value=penseeAvecReponse;
+  document.getElementById('pensee-input').focus();
+  document.getElementById('pensee-input').scrollIntoView({behavior:'smooth'});
+}
+
 async function partagerPensee(){const pensee=document.getElementById('pensee-input').value.trim();if(!pensee){alert('Écris une pensée !');return;}if(pensee.length>200){alert('Maximum 200 caractères !');return;}document.querySelector('#communaute .btn-p').textContent='Vérification... 💙';document.querySelector('#communaute .btn-p').disabled=true;try{const verif=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:50,system:'Tu es un modérateur bienveillant. Réponds UNIQUEMENT par "OUI" si le message est positif et approprié, ou "NON" si inapproprié.',messages:[{role:'user',content:'Ce message est-il approprié ? "'+pensee+'"'}]})});const verifData=await verif.json();const decision=verifData.content[0].text.trim().toUpperCase();if(decision.includes('NON')){alert('😔 Cette pensée ne semble pas bienveillante. Essaie de partager quelque chose de positif 💙');document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;return;}await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee,prenom:prenom||'Anonyme',groupe:groupePubli})});document.getElementById('pensee-input').value='';document.getElementById('succes-pensee').style.display='block';setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);chargerCommunaute();}catch(e){alert('Erreur 😔');}document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;}
 async function envoyerCoeur(id,btn){try{const res=await fetch(`https://serveur-juste-la-pour-toi.onrender.com/communaute/${id}/coeur`,{method:'POST'});const data=await res.json();btn.textContent='💙 '+data.coeurs;}catch(e){}}
 
-const BADGES=[{id:'premier-pas',icon:'💙',nom:'Premier pas',desc:'Première conversation'},{id:'objectif-fixe',icon:'🎯',nom:'Objectif fixé',desc:'Premier objectif créé'},{id:'journaliste',icon:'📔',nom:'Journaliste',desc:'5 entrées dans le journal'},{id:'challenger',icon:'⚡',nom:'Challenger',desc:'5 défis acceptés'},{id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},{id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'}];
-function verifierBadges(){const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');const objectif=localStorage.getItem('objectif');const visites=JSON.parse(localStorage.getItem('visites')||'[]');const aujourd=getDate();if(!visites.includes(aujourd)){visites.push(aujourd);if(visites.length>30)visites.shift();localStorage.setItem('visites',JSON.stringify(visites));}const nouveaux=[];if(!obtenus.includes('premier-pas')&&historique.length>0){obtenus.push('premier-pas');nouveaux.push('premier-pas');}if(!obtenus.includes('objectif-fixe')&&objectif){obtenus.push('objectif-fixe');nouveaux.push('objectif-fixe');}if(!obtenus.includes('journaliste')&&journal.length>=5){obtenus.push('journaliste');nouveaux.push('journaliste');}if(!obtenus.includes('challenger')&&defis.length>=5){obtenus.push('challenger');nouveaux.push('challenger');}if(!obtenus.includes('futur-moi')&&lettres.length>0){obtenus.push('futur-moi');nouveaux.push('futur-moi');}if(!obtenus.includes('semaine')&&visites.length>=7){obtenus.push('semaine');nouveaux.push('semaine');}localStorage.setItem('badges',JSON.stringify(obtenus));nouveaux.forEach(id=>{const b=BADGES.find(x=>x.id===id);afficherNotifBadge(b);});}
+const BADGES=[{id:'premier-pas',icon:'💙',nom:'Premier pas',desc:'Première conversation'},{id:'objectif-fixe',icon:'🎯',nom:'Objectif fixé',desc:'Premier objectif créé'},{id:'journaliste',icon:'📔',nom:'Journaliste',desc:'5 entrées dans le journal'},{id:'challenger',icon:'⚡',nom:'Challenger',desc:'5 défis acceptés'},{id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},{id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'},{id:'streak-3',icon:'🔥',nom:'En feu !',desc:'3 jours de suite'}];
+function verifierBadges(){const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');const objectif=localStorage.getItem('objectif');const visites=JSON.parse(localStorage.getItem('visites')||'[]');const aujourd=getDate();if(!visites.includes(aujourd)){visites.push(aujourd);if(visites.length>30)visites.shift();localStorage.setItem('visites',JSON.stringify(visites));}const nouveaux=[];if(!obtenus.includes('premier-pas')&&historique.length>0){obtenus.push('premier-pas');nouveaux.push('premier-pas');}if(!obtenus.includes('objectif-fixe')&&objectif){obtenus.push('objectif-fixe');nouveaux.push('objectif-fixe');}if(!obtenus.includes('journaliste')&&journal.length>=5){obtenus.push('journaliste');nouveaux.push('journaliste');}if(!obtenus.includes('challenger')&&defis.length>=5){obtenus.push('challenger');nouveaux.push('challenger');}if(!obtenus.includes('futur-moi')&&lettres.length>0){obtenus.push('futur-moi');nouveaux.push('futur-moi');}if(!obtenus.includes('semaine')&&visites.length>=7){obtenus.push('semaine');nouveaux.push('semaine');}if(!obtenus.includes('streak-3')&&calculerStreak()>=3){obtenus.push('streak-3');nouveaux.push('streak-3');}localStorage.setItem('badges',JSON.stringify(obtenus));nouveaux.forEach(id=>{const b=BADGES.find(x=>x.id===id);afficherNotifBadge(b);});}
 function afficherNotifBadge(badge){const notif=document.createElement('div');notif.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#185FA5;color:#fff;border-radius:20px;padding:12px 20px;font-size:14px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;display:flex;align-items:center;gap:10px;white-space:nowrap;';notif.innerHTML=`<span style="font-size:24px;">${badge.icon}</span><div><p style="font-weight:500;font-size:13px;">Badge obtenu !</p><p style="font-size:12px;opacity:0.85;">${badge.nom}</p></div>`;document.body.appendChild(notif);setTimeout(()=>{notif.style.opacity='0';notif.style.transition='opacity 0.5s';setTimeout(()=>notif.remove(),500);},3000);}
 function afficherBadges(){const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');const c=document.getElementById('badges-liste');c.innerHTML=BADGES.map(b=>{const ok=obtenus.includes(b.id);return `<div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:${ok?'rgba(24,95,165,0.08)':'transparent'};border:0.5px solid ${ok?'#B5D4F4':'#e0e0e0'};margin-bottom:8px;opacity:${ok?'1':'0.4'};"><span style="font-size:28px;">${b.icon}</span><div><p style="font-size:14px;font-weight:500;color:${ok?'#0C447C':'#999'};">${b.nom}</p><p style="font-size:12px;color:#85B7EB;">${b.desc}</p></div>${ok?'<span style="margin-left:auto;font-size:12px;color:#1D9E75;font-weight:500;">✓</span>':''}</div>`;}).join('');}
 
@@ -986,6 +1127,7 @@ function genererCarte(){
   const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');
   const journal=JSON.parse(localStorage.getItem('journal')||'[]');
   const moyenne=notes.length?(notes.slice(-7).reduce((a,b)=>a+b.note,0)/Math.min(notes.length,7)).toFixed(1):'-';
+  const streak=calculerStreak();
   const canvas=document.createElement('canvas');
   canvas.width=800;canvas.height=450;
   const ctx=canvas.getContext('2d');
@@ -995,7 +1137,6 @@ function genererCarte(){
   ctx.fillStyle='rgba(255,255,255,0.05)';
   ctx.beginPath();ctx.arc(700,50,200,0,Math.PI*2);ctx.fill();
   ctx.beginPath();ctx.arc(100,400,150,0,Math.PI*2);ctx.fill();
-  // Avatar de l'utilisateur
   const color=getAvatarColor(prenom||'toi');
   ctx.fillStyle=color;ctx.beginPath();ctx.arc(90,60,30,0,Math.PI*2);ctx.fill();
   ctx.fillStyle='#fff';ctx.font='bold 24px Arial';ctx.textAlign='center';
@@ -1004,13 +1145,14 @@ function genererCarte(){
   ctx.fillText('Juste là pour toi 💙',130,55);
   ctx.font='15px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
   ctx.fillText('Ma carte bien-être · '+(prenom||'Anonyme'),130,75);
-  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(50,110,200,160,16);ctx.fill();
-  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(280,110,200,160,16);ctx.fill();
-  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(510,110,200,160,16);ctx.fill();
-  ctx.fillStyle='#fff';ctx.font='bold 48px Arial';ctx.textAlign='center';
-  ctx.fillText(moyenne,150,200);ctx.fillText(defis.length,380,200);ctx.fillText(journal.length,610,200);
-  ctx.font='13px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
-  ctx.fillText('Humeur /10',150,235);ctx.fillText('Défis complétés',380,235);ctx.fillText('Entrées journal',610,235);
+  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(50,110,145,160,16);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(215,110,145,160,16);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(380,110,145,160,16);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(545,110,205,160,16);ctx.fill();
+  ctx.fillStyle='#fff';ctx.font='bold 42px Arial';ctx.textAlign='center';
+  ctx.fillText(moyenne,122,200);ctx.fillText(defis.length,287,200);ctx.fillText(journal.length,452,200);ctx.fillText('🔥'+streak,647,200);
+  ctx.font='12px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';
+  ctx.fillText('Humeur /10',122,235);ctx.fillText('Défis',287,235);ctx.fillText('Journal',452,235);ctx.fillText('Jours streak',647,235);
   ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(50,310,700,1);
   ctx.fillStyle='rgba(181,212,244,0.6)';ctx.font='13px Arial';ctx.textAlign='left';
   ctx.fillText('© 2026 Juste là pour toi',50,350);
@@ -1123,6 +1265,11 @@ document.getElementById('input').addEventListener('keydown',e=>{if(e.key==='Ente
 document.getElementById('input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,160)+'px';});
 document.getElementById('prenom').addEventListener('keydown',e=>{if(e.key==='Enter')commencer();});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('mdp-screen').style.display==='flex'){validerMdp();}});
+
+// Init streak au chargement
+afficherStreak();
+const prenomSauve=localStorage.getItem('user-prenom-save');
+if(prenomSauve)prenom=prenomSauve;
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/Juste-l-pour-toi/sw.js').catch(()=>{});}
 </script>
