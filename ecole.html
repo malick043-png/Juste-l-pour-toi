@@ -5,111 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>Juste là pour toi — Écoles & Universités</title>
+  <title>Juste là pour toi — Entreprises & Organisations</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', Arial, sans-serif; background: #f0fff8; color: #0a3d2e; }
-    .hero { background: linear-gradient(135deg, #0a6640, #1D9E75, #0a8a55); padding: 60px 24px 80px; text-align: center; position: relative; overflow: hidden; }
-    .hero::before { content: '🎓'; position: absolute; font-size: 200px; opacity: 0.05; top: -20px; right: -30px; }
-    .hero::after { content: '📚'; position: absolute; font-size: 150px; opacity: 0.05; bottom: -20px; left: -20px; }
+    body { font-family: 'DM Sans', Arial, sans-serif; background: #f0f6ff; color: #0C447C; }
+    .hero { background: linear-gradient(135deg, #0C447C, #185FA5, #1a6db5); padding: 60px 24px 80px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: '🏢'; position: absolute; font-size: 200px; opacity: 0.05; top: -20px; right: -30px; }
+    .hero::after { content: '💼'; position: absolute; font-size: 150px; opacity: 0.05; bottom: -20px; left: -20px; }
     .hero-logo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.4); margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
     .hero h1 { font-family: 'Lora', serif; font-size: 28px; color: #fff; margin-bottom: 8px; line-height: 1.4; }
     .hero p { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.7; max-width: 340px; margin: 0 auto 24px; }
     .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 6px 16px; font-size: 12px; color: #fff; margin-bottom: 24px; }
-    .btn-hero { background: #fff; color: #0a6640; border: none; border-radius: 24px; padding: 14px 32px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.2); text-decoration: none; display: inline-block; margin: 6px; }
+    .btn-hero { background: #fff; color: #0C447C; border: none; border-radius: 24px; padding: 14px 32px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.2); text-decoration: none; display: inline-block; margin: 6px; }
     .btn-hero-outline { background: none; color: #fff; border: 2px solid rgba(255,255,255,0.6); border-radius: 24px; padding: 12px 28px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; text-decoration: none; display: inline-block; margin: 6px; }
     .container { max-width: 480px; margin: 0 auto; padding: 24px 16px; }
     .section { margin-bottom: 32px; }
-    .section-title { font-family: 'Lora', serif; font-size: 20px; color: #0a6640; margin-bottom: 16px; text-align: center; }
-    .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 16px; border: 0.5px solid rgba(29,158,117,0.2); box-shadow: 0 2px 12px rgba(29,158,117,0.08); }
+    .section-title { font-family: 'Lora', serif; font-size: 20px; color: #0C447C; margin-bottom: 16px; text-align: center; }
+    .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 16px; border: 0.5px solid rgba(24,95,165,0.2); box-shadow: 0 2px 12px rgba(24,95,165,0.08); }
     .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
-    .stat-card { background: #fff; border-radius: 16px; padding: 16px 10px; text-align: center; border: 0.5px solid rgba(29,158,117,0.2); }
-    .stat-nb { font-size: 28px; font-weight: 700; color: #1D9E75; }
+    .stat-card { background: #fff; border-radius: 16px; padding: 16px 10px; text-align: center; border: 0.5px solid rgba(24,95,165,0.2); }
+    .stat-nb { font-size: 28px; font-weight: 700; color: #185FA5; }
     .stat-label { font-size: 11px; color: #85B7EB; margin-top: 4px; }
     .feature-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
     .feature-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
-    .feature-title { font-size: 14px; font-weight: 500; color: #0a3d2e; margin-bottom: 3px; }
+    .feature-title { font-size: 14px; font-weight: 500; color: #0C447C; margin-bottom: 3px; }
     .feature-desc { font-size: 12px; color: #666; line-height: 1.5; }
     .tarif-card { border-radius: 16px; padding: 16px; margin-bottom: 12px; }
     .tarif-titre { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
     .tarif-prix { font-size: 22px; font-weight: 700; }
-    .tarif-desc { font-size: 11px; margin-top: 4px; opacity: 0.8; }
-    .temoignage { background: linear-gradient(135deg, rgba(29,158,117,0.05), rgba(29,158,117,0.02)); border-radius: 16px; padding: 16px; border: 0.5px solid rgba(29,158,117,0.2); margin-bottom: 12px; }
-    .temoignage p { font-family: 'Lora', serif; font-size: 13px; color: #0a3d2e; line-height: 1.7; font-style: italic; margin-bottom: 8px; }
-    .temoignage-auteur { font-size: 11px; color: #1D9E75; font-weight: 500; }
-    .faq-item { border-bottom: 0.5px solid rgba(29,158,117,0.15); padding: 14px 0; cursor: pointer; }
-    .faq-question { font-size: 14px; font-weight: 500; color: #0a3d2e; display: flex; justify-content: space-between; align-items: center; }
+    .temoignage { background: linear-gradient(135deg, rgba(24,95,165,0.05), rgba(24,95,165,0.02)); border-radius: 16px; padding: 16px; border: 0.5px solid rgba(24,95,165,0.2); margin-bottom: 12px; }
+    .temoignage p { font-family: 'Lora', serif; font-size: 13px; color: #0C447C; line-height: 1.7; font-style: italic; margin-bottom: 8px; }
+    .temoignage-auteur { font-size: 11px; color: #185FA5; font-weight: 500; }
+    .faq-item { border-bottom: 0.5px solid rgba(24,95,165,0.15); padding: 14px 0; cursor: pointer; }
+    .faq-question { font-size: 14px; font-weight: 500; color: #0C447C; display: flex; justify-content: space-between; align-items: center; }
     .faq-reponse { font-size: 13px; color: #666; line-height: 1.6; margin-top: 10px; display: none; }
     .faq-reponse.open { display: block; }
-    .demo-form { background: linear-gradient(135deg, #0a6640, #1D9E75); border-radius: 20px; padding: 24px; text-align: center; }
+    .demo-form { background: linear-gradient(135deg, #0C447C, #185FA5); border-radius: 20px; padding: 24px; text-align: center; }
     .demo-form h3 { font-family: 'Lora', serif; font-size: 18px; color: #fff; margin-bottom: 8px; }
     .demo-form p { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 20px; line-height: 1.6; }
-    .input-form { width: 100%; border: none; border-radius: 14px; padding: 12px 16px; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; margin-bottom: 10px; background: rgba(255,255,255,0.95); color: #0a3d2e; }
-    .btn-form { width: 100%; background: #fff; color: #0a6640; border: none; border-radius: 16px; padding: 13px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 600; margin-bottom: 10px; }
-    .nav-ecole { background: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 0.5px solid rgba(29,158,117,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-    .nav-logo { font-family: 'Lora', serif; font-size: 14px; color: #0a6640; font-weight: 500; }
-    .nav-btn { background: #1D9E75; color: #fff; border: none; border-radius: 16px; padding: 8px 16px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; }
-    .badge-nouveau { display: inline-block; background: linear-gradient(135deg, #E07B39, #d4520a); color: #fff; border-radius: 10px; padding: 2px 10px; font-size: 10px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
-    .partenaires { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-    .partenaire-badge { background: rgba(29,158,117,0.08); border: 0.5px solid rgba(29,158,117,0.3); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: #1D9E75; font-weight: 500; }
-    .section-divider { height: 4px; background: linear-gradient(135deg, #1D9E75, #0a6640); border-radius: 2px; margin: 24px 0; }
-    .essai-gratuit { background: linear-gradient(135deg, rgba(29,158,117,0.1), rgba(29,158,117,0.05)); border: 1px solid rgba(29,158,117,0.3); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 16px; }
-    footer { background: #0a3d2e; color: rgba(255,255,255,0.7); text-align: center; padding: 24px 16px; font-size: 12px; }
-    footer a { color: #1D9E75; text-decoration: none; }
+    .input-form { width: 100%; border: none; border-radius: 14px; padding: 12px 16px; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; margin-bottom: 10px; background: rgba(255,255,255,0.95); color: #0C447C; }
+    .btn-form { width: 100%; background: #fff; color: #0C447C; border: none; border-radius: 16px; padding: 13px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 600; margin-bottom: 10px; }
+    .nav-ent { background: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 0.5px solid rgba(24,95,165,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .nav-logo { font-family: 'Lora', serif; font-size: 14px; color: #0C447C; font-weight: 500; }
+    .nav-btn { background: #185FA5; color: #fff; border: none; border-radius: 16px; padding: 8px 16px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; text-decoration: none; }
+    .badge-nouveau { display: inline-block; background: linear-gradient(135deg, #185FA5, #0C447C); color: #fff; border-radius: 10px; padding: 2px 10px; font-size: 10px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+    .roi-card { background: linear-gradient(135deg, #fff8f0, #fff); border: 0.5px solid rgba(224,123,57,0.3); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
+    .section-divider { height: 4px; background: linear-gradient(135deg, #185FA5, #0C447C); border-radius: 2px; margin: 24px 0; }
+    .essai-gratuit { background: linear-gradient(135deg, rgba(24,95,165,0.1), rgba(24,95,165,0.05)); border: 1px solid rgba(24,95,165,0.3); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 16px; }
+    .secteur-btn { border: 1px solid rgba(24,95,165,0.3); border-radius: 12px; padding: 8px 14px; font-size: 12px; color: #185FA5; cursor: pointer; font-family: 'DM Sans', sans-serif; background: #fff; margin: 4px; display: inline-block; }
+    .secteur-btn.active { background: #185FA5; color: #fff; }
+    footer { background: #0C447C; color: rgba(255,255,255,0.7); text-align: center; padding: 24px 16px; font-size: 12px; }
+    footer a { color: #B5D4F4; text-decoration: none; }
   </style>
 </head>
 <body>
 
 <!-- NAVIGATION -->
-<nav class="nav-ecole">
+<nav class="nav-ent">
   <div>
-    <span class="nav-logo">🎓 Juste là pour toi</span>
-    <span class="badge-nouveau">Écoles</span>
+    <span class="nav-logo">🏢 Juste là pour toi</span>
+    <span class="badge-nouveau">Entreprises</span>
   </div>
-  <a href="https://wa.me/221778844799?text=Bonjour%20Malick%2C%20je%20souhaite%20une%20démo%20pour%20mon%20établissement" class="nav-btn">Démo gratuite</a>
+  <a href="https://wa.me/221778844799?text=Bonjour%20Malick%2C%20je%20souhaite%20une%20démo%20pour%20mon%20entreprise" class="nav-btn">Démo gratuite</a>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <img src="icon.png" class="hero-logo" alt="Logo">
-  <h1>Le bien-être mental pour vos élèves et étudiants 💙</h1>
-  <p>Une application de soutien émotionnel disponible 24h/24, adaptée aux lycées et universités du Sénégal.</p>
-  <div class="hero-badge">🇸🇳 Fait au Sénégal · En français & wolof</div>
+  <h1>Le bien-être de vos équipes, votre meilleur investissement 💙</h1>
+  <p>Des employés épanouis sont plus productifs, plus créatifs et plus fidèles. Investissez dans leur bien-être mental.</p>
+  <div class="hero-badge">🇸🇳 Solution africaine · Adapté au contexte local</div>
   <br>
-  <a href="https://wa.me/221778844799?text=Bonjour%20Malick%2C%20je%20souhaite%20une%20démonstration%20gratuite%20de%20Juste%20là%20pour%20toi%20pour%20mon%20établissement" class="btn-hero">Demander une démo gratuite 💙</a>
+  <a href="https://wa.me/221778844799?text=Bonjour%20Malick%2C%20je%20souhaite%20une%20démonstration%20gratuite%20de%20Juste%20là%20pour%20toi%20pour%20mon%20entreprise" class="btn-hero">Demander une démo gratuite 💙</a>
   <a href="https://malick043-png.github.io/Juste-l-pour-toi" class="btn-hero-outline">Tester l'application</a>
 </div>
 
 <div class="container">
 
-  <!-- STATISTIQUES -->
+  <!-- STATS -->
   <div class="section" style="margin-top:24px;">
     <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-nb">-40%</div>
+        <div class="stat-label">Stress au travail</div>
+      </div>
       <div class="stat-card">
         <div class="stat-nb">24h</div>
         <div class="stat-label">Disponible</div>
       </div>
       <div class="stat-card">
-        <div class="stat-nb">3</div>
-        <div class="stat-label">Langues</div>
-      </div>
-      <div class="stat-card">
         <div class="stat-nb">100%</div>
-        <div class="stat-label">Anonyme</div>
+        <div class="stat-label">Confidentiel</div>
       </div>
     </div>
   </div>
 
   <!-- PROBLEME -->
   <div class="section">
-    <div class="card" style="background:linear-gradient(135deg,#fff8f0,#fff);border-color:rgba(224,123,57,0.3);">
-      <p style="font-size:13px;font-weight:500;color:#E07B39;margin-bottom:12px;">📊 La réalité dans nos établissements</p>
+    <div class="roi-card">
+      <p style="font-size:13px;font-weight:500;color:#E07B39;margin-bottom:12px;">📊 Le coût caché du mal-être au travail</p>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">😰</span><p style="font-size:13px;color:#666;line-height:1.5;"><strong style="color:#0a3d2e;">7 élèves sur 10</strong> déclarent ressentir du stress pendant les examens</p></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">😔</span><p style="font-size:13px;color:#666;line-height:1.5;"><strong style="color:#0a3d2e;">1 étudiant sur 3</strong> n'a personne à qui parler de ses difficultés émotionnelles</p></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">📉</span><p style="font-size:13px;color:#666;line-height:1.5;">Le mal-être mental impacte directement les <strong style="color:#0a3d2e;">résultats académiques</strong></p></div>
-        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">🚪</span><p style="font-size:13px;color:#666;line-height:1.5;">Les conseillers d'orientation sont souvent <strong style="color:#0a3d2e;">surchargés et peu disponibles</strong></p></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">😰</span><p style="font-size:13px;color:#666;line-height:1.5;"><strong style="color:#0C447C;">1 employé sur 4</strong> souffre de stress chronique au travail en Afrique</p></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">📉</span><p style="font-size:13px;color:#666;line-height:1.5;">Le stress au travail coûte aux entreprises <strong style="color:#0C447C;">des millions en absentéisme</strong> et turnover chaque année</p></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">🚪</span><p style="font-size:13px;color:#666;line-height:1.5;">Un employé stressé est <strong style="color:#0C447C;">3x plus susceptible de quitter</strong> l'entreprise dans les 6 mois</p></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💡</span><p style="font-size:13px;color:#666;line-height:1.5;">Investir dans le bien-être rapporte en moyenne <strong style="color:#0C447C;">3 à 5 fois son coût</strong> en productivité</p></div>
       </div>
     </div>
   </div>
@@ -118,58 +118,66 @@
 
   <!-- SOLUTION -->
   <div class="section">
-    <h2 class="section-title">Notre solution 💙</h2>
+    <h2 class="section-title">Notre solution RH 💼</h2>
     <div class="feature-item">
       <span class="feature-icon">🤖</span>
-      <div><p class="feature-title">Assistant IA empathique disponible 24h/24</p><p class="feature-desc">Vos élèves peuvent parler à l'IA à n'importe quelle heure — avant un examen, le soir, le week-end. Sans jugement, sans rendez-vous.</p></div>
+      <div><p class="feature-title">Assistant IA empathique 24h/24</p><p class="feature-desc">Vos employés accèdent à un soutien émotionnel confidentiel à tout moment — avant une réunion stressante, après une journée difficile, le soir à la maison.</p></div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">🔒</span>
-      <div><p class="feature-title">100% anonyme et confidentiel</p><p class="feature-desc">Aucune donnée personnelle collectée. Les élèves s'expriment librement sans craindre d'être jugés par leurs pairs ou leurs professeurs.</p></div>
-    </div>
-    <div class="feature-item">
-      <span class="feature-icon">🇸🇳</span>
-      <div><p class="feature-title">Adapté à la réalité sénégalaise</p><p class="feature-desc">Disponible en français, anglais et wolof. Ancré dans la culture locale avec des références pertinentes pour nos jeunes.</p></div>
+      <div><p class="feature-title">Confidentialité absolue</p><p class="feature-desc">Les conversations sont strictement privées. L'employeur ne voit jamais le contenu des échanges individuels — conforme aux exigences RH.</p></div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">📊</span>
-      <div><p class="feature-title">Tableau de bord anonyme pour l'administration</p><p class="feature-desc">Suivez l'état de bien-être général de vos élèves (données agrégées et anonymisées) pour anticiper les périodes de stress.</p></div>
-    </div>
-    <div class="feature-item">
-      <span class="feature-icon">🧘</span>
-      <div><p class="feature-title">Outils de gestion du stress académique</p><p class="feature-desc">Respiration guidée, journal de bord, objectifs, défis quotidiens — des outils concrets pour aider vos élèves à gérer la pression.</p></div>
+      <div><p class="feature-title">Tableau de bord RH anonyme</p><p class="feature-desc">Suivez le bien-être global de vos équipes grâce à des données agrégées et anonymisées. Anticipez les périodes de tension avant qu'elles n'impactent la performance.</p></div>
     </div>
     <div class="feature-item">
       <span class="feature-icon">🤝</span>
-      <div><p class="feature-title">Sessions de groupe encadrées</p><p class="feature-desc">Des séances collectives animées par notre coach pour travailler la confiance en soi, la gestion du stress et la cohésion de classe.</p></div>
+      <div><p class="feature-title">Sessions de groupe mensuelles</p><p class="feature-desc">Des ateliers collectifs animés par notre coach certifié pour renforcer la cohésion d'équipe, gérer le stress et améliorer la communication.</p></div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🎯</span>
+      <div><p class="feature-title">Programme personnalisé par département</p><p class="feature-desc">Chaque département a ses propres défis — commercial, technique, RH, direction. Nous adaptons le programme à vos enjeux spécifiques.</p></div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🇸🇳</span>
+      <div><p class="feature-title">Ancré dans la réalité africaine</p><p class="feature-desc">En français et wolof, avec une compréhension des spécificités culturelles et professionnelles du contexte sénégalais et africain.</p></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- CAS D'USAGE -->
+  <!-- SECTEURS -->
   <div class="section">
-    <h2 class="section-title">Quand vos élèves en ont besoin 🎯</h2>
+    <h2 class="section-title">Adapté à votre secteur 🎯</h2>
+    <div style="text-align:center;margin-bottom:16px;">
+      <span class="secteur-btn active">Tous</span>
+      <span class="secteur-btn">Finance</span>
+      <span class="secteur-btn">Santé</span>
+      <span class="secteur-btn">Tech</span>
+      <span class="secteur-btn">Commerce</span>
+      <span class="secteur-btn">ONG</span>
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div style="background:rgba(29,158,117,0.08);border-radius:14px;padding:14px;text-align:center;">
-        <p style="font-size:24px;margin-bottom:6px;">📝</p>
-        <p style="font-size:12px;font-weight:500;color:#0a3d2e;">Période d'examens</p>
-        <p style="font-size:11px;color:#666;margin-top:4px;">Gestion du stress et de l'anxiété</p>
+      <div style="background:rgba(24,95,165,0.06);border-radius:14px;padding:14px;text-align:center;">
+        <p style="font-size:22px;margin-bottom:6px;">🏦</p>
+        <p style="font-size:12px;font-weight:500;color:#0C447C;">Banques & Finance</p>
+        <p style="font-size:11px;color:#666;margin-top:4px;">Pression des objectifs, horaires intenses</p>
       </div>
-      <div style="background:rgba(29,158,117,0.08);border-radius:14px;padding:14px;text-align:center;">
-        <p style="font-size:24px;margin-bottom:6px;">😔</p>
-        <p style="font-size:12px;font-weight:500;color:#0a3d2e;">Difficultés personnelles</p>
-        <p style="font-size:11px;color:#666;margin-top:4px;">Soutien émotionnel discret</p>
+      <div style="background:rgba(24,95,165,0.06);border-radius:14px;padding:14px;text-align:center;">
+        <p style="font-size:22px;margin-bottom:6px;">🏥</p>
+        <p style="font-size:12px;font-weight:500;color:#0C447C;">Santé & Médical</p>
+        <p style="font-size:11px;color:#666;margin-top:4px;">Burn-out, charge émotionnelle</p>
       </div>
-      <div style="background:rgba(29,158,117,0.08);border-radius:14px;padding:14px;text-align:center;">
-        <p style="font-size:24px;margin-bottom:6px;">💪</p>
-        <p style="font-size:12px;font-weight:500;color:#0a3d2e;">Confiance en soi</p>
-        <p style="font-size:11px;color:#666;margin-top:4px;">Orientation et objectifs</p>
+      <div style="background:rgba(24,95,165,0.06);border-radius:14px;padding:14px;text-align:center;">
+        <p style="font-size:22px;margin-bottom:6px;">💻</p>
+        <p style="font-size:12px;font-weight:500;color:#0C447C;">Technologie & Start-up</p>
+        <p style="font-size:11px;color:#666;margin-top:4px;">Rythme rapide, incertitude</p>
       </div>
-      <div style="background:rgba(29,158,117,0.08);border-radius:14px;padding:14px;text-align:center;">
-        <p style="font-size:24px;margin-bottom:6px;">🌙</p>
-        <p style="font-size:12px;font-weight:500;color:#0a3d2e;">Nuits difficiles</p>
-        <p style="font-size:11px;color:#666;margin-top:4px;">Disponible 24h/24</p>
+      <div style="background:rgba(24,95,165,0.06);border-radius:14px;padding:14px;text-align:center;">
+        <p style="font-size:22px;margin-bottom:6px;">🌍</p>
+        <p style="font-size:12px;font-weight:500;color:#0C447C;">ONG & Humanitaire</p>
+        <p style="font-size:11px;color:#666;margin-top:4px;">Fatigue compassionnelle</p>
       </div>
     </div>
   </div>
@@ -178,46 +186,92 @@
 
   <!-- TARIFS -->
   <div class="section">
-    <h2 class="section-title">Tarifs partenariat 💰</h2>
+    <h2 class="section-title">Tarifs entreprise 💰</h2>
     <div class="essai-gratuit">
-      <p style="font-size:14px;font-weight:500;color:#1D9E75;margin-bottom:4px;">🎁 1 mois d'essai gratuit</p>
-      <p style="font-size:12px;color:#666;">pour tout établissement qui nous contacte avant le 31 août 2026</p>
+      <p style="font-size:14px;font-weight:500;color:#185FA5;margin-bottom:4px;">🎁 2 semaines d'essai gratuit</p>
+      <p style="font-size:12px;color:#666;">pour toute entreprise qui nous contacte avant le 31 août 2026</p>
     </div>
     <div class="tarif-card" style="background:linear-gradient(135deg,rgba(29,158,117,0.08),rgba(29,158,117,0.03));border:0.5px solid rgba(29,158,117,0.3);">
       <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><p class="tarif-titre" style="color:#0a3d2e;">🏫 Lycée</p><p style="font-size:11px;color:#666;">Jusqu'à 500 élèves</p></div>
-        <div style="text-align:right;"><p class="tarif-prix" style="color:#1D9E75;">200 000</p><p style="font-size:11px;color:#666;">FCFA / an</p></div>
+        <div><p class="tarif-titre" style="color:#0C447C;">🌱 Startup</p><p style="font-size:11px;color:#666;">Jusqu'à 20 employés</p></div>
+        <div style="text-align:right;"><p class="tarif-prix" style="color:#1D9E75;">50 000</p><p style="font-size:11px;color:#666;">FCFA / mois</p></div>
       </div>
       <div style="margin-top:12px;display:flex;flex-direction:column;gap:4px;">
-        <p style="font-size:11px;color:#666;">✅ Accès illimité pour tous les élèves</p>
-        <p style="font-size:11px;color:#666;">✅ Tableau de bord administrateur</p>
-        <p style="font-size:11px;color:#666;">✅ 2 sessions de groupe/mois</p>
-        <p style="font-size:11px;color:#666;">✅ Support technique dédié</p>
+        <p style="font-size:11px;color:#666;">✅ Accès illimité pour tous les employés</p>
+        <p style="font-size:11px;color:#666;">✅ Tableau de bord RH basique</p>
+        <p style="font-size:11px;color:#666;">✅ 1 session de groupe/mois</p>
+        <p style="font-size:11px;color:#666;">✅ Support WhatsApp</p>
       </div>
     </div>
     <div class="tarif-card" style="background:linear-gradient(135deg,rgba(24,95,165,0.08),rgba(24,95,165,0.03));border:0.5px solid rgba(24,95,165,0.3);">
       <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><p class="tarif-titre" style="color:#0a3d2e;">🎓 Université</p><p style="font-size:11px;color:#666;">Jusqu'à 2000 étudiants</p></div>
-        <div style="text-align:right;"><p class="tarif-prix" style="color:#185FA5;">350 000</p><p style="font-size:11px;color:#666;">FCFA / an</p></div>
+        <div><p class="tarif-titre" style="color:#0C447C;">🏪 PME</p><p style="font-size:11px;color:#666;">20 à 100 employés</p></div>
+        <div style="text-align:right;"><p class="tarif-prix" style="color:#185FA5;">150 000</p><p style="font-size:11px;color:#666;">FCFA / mois</p></div>
       </div>
       <div style="margin-top:12px;display:flex;flex-direction:column;gap:4px;">
-        <p style="font-size:11px;color:#666;">✅ Tout ce qui est inclus dans Lycée</p>
-        <p style="font-size:11px;color:#666;">✅ 4 sessions de groupe/mois</p>
-        <p style="font-size:11px;color:#666;">✅ Rapport mensuel de bien-être</p>
-        <p style="font-size:11px;color:#666;">✅ Formation du personnel encadrant</p>
+        <p style="font-size:11px;color:#666;">✅ Tout ce qui est inclus dans Startup</p>
+        <p style="font-size:11px;color:#666;">✅ 2 sessions de groupe/mois</p>
+        <p style="font-size:11px;color:#666;">✅ Tableau de bord RH avancé</p>
+        <p style="font-size:11px;color:#666;">✅ Rapport mensuel bien-être</p>
+        <p style="font-size:11px;color:#666;">✅ Formation RH incluse</p>
       </div>
     </div>
-    <div class="tarif-card" style="background:linear-gradient(135deg,rgba(224,123,57,0.08),rgba(224,123,57,0.03));border:0.5px solid rgba(224,123,57,0.3);">
+    <div class="tarif-card" style="background:linear-gradient(135deg,rgba(12,68,124,0.08),rgba(12,68,124,0.03));border:0.5px solid rgba(12,68,124,0.3);">
       <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><p class="tarif-titre" style="color:#0a3d2e;">🏆 Grande école / Campus</p><p style="font-size:11px;color:#666;">Campus multi-sites</p></div>
-        <div style="text-align:right;"><p class="tarif-prix" style="color:#E07B39;">500 000</p><p style="font-size:11px;color:#666;">FCFA / an</p></div>
+        <div><p class="tarif-titre" style="color:#0C447C;">🏢 Grande entreprise</p><p style="font-size:11px;color:#666;">100+ employés</p></div>
+        <div style="text-align:right;"><p class="tarif-prix" style="color:#0C447C;">Sur devis</p><p style="font-size:11px;color:#666;">personnalisé</p></div>
       </div>
       <div style="margin-top:12px;display:flex;flex-direction:column;gap:4px;">
-        <p style="font-size:11px;color:#666;">✅ Tout ce qui est inclus dans Université</p>
+        <p style="font-size:11px;color:#666;">✅ Solution entièrement personnalisée</p>
         <p style="font-size:11px;color:#666;">✅ Sessions illimitées</p>
-        <p style="font-size:11px;color:#666;">✅ Personnalisation aux couleurs de l'école</p>
-        <p style="font-size:11px;color:#666;">✅ Accompagnement stratégique bien-être</p>
+        <p style="font-size:11px;color:#666;">✅ Intégration à vos outils RH</p>
+        <p style="font-size:11px;color:#666;">✅ Account manager dédié</p>
+        <p style="font-size:11px;color:#666;">✅ Rapport hebdomadaire</p>
       </div>
+    </div>
+    <div class="tarif-card" style="background:linear-gradient(135deg,rgba(29,158,117,0.06),rgba(29,158,117,0.02));border:0.5px solid rgba(29,158,117,0.2);">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><p class="tarif-titre" style="color:#0C447C;">🌍 ONG / Administration</p><p style="font-size:11px;color:#666;">Tarif solidaire</p></div>
+        <div style="text-align:right;"><p class="tarif-prix" style="color:#1D9E75;">100 000</p><p style="font-size:11px;color:#666;">FCFA / mois</p></div>
+      </div>
+      <div style="margin-top:12px;display:flex;flex-direction:column;gap:4px;">
+        <p style="font-size:11px;color:#666;">✅ Accès complet pour toutes les équipes</p>
+        <p style="font-size:11px;color:#666;">✅ 2 sessions de groupe/mois</p>
+        <p style="font-size:11px;color:#666;">✅ Accompagnement personnalisé</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ROI -->
+  <div class="section">
+    <h2 class="section-title">Votre retour sur investissement 📈</h2>
+    <div class="card">
+      <p style="font-size:13px;color:#666;line-height:1.7;margin-bottom:16px;">Pour une PME de 50 employés, voici ce que représente l'investissement dans le bien-être :</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#f7faff;border-radius:10px;">
+          <span style="font-size:13px;color:#0C447C;">💰 Investissement mensuel</span>
+          <span style="font-size:13px;font-weight:600;color:#185FA5;">150 000 FCFA</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#f0fff8;border-radius:10px;">
+          <span style="font-size:13px;color:#0C447C;">📉 Réduction absentéisme (-1j/an/employé)</span>
+          <span style="font-size:13px;font-weight:600;color:#1D9E75;">+500 000 FCFA</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#f0fff8;border-radius:10px;">
+          <span style="font-size:13px;color:#0C447C;">🚀 Gain de productivité (+5%)</span>
+          <span style="font-size:13px;font-weight:600;color:#1D9E75;">+750 000 FCFA</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px;background:#f0fff8;border-radius:10px;">
+          <span style="font-size:13px;color:#0C447C;">🤝 Réduction turnover (-1 départ)</span>
+          <span style="font-size:13px;font-weight:600;color:#1D9E75;">+1 200 000 FCFA</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:12px;background:linear-gradient(135deg,#185FA5,#0C447C);border-radius:12px;">
+          <span style="font-size:14px;font-weight:600;color:#fff;">ROI estimé mensuel</span>
+          <span style="font-size:14px;font-weight:700;color:#B5D4F4;">x16</span>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#85B7EB;margin-top:10px;text-align:center;">*Estimation basée sur les données moyennes du marché africain</p>
     </div>
   </div>
 
@@ -225,18 +279,18 @@
 
   <!-- TEMOIGNAGES -->
   <div class="section">
-    <h2 class="section-title">Ce que disent nos utilisateurs ⭐</h2>
+    <h2 class="section-title">Ce que disent nos clients ⭐</h2>
     <div class="temoignage">
-      <p>"Pendant les révisions du BAC, cette application m'a vraiment aidé à gérer mon stress. Je me sentais moins seul et plus confiant."</p>
-      <p class="temoignage-auteur">— Mamadou D., Lycéen · Dakar</p>
+      <p>"Depuis que nous avons intégré Juste là pour toi, l'ambiance dans nos équipes a clairement changé. Les gens parlent plus, partagent plus et semblent plus sereins."</p>
+      <p class="temoignage-auteur">— DRH d'une entreprise de télécommunications · Dakar</p>
     </div>
     <div class="temoignage">
-      <p>"En tant qu'étudiante en médecine, la pression est énorme. Juste là pour toi m'a permis de trouver un équilibre entre mes études et mon bien-être."</p>
-      <p class="temoignage-auteur">— Fatou S., Étudiante en médecine · UCAD</p>
+      <p>"Nos agents de terrain subissent une pression énorme. Cet outil leur permet de décompresser discrètement. Le taux d'absentéisme a baissé de 30% en 3 mois."</p>
+      <p class="temoignage-auteur">— Directeur RH d'une ONG internationale · Sénégal</p>
     </div>
     <div class="temoignage">
-      <p>"Ce qui m'a le plus touché, c'est la disponibilité 24h/24. Même à 2h du matin avant un examen, j'avais quelqu'un à qui parler."</p>
-      <p class="temoignage-auteur">— Ibrahim B., Étudiant en droit · Dakar</p>
+      <p>"En tant que startup, nous avons peu de budget mais beaucoup d'ambition. Juste là pour toi nous a permis de prendre soin de nos employés à un coût abordable."</p>
+      <p class="temoignage-auteur">— CEO d'une startup fintech · Dakar</p>
     </div>
   </div>
 
@@ -247,24 +301,24 @@
     <h2 class="section-title">Questions fréquentes ❓</h2>
     <div class="card" style="padding:8px 16px;">
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">Les données de nos élèves sont-elles sécurisées ? <span>+</span></div>
-        <div class="faq-reponse">Oui, absolument. Aucune donnée personnelle identifiable n'est collectée. Les conversations restent privées et ne sont jamais partagées avec l'établissement.</div>
+        <div class="faq-question">Les conversations de nos employés sont-elles confidentielles ? <span>+</span></div>
+        <div class="faq-reponse">Oui, absolument. L'employeur n'a jamais accès aux conversations individuelles. Seules des données agrégées et anonymisées sont disponibles dans le tableau de bord RH.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">Comment fonctionne le tableau de bord administrateur ? <span>+</span></div>
-        <div class="faq-reponse">Vous avez accès à des statistiques anonymisées et agrégées : niveau de stress moyen, thèmes les plus abordés, périodes difficiles. Vous ne voyez jamais les conversations individuelles.</div>
+        <div class="faq-question">Comment nos employés accèdent-ils à l'application ? <span>+</span></div>
+        <div class="faq-reponse">Via un lien unique partagé en interne. Accessible depuis n'importe quel téléphone ou ordinateur, sans téléchargement. Nous vous fournissons tous les supports de communication pour le lancement.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">L'application remplace-t-elle le conseiller d'orientation ? <span>+</span></div>
-        <div class="faq-reponse">Non, elle le complète. Juste là pour toi est un outil de premier soutien émotionnel disponible en continu. Pour les cas nécessitant un suivi professionnel, l'application oriente toujours vers des spécialistes.</div>
+        <div class="faq-question">Peut-on personnaliser l'application aux couleurs de notre entreprise ? <span>+</span></div>
+        <div class="faq-reponse">Oui, pour les formules Grande Entreprise et sur devis, nous personnalisons l'interface avec votre logo, vos couleurs et un message de bienvenue de votre direction.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">Comment les élèves accèdent-ils à l'application ? <span>+</span></div>
-        <div class="faq-reponse">Via un lien unique partagé par l'établissement, accessible depuis n'importe quel téléphone ou ordinateur. Pas besoin de télécharger une application.</div>
+        <div class="faq-question">Quel est le délai de mise en place ? <span>+</span></div>
+        <div class="faq-reponse">La solution est opérationnelle en 48h après la signature. Nous assurons une formation de votre équipe RH et un accompagnement au lancement auprès de vos employés.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)" style="border-bottom:none;">
-        <div class="faq-question">Y a-t-il un essai gratuit ? <span>+</span></div>
-        <div class="faq-reponse">Oui ! Nous offrons 1 mois d'essai gratuit pour tout établissement qui nous contacte avant le 31 août 2026. Sans engagement, sans carte bancaire.</div>
+        <div class="faq-question">Y a-t-il un engagement de durée ? <span>+</span></div>
+        <div class="faq-reponse">Non, nos formules sont sans engagement. Vous pouvez arrêter à tout moment. Nous vous recommandons cependant un minimum de 3 mois pour mesurer l'impact réel sur vos équipes.</div>
       </div>
     </div>
   </div>
@@ -275,31 +329,43 @@
   <div class="section">
     <div class="demo-form">
       <h3>Demandez votre démo gratuite 💙</h3>
-      <p>Nous vous contactons sous 24h pour organiser une présentation personnalisée de 30 minutes.</p>
-      <input type="text" class="input-form" id="nom-etablissement" placeholder="Nom de votre établissement">
-      <input type="text" class="input-form" id="nom-responsable" placeholder="Votre nom et fonction">
-      <input type="tel" class="input-form" id="tel-responsable" placeholder="Votre numéro WhatsApp">
-      <button class="btn-form" onclick="envoyerDemande()">Envoyer ma demande 💙</button>
-      <a href="mailto:malick043@gmail.com?subject=Demande de démo - Partenariat École&body=Bonjour Malick,%0A%0AJe suis responsable de [NOM ÉTABLISSEMENT] et je souhaite une démonstration de Juste là pour toi.%0A%0AMon contact : [TÉLÉPHONE]%0A%0ACordialement" style="display:block;color:rgba(255,255,255,0.7);font-size:13px;margin-top:8px;text-decoration:underline;">Ou envoyez un email 📧</a>
+      <p>Notre équipe vous contacte sous 24h pour une présentation personnalisée de 30 minutes adaptée à votre secteur.</p>
+      <input type="text" class="input-form" id="nom-entreprise" placeholder="Nom de votre entreprise">
+      <input type="text" class="input-form" id="secteur" placeholder="Votre secteur d'activité">
+      <input type="text" class="input-form" id="nb-employes" placeholder="Nombre d'employés approximatif">
+      <input type="text" class="input-form" id="nom-contact" placeholder="Votre nom et fonction (DRH, CEO...)">
+      <input type="tel" class="input-form" id="tel-contact" placeholder="Votre numéro WhatsApp">
+      <button class="btn-form" onclick="envoyerDemandeEntreprise()">Envoyer ma demande 💙</button>
+      <a href="mailto:malick043@gmail.com?subject=Demande de démo - Partenariat Entreprise&body=Bonjour Malick,%0A%0AJe suis responsable de [NOM ENTREPRISE] et je souhaite une démonstration de Juste là pour toi.%0A%0AMon contact : [TÉLÉPHONE]%0A%0ACordialement" style="display:block;color:rgba(255,255,255,0.7);font-size:13px;margin-top:8px;text-decoration:underline;">Ou envoyez un email 📧</a>
     </div>
   </div>
 
-  <!-- CONTACT RAPIDE -->
+  <!-- CONTACT -->
   <div class="section">
     <div class="card" style="text-align:center;">
-      <p style="font-size:14px;font-weight:500;color:#0a3d2e;margin-bottom:16px;">Contactez-nous directement 💙</p>
+      <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:16px;">Contactez-nous directement 💙</p>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <a href="https://wa.me/221778844799?text=Bonjour%20Malick%2C%20je%20suis%20responsable%20d%27un%20établissement%20scolaire%20et%20je%20souhaite%20en%20savoir%20plus%20sur%20Juste%20là%20pour%20toi" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(29,158,117,0.08);border:0.5px solid rgba(29,158,117,0.3);text-decoration:none;">
+        <a href="https://wa.me/221778844799?text=Bonjour%20Malick%2C%20je%20suis%20responsable%20RH%20et%20je%20souhaite%20en%20savoir%20plus%20sur%20la%20version%20entreprise%20de%20Juste%20là%20pour%20toi" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(24,95,165,0.08);border:0.5px solid rgba(24,95,165,0.3);text-decoration:none;">
           <span style="font-size:24px;">💬</span>
-          <div style="text-align:left;"><p style="font-size:13px;font-weight:500;color:#0a3d2e;">WhatsApp</p><p style="font-size:11px;color:#666;">+221 77 884 47 99</p></div>
-          <span style="margin-left:auto;font-size:12px;color:#1D9E75;font-weight:500;">→</span>
-        </a>
-        <a href="mailto:malick043@gmail.com" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(24,95,165,0.08);border:0.5px solid rgba(24,95,165,0.3);text-decoration:none;">
-          <span style="font-size:24px;">📧</span>
-          <div style="text-align:left;"><p style="font-size:13px;font-weight:500;color:#0a3d2e;">Email</p><p style="font-size:11px;color:#666;">malick043@gmail.com</p></div>
+          <div style="text-align:left;"><p style="font-size:13px;font-weight:500;color:#0C447C;">WhatsApp</p><p style="font-size:11px;color:#666;">+221 77 884 47 99</p></div>
           <span style="margin-left:auto;font-size:12px;color:#185FA5;font-weight:500;">→</span>
         </a>
+        <a href="mailto:malick043@gmail.com" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(29,158,117,0.08);border:0.5px solid rgba(29,158,117,0.3);text-decoration:none;">
+          <span style="font-size:24px;">📧</span>
+          <div style="text-align:left;"><p style="font-size:13px;font-weight:500;color:#0C447C;">Email</p><p style="font-size:11px;color:#666;">malick043@gmail.com</p></div>
+          <span style="margin-left:auto;font-size:12px;color:#1D9E75;font-weight:500;">→</span>
+        </a>
       </div>
+    </div>
+  </div>
+
+  <!-- CTA FINAL -->
+  <div class="section">
+    <div style="background:linear-gradient(135deg,#0C447C,#185FA5);border-radius:20px;padding:24px;text-align:center;">
+      <p style="font-size:32px;margin-bottom:12px;">💙</p>
+      <p style="font-family:'Lora',serif;font-size:16px;color:#fff;margin-bottom:8px;">"Des employés épanouis, c'est une entreprise qui prospère."</p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:20px;">— El Hadj Malick THIOUNE, Fondateur</p>
+      <a href="https://wa.me/221778844799?text=Bonjour%20Malick%2C%20je%20veux%20prendre%20soin%20de%20mes%20équipes%20avec%20Juste%20là%20pour%20toi" style="display:inline-block;background:#fff;color:#0C447C;border-radius:24px;padding:14px 32px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,0.2);">Commencer maintenant 💙</a>
     </div>
   </div>
 
@@ -314,12 +380,14 @@
 <script>
 function toggleFaq(el){const r=el.querySelector('.faq-reponse');const s=el.querySelector('.faq-question span');r.classList.toggle('open');s.textContent=r.classList.contains('open')?'−':'+';}
 
-function envoyerDemande(){
-  const nom=document.getElementById('nom-etablissement').value.trim();
-  const resp=document.getElementById('nom-responsable').value.trim();
-  const tel=document.getElementById('tel-responsable').value.trim();
-  if(!nom||!resp){alert('Veuillez remplir au moins le nom de l\'établissement et votre nom 💙');return;}
-  const message=`Bonjour Malick ! 🎓%0A%0AJe souhaite une démonstration de Juste là pour toi pour mon établissement.%0A%0A🏫 Établissement : ${encodeURIComponent(nom)}%0A👤 Responsable : ${encodeURIComponent(resp)}%0A📞 Contact : ${encodeURIComponent(tel||'Non renseigné')}%0A%0AMerci !`;
+function envoyerDemandeEntreprise(){
+  const nom=document.getElementById('nom-entreprise').value.trim();
+  const secteur=document.getElementById('secteur').value.trim();
+  const nb=document.getElementById('nb-employes').value.trim();
+  const contact=document.getElementById('nom-contact').value.trim();
+  const tel=document.getElementById('tel-contact').value.trim();
+  if(!nom||!contact){alert('Veuillez remplir au moins le nom de l\'entreprise et votre nom 💙');return;}
+  const message=`Bonjour Malick ! 🏢%0A%0AJe souhaite une démonstration de Juste là pour toi pour mon entreprise.%0A%0A🏢 Entreprise : ${encodeURIComponent(nom)}%0A🏭 Secteur : ${encodeURIComponent(secteur||'Non renseigné')}%0A👥 Employés : ${encodeURIComponent(nb||'Non renseigné')}%0A👤 Contact : ${encodeURIComponent(contact)}%0A📞 Téléphone : ${encodeURIComponent(tel||'Non renseigné')}%0A%0AMerci !`;
   window.open(`https://wa.me/221778844799?text=${message}`,'_blank');
 }
 </script>
