@@ -31,7 +31,7 @@
     .splash-share { background: none; border: none; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     body:not(.dark) .splash-share { color: #85B7EB; }
     body.dark .splash-share { color: rgba(255,255,255,0.4); }
-    #accueil { position: fixed; inset: 0; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px 80px; text-align: center; }
+    #accueil { position: fixed; inset: 0; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px 80px; text-align: center; overflow-y: auto; }
     body:not(.dark) #accueil { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
     body.dark #accueil { background: linear-gradient(135deg, #0a1628, #112233); }
     .accueil-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(181,212,244,0.5); margin-bottom: 20px; box-shadow: 0 4px 20px rgba(24,95,165,0.2); }
@@ -50,7 +50,7 @@
     .btn-dark-toggle { background: none; border: 1.5px solid rgba(181,212,244,0.4); border-radius: 20px; padding: 8px 20px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-bottom: 14px; }
     body:not(.dark) .btn-dark-toggle { color: #85B7EB; }
     body.dark .btn-dark-toggle { color: rgba(181,212,244,0.6); }
-    .accueil-footer { position: absolute; bottom: 70px; font-size: 11px; font-style: italic; font-family: 'Lora', serif; }
+    .accueil-footer { font-size: 11px; font-style: italic; font-family: 'Lora', serif; margin-top: 10px; }
     body:not(.dark) .accueil-footer { color: #B5D4F4; }
     body.dark .accueil-footer { color: rgba(181,212,244,0.3); }
     #nav-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; display: none; border-top: 0.5px solid #B5D4F4; padding: 8px 0 12px; }
@@ -200,6 +200,9 @@
     .therapie-question { padding: 14px; border-radius: 12px; background: linear-gradient(135deg, rgba(24,95,165,0.08), rgba(24,95,165,0.03)); border: 0.5px solid #B5D4F4; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; }
     .therapie-question:hover { background: rgba(24,95,165,0.12); }
     .therapie-question p { font-family: 'Lora', serif; font-size: 14px; color: #0C447C; line-height: 1.6; }
+    .story-card { width: 100%; border-radius: 20px; padding: 24px; text-align: center; cursor: pointer; position: relative; overflow: hidden; margin-bottom: 10px; }
+    .spirituel-btn { border: 2px solid; border-radius: 16px; padding: 12px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; text-align: center; flex: 1; transition: all 0.2s; }
+    .spirituel-btn.selected { color: #fff; }
     #mdp-screen { background: linear-gradient(160deg, #E6F1FB, #f0f6ff, #fff); }
     body.dark #mdp-screen { background: linear-gradient(135deg, #0a1628, #112233); }
     body.dark #mdp-user-input, body.dark #mdp-user-confirm { background: rgba(255,255,255,0.07); color: #e8f2ff; border-color: rgba(181,212,244,0.2); }
@@ -265,7 +268,7 @@
 </div>
 
 <!-- ACCUEIL -->
-<div id="accueil" style="display:none; position:fixed; inset:0; z-index:10; flex-direction:column; align-items:center; justify-content:center; padding:30px 24px 80px; text-align:center;">
+<div id="accueil" style="display:none; position:fixed; inset:0; z-index:10; flex-direction:column; align-items:center; justify-content:center; padding:30px 24px 80px; text-align:center; overflow-y:auto;">
   <img src="icon.png" class="accueil-logo" alt="Logo">
   <h1 class="accueil-titre">Juste là pour toi</h1>
   <p class="accueil-sous">Ton espace bienveillant de bien-être</p>
@@ -278,9 +281,11 @@
     <button onclick="changerLangue('en')" id="lang-en" style="background:none;border:1.5px solid #B5D4F4;color:#85B7EB;border-radius:16px;padding:6px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🇬🇧 English</button>
   </div>
   <button class="btn-dark-toggle" onclick="toggleDark()" id="dark-btn">🌙 Mode sombre</button>
-  <div style="display:flex;gap:8px;margin-bottom:10px;">
-    <button onclick="inviterAmi()" style="background:none;border:1.5px solid #1D9E75;color:#1D9E75;border-radius:24px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🤝 Inviter</button>
-    <button onclick="ouvrirSec('profil');fermerMenu();afficherProfil()" style="background:none;border:1.5px solid #185FA5;color:#185FA5;border-radius:24px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">👤 Profil</button>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;">
+    <button onclick="inviterAmi()" style="background:none;border:1.5px solid #1D9E75;color:#1D9E75;border-radius:24px;padding:8px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">🤝 Inviter</button>
+    <button onclick="ouvrirSec('profil');afficherProfil()" style="background:none;border:1.5px solid #185FA5;color:#185FA5;border-radius:24px;padding:8px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">👤 Profil</button>
+    <button onclick="ouvrirSec('stories');chargerStories()" style="background:none;border:1.5px solid #9B59B6;color:#9B59B6;border-radius:24px;padding:8px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">🎭 Stories</button>
+    <button onclick="ouvrirSec('spirituel');chargerCitationSpirituele()" style="background:none;border:1.5px solid #E07B39;color:#E07B39;border-radius:24px;padding:8px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">🕌 Spirituel</button>
   </div>
   <p class="accueil-footer">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p>
 </div>
@@ -309,11 +314,19 @@
       <div class="drawer-item" onclick="ouvrirSec('profil');fermerMenu();afficherProfil()"><span class="drawer-icon">👤</span><span class="drawer-label">Mon profil</span></div>
       <div class="drawer-item" onclick="ouvrirSec('therapie');fermerMenu();chargerTherapie()"><span class="drawer-icon">🗣️</span><span class="drawer-label">Thérapie</span></div>
     </div>
-    <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Communauté</p>
+    <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Communauté & Plus</p>
     <div class="drawer-grid" style="margin-bottom:14px;">
       <div class="drawer-item" onclick="ouvrirSec('communaute');fermerMenu();chargerCommunaute()"><span class="drawer-icon">🌍</span><span class="drawer-label">Communauté</span></div>
       <div class="drawer-item" onclick="ouvrirSec('groupe-premium');fermerMenu()"><span class="drawer-icon">🤝</span><span class="drawer-label">Groupe</span></div>
       <div class="drawer-item" onclick="ouvrirSec('temoignages-page');fermerMenu();chargerTemoignages()"><span class="drawer-icon">⭐</span><span class="drawer-label">Témoignages</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('stories');fermerMenu();chargerStories()"><span class="drawer-icon">🎭</span><span class="drawer-label">Stories</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('evenements');fermerMenu()"><span class="drawer-icon">🎪</span><span class="drawer-label">Événements</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('spirituel');fermerMenu();chargerCitationSpirituele()"><span class="drawer-icon">🕌</span><span class="drawer-label">Spirituel</span></div>
+    </div>
+    <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Partenariats</p>
+    <div class="drawer-grid" style="margin-bottom:14px;">
+      <div class="drawer-item" onclick="ouvrirSec('ecole');fermerMenu()"><span class="drawer-icon">🏫</span><span class="drawer-label">Écoles</span></div>
+      <div class="drawer-item" onclick="ouvrirSec('entreprise');fermerMenu()"><span class="drawer-icon">🏢</span><span class="drawer-label">Entreprises</span></div>
     </div>
     <p style="font-size:11px;color:#85B7EB;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding:0 4px;">Informations</p>
     <div class="drawer-grid">
@@ -376,6 +389,200 @@
     <div class="card">
       <p class="card-titre">📊 Mes statistiques globales</p>
       <div id="profil-stats" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STORIES BIEN-ETRE -->
+<div class="page-sec" id="stories">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('stories')">← Retour</button><h2>🎭 Stories bien-être</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#9B59B6,#6C3483);border:none;">
+      <p style="font-size:32px;margin-bottom:8px;">🎭</p>
+      <p style="font-family:'Lora',serif;font-size:16px;color:#fff;margin-bottom:6px;">Partage ton humeur du jour</p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.6;">Une belle carte visuelle à partager 💙</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Crée ta story du jour</p>
+      <p style="font-size:12px;color:#85B7EB;margin-bottom:12px;">Comment te sens-tu aujourd'hui ?</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;">
+        <div onclick="selStory(this,'😊','Rayonnant(e)','#1D9E75')" style="cursor:pointer;padding:12px;border-radius:14px;border:2px solid #E6F1FB;text-align:center;transition:all 0.2s;flex:1;min-width:80px;">
+          <p style="font-size:28px;">😊</p><p style="font-size:11px;color:#85B7EB;margin-top:4px;">Rayonnant(e)</p>
+        </div>
+        <div onclick="selStory(this,'😌','Serein(e)','#185FA5')" style="cursor:pointer;padding:12px;border-radius:14px;border:2px solid #E6F1FB;text-align:center;transition:all 0.2s;flex:1;min-width:80px;">
+          <p style="font-size:28px;">😌</p><p style="font-size:11px;color:#85B7EB;margin-top:4px;">Serein(e)</p>
+        </div>
+        <div onclick="selStory(this,'😔','Mélancolique','#5B8CDB')" style="cursor:pointer;padding:12px;border-radius:14px;border:2px solid #E6F1FB;text-align:center;transition:all 0.2s;flex:1;min-width:80px;">
+          <p style="font-size:28px;">😔</p><p style="font-size:11px;color:#85B7EB;margin-top:4px;">Mélancolique</p>
+        </div>
+        <div onclick="selStory(this,'💪','Motivé(e)','#E07B39')" style="cursor:pointer;padding:12px;border-radius:14px;border:2px solid #E6F1FB;text-align:center;transition:all 0.2s;flex:1;min-width:80px;">
+          <p style="font-size:28px;">💪</p><p style="font-size:11px;color:#85B7EB;margin-top:4px;">Motivé(e)</p>
+        </div>
+      </div>
+      <div id="story-preview" style="display:none;border-radius:20px;padding:30px;text-align:center;margin-bottom:12px;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;opacity:0.1;font-size:100px;display:flex;align-items:center;justify-content:center;" id="story-bg-emoji"></div>
+        <p style="font-size:48px;margin-bottom:8px;position:relative;" id="story-emoji-preview"></p>
+        <p style="font-family:'Lora',serif;font-size:20px;color:#fff;font-weight:500;margin-bottom:6px;position:relative;" id="story-humeur-preview"></p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.7);position:relative;" id="story-prenom-preview"></p>
+        <p style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:8px;position:relative;">Juste là pour toi 💙</p>
+      </div>
+      <button class="btn-p" id="story-partager-btn" style="display:none;" onclick="partagerStory()">Partager ma story 🎭</button>
+    </div>
+    <div class="card">
+      <p class="card-titre">Stories de la communauté</p>
+      <div id="stories-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODE SPIRITUEL -->
+<div class="page-sec" id="spirituel">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('spirituel')">← Retour</button><h2>🕌 Mode spirituel</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#E07B39,#c9610a);border:none;">
+      <p style="font-size:32px;margin-bottom:8px;">🕌</p>
+      <p style="font-family:'Lora',serif;font-size:16px;color:#fff;margin-bottom:6px;">Citations spirituelles bienveillantes</p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.6;">Pour nourrir ton âme et ton cœur 💙</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Choisis ta tradition</p>
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <div class="spirituel-btn" id="btn-islam" onclick="selSpirituel('islam')" style="border-color:#E07B39;color:#E07B39;">🌙 Islam</div>
+        <div class="spirituel-btn" id="btn-chretien" onclick="selSpirituel('chretien')" style="border-color:#185FA5;color:#185FA5;">✝️ Christianisme</div>
+        <div class="spirituel-btn" id="btn-universel" onclick="selSpirituel('universel')" style="border-color:#1D9E75;color:#1D9E75;">🌟 Universel</div>
+      </div>
+    </div>
+    <div class="card" id="citation-spirituelle-card" style="display:none;">
+      <p class="card-titre" id="spirituel-titre">Citation du jour</p>
+      <div id="citation-spirituelle-contenu" style="font-family:'Lora',serif;font-size:16px;color:#0C447C;line-height:1.9;font-style:italic;text-align:center;padding:10px 0;"></div>
+      <p id="citation-source" style="font-size:12px;color:#85B7EB;text-align:center;margin-top:8px;"></p>
+      <button class="btn-s" onclick="chargerCitationSpirituele()" style="margin-top:12px;">🔄 Nouvelle citation</button>
+      <button class="btn-p" onclick="partagerCitationSpirituele()" style="margin-top:8px;">Partager 💙</button>
+    </div>
+  </div>
+</div>
+
+<!-- EVENEMENTS -->
+<div class="page-sec" id="evenements">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('evenements')">← Retour</button><h2>🎪 Événements bien-être</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#185FA5,#1a4a7a);border:none;">
+      <p style="font-size:40px;margin-bottom:12px;">🎪</p>
+      <p style="font-family:'Lora',serif;font-size:18px;color:#fff;margin-bottom:8px;">Événements bien-être à Dakar</p>
+      <p style="font-size:12px;color:#B5D4F4;line-height:1.6;">Conférences, ateliers et retraites pour prendre soin de toi 💙</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">📅 Prochains événements</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(24,95,165,0.08),rgba(24,95,165,0.03));border:0.5px solid #B5D4F4;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+            <div><p style="font-size:14px;font-weight:500;color:#0C447C;">🎤 Conférence sur le bien-être mental</p><p style="font-size:11px;color:#85B7EB;margin-top:2px;">En ligne · Gratuit</p></div>
+            <span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:4px 10px;border-radius:10px;white-space:nowrap;">15 Juil.</span>
+          </div>
+          <p style="font-size:13px;color:#378ADD;line-height:1.5;margin-bottom:10px;">Une conférence interactive sur la gestion du stress et les outils de bien-être mental au Sénégal.</p>
+          <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20veux%20m%27inscrire%20à%20la%20conférence%20bien-être" style="display:block;background:#185FA5;color:#fff;text-align:center;padding:10px;border-radius:12px;text-decoration:none;font-size:13px;">S'inscrire gratuitement</a>
+        </div>
+        <div style="padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(29,158,117,0.08),rgba(29,158,117,0.03));border:0.5px solid rgba(29,158,117,0.3);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+            <div><p style="font-size:14px;font-weight:500;color:#0C447C;">🧘 Atelier de respiration & méditation</p><p style="font-size:11px;color:#85B7EB;margin-top:2px;">Dakar · Présentiel · 5 000 FCFA</p></div>
+            <span style="font-size:11px;background:rgba(29,158,117,0.1);color:#1D9E75;padding:4px 10px;border-radius:10px;white-space:nowrap;">22 Juil.</span>
+          </div>
+          <p style="font-size:13px;color:#378ADD;line-height:1.5;margin-bottom:10px;">Apprenez des techniques de respiration et de pleine conscience pour gérer votre stress au quotidien.</p>
+          <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20veux%20m%27inscrire%20à%20l%27atelier%20respiration" style="display:block;background:#1D9E75;color:#fff;text-align:center;padding:10px;border-radius:12px;text-decoration:none;font-size:13px;">Réserver ma place</a>
+        </div>
+        <div style="padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(224,123,57,0.08),rgba(224,123,57,0.03));border:0.5px solid rgba(224,123,57,0.3);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+            <div><p style="font-size:14px;font-weight:500;color:#0C447C;">🌿 Retraite bien-être week-end</p><p style="font-size:11px;color:#85B7EB;margin-top:2px;">Saly · 2 jours · 50 000 FCFA</p></div>
+            <span style="font-size:11px;background:rgba(224,123,57,0.1);color:#E07B39;padding:4px 10px;border-radius:10px;white-space:nowrap;">5-6 Août</span>
+          </div>
+          <p style="font-size:13px;color:#378ADD;line-height:1.5;margin-bottom:10px;">Un week-end de reconnexion à soi-même entre mer et nature. Ateliers, méditation et partage en groupe.</p>
+          <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20veux%20m%27inscrire%20à%20la%20retraite%20bien-être" style="display:block;background:#E07B39;color:#fff;text-align:center;padding:10px;border-radius:12px;text-decoration:none;font-size:13px;">Réserver ma place</a>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <p style="font-size:13px;color:#85B7EB;margin-bottom:12px;">Tu veux organiser un événement avec nous ?</p>
+      <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20veux%20organiser%20un%20événement%20bien-être%20avec%20Juste%20là%20pour%20toi" style="display:block;background:#185FA5;color:#fff;text-align:center;padding:13px;border-radius:16px;text-decoration:none;font-size:14px;font-weight:500;">Proposer un événement 💙</a>
+    </div>
+  </div>
+</div>
+
+<!-- VERSION ECOLE -->
+<div class="page-sec" id="ecole">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('ecole')">← Retour</button><h2>🏫 Juste là pour toi — Écoles</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#1D9E75,#0f7a5a);border:none;">
+      <p style="font-size:40px;margin-bottom:12px;">🏫</p>
+      <p style="font-family:'Lora',serif;font-size:18px;color:#fff;margin-bottom:8px;">Bien-être dans les établissements</p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.8);line-height:1.6;">Lycées · Universités · Grandes écoles du Sénégal 💙</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Pourquoi intégrer Juste là pour toi ?</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:20px;flex-shrink:0;">📉</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Réduire le stress académique</p><p style="font-size:12px;color:#85B7EB;margin-top:2px;">Accompagner les élèves et étudiants dans la gestion du stress des examens</p></div></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:20px;flex-shrink:0;">💙</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Soutien émotionnel anonyme</p><p style="font-size:12px;color:#85B7EB;margin-top:2px;">Un espace sûr pour parler sans jugement, disponible 24h/24</p></div></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:20px;flex-shrink:0;">📊</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Tableau de bord établissement</p><p style="font-size:12px;color:#85B7EB;margin-top:2px;">Suivre anonymement le bien-être général des étudiants</p></div></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:20px;flex-shrink:0;">🇸🇳</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Adapté au contexte sénégalais</p><p style="font-size:12px;color:#85B7EB;margin-top:2px;">En français, wolof et anglais — ancré dans la réalité locale</p></div></div>
+      </div>
+    </div>
+    <div class="card" style="background:rgba(29,158,117,0.05);border-color:#1D9E75;">
+      <p class="card-titre" style="color:#1D9E75;">💰 Tarifs partenariat</p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#378ADD;">Lycée (jusqu'à 500 élèves)</span><span style="font-size:13px;font-weight:500;color:#1D9E75;">50 000 FCFA/an</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#378ADD;">Université (jusqu'à 2000 étudiants)</span><span style="font-size:13px;font-weight:500;color:#1D9E75;">150 000 FCFA/an</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="font-size:13px;color:#378ADD;">Grande école / Campus</span><span style="font-size:13px;font-weight:500;color:#1D9E75;">Sur devis</span></div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <p style="font-size:13px;color:#85B7EB;margin-bottom:12px;">Demandez une démonstration gratuite pour votre établissement</p>
+      <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20suis%20intéressé(e)%20par%20un%20partenariat%20école%20avec%20Juste%20là%20pour%20toi" style="display:block;background:#1D9E75;color:#fff;text-align:center;padding:13px;border-radius:16px;text-decoration:none;font-size:14px;font-weight:500;margin-bottom:10px;">Demander une démo WhatsApp 💙</a>
+      <a href="mailto:malick043@gmail.com?subject=Partenariat école - Juste là pour toi&body=Bonjour Malick, je suis responsable de [NOM DE L'ÉTABLISSEMENT] et je souhaite en savoir plus sur votre solution bien-être." style="display:block;background:none;border:1px solid #1D9E75;color:#1D9E75;text-align:center;padding:11px;border-radius:16px;text-decoration:none;font-size:13px;">Envoyer un email 📧</a>
+    </div>
+  </div>
+</div>
+
+<!-- VERSION ENTREPRISE -->
+<div class="page-sec" id="entreprise">
+  <div class="sec-header"><button class="btn-back" onclick="fermerSec('entreprise')">← Retour</button><h2>🏢 Juste là pour toi — Entreprises</h2></div>
+  <div class="sec-body">
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#0C447C,#185FA5);border:none;">
+      <p style="font-size:40px;margin-bottom:12px;">🏢</p>
+      <p style="font-family:'Lora',serif;font-size:18px;color:#fff;margin-bottom:8px;">Bien-être de vos employés</p>
+      <p style="font-size:12px;color:#B5D4F4;line-height:1.6;">Des équipes épanouies · Plus productives · Plus fidèles 💙</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">Le coût du mal-être au travail</p>
+      <div style="background:rgba(229,62,62,0.05);border-radius:12px;padding:14px;border:0.5px solid rgba(229,62,62,0.2);margin-bottom:12px;">
+        <p style="font-size:13px;color:#e53e3e;line-height:1.7;">📊 Le stress au travail coûte aux entreprises africaines des millions en absentéisme, turnover et baisse de productivité chaque année.</p>
+      </div>
+      <p style="font-size:13px;color:#378ADD;line-height:1.7;">Juste là pour toi offre à vos employés un espace bienveillant et confidentiel pour gérer leur stress, retrouver leur équilibre et performer sereinement.</p>
+    </div>
+    <div class="card">
+      <p class="card-titre">✨ Ce que vous obtenez</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:20px;flex-shrink:0;">🤖</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Assistant IA disponible 24h/24</p><p style="font-size:12px;color:#85B7EB;margin-top:2px;">Vos employés accèdent au soutien quand ils en ont besoin</p></div></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:20px;flex-shrink:0;">📊</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Tableau de bord RH anonyme</p><p style="font-size:12px;color:#85B7EB;margin-top:2px;">Suivez le bien-être global de vos équipes sans violer la confidentialité</p></div></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:20px;flex-shrink:0;">🤝</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Sessions de groupe mensuelles</p><p style="font-size:12px;color:#85B7EB;margin-top:2px;">Ateliers collectifs animés par notre coach</p></div></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:20px;flex-shrink:0;">🎯</span><div><p style="font-size:13px;font-weight:500;color:#0C447C;">Programmes personnalisés</p><p style="font-size:12px;color:#85B7EB;margin-top:2px;">Plans bien-être adaptés aux enjeux de votre secteur</p></div></div>
+      </div>
+    </div>
+    <div class="card" style="background:#E6F1FB;border-color:#185FA5;">
+      <p class="card-titre">💰 Tarifs entreprise</p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid rgba(24,95,165,0.2);"><span style="font-size:13px;color:#378ADD;">Startup (jusqu'à 20 employés)</span><span style="font-size:13px;font-weight:500;color:#185FA5;">25 000 FCFA/mois</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid rgba(24,95,165,0.2);"><span style="font-size:13px;color:#378ADD;">PME (20-100 employés)</span><span style="font-size:13px;font-weight:500;color:#185FA5;">75 000 FCFA/mois</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid rgba(24,95,165,0.2);"><span style="font-size:13px;color:#378ADD;">Grande entreprise (100+)</span><span style="font-size:13px;font-weight:500;color:#185FA5;">Sur devis</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="font-size:13px;color:#378ADD;">ONG / Administration</span><span style="font-size:13px;font-weight:500;color:#1D9E75;">Tarif préférentiel</span></div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <p style="font-size:13px;color:#85B7EB;margin-bottom:12px;">Demandez une présentation gratuite pour votre entreprise</p>
+      <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20suis%20intéressé(e)%20par%20la%20version%20entreprise%20de%20Juste%20là%20pour%20toi" style="display:block;background:#185FA5;color:#fff;text-align:center;padding:13px;border-radius:16px;text-decoration:none;font-size:14px;font-weight:500;margin-bottom:10px;">Demander une démo WhatsApp 💙</a>
+      <a href="mailto:malick043@gmail.com?subject=Partenariat entreprise - Juste là pour toi&body=Bonjour Malick, je représente [NOM DE L'ENTREPRISE] et je souhaite en savoir plus sur votre solution bien-être pour entreprises." style="display:block;background:none;border:1px solid #185FA5;color:#185FA5;text-align:center;padding:11px;border-radius:16px;text-decoration:none;font-size:13px;">Envoyer un email 📧</a>
+    </div>
+    <div class="card" style="text-align:center;">
+      <p style="font-size:13px;color:#85B7EB;line-height:1.7;font-style:italic;">"Des employés épanouis, c'est une entreprise qui prospère. Investissez dans le bien-être de vos équipes." 💙</p>
+      <p style="font-size:12px;color:#B5D4F4;margin-top:8px;">— El Hadj Malick THIOUNE, Fondateur</p>
     </div>
   </div>
 </div>
@@ -538,14 +745,8 @@
 <div class="page-sec" id="plan-perso">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('plan-perso')">← Retour</button><h2>🧬 Mon plan personnalisé</h2></div>
   <div class="sec-body">
-    <div class="card" style="text-align:center;background:linear-gradient(135deg,#185FA5,#1a4a7a);border:none;">
-      <p style="font-size:40px;margin-bottom:12px;">🧬</p>
-      <p style="font-family:'Lora',serif;font-size:18px;color:#fff;margin-bottom:8px;">Ton plan bien-être personnalisé</p>
-      <p style="font-size:12px;color:#B5D4F4;line-height:1.6;">Généré par l'IA en analysant tes 7 derniers jours 💙</p>
-    </div>
-    <div class="card" id="plan-contenu">
-      <p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Génération de ton plan...</p>
-    </div>
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#185FA5,#1a4a7a);border:none;"><p style="font-size:40px;margin-bottom:12px;">🧬</p><p style="font-family:'Lora',serif;font-size:18px;color:#fff;margin-bottom:8px;">Ton plan bien-être personnalisé</p><p style="font-size:12px;color:#B5D4F4;line-height:1.6;">Généré par l'IA en analysant tes 7 derniers jours 💙</p></div>
+    <div class="card" id="plan-contenu"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Génération de ton plan...</p></div>
     <button class="btn-p" onclick="regenererPlan()">🔄 Régénérer mon plan</button>
   </div>
 </div>
@@ -575,6 +776,9 @@
       <textarea class="textarea-sec" id="pensee-input" placeholder="Une pensée bienveillante à partager..." style="height:80px;margin-bottom:10px;"></textarea>
       <button class="btn-p" onclick="partagerPensee()">Partager 💙</button>
       <p class="succes" id="succes-pensee">✅ Partagé !</p>
+      <div id="solidarite-msg" style="display:none;margin-top:10px;padding:10px;background:rgba(29,158,117,0.1);border-radius:12px;border:0.5px solid #1D9E75;">
+        <p style="font-size:12px;color:#1D9E75;">🤲 Mode solidarité : ton message d'encouragement a été envoyé à quelqu'un en difficulté 💙</p>
+      </div>
     </div>
     <div class="card"><p class="card-titre">💙 Pensées de la communauté</p><div id="communaute-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Chargement...</p></div></div>
     <div class="card">
@@ -589,11 +793,7 @@
 <div class="page-sec" id="groupe-premium">
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('groupe-premium')">← Retour</button><h2>🤝 Sessions de groupe</h2></div>
   <div class="sec-body">
-    <div class="card" style="text-align:center;background:linear-gradient(135deg,#185FA5,#1a4a7a);border:none;">
-      <p style="font-size:40px;margin-bottom:12px;">🤝</p>
-      <h2 style="font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:8px;">Sessions de soutien en groupe</h2>
-      <p style="font-size:13px;color:#B5D4F4;line-height:1.6;">Un espace bienveillant et anonyme pour partager, s'écouter et avancer ensemble 💙</p>
-    </div>
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,#185FA5,#1a4a7a);border:none;"><p style="font-size:40px;margin-bottom:12px;">🤝</p><h2 style="font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:8px;">Sessions de soutien en groupe</h2><p style="font-size:13px;color:#B5D4F4;line-height:1.6;">Un espace bienveillant et anonyme pour partager 💙</p></div>
     <div class="card" style="background:#E6F1FB;border-color:#185FA5;">
       <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:4px;text-align:center;">Abonnement mensuel</p>
       <p style="font-size:36px;font-weight:700;color:#185FA5;text-align:center;margin-bottom:4px;">5$</p>
@@ -602,10 +802,9 @@
         <p style="font-size:13px;color:#0C447C;">✅ 2 à 3 séances par semaine</p>
         <p style="font-size:13px;color:#0C447C;">✅ 1h à 2h par séance</p>
         <p style="font-size:13px;color:#0C447C;">✅ Accès à tous les groupes thématiques</p>
-        <p style="font-size:13px;color:#0C447C;">✅ Suivi personnalisé entre les séances</p>
         <p style="font-size:13px;color:#0C447C;">✅ Annulation à tout moment</p>
       </div>
-      <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20veux%20m%27inscrire%20aux%20sessions%20de%20groupe%20de%20Juste%20l%C3%A0%20pour%20toi%20%285%24%2Fmois%29" style="display:block;background:#185FA5;color:#fff;text-align:center;padding:13px;border-radius:16px;text-decoration:none;font-size:15px;font-weight:500;margin-bottom:10px;">S'inscrire via WhatsApp 💙</a>
+      <a href="https://wa.me/00221778844799?text=Bonjour%20Malick%2C%20je%20veux%20m%27inscrire%20aux%20sessions%20de%20groupe" style="display:block;background:#185FA5;color:#fff;text-align:center;padding:13px;border-radius:16px;text-decoration:none;font-size:15px;font-weight:500;margin-bottom:10px;">S'inscrire via WhatsApp 💙</a>
       <a href="mailto:malick043@gmail.com?subject=Inscription sessions de groupe&body=Bonjour Malick, je souhaite m'inscrire aux sessions de groupe (5$/mois). Mon prénom : " style="display:block;background:none;border:1px solid #185FA5;color:#185FA5;text-align:center;padding:11px;border-radius:16px;text-decoration:none;font-size:14px;">S'inscrire via Email 📧</a>
     </div>
     <div class="card">
@@ -633,7 +832,7 @@
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('programme')">← Retour</button><h2>💪 Programme 30 jours</h2></div>
   <div class="sec-body">
     <div id="programme-accueil" style="display:none;">
-      <div class="card" style="text-align:center;background:linear-gradient(135deg,#185FA5,#1a4a7a);border:none;"><p style="font-size:40px;margin-bottom:12px;">💪</p><h2 style="font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:8px;">Programme 30 jours</h2><p style="font-size:13px;color:#B5D4F4;line-height:1.6;">Transforme ta vie en 30 jours avec un programme guidé quotidien 💙</p></div>
+      <div class="card" style="text-align:center;background:linear-gradient(135deg,#185FA5,#1a4a7a);border:none;"><p style="font-size:40px;margin-bottom:12px;">💪</p><h2 style="font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:8px;">Programme 30 jours</h2><p style="font-size:13px;color:#B5D4F4;line-height:1.6;">Transforme ta vie en 30 jours 💙</p></div>
       <div class="card"><p class="card-titre">Choisis ton objectif de programme</p><select class="input-sec" id="prog-objectif" style="margin-bottom:12px;"><option>😌 Réduire mon stress</option><option>💪 Renforcer ma confiance</option><option>😴 Améliorer mon sommeil</option><option>💭 Mieux gérer mes émotions</option><option>🌱 Développement personnel</option></select><button class="btn-p" onclick="demarrerProgramme()">Commencer le programme 💙</button></div>
     </div>
     <div id="programme-actif" style="display:none;">
@@ -680,11 +879,7 @@
   <div class="sec-header"><button class="btn-back" onclick="fermerSec('wolof-beta')">← Retour</button><h2>🇸🇳 Wolof Beta</h2></div>
   <div class="sec-body">
     <div class="card" style="text-align:center;"><p style="font-size:32px;margin-bottom:8px;">🇸🇳</p><p class="card-titre">Le wolof en version bêta</p></div>
-    <div class="card">
-      <p style="font-size:14px;color:#378ADD;line-height:1.8;">💙 Notre assistant peut communiquer en wolof mais cette fonctionnalité est encore en cours d'amélioration.</p>
-      <p style="font-size:14px;color:#378ADD;line-height:1.8;margin-top:10px;">🌍 Aucune application de bien-être dans le monde ne propose encore le wolof — nous sommes pionniers !</p>
-      <p style="font-size:14px;color:#378ADD;line-height:1.8;margin-top:10px;">📩 Si vous avez des suggestions, contactez-nous 💙</p>
-    </div>
+    <div class="card"><p style="font-size:14px;color:#378ADD;line-height:1.8;">💙 Notre assistant peut communiquer en wolof mais cette fonctionnalité est encore en cours d'amélioration. Nous sommes pionniers !</p><p style="font-size:14px;color:#378ADD;line-height:1.8;margin-top:10px;">📩 Si vous avez des suggestions, contactez-nous 💙</p></div>
     <div class="card" style="text-align:center;"><a href="https://wa.me/00221778844799" style="display:block;background:#185FA5;color:#fff;text-align:center;padding:13px;border-radius:16px;text-decoration:none;font-size:15px;font-weight:500;">Suggérer une amélioration 💙</a></div>
   </div>
 </div>
@@ -731,161 +926,78 @@ let groupeFiltre='Tous',groupePubli='😰 Stress';
 let mdpMode='setup';
 let reconnaissance=null,enEcoute=false;
 let iaParle=localStorage.getItem('ia-parle')!=='off';
+let storySelectionnee=null;
+let spirituelChoisi=localStorage.getItem('spirituel-choix')||'universel';
 
 // AVATAR SYSTEM
 const AVATAR_COLORS=['#185FA5','#1D9E75','#E07B39','#9B59B6','#E74C3C','#16A085','#2980B9','#8E44AD','#27AE60','#D35400','#C0392B','#1ABC9C'];
-function getAvatarColor(nom){const couleurSauvegardee=localStorage.getItem('avatar-couleur');if(couleurSauvegardee&&nom===prenom)return couleurSauvegardee;let hash=0;for(let i=0;i<nom.length;i++)hash=nom.charCodeAt(i)+((hash<<5)-hash);return AVATAR_COLORS[Math.abs(hash)%AVATAR_COLORS.length];}
+function getAvatarColor(nom){const c=localStorage.getItem('avatar-couleur');if(c&&nom===prenom)return c;let h=0;for(let i=0;i<nom.length;i++)h=nom.charCodeAt(i)+((h<<5)-h);return AVATAR_COLORS[Math.abs(h)%AVATAR_COLORS.length];}
 function getInitiale(nom){return nom?nom.charAt(0).toUpperCase():'?';}
-function creerAvatar(nom,taille=28){const color=getAvatarColor(nom);const initiale=getInitiale(nom);return `<div style="width:${taille}px;height:${taille}px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:${Math.round(taille*0.43)}px;font-weight:700;color:#fff;flex-shrink:0;">${initiale}</div>`;}
+function creerAvatar(nom,taille=28){const color=getAvatarColor(nom);return `<div style="width:${taille}px;height:${taille}px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:${Math.round(taille*0.43)}px;font-weight:700;color:#fff;flex-shrink:0;">${getInitiale(nom)}</div>`;}
 
 // EMOTION SYSTEM
-const EMOTION_CONFIG={
-  joy:{emoji:'😊',color:'#1D9E75',bg:'rgba(29,158,117,0.1)',label:'Joie'},
-  sadness:{emoji:'😔',color:'#5B8CDB',bg:'rgba(91,140,219,0.1)',label:'Tristesse'},
-  anxiety:{emoji:'😰',color:'#E07B39',bg:'rgba(224,123,57,0.1)',label:'Anxiété'},
-  anger:{emoji:'😠',color:'#E74C3C',bg:'rgba(231,76,60,0.1)',label:'Colère'},
-  fear:{emoji:'😨',color:'#9B59B6',bg:'rgba(155,89,182,0.1)',label:'Peur'},
-  neutral:{emoji:'😐',color:'#85B7EB',bg:'rgba(133,183,235,0.1)',label:'Neutre'}
-};
-
-function extraireEmotion(texte){
-  const match=texte.match(/\[EMOTION:(\w+)\]/);
-  if(match)return match[1];
-  return 'neutral';
-}
-
+const EMOTION_CONFIG={joy:{emoji:'😊',color:'#1D9E75',bg:'rgba(29,158,117,0.1)',label:'Joie'},sadness:{emoji:'😔',color:'#5B8CDB',bg:'rgba(91,140,219,0.1)',label:'Tristesse'},anxiety:{emoji:'😰',color:'#E07B39',bg:'rgba(224,123,57,0.1)',label:'Anxiété'},anger:{emoji:'😠',color:'#E74C3C',bg:'rgba(231,76,60,0.1)',label:'Colère'},fear:{emoji:'😨',color:'#9B59B6',bg:'rgba(155,89,182,0.1)',label:'Peur'},neutral:{emoji:'😐',color:'#85B7EB',bg:'rgba(133,183,235,0.1)',label:'Neutre'}};
+function extraireEmotion(texte){const m=texte.match(/\[EMOTION:(\w+)\]/);return m?m[1]:'neutral';}
 function nettoyerTexteEmotion(texte){return texte.replace(/\[EMOTION:\w+\]\s*/,'');}
 
 // STREAK SYSTEM
-function calculerStreak(){const visites=JSON.parse(localStorage.getItem('visites')||'[]');if(!visites.length)return 0;const auj=new Date();let streak=0;for(let i=0;i<30;i++){const d=new Date(auj);d.setDate(auj.getDate()-i);const ds=d.toLocaleDateString('fr-FR');if(visites.includes(ds))streak++;else break;}return streak;}
-function afficherStreak(){const streak=calculerStreak();if(streak>=2){document.getElementById('streak-accueil').style.display='block';document.getElementById('streak-nb').textContent=streak;document.getElementById('profil-streak-nb').textContent=streak;document.getElementById('streak-chat').textContent='🔥 '+streak+' jours de suite · toujours là pour toi';}}
+function calculerStreak(){const v=JSON.parse(localStorage.getItem('visites')||'[]');if(!v.length)return 0;const auj=new Date();let s=0;for(let i=0;i<30;i++){const d=new Date(auj);d.setDate(auj.getDate()-i);if(v.includes(d.toLocaleDateString('fr-FR')))s++;else break;}return s;}
+function afficherStreak(){const s=calculerStreak();if(s>=2){document.getElementById('streak-accueil').style.display='block';document.getElementById('streak-nb').textContent=s;document.getElementById('profil-streak-nb').textContent=s;document.getElementById('streak-chat').textContent='🔥 '+s+' jours de suite · toujours là pour toi';}}
 
 // PROFIL
-function afficherProfil(){const p=localStorage.getItem('user-prenom-save')||prenom||'Anonyme';const couleur=localStorage.getItem('avatar-couleur')||getAvatarColor(p);document.getElementById('profil-prenom').textContent=p;document.getElementById('profil-prenom-input').value=p;const av=document.getElementById('profil-avatar');av.style.background=couleur;av.textContent=getInitiale(p);av.style.fontSize='32px';av.style.fontWeight='700';afficherStreak();const c=document.getElementById('couleurs-avatar');c.innerHTML=AVATAR_COLORS.map(col=>`<div class="couleur-btn ${col===couleur?'selected':''}" style="background:${col};" onclick="selCouleur('${col}',this)"></div>`).join('');const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');const badges=JSON.parse(localStorage.getItem('badges')||'[]');const moyenne=notes.length?(notes.reduce((a,b)=>a+b.note,0)/notes.length).toFixed(1):'-';document.getElementById('profil-stats').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">📊 Humeur moyenne</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${moyenne}/10</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">⚡ Défis complétés</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${defis.length}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">📔 Entrées journal</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${journal.length}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">💌 Lettres scellées</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${lettres.length}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#85B7EB;">🏆 Badges obtenus</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${badges.length}/${BADGES.length}</span></div>`;}
-function selCouleur(couleur,el){localStorage.setItem('avatar-couleur',couleur);document.querySelectorAll('.couleur-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');const p=localStorage.getItem('user-prenom-save')||prenom||'Anonyme';const av=document.getElementById('profil-avatar');av.style.background=couleur;}
-function sauvegarderProfil(){const nouveauPrenom=document.getElementById('profil-prenom-input').value.trim();if(!nouveauPrenom){alert('Entre ton prénom !');return;}prenom=nouveauPrenom;localStorage.setItem('user-prenom-save',nouveauPrenom);document.getElementById('profil-prenom').textContent=nouveauPrenom;document.getElementById('chat-sub').textContent='Bonjour '+nouveauPrenom+' 💙';document.getElementById('succes-profil').style.display='block';setTimeout(()=>document.getElementById('succes-profil').style.display='none',2000);afficherProfil();}
+function afficherProfil(){const p=localStorage.getItem('user-prenom-save')||prenom||'Anonyme';const couleur=localStorage.getItem('avatar-couleur')||getAvatarColor(p);document.getElementById('profil-prenom').textContent=p;document.getElementById('profil-prenom-input').value=p;const av=document.getElementById('profil-avatar');av.style.background=couleur;av.textContent=getInitiale(p);av.style.fontSize='32px';av.style.fontWeight='700';afficherStreak();document.getElementById('couleurs-avatar').innerHTML=AVATAR_COLORS.map(col=>`<div class="couleur-btn ${col===couleur?'selected':''}" style="background:${col};" onclick="selCouleur('${col}',this)"></div>`).join('');const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');const badges=JSON.parse(localStorage.getItem('badges')||'[]');const moy=notes.length?(notes.reduce((a,b)=>a+b.note,0)/notes.length).toFixed(1):'-';document.getElementById('profil-stats').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">📊 Humeur moyenne</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${moy}/10</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">⚡ Défis complétés</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${defis.length}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">📔 Entrées journal</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${journal.length}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid #E6F1FB;"><span style="font-size:13px;color:#85B7EB;">💌 Lettres scellées</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${lettres.length}</span></div><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;"><span style="font-size:13px;color:#85B7EB;">🏆 Badges obtenus</span><span style="font-size:14px;font-weight:500;color:#185FA5;">${badges.length}/${BADGES.length}</span></div>`;}
+function selCouleur(couleur,el){localStorage.setItem('avatar-couleur',couleur);document.querySelectorAll('.couleur-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');const av=document.getElementById('profil-avatar');av.style.background=couleur;}
+function sauvegarderProfil(){const p=document.getElementById('profil-prenom-input').value.trim();if(!p){alert('Entre ton prénom !');return;}prenom=p;localStorage.setItem('user-prenom-save',p);document.getElementById('profil-prenom').textContent=p;document.getElementById('chat-sub').textContent='Bonjour '+p+' 💙';document.getElementById('succes-profil').style.display='block';setTimeout(()=>document.getElementById('succes-profil').style.display='none',2000);afficherProfil();}
 
-// THERAPIE PAR L'ECRITURE
-const QUESTIONS_THERAPIE=[
-  'Qu\'est-ce qui te pèse le plus en ce moment, et pourquoi penses-tu que c\'est si important pour toi ?',
-  'Si tu pouvais changer une chose dans ta vie aujourd\'hui, laquelle serait-ce et pourquoi ?',
-  'Quand te sens-tu le plus toi-même ? Décris ce moment en détail.',
-  'Quelle émotion tu évites le plus souvent ? Qu\'est-ce qui se passerait si tu l\'accueillais pleinement ?',
-  'Qu\'est-ce que tu te dirais si tu étais ton meilleur ami face à ta situation actuelle ?',
-  'Quel moment de ta vie t\'a le plus appris sur toi-même ?',
-  'Qu\'est-ce qui te donne de l\'énergie et qu\'est-ce qui t\'en prend ?',
-  'Si tu n\'avais aucune peur, qu\'est-ce que tu ferais différemment ?',
-  'Qu\'est-ce que tu as accompli récemment dont tu es fier(e), même si c\'est petit ?',
-  'Quelle est la chose la plus bienveillante que tu pourrais faire pour toi-même aujourd\'hui ?'
-];
+// STORIES BIEN-ETRE
+function selStory(el,emoji,humeur,couleur){storySelectionnee={emoji,humeur,couleur};document.querySelectorAll('[onclick^="selStory"]').forEach(b=>{b.style.border='2px solid #E6F1FB';b.style.background='';});el.style.border=`2px solid ${couleur}`;el.style.background=`${couleur}15`;const preview=document.getElementById('story-preview');preview.style.background=`linear-gradient(135deg,${couleur},${couleur}aa)`;document.getElementById('story-emoji-preview').textContent=emoji;document.getElementById('story-bg-emoji').textContent=emoji;document.getElementById('story-humeur-preview').textContent=humeur;document.getElementById('story-prenom-preview').textContent=prenom||'Anonyme';preview.style.display='block';document.getElementById('story-partager-btn').style.display='block';}
 
-function chargerTherapie(){
-  const shuffled=[...QUESTIONS_THERAPIE].sort(()=>Math.random()-0.5).slice(0,4);
-  document.getElementById('therapie-questions').innerHTML=shuffled.map((q,i)=>`
-    <div class="therapie-question" onclick="selectionnerQuestion('${q.replace(/'/g,"\\'")}')">
-      <p>${q}</p>
-    </div>
-  `).join('');
-  document.getElementById('therapie-ecriture').style.display='none';
-  document.getElementById('therapie-resultat').style.display='none';
-}
+function partagerStory(){if(!storySelectionnee)return;const {emoji,humeur,couleur}=storySelectionnee;const texte=`${emoji} Je me sens ${humeur} aujourd'hui\n\n💙 Juste là pour toi — Prends soin de toi !\nhttps://malick043-png.github.io/Juste-l-pour-toi`;if(navigator.share){navigator.share({text:texte});}else{navigator.clipboard.writeText(texte);alert('Story copiée ! 💙 Partage-la sur tes réseaux !');}// Sauvegarder dans les stories locales
+const stories=JSON.parse(localStorage.getItem('stories-locales')||'[]');stories.unshift({date:getDate(),emoji,humeur,couleur,prenom:prenom||'Anonyme'});if(stories.length>10)stories.pop();localStorage.setItem('stories-locales',JSON.stringify(stories));chargerStories();}
 
-function selectionnerQuestion(question){
-  document.getElementById('therapie-question-active').textContent=question;
-  document.getElementById('therapie-reponse').value='';
-  document.getElementById('therapie-ecriture').style.display='block';
-  document.getElementById('therapie-resultat').style.display='none';
-  document.getElementById('therapie-ecriture').scrollIntoView({behavior:'smooth'});
-}
+function chargerStories(){const stories=JSON.parse(localStorage.getItem('stories-locales')||'[]');const c=document.getElementById('stories-liste');if(!stories.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune story partagée 💙</p>';return;}c.innerHTML=stories.map(s=>`<div class="story-card" style="background:linear-gradient(135deg,${s.couleur},${s.couleur}aa);"><p style="font-size:40px;margin-bottom:8px;">${s.emoji}</p><p style="font-family:'Lora',serif;font-size:18px;color:#fff;font-weight:500;margin-bottom:4px;">${s.humeur}</p><p style="font-size:12px;color:rgba(255,255,255,0.7);">${s.prenom} · ${s.date}</p><p style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:8px;">Juste là pour toi 💙</p></div>`).join('');}
 
-async function envoyerTherapie(){
-  const question=document.getElementById('therapie-question-active').textContent;
-  const reponse=document.getElementById('therapie-reponse').value.trim();
-  if(!reponse){alert('Écris quelque chose d\'abord 💙');return;}
-  document.querySelector('#therapie-ecriture .btn-p').textContent='L\'IA réfléchit... 💙';
-  document.querySelector('#therapie-ecriture .btn-p').disabled=true;
-  try{
-    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:300,system:`Tu es un thérapeute bienveillant. L'utilisateur s'appelle ${prenom||'toi'}. Il répond à une question d'introspection. Donne une réflexion profonde et bienveillante en 3-4 phrases. Explore l'émotion sous-jacente, fais des connexions profondes et termine par une question ouverte pour aller plus loin. Réponds en français avec empathie et profondeur.`,messages:[{role:'user',content:`Question : "${question}"\n\nMa réponse : "${reponse}"`}]})});
-    const data=await res.json();
-    document.getElementById('therapie-ia-reponse').textContent=data.content[0].text;
-    document.getElementById('therapie-resultat').style.display='block';
-    document.getElementById('therapie-resultat').scrollIntoView({behavior:'smooth'});
-  }catch(e){alert('Erreur 😔');}
-  document.querySelector('#therapie-ecriture .btn-p').textContent='Explorer avec l\'IA 💙';
-  document.querySelector('#therapie-ecriture .btn-p').disabled=false;
-}
+// MODE SPIRITUEL
+const CITATIONS_SPIRITUELLES={
+  islam:[{texte:'Avec la difficulté vient certes la facilité.',source:'Coran, Sourate Al-Inshirah 94:5'},{texte:'Allah n\'impose à aucune âme une charge supérieure à sa capacité.',source:'Coran, Sourate Al-Baqara 2:286'},{texte:'Rappelle-toi d\'Allah et ton cœur trouvera la paix.',source:'Coran, Sourate Ar-Ra\'d 13:28'},{texte:'Lorsque mon serviteur se souvient de Moi en lui-même, Je me souviens de lui en Moi-même.',source:'Hadith Qudsi'},{texte:'La patience est une lumière.',source:'Hadith du Prophète ﷺ'}],
+  chretien:[{texte:'Car je connais les projets que j\'ai formés sur vous, dit l\'Éternel, projets de paix et non de malheur.',source:'Jérémie 29:11'},{texte:'Je puis tout par celui qui me fortifie.',source:'Philippiens 4:13'},{texte:'Ne vous inquiétez de rien ; mais en toute chose faites connaître vos besoins à Dieu.',source:'Philippiens 4:6'},{texte:'L\'Éternel est mon berger : je ne manquerai de rien.',source:'Psaume 23:1'},{texte:'Venez à moi, vous tous qui êtes fatigués et chargés, et je vous donnerai du repos.',source:'Matthieu 11:28'}],
+  universel:[{texte:'La paix intérieure commence le jour où tu choisis de ne pas permettre à une personne ou un événement de contrôler tes émotions.',source:'Sagesse universelle'},{texte:'Celui qui regarde à l\'extérieur rêve ; celui qui regarde à l\'intérieur s\'éveille.',source:'Carl Jung'},{texte:'Le bonheur ne dépend pas de ce que tu as ou de ce que tu es, mais de ce que tu penses.',source:'Dale Carnegie'},{texte:'Sois le changement que tu veux voir dans le monde.',source:'Mahatma Gandhi'},{texte:'L\'amour est la seule force capable de transformer un ennemi en ami.',source:'Martin Luther King Jr'}]
+};
 
+function selSpirituel(choix){spirituelChoisi=choix;localStorage.setItem('spirituel-choix',choix);document.querySelectorAll('.spirituel-btn').forEach(b=>{b.classList.remove('selected');b.style.background='';});const configs={islam:{id:'btn-islam',color:'#E07B39',titre:'🌙 Citation islamique du jour'},chretien:{id:'btn-chretien',color:'#185FA5',titre:'✝️ Citation chrétienne du jour'},universel:{id:'btn-universel',color:'#1D9E75',titre:'🌟 Sagesse universelle du jour'}};const cfg=configs[choix];const btn=document.getElementById(cfg.id);btn.classList.add('selected');btn.style.background=cfg.color;btn.style.color='#fff';btn.style.borderColor=cfg.color;document.getElementById('spirituel-titre').textContent=cfg.titre;chargerCitationSpirituele();}
+
+function chargerCitationSpirituele(){const citations=CITATIONS_SPIRITUELLES[spirituelChoisi]||CITATIONS_SPIRITUELLES.universel;const citation=citations[Math.floor(Math.random()*citations.length)];document.getElementById('citation-spirituelle-contenu').textContent='"'+citation.texte+'"';document.getElementById('citation-source').textContent='— '+citation.source;document.getElementById('citation-spirituelle-card').style.display='block';if(spirituelChoisi)selSpirituel(spirituelChoisi);}
+
+function partagerCitationSpirituele(){const texte=document.getElementById('citation-spirituelle-contenu').textContent;const source=document.getElementById('citation-source').textContent;const msg=`${texte}\n${source}\n\n💙 Juste là pour toi\nhttps://malick043-png.github.io/Juste-l-pour-toi`;if(navigator.share){navigator.share({text:msg});}else{navigator.clipboard.writeText(msg);alert('Citation copiée ! 💙');}}
+
+// THERAPIE
+const QUESTIONS_THERAPIE=['Qu\'est-ce qui te pèse le plus en ce moment, et pourquoi penses-tu que c\'est si important pour toi ?','Si tu pouvais changer une chose dans ta vie aujourd\'hui, laquelle serait-ce et pourquoi ?','Quand te sens-tu le plus toi-même ? Décris ce moment en détail.','Quelle émotion tu évites le plus souvent ? Qu\'est-ce qui se passerait si tu l\'accueillais pleinement ?','Qu\'est-ce que tu te dirais si tu étais ton meilleur ami face à ta situation actuelle ?','Quel moment de ta vie t\'a le plus appris sur toi-même ?','Qu\'est-ce qui te donne de l\'énergie et qu\'est-ce qui t\'en prend ?','Si tu n\'avais aucune peur, qu\'est-ce que tu ferais différemment ?','Qu\'est-ce que tu as accompli récemment dont tu es fier(e), même si c\'est petit ?','Quelle est la chose la plus bienveillante que tu pourrais faire pour toi-même aujourd\'hui ?'];
+function chargerTherapie(){const shuffled=[...QUESTIONS_THERAPIE].sort(()=>Math.random()-0.5).slice(0,4);document.getElementById('therapie-questions').innerHTML=shuffled.map(q=>`<div class="therapie-question" onclick="selectionnerQuestion('${q.replace(/'/g,"\\'")}')"><p>${q}</p></div>`).join('');document.getElementById('therapie-ecriture').style.display='none';document.getElementById('therapie-resultat').style.display='none';}
+function selectionnerQuestion(q){document.getElementById('therapie-question-active').textContent=q;document.getElementById('therapie-reponse').value='';document.getElementById('therapie-ecriture').style.display='block';document.getElementById('therapie-resultat').style.display='none';document.getElementById('therapie-ecriture').scrollIntoView({behavior:'smooth'});}
+async function envoyerTherapie(){const question=document.getElementById('therapie-question-active').textContent;const reponse=document.getElementById('therapie-reponse').value.trim();if(!reponse){alert('Écris quelque chose d\'abord 💙');return;}document.querySelector('#therapie-ecriture .btn-p').textContent='L\'IA réfléchit... 💙';document.querySelector('#therapie-ecriture .btn-p').disabled=true;try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:300,system:`Tu es un thérapeute bienveillant. L'utilisateur s'appelle ${prenom||'toi'}. Il répond à une question d'introspection. Donne une réflexion profonde et bienveillante en 3-4 phrases. Termine par une question ouverte. Réponds en français.`,messages:[{role:'user',content:`Question : "${question}"\n\nMa réponse : "${reponse}"`}]})});const data=await res.json();document.getElementById('therapie-ia-reponse').textContent=data.content[0].text;document.getElementById('therapie-resultat').style.display='block';document.getElementById('therapie-resultat').scrollIntoView({behavior:'smooth'});localStorage.setItem('therapie-fait','true');verifierBadges();}catch(e){alert('Erreur 😔');}document.querySelector('#therapie-ecriture .btn-p').textContent='Explorer avec l\'IA 💙';document.querySelector('#therapie-ecriture .btn-p').disabled=false;}
 function nouvelleTherapie(){document.getElementById('therapie-resultat').style.display='none';document.getElementById('therapie-ecriture').style.display='none';chargerTherapie();}
 
 // PREDICTION D'HUMEUR
-async function predireHumeur(noteActuelle){
-  const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
-  if(notes.length<3)return;
-  try{
-    const historique7j=notes.slice(-7).map(n=>`${n.date}: ${n.note}/10`).join(', ');
-    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:150,system:'Tu es un coach bienveillant spécialisé dans l\'analyse des tendances d\'humeur. Analyse les données et fais une prédiction courte et bienveillante pour demain en 2 phrases maximum. Sois encourageant et concret. Réponds en français.',messages:[{role:'user',content:`Historique des 7 derniers jours : ${historique7j}. Note d'aujourd'hui : ${noteActuelle}/10. Prédit l'humeur de demain et donne un conseil concret.`}]})});
-    const data=await res.json();
-    document.getElementById('prediction-contenu').textContent=data.content[0].text;
-    document.getElementById('prediction-card').style.display='block';
-  }catch(e){}
-}
+async function predireHumeur(noteActuelle){const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');if(notes.length<3)return;try{const historique7j=notes.slice(-7).map(n=>`${n.date}: ${n.note}/10`).join(', ');const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:150,system:'Tu es un coach bienveillant. Analyse les données d\'humeur et fais une prédiction courte et bienveillante pour demain en 2 phrases. Sois encourageant. Réponds en français.',messages:[{role:'user',content:`Historique : ${historique7j}. Aujourd'hui : ${noteActuelle}/10. Prédit l'humeur de demain.`}]})});const data=await res.json();document.getElementById('prediction-contenu').textContent=data.content[0].text;document.getElementById('prediction-card').style.display='block';}catch(e){}}
 
 // PLAN PERSONNALISE
-async function chargerPlanPerso(){
-  const visites=JSON.parse(localStorage.getItem('visites')||'[]');
-  if(visites.length<7){
-    document.getElementById('plan-contenu').innerHTML=`
-      <div style="text-align:center;">
-        <p style="font-size:32px;margin-bottom:8px;">⏳</p>
-        <p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;margin-bottom:8px;">Ton plan sera disponible dans ${7-visites.length} jours</p>
-        <p style="font-size:13px;color:#85B7EB;line-height:1.6;">Utilise l'app pendant 7 jours pour que l'IA puisse analyser tes habitudes et créer ton plan personnalisé 💙</p>
-        <div style="background:#E6F1FB;border-radius:12px;height:8px;margin-top:16px;">
-          <div style="background:linear-gradient(135deg,#185FA5,#378ADD);height:8px;border-radius:12px;width:${(visites.length/7*100)}%;transition:width 0.5s;"></div>
-        </div>
-        <p style="font-size:12px;color:#85B7EB;margin-top:6px;">${visites.length}/7 jours</p>
-      </div>
-    `;
-    return;
-  }
-  const planSauvegarde=localStorage.getItem('plan-perso-cache');
-  const planDate=localStorage.getItem('plan-perso-date');
-  if(planSauvegarde&&planDate===new Date().toLocaleDateString('fr-FR')){
-    document.getElementById('plan-contenu').innerHTML=`<div style="font-family:'Lora',serif;font-size:14px;color:#0C447C;line-height:1.9;white-space:pre-line;">${planSauvegarde}</div>`;
-    return;
-  }
-  await genererPlanPerso();
-}
-
-async function genererPlanPerso(){
-  document.getElementById('plan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">L\'IA analyse tes habitudes... 💙</p>';
-  const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');
-  const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');
-  const journal=JSON.parse(localStorage.getItem('journal')||'[]');
-  const objectif=JSON.parse(localStorage.getItem('objectif')||'null');
-  const streak=calculerStreak();
-  const moyenne=notes.length?(notes.reduce((a,b)=>a+b.note,0)/notes.length).toFixed(1):null;
-  try{
-    const contexte=`Utilisateur : ${prenom||'Anonyme'}. Streak : ${streak} jours. Humeur moyenne : ${moyenne||'non renseignée'}/10. Défis complétés : ${defis.length}. Entrées journal : ${journal.length}. Objectif : ${objectif?objectif.texte:'non défini'}.`;
-    const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:400,system:'Tu es un coach bien-être expert. Génère un plan personnalisé hebdomadaire structuré avec : 1) Une analyse bienveillante du profil (2 phrases), 2) 3 recommandations concrètes pour cette semaine avec des emojis, 3) Un conseil spécial basé sur l\'objectif. Utilise des tirets et des emojis pour structurer. Réponds en français.',messages:[{role:'user',content:contexte}]})});
-    const data=await res.json();
-    const plan=data.content[0].text;
-    localStorage.setItem('plan-perso-cache',plan);
-    localStorage.setItem('plan-perso-date',new Date().toLocaleDateString('fr-FR'));
-    document.getElementById('plan-contenu').innerHTML=`<div style="font-family:'Lora',serif;font-size:14px;color:#0C447C;line-height:1.9;white-space:pre-line;">${plan}</div>`;
-  }catch(e){document.getElementById('plan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur de génération 😔</p>';}
-}
-
+async function chargerPlanPerso(){const visites=JSON.parse(localStorage.getItem('visites')||'[]');if(visites.length<7){document.getElementById('plan-contenu').innerHTML=`<div style="text-align:center;"><p style="font-size:32px;margin-bottom:8px;">⏳</p><p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;margin-bottom:8px;">Ton plan sera disponible dans ${7-visites.length} jours</p><p style="font-size:13px;color:#85B7EB;line-height:1.6;">Utilise l'app pendant 7 jours pour que l'IA analyse tes habitudes 💙</p><div style="background:#E6F1FB;border-radius:12px;height:8px;margin-top:16px;"><div style="background:linear-gradient(135deg,#185FA5,#378ADD);height:8px;border-radius:12px;width:${(visites.length/7*100)}%;"></div></div><p style="font-size:12px;color:#85B7EB;margin-top:6px;">${visites.length}/7 jours</p></div>`;return;}const cache=localStorage.getItem('plan-perso-cache');const date=localStorage.getItem('plan-perso-date');if(cache&&date===getDate()){document.getElementById('plan-contenu').innerHTML=`<div style="font-family:'Lora',serif;font-size:14px;color:#0C447C;line-height:1.9;white-space:pre-line;">${cache}</div>`;return;}await genererPlanPerso();}
+async function genererPlanPerso(){document.getElementById('plan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">L\'IA analyse tes habitudes... 💙</p>';const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const objectif=JSON.parse(localStorage.getItem('objectif')||'null');const streak=calculerStreak();const moy=notes.length?(notes.reduce((a,b)=>a+b.note,0)/notes.length).toFixed(1):null;try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:400,system:'Tu es un coach bien-être expert. Génère un plan personnalisé hebdomadaire avec : 1) Analyse bienveillante du profil (2 phrases), 2) 3 recommandations concrètes avec emojis, 3) Un conseil spécial basé sur l\'objectif. Réponds en français.',messages:[{role:'user',content:`Utilisateur : ${prenom||'Anonyme'}. Streak : ${streak} jours. Humeur : ${moy||'?'}/10. Défis : ${defis.length}. Journal : ${journal.length}. Objectif : ${objectif?objectif.texte:'non défini'}.`}]})});const data=await res.json();const plan=data.content[0].text;localStorage.setItem('plan-perso-cache',plan);localStorage.setItem('plan-perso-date',getDate());document.getElementById('plan-contenu').innerHTML=`<div style="font-family:'Lora',serif;font-size:14px;color:#0C447C;line-height:1.9;white-space:pre-line;">${plan}</div>`;}catch(e){document.getElementById('plan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
 async function regenererPlan(){localStorage.removeItem('plan-perso-cache');localStorage.removeItem('plan-perso-date');await genererPlanPerso();}
+
+// MODE SOLIDARITE
+async function envoyerMessageSolidarite(penseePartagee){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:100,system:'Tu es un assistant bienveillant. Génère un court message d\'encouragement anonyme (2 phrases max) pour quelqu\'un qui traverse une période difficile. Sois chaleureux et sincère. Réponds en français.',messages:[{role:'user',content:'Message d\'encouragement solidaire basé sur cette pensée positive : "'+penseePartagee+'"'}]})});const data=await res.json();const message=data.content[0].text;// Partager ce message comme pensée de solidarité
+await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee:'🤲 Message de solidarité : '+message,prenom:'Communauté 💙',groupe:'💪 Confiance'})});}catch(e){}}
 
 // NOTIFICATION
 function demanderNotifications(){if('Notification' in window&&Notification.permission==='default'){Notification.requestPermission().then(p=>{if(p==='granted')planifierNotification();});}else if(Notification.permission==='granted'){planifierNotification();}}
-function planifierNotification(){const derniere=localStorage.getItem('derniere-notif');const auj=new Date().toLocaleDateString('fr-FR');if(derniere===auj)return;const messages=['💙 Comment vas-tu aujourd\'hui ? Je suis là pour toi !','🌟 N\'oublie pas de prendre soin de toi aujourd\'hui !','💪 Un petit défi t\'attend sur Juste là pour toi !','🌸 Prends 5 minutes pour toi aujourd\'hui 💙'];const msg=messages[Math.floor(Math.random()*messages.length)];setTimeout(()=>{if(Notification.permission==='granted'){new Notification('Juste là pour toi 💙',{body:msg,icon:'/Juste-l-pour-toi/icon.png'});localStorage.setItem('derniere-notif',auj);}},3000);}
+function planifierNotification(){const d=localStorage.getItem('derniere-notif');const auj=getDate();if(d===auj)return;const msgs=['💙 Comment vas-tu aujourd\'hui ? Je suis là pour toi !','🌟 N\'oublie pas de prendre soin de toi aujourd\'hui !','💪 Un petit défi t\'attend sur Juste là pour toi !','🌸 Prends 5 minutes pour toi aujourd\'hui 💙'];setTimeout(()=>{if(Notification.permission==='granted'){new Notification('Juste là pour toi 💙',{body:msgs[Math.floor(Math.random()*msgs.length)],icon:'/Juste-l-pour-toi/icon.png'});localStorage.setItem('derniere-notif',auj);}},3000);}
 
 // CITATION PERSONNALISEE
-async function chargerCitationPersonnalisee(){const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const derniereNote=notes.length?notes[notes.length-1].note:null;const citEl=document.getElementById('splash-citation');let contexte='bienveillante et inspirante';if(derniereNote){if(derniereNote<=3)contexte='réconfortante et encourageante pour quelqu\'un qui traverse une période difficile';else if(derniereNote<=6)contexte='motivante et positive';else contexte='joyeuse et célébrant les petites victoires';}try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:`Génère UNE citation courte ${contexte}. Réponds UNIQUEMENT avec la citation, sans guillemets, en français.`,messages:[{role:'user',content:'Citation'}]})});const d=await res.json();if(d.content&&d.content[0])citEl.textContent='"'+d.content[0].text+'"';}catch(e){}}
+async function chargerCitationPersonnalisee(){const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const derniereNote=notes.length?notes[notes.length-1].note:null;const citEl=document.getElementById('splash-citation');let ctx='bienveillante et inspirante';if(derniereNote){if(derniereNote<=3)ctx='réconfortante pour quelqu\'un qui traverse une période difficile';else if(derniereNote<=6)ctx='motivante et positive';else ctx='joyeuse et célébrant les petites victoires';}try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:80,system:`Génère UNE citation courte ${ctx}. Réponds UNIQUEMENT avec la citation, sans guillemets, en français.`,messages:[{role:'user',content:'Citation'}]})});const d=await res.json();if(d.content&&d.content[0])citEl.textContent='"'+d.content[0].text+'"';}catch(e){}}
 
-function initMdp(){const mdpSauvegarde=localStorage.getItem('user-mdp');const mdpIgnore=localStorage.getItem('user-mdp-ignore');if(mdpIgnore)return;if(mdpSauvegarde){mdpMode='login';document.getElementById('mdp-titre').textContent='Bon retour 💙';document.getElementById('mdp-sous').textContent='Entre ton mot de passe pour accéder à ton espace';document.getElementById('mdp-user-confirm').style.display='none';document.getElementById('mdp-btn').textContent='Se connecter 💙';document.getElementById('mdp-ignorer').style.display='none';const p=localStorage.getItem('user-prenom-save');if(p)document.getElementById('mdp-titre').textContent='Bon retour '+p+' 💙';}else{mdpMode='setup';document.getElementById('mdp-user-confirm').style.display='block';}document.getElementById('mdp-screen').style.display='flex';}
-function validerMdp(){const inp=document.getElementById('mdp-user-input').value;const confirm=document.getElementById('mdp-user-confirm').value;const erreur=document.getElementById('mdp-erreur');if(mdpMode==='setup'){if(inp.length<4){erreur.textContent='Minimum 4 caractères !';erreur.style.display='block';return;}if(inp!==confirm){erreur.textContent='Les mots de passe ne correspondent pas !';erreur.style.display='block';return;}localStorage.setItem('user-mdp',btoa(inp));document.getElementById('mdp-screen').style.display='none';alert('Mot de passe créé ! 💙 N\'oublie pas de le retenir.');}else{const mdpSauvegarde=localStorage.getItem('user-mdp');if(btoa(inp)===mdpSauvegarde){erreur.style.display='none';document.getElementById('mdp-screen').style.display='none';document.getElementById('mdp-user-input').value='';}else{erreur.textContent='Mot de passe incorrect. Réessaie !';erreur.style.display='block';document.getElementById('mdp-user-input').value='';}}}
+function initMdp(){const s=localStorage.getItem('user-mdp');const ig=localStorage.getItem('user-mdp-ignore');if(ig)return;if(s){mdpMode='login';document.getElementById('mdp-titre').textContent='Bon retour 💙';document.getElementById('mdp-sous').textContent='Entre ton mot de passe pour accéder à ton espace';document.getElementById('mdp-user-confirm').style.display='none';document.getElementById('mdp-btn').textContent='Se connecter 💙';document.getElementById('mdp-ignorer').style.display='none';const p=localStorage.getItem('user-prenom-save');if(p)document.getElementById('mdp-titre').textContent='Bon retour '+p+' 💙';}else{mdpMode='setup';document.getElementById('mdp-user-confirm').style.display='block';}document.getElementById('mdp-screen').style.display='flex';}
+function validerMdp(){const inp=document.getElementById('mdp-user-input').value;const confirm=document.getElementById('mdp-user-confirm').value;const erreur=document.getElementById('mdp-erreur');if(mdpMode==='setup'){if(inp.length<4){erreur.textContent='Minimum 4 caractères !';erreur.style.display='block';return;}if(inp!==confirm){erreur.textContent='Les mots de passe ne correspondent pas !';erreur.style.display='block';return;}localStorage.setItem('user-mdp',btoa(inp));document.getElementById('mdp-screen').style.display='none';alert('Mot de passe créé ! 💙');}else{if(btoa(inp)===localStorage.getItem('user-mdp')){document.getElementById('mdp-erreur').style.display='none';document.getElementById('mdp-screen').style.display='none';document.getElementById('mdp-user-input').value='';}else{erreur.textContent='Mot de passe incorrect. Réessaie !';erreur.style.display='block';document.getElementById('mdp-user-input').value='';}}}
 function ignorerMdp(){localStorage.setItem('user-mdp-ignore','true');document.getElementById('mdp-screen').style.display='none';}
 initMdp();
 
@@ -898,18 +1010,13 @@ function finirTutoriel(){localStorage.setItem('tutoriel-vu','true');document.get
 if(!localStorage.getItem('tutoriel-vu')){document.getElementById('tutoriel').style.display='flex';document.getElementById('splash').style.display='none';}
 if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark');}
 function toggleDark(){const isDark=document.body.classList.toggle('dark');localStorage.setItem('darkMode',isDark);document.getElementById('dark-btn').textContent=isDark?'☀️ Mode clair':'🌙 Mode sombre';}
-
-function changerLangue(langue){localStorage.setItem('langue',langue);const t=TRADUCTIONS[langue];document.querySelector('.accueil-titre').textContent=t.titre;document.querySelector('.accueil-sous').textContent=t.sous;document.getElementById('prenom').placeholder=t.prenom;document.querySelector('.btn-commencer').textContent=t.commencer;document.querySelector('.accueil-footer').textContent=t.footer;document.getElementById('dark-btn').textContent=document.body.classList.contains('dark')?t.clair:t.dark;document.getElementById('lang-fr').style.background=langue==='fr'?'#185FA5':'none';document.getElementById('lang-fr').style.color=langue==='fr'?'#fff':'#85B7EB';document.getElementById('lang-fr').style.border=langue==='fr'?'none':'1.5px solid #B5D4F4';document.getElementById('lang-en').style.background=langue==='en'?'#185FA5':'none';document.getElementById('lang-en').style.color=langue==='en'?'#fff':'#85B7EB';document.getElementById('lang-en').style.border=langue==='en'?'none':'1.5px solid #B5D4F4';}
-const langueSauvegardee=localStorage.getItem('langue')||'fr';
-changerLangue(langueSauvegardee);
+function changerLangue(langue){localStorage.setItem('langue',langue);const t=TRADUCTIONS[langue];document.querySelector('.accueil-titre').textContent=t.titre;document.querySelector('.accueil-sous').textContent=t.sous;document.getElementById('prenom').placeholder=t.prenom;document.querySelector('.btn-commencer').textContent=t.commencer;document.querySelector('.accueil-footer').textContent=t.footer;document.getElementById('dark-btn').textContent=document.body.classList.contains('dark')?t.clair:t.dark;['fr','en'].forEach(l=>{const b=document.getElementById('lang-'+l);b.style.background=l===langue?'#185FA5':'none';b.style.color=l===langue?'#fff':'#85B7EB';b.style.border=l===langue?'none':'1.5px solid #B5D4F4';});}
+changerLangue(localStorage.getItem('langue')||'fr');
 
 const citation=CITATIONS[Math.floor(Math.random()*CITATIONS.length)];
-const mots=('"'+citation+'"').split(' ');
-let idx=0;
-const citEl=document.getElementById('splash-citation');
+const mots=('"'+citation+'"').split(' ');let idx=0;const citEl=document.getElementById('splash-citation');
 function motSuivant(){if(idx<mots.length){citEl.textContent+=(idx>0?' ':'')+mots[idx];idx++;setTimeout(motSuivant,110);}}
-motSuivant();
-chargerCitationPersonnalisee();
+motSuivant();chargerCitationPersonnalisee();
 
 function getTime(){return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
 function getDate(){return new Date().toLocaleDateString('fr-FR');}
@@ -921,33 +1028,22 @@ function allerAccueil(){
   document.getElementById('chat').style.display='none';
   document.getElementById('accueil').style.display='flex';
   document.getElementById('nav-bar').style.display='block';
-  pagePrecedente='accueil';
-  setNavActif('nav-accueil');
-  afficherStreak();
-  demanderNotifications();
-  const prenomSauve=localStorage.getItem('user-prenom-save');
-  if(prenomSauve){prenom=prenomSauve;document.getElementById('prenom').value=prenomSauve;}
-  // Vérifier si plan disponible
+  pagePrecedente='accueil';setNavActif('nav-accueil');afficherStreak();demanderNotifications();
+  const ps=localStorage.getItem('user-prenom-save');
+  if(ps){prenom=ps;document.getElementById('prenom').value=ps;}
   const visites=JSON.parse(localStorage.getItem('visites')||'[]');
   if(visites.length>=7&&!localStorage.getItem('plan-notifie')){
     localStorage.setItem('plan-notifie','true');
-    setTimeout(()=>{
-      const notif=document.createElement('div');
-      notif.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#185FA5,#1a4a7a);color:#fff;border-radius:16px;padding:14px 20px;font-size:13px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;cursor:pointer;text-align:center;';
-      notif.innerHTML='🧬 Ton plan personnalisé est prêt !<br><small>Clique pour le découvrir</small>';
-      notif.onclick=()=>{notif.remove();ouvrirSec('plan-perso');chargerPlanPerso();};
-      document.body.appendChild(notif);
-      setTimeout(()=>{notif.style.opacity='0';notif.style.transition='opacity 0.5s';setTimeout(()=>notif.remove(),500);},6000);
-    },2000);
+    setTimeout(()=>{const notif=document.createElement('div');notif.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#185FA5,#1a4a7a);color:#fff;border-radius:16px;padding:14px 20px;font-size:13px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;cursor:pointer;text-align:center;';notif.innerHTML='🧬 Ton plan personnalisé est prêt !<br><small>Clique pour le découvrir</small>';notif.onclick=()=>{notif.remove();ouvrirSec('plan-perso');chargerPlanPerso();};document.body.appendChild(notif);setTimeout(()=>{notif.style.opacity='0';notif.style.transition='opacity 0.5s';setTimeout(()=>notif.remove(),500);},6000);},2000);
   }
+  // Initialiser le mode spirituel
+  if(spirituelChoisi)setTimeout(()=>chargerCitationSpirituele(),100);
 }
 
 function allerChat(){if(!prenom||prenom===''){document.getElementById('accueil').style.display='flex';document.getElementById('chat').style.display='none';document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));setNavActif('nav-accueil');return;}document.getElementById('accueil').style.display='none';document.querySelectorAll('.page-sec').forEach(p=>p.classList.remove('open'));document.getElementById('chat').style.display='flex';pagePrecedente='chat';setNavActif('nav-chat');}
-
 function partagercitation(){const t=citEl.textContent+'\n\n💙 Juste là pour toi\nhttps://malick043-png.github.io/Juste-l-pour-toi';if(navigator.share){navigator.share({text:t});}else{navigator.clipboard.writeText(t);alert('Citation copiée ! 💙');}}
 function ouvrirMenu(){document.getElementById('menu-drawer').classList.add('open');}
 function fermerMenu(){document.getElementById('menu-drawer').classList.remove('open');}
-
 function commencer(){prenom=document.getElementById('prenom').value.trim()||'toi';document.getElementById('accueil').style.display='none';document.getElementById('chat').style.display='flex';document.getElementById('chat-sub').textContent='Bonjour '+prenom+' 💙';pagePrecedente='chat';document.getElementById('nav-bar').style.display='block';setNavActif('nav-chat');localStorage.setItem('user-prenom-save',prenom);incrementerCompteur();verifierBadges();afficherStreak();ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Je suis là pour toi. Comment te sens-tu aujourd\'hui ?');}
 function reinitialiser(){sauvegarderConversation();historique=[];document.getElementById('messages').innerHTML='<div class="date-div"><span>aujourd\'hui</span></div>';document.getElementById('suggestions').style.display='flex';ajouterMsg('assistant','💙 Bonjour '+prenom+' ! Comment te sens-tu ?');}
 function ouvrirSec(id){pagePrecedente=document.getElementById('chat').style.display==='flex'?'chat':'accueil';document.getElementById(id).classList.add('open');}
@@ -979,7 +1075,7 @@ function defiOk(){localStorage.setItem('defi-date',getDate());const defis=JSON.p
 function afficherDefisHisto(){const d=JSON.parse(localStorage.getItem('defis-ok')||'[]');const c=document.getElementById('defi-histo');if(!d.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun défi 💙</p>';return;}c.innerHTML=d.map(x=>`<div style="padding:8px 0;border-bottom:0.5px solid #E6F1FB;display:flex;gap:8px;"><span>✅</span><div><p style="font-size:11px;color:#85B7EB;">${x.date}</p><p style="font-size:13px;color:#0C447C;">${x.defi}</p></div></div>`).join('');}
 
 function selDelai(el,d){document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');delaiLettre=d;}
-function sauvegarderLettre(){const t=document.getElementById('lettre-txt').value.trim();if(!t){alert('Écris ta lettre !');return;}if(!delaiLettre){alert('Choisis un délai !');return;}const l=JSON.parse(localStorage.getItem('lettres')||'[]');l.unshift({date:getDate(),delai:delaiLettre,texte:t});localStorage.setItem('lettres',JSON.stringify(l));document.getElementById('lettre-txt').value='';delaiLettre='';document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));alert('Lettre scellée ! 💌 Elle t\'attend dans '+delaiLettre);afficherLettres();verifierBadges();}
+function sauvegarderLettre(){const t=document.getElementById('lettre-txt').value.trim();if(!t){alert('Écris ta lettre !');return;}if(!delaiLettre){alert('Choisis un délai !');return;}const l=JSON.parse(localStorage.getItem('lettres')||'[]');l.unshift({date:getDate(),delai:delaiLettre,texte:t});localStorage.setItem('lettres',JSON.stringify(l));document.getElementById('lettre-txt').value='';delaiLettre='';document.querySelectorAll('.delai-btn').forEach(b=>b.classList.remove('selected'));alert('Lettre scellée ! 💌');afficherLettres();verifierBadges();}
 function afficherLettres(){const l=JSON.parse(localStorage.getItem('lettres')||'[]');const c=document.getElementById('lettres-list');if(!l.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune lettre 💌</p>';return;}c.innerHTML=l.map(x=>`<div style="padding:10px;border-radius:10px;background:#f7faff;border:0.5px solid #B5D4F4;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;color:#85B7EB;">${x.date}</span><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">Dans ${x.delai}</span></div><p style="font-size:13px;color:#0C447C;font-style:italic;">"${x.texte.substring(0,80)}${x.texte.length>80?'...':''}"</p></div>`).join('');}
 
 function selGroupe(el,groupe){groupeFiltre=groupe;document.querySelectorAll('#groupes-btns .groupe-theme').forEach(b=>{b.style.background='none';b.style.color='#185FA5';b.style.borderColor='#B5D4F4';});el.style.background='#185FA5';el.style.color='#fff';el.style.borderColor='#185FA5';chargerCommunaute();}
@@ -989,29 +1085,52 @@ async function chargerClassement(){try{const res=await fetch('https://serveur-ju
 
 async function chargerCommunaute(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute');const data=await res.json();const c=document.getElementById('communaute-liste');const filtered=groupeFiltre==='Tous'?data:data.filter(p=>p.groupe===groupeFiltre);if(!filtered.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune pensée dans ce groupe 💙</p>';}else{c.innerHTML=filtered.map(p=>`<div style="padding:12px;border-radius:12px;background:rgba(24,95,165,0.05);border:0.5px solid #B5D4F4;margin-bottom:10px;"><div style="margin-bottom:8px;"><span style="font-size:11px;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:8px;">${p.groupe||'Général'}</span></div><p style="font-size:14px;color:#0C447C;line-height:1.5;margin-bottom:10px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><div style="display:flex;align-items:center;gap:8px;">${creerAvatar(p.prenom||'Anonyme',24)}<span style="font-size:11px;color:#85B7EB;">${p.prenom} · ${p.date}</span></div><div style="display:flex;gap:6px;align-items:center;"><button onclick="repondreAPensee(${p.id},'${p.prenom}')" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#85B7EB;cursor:pointer;">💬 Répondre</button><button onclick="envoyerCoeur(${p.id},this)" style="background:none;border:1px solid #B5D4F4;border-radius:12px;padding:4px 10px;font-size:12px;color:#185FA5;cursor:pointer;">💙 ${p.coeurs}</button></div></div></div>`).join('');}chargerClassement();}catch(e){document.getElementById('communaute-liste').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
 
-function repondreAPensee(id,auteur){const reponse=prompt('💙 Réponds à '+auteur+' :');if(!reponse||!reponse.trim())return;document.getElementById('pensee-input').value='↩️ En réponse à '+auteur+' : '+reponse.trim();document.getElementById('pensee-input').focus();document.getElementById('pensee-input').scrollIntoView({behavior:'smooth'});}
-async function partagerPensee(){const pensee=document.getElementById('pensee-input').value.trim();if(!pensee){alert('Écris une pensée !');return;}if(pensee.length>200){alert('Maximum 200 caractères !');return;}document.querySelector('#communaute .btn-p').textContent='Vérification... 💙';document.querySelector('#communaute .btn-p').disabled=true;try{const verif=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:50,system:'Tu es un modérateur bienveillant. Réponds UNIQUEMENT par "OUI" si le message est positif et approprié, ou "NON" si inapproprié.',messages:[{role:'user',content:'Ce message est-il approprié ? "'+pensee+'"'}]})});const verifData=await verif.json();const decision=verifData.content[0].text.trim().toUpperCase();if(decision.includes('NON')){alert('😔 Cette pensée ne semble pas bienveillante. Essaie de partager quelque chose de positif 💙');document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;return;}await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee,prenom:prenom||'Anonyme',groupe:groupePubli})});document.getElementById('pensee-input').value='';document.getElementById('succes-pensee').style.display='block';setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);chargerCommunaute();}catch(e){alert('Erreur 😔');}document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;}
+function repondreAPensee(id,auteur){const r=prompt('💙 Réponds à '+auteur+' :');if(!r||!r.trim())return;document.getElementById('pensee-input').value='↩️ En réponse à '+auteur+' : '+r.trim();document.getElementById('pensee-input').focus();document.getElementById('pensee-input').scrollIntoView({behavior:'smooth'});}
+
+async function partagerPensee(){
+  const pensee=document.getElementById('pensee-input').value.trim();
+  if(!pensee){alert('Écris une pensée !');return;}
+  if(pensee.length>200){alert('Maximum 200 caractères !');return;}
+  document.querySelector('#communaute .btn-p').textContent='Vérification... 💙';
+  document.querySelector('#communaute .btn-p').disabled=true;
+  try{
+    const verif=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:50,system:'Tu es un modérateur bienveillant. Réponds UNIQUEMENT par "OUI" si le message est positif et approprié, ou "NON" si inapproprié.',messages:[{role:'user',content:'Ce message est-il approprié ? "'+pensee+'"'}]})});
+    const verifData=await verif.json();
+    const decision=verifData.content[0].text.trim().toUpperCase();
+    if(decision.includes('NON')){alert('😔 Cette pensée ne semble pas bienveillante. Essaie de partager quelque chose de positif 💙');document.querySelector('#communaute .btn-p').textContent='Partager 💙';document.querySelector('#communaute .btn-p').disabled=false;return;}
+    await fetch('https://serveur-juste-la-pour-toi.onrender.com/communaute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pensee,prenom:prenom||'Anonyme',groupe:groupePubli})});
+    document.getElementById('pensee-input').value='';
+    document.getElementById('succes-pensee').style.display='block';
+    setTimeout(()=>document.getElementById('succes-pensee').style.display='none',2000);
+    // MODE SOLIDARITE
+    document.getElementById('solidarite-msg').style.display='block';
+    setTimeout(()=>document.getElementById('solidarite-msg').style.display='none',4000);
+    envoyerMessageSolidarite(pensee);
+    chargerCommunaute();
+  }catch(e){alert('Erreur 😔');}
+  document.querySelector('#communaute .btn-p').textContent='Partager 💙';
+  document.querySelector('#communaute .btn-p').disabled=false;
+}
+
 async function envoyerCoeur(id,btn){try{const res=await fetch(`https://serveur-juste-la-pour-toi.onrender.com/communaute/${id}/coeur`,{method:'POST'});const data=await res.json();btn.textContent='💙 '+data.coeurs;}catch(e){}}
 
-const BADGES=[{id:'premier-pas',icon:'💙',nom:'Premier pas',desc:'Première conversation'},{id:'objectif-fixe',icon:'🎯',nom:'Objectif fixé',desc:'Premier objectif créé'},{id:'journaliste',icon:'📔',nom:'Journaliste',desc:'5 entrées dans le journal'},{id:'challenger',icon:'⚡',nom:'Challenger',desc:'5 défis acceptés'},{id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},{id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'},{id:'streak-3',icon:'🔥',nom:'En feu !',desc:'3 jours de suite'},{id:'therapeute',icon:'🗣️',nom:'Thérapeute',desc:'Première séance d\'écriture'},{id:'plan',icon:'🧬',nom:'Planifié',desc:'Plan personnalisé généré'}];
-function verifierBadges(){const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');const objectif=localStorage.getItem('objectif');const visites=JSON.parse(localStorage.getItem('visites')||'[]');const aujourd=getDate();if(!visites.includes(aujourd)){visites.push(aujourd);if(visites.length>30)visites.shift();localStorage.setItem('visites',JSON.stringify(visites));}const nouveaux=[];if(!obtenus.includes('premier-pas')&&historique.length>0){obtenus.push('premier-pas');nouveaux.push('premier-pas');}if(!obtenus.includes('objectif-fixe')&&objectif){obtenus.push('objectif-fixe');nouveaux.push('objectif-fixe');}if(!obtenus.includes('journaliste')&&journal.length>=5){obtenus.push('journaliste');nouveaux.push('journaliste');}if(!obtenus.includes('challenger')&&defis.length>=5){obtenus.push('challenger');nouveaux.push('challenger');}if(!obtenus.includes('futur-moi')&&lettres.length>0){obtenus.push('futur-moi');nouveaux.push('futur-moi');}if(!obtenus.includes('semaine')&&visites.length>=7){obtenus.push('semaine');nouveaux.push('semaine');}if(!obtenus.includes('streak-3')&&calculerStreak()>=3){obtenus.push('streak-3');nouveaux.push('streak-3');}if(!obtenus.includes('therapeute')&&localStorage.getItem('therapie-fait')){obtenus.push('therapeute');nouveaux.push('therapeute');}if(!obtenus.includes('plan')&&localStorage.getItem('plan-perso-cache')){obtenus.push('plan');nouveaux.push('plan');}localStorage.setItem('badges',JSON.stringify(obtenus));nouveaux.forEach(id=>{const b=BADGES.find(x=>x.id===id);if(b)afficherNotifBadge(b);});}
+const BADGES=[{id:'premier-pas',icon:'💙',nom:'Premier pas',desc:'Première conversation'},{id:'objectif-fixe',icon:'🎯',nom:'Objectif fixé',desc:'Premier objectif créé'},{id:'journaliste',icon:'📔',nom:'Journaliste',desc:'5 entrées dans le journal'},{id:'challenger',icon:'⚡',nom:'Challenger',desc:'5 défis acceptés'},{id:'futur-moi',icon:'💌',nom:'Futur moi',desc:'Première lettre écrite'},{id:'semaine',icon:'🌟',nom:'7 jours',desc:'7 jours d\'utilisation'},{id:'streak-3',icon:'🔥',nom:'En feu !',desc:'3 jours de suite'},{id:'therapeute',icon:'🗣️',nom:'Thérapeute',desc:'Première séance d\'écriture'},{id:'plan',icon:'🧬',nom:'Planifié',desc:'Plan personnalisé généré'},{id:'solidaire',icon:'🤲',nom:'Solidaire',desc:'Première pensée partagée'},{id:'spirituel',icon:'🕌',nom:'Spirituel',desc:'Mode spirituel activé'},{id:'story',icon:'🎭',nom:'Storyteller',desc:'Première story partagée'}];
+function verifierBadges(){const ob=JSON.parse(localStorage.getItem('badges')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const lettres=JSON.parse(localStorage.getItem('lettres')||'[]');const objectif=localStorage.getItem('objectif');const visites=JSON.parse(localStorage.getItem('visites')||'[]');const aujourd=getDate();if(!visites.includes(aujourd)){visites.push(aujourd);if(visites.length>30)visites.shift();localStorage.setItem('visites',JSON.stringify(visites));}const nouveaux=[];const check=(id,cond)=>{if(!ob.includes(id)&&cond){ob.push(id);nouveaux.push(id);}};check('premier-pas',historique.length>0);check('objectif-fixe',!!objectif);check('journaliste',journal.length>=5);check('challenger',defis.length>=5);check('futur-moi',lettres.length>0);check('semaine',visites.length>=7);check('streak-3',calculerStreak()>=3);check('therapeute',!!localStorage.getItem('therapie-fait'));check('plan',!!localStorage.getItem('plan-perso-cache'));check('solidaire',!!localStorage.getItem('solidarite-fait'));check('spirituel',!!localStorage.getItem('spirituel-choix'));check('story',!!localStorage.getItem('stories-locales'));localStorage.setItem('badges',JSON.stringify(ob));nouveaux.forEach(id=>{const b=BADGES.find(x=>x.id===id);if(b)afficherNotifBadge(b);});}
 function afficherNotifBadge(badge){const notif=document.createElement('div');notif.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#185FA5;color:#fff;border-radius:20px;padding:12px 20px;font-size:14px;font-family:DM Sans,sans-serif;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;display:flex;align-items:center;gap:10px;white-space:nowrap;';notif.innerHTML=`<span style="font-size:24px;">${badge.icon}</span><div><p style="font-weight:500;font-size:13px;">Badge obtenu !</p><p style="font-size:12px;opacity:0.85;">${badge.nom}</p></div>`;document.body.appendChild(notif);setTimeout(()=>{notif.style.opacity='0';notif.style.transition='opacity 0.5s';setTimeout(()=>notif.remove(),500);},3000);}
-function afficherBadges(){const obtenus=JSON.parse(localStorage.getItem('badges')||'[]');const c=document.getElementById('badges-liste');c.innerHTML=BADGES.map(b=>{const ok=obtenus.includes(b.id);return `<div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:${ok?'rgba(24,95,165,0.08)':'transparent'};border:0.5px solid ${ok?'#B5D4F4':'#e0e0e0'};margin-bottom:8px;opacity:${ok?'1':'0.4'};"><span style="font-size:28px;">${b.icon}</span><div><p style="font-size:14px;font-weight:500;color:${ok?'#0C447C':'#999'};">${b.nom}</p><p style="font-size:12px;color:#85B7EB;">${b.desc}</p></div>${ok?'<span style="margin-left:auto;font-size:12px;color:#1D9E75;font-weight:500;">✓</span>':''}</div>`;}).join('');}
+function afficherBadges(){const ob=JSON.parse(localStorage.getItem('badges')||'[]');const c=document.getElementById('badges-liste');c.innerHTML=BADGES.map(b=>{const ok=ob.includes(b.id);return `<div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;background:${ok?'rgba(24,95,165,0.08)':'transparent'};border:0.5px solid ${ok?'#B5D4F4':'#e0e0e0'};margin-bottom:8px;opacity:${ok?'1':'0.4'};"><span style="font-size:28px;">${b.icon}</span><div><p style="font-size:14px;font-weight:500;color:${ok?'#0C447C':'#999'};">${b.nom}</p><p style="font-size:12px;color:#85B7EB;">${b.desc}</p></div>${ok?'<span style="margin-left:auto;font-size:12px;color:#1D9E75;font-weight:500;">✓</span>':''}</div>`;}).join('');}
 
 async function chargerProgramme(){const prog=JSON.parse(localStorage.getItem('programme')||'null');if(!prog){document.getElementById('programme-accueil').style.display='block';document.getElementById('programme-actif').style.display='none';}else{document.getElementById('programme-accueil').style.display='none';document.getElementById('programme-actif').style.display='block';afficherProgramme(prog);await chargerContenuJour(prog);}}
 function demarrerProgramme(){const objectif=document.getElementById('prog-objectif').value;const prog={objectif,dateDebut:getDate(),joursCompletes:[],jourActuel:1};localStorage.setItem('programme',JSON.stringify(prog));chargerProgramme();alert('Programme lancé ! 💙');}
 function afficherProgramme(prog){document.getElementById('prog-objectif-affiche').textContent=prog.objectif;document.getElementById('prog-jour-actuel').textContent=prog.jourActuel;document.getElementById('prog-date-debut').textContent='Commencé le '+prog.dateDebut;document.getElementById('prog-barre').style.width=(prog.jourActuel/30*100)+'%';document.getElementById('prog-titre-jour').textContent='Jour '+prog.jourActuel+' — Contenu du jour';const deja=prog.joursCompletes.includes(prog.jourActuel);document.getElementById('prog-valider-btn').style.display=deja?'none':'block';const grille=document.getElementById('prog-grille');grille.innerHTML='';for(let i=1;i<=30;i++){const div=document.createElement('div');div.style.cssText=`width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;${prog.joursCompletes.includes(i)?'background:#185FA5;color:#fff;':i===prog.jourActuel?'background:#E6F1FB;color:#185FA5;border:2px solid #185FA5;':'background:#f7faff;color:#85B7EB;border:0.5px solid #B5D4F4;'}`;div.textContent=prog.joursCompletes.includes(i)?'✓':i;grille.appendChild(div);}}
-async function chargerContenuJour(prog){const cache=localStorage.getItem('prog-contenu-'+prog.jourActuel);if(cache){document.getElementById('prog-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;">${cache}</p>`;return;}try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:200,system:'Tu es un coach bienveillant. Génère le contenu du jour pour un programme bien-être de 30 jours. Réponds avec: 1 exercice pratique simple, 1 conseil bienveillant, et 1 question de réflexion. Sois concis et inspirant. Réponds en français.',messages:[{role:'user',content:`Jour ${prog.jourActuel}/30 du programme "${prog.objectif}". Génère le contenu de ce jour.`}]})});const data=await res.json();const contenu=data.content[0].text;localStorage.setItem('prog-contenu-'+prog.jourActuel,contenu);document.getElementById('prog-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;">${contenu}</p>`;}catch(e){document.getElementById('prog-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
+async function chargerContenuJour(prog){const cache=localStorage.getItem('prog-contenu-'+prog.jourActuel);if(cache){document.getElementById('prog-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;">${cache}</p>`;return;}try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:200,system:'Tu es un coach bienveillant. Génère le contenu du jour pour un programme bien-être de 30 jours. Réponds avec: 1 exercice pratique simple, 1 conseil bienveillant, et 1 question de réflexion. Réponds en français.',messages:[{role:'user',content:`Jour ${prog.jourActuel}/30 du programme "${prog.objectif}".`}]})});const data=await res.json();const contenu=data.content[0].text;localStorage.setItem('prog-contenu-'+prog.jourActuel,contenu);document.getElementById('prog-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;">${contenu}</p>`;}catch(e){document.getElementById('prog-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;">Erreur 😔</p>';}}
 function validerJourProgramme(){const prog=JSON.parse(localStorage.getItem('programme')||'null');if(!prog)return;if(!prog.joursCompletes.includes(prog.jourActuel))prog.joursCompletes.push(prog.jourActuel);if(prog.jourActuel<30)prog.jourActuel++;else{alert('🎉 Félicitations ! Tu as complété le programme 30 jours !');abandonnerProgramme();return;}localStorage.setItem('programme',JSON.stringify(prog));afficherProgramme(prog);chargerContenuJour(prog);verifierBadges();}
 function abandonnerProgramme(){if(!confirm('Abandonner le programme ?'))return;localStorage.removeItem('programme');chargerProgramme();}
 
-async function genererBilan(){const aujourd=new Date();const debutSemaine=new Date(aujourd);debutSemaine.setDate(aujourd.getDate()-aujourd.getDay());const finSemaine=new Date(debutSemaine);finSemaine.setDate(debutSemaine.getDate()+6);document.getElementById('bilan-date').textContent='Semaine du '+debutSemaine.toLocaleDateString('fr-FR')+' au '+finSemaine.toLocaleDateString('fr-FR');const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const objectif=JSON.parse(localStorage.getItem('objectif')||'null');const notesSemaine=notes.filter(n=>{const d=n.date.split('/');const date=new Date(d[2],d[1]-1,d[0]);return date>=debutSemaine&&date<=finSemaine;});const moyenne=notesSemaine.length?(notesSemaine.reduce((a,b)=>a+b.note,0)/notesSemaine.length).toFixed(1):null;const defisSemaine=defis.filter(d=>{const parts=d.date.split('/');const date=new Date(parts[2],parts[1]-1,parts[0]);return date>=debutSemaine&&date<=finSemaine;});const journalSemaine=journal.filter(j=>{const parts=j.date.split('/');const date=new Date(parts[2],parts[1]-1,parts[0]);return date>=debutSemaine&&date<=finSemaine;});document.getElementById('bilan-stats').style.display='block';document.getElementById('bilan-chiffres').innerHTML=`<div style="display:flex;justify-content:space-around;margin-bottom:8px;"><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${moyenne||'-'}</p><p style="font-size:11px;color:#85B7EB;">Humeur /10</p></div><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${defisSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Défis complétés</p></div><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${journalSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Entrées journal</p></div></div>`;document.getElementById('bilan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;">L\'IA analyse ta semaine... 💙</p>';try{const contexte=`L'utilisateur s'appelle ${prenom||'toi'}. Cette semaine : humeur moyenne ${moyenne||'non renseignée'}/10, ${defisSemaine.length} défi(s) complété(s), ${journalSemaine.length} entrée(s) dans le journal. Objectif actuel : ${objectif?objectif.texte:'non défini'}.`;const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:300,system:'Tu es un coach bienveillant. Génère un bilan hebdomadaire personnalisé et encourageant en 3-4 phrases. Réponds en français.',messages:[{role:'user',content:contexte}]})});const data=await res.json();const bilan=data.content[0].text;localStorage.setItem('dernier-bilan',bilan);document.getElementById('bilan-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;font-style:italic;">"${bilan}"</p>`;document.getElementById('bilan-partager').style.display='block';document.getElementById('carte-partager').style.display='block';}catch(e){document.getElementById('bilan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;">Erreur 😔</p>';}}
-
+async function genererBilan(){const aujourd=new Date();const debutSemaine=new Date(aujourd);debutSemaine.setDate(aujourd.getDate()-aujourd.getDay());const finSemaine=new Date(debutSemaine);finSemaine.setDate(debutSemaine.getDate()+6);document.getElementById('bilan-date').textContent='Semaine du '+debutSemaine.toLocaleDateString('fr-FR')+' au '+finSemaine.toLocaleDateString('fr-FR');const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const objectif=JSON.parse(localStorage.getItem('objectif')||'null');const notesSemaine=notes.filter(n=>{const d=n.date.split('/');const date=new Date(d[2],d[1]-1,d[0]);return date>=debutSemaine&&date<=finSemaine;});const moyenne=notesSemaine.length?(notesSemaine.reduce((a,b)=>a+b.note,0)/notesSemaine.length).toFixed(1):null;const defisSemaine=defis.filter(d=>{const parts=d.date.split('/');const date=new Date(parts[2],parts[1]-1,parts[0]);return date>=debutSemaine&&date<=finSemaine;});const journalSemaine=journal.filter(j=>{const parts=j.date.split('/');const date=new Date(parts[2],parts[1]-1,parts[0]);return date>=debutSemaine&&date<=finSemaine;});document.getElementById('bilan-stats').style.display='block';document.getElementById('bilan-chiffres').innerHTML=`<div style="display:flex;justify-content:space-around;margin-bottom:8px;"><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${moyenne||'-'}</p><p style="font-size:11px;color:#85B7EB;">Humeur /10</p></div><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${defisSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Défis complétés</p></div><div style="text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;">${journalSemaine.length}</p><p style="font-size:11px;color:#85B7EB;">Entrées journal</p></div></div>`;document.getElementById('bilan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;">L\'IA analyse ta semaine... 💙</p>';try{const contexte=`L'utilisateur s'appelle ${prenom||'toi'}. Cette semaine : humeur moyenne ${moyenne||'non renseignée'}/10, ${defisSemaine.length} défi(s), ${journalSemaine.length} entrée(s) journal. Objectif : ${objectif?objectif.texte:'non défini'}.`;const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:300,system:'Tu es un coach bienveillant. Génère un bilan hebdomadaire personnalisé et encourageant en 3-4 phrases. Réponds en français.',messages:[{role:'user',content:contexte}]})});const data=await res.json();const bilan=data.content[0].text;localStorage.setItem('dernier-bilan',bilan);document.getElementById('bilan-contenu').innerHTML=`<p style="font-family:'Lora',serif;font-size:15px;color:#0C447C;line-height:1.8;font-style:italic;">"${bilan}"</p>`;document.getElementById('bilan-partager').style.display='block';document.getElementById('carte-partager').style.display='block';}catch(e){document.getElementById('bilan-contenu').innerHTML='<p style="font-size:13px;color:#85B7EB;">Erreur 😔</p>';}}
 function partagerBilan(){const bilan=localStorage.getItem('dernier-bilan')||'';const texte=`📋 Mon bilan de la semaine sur Juste là pour toi :\n\n"${bilan}"\n\n💙 https://malick043-png.github.io/Juste-l-pour-toi`;if(navigator.share){navigator.share({text:texte});}else{navigator.clipboard.writeText(texte);alert('Bilan copié ! 💙');}}
+function genererCarte(){const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const moyenne=notes.length?(notes.slice(-7).reduce((a,b)=>a+b.note,0)/Math.min(notes.length,7)).toFixed(1):'-';const streak=calculerStreak();const canvas=document.createElement('canvas');canvas.width=800;canvas.height=450;const ctx=canvas.getContext('2d');const grad=ctx.createLinearGradient(0,0,800,450);grad.addColorStop(0,'#0C447C');grad.addColorStop(1,'#185FA5');ctx.fillStyle=grad;ctx.fillRect(0,0,800,450);ctx.fillStyle='rgba(255,255,255,0.05)';ctx.beginPath();ctx.arc(700,50,200,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(100,400,150,0,Math.PI*2);ctx.fill();const color=getAvatarColor(prenom||'toi');ctx.fillStyle=color;ctx.beginPath();ctx.arc(90,60,30,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 24px Arial';ctx.textAlign='center';ctx.fillText(getInitiale(prenom||'toi'),90,69);ctx.fillStyle='#fff';ctx.font='bold 26px Arial';ctx.textAlign='left';ctx.fillText('Juste là pour toi 💙',130,55);ctx.font='15px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';ctx.fillText('Ma carte bien-être · '+(prenom||'Anonyme'),130,75);ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(50,110,145,160,16);ctx.fill();ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(215,110,145,160,16);ctx.fill();ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(380,110,145,160,16);ctx.fill();ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(545,110,205,160,16);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 42px Arial';ctx.textAlign='center';ctx.fillText(moyenne,122,200);ctx.fillText(defis.length,287,200);ctx.fillText(journal.length,452,200);ctx.fillText('🔥'+streak,647,200);ctx.font='12px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';ctx.fillText('Humeur /10',122,235);ctx.fillText('Défis',287,235);ctx.fillText('Journal',452,235);ctx.fillText('Jours streak',647,235);ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(50,310,700,1);ctx.fillStyle='rgba(181,212,244,0.6)';ctx.font='13px Arial';ctx.textAlign='left';ctx.fillText('© 2026 Juste là pour toi',50,350);ctx.fillStyle='#5DCAA5';ctx.font='bold 15px Arial';ctx.textAlign='right';ctx.fillText('Prends soin de toi 💙',750,350);const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='ma-carte-bien-etre.png';a.click();}
 
-function genererCarte(){const notes=JSON.parse(localStorage.getItem('notes-humeur')||'[]');const defis=JSON.parse(localStorage.getItem('defis-ok')||'[]');const journal=JSON.parse(localStorage.getItem('journal')||'[]');const moyenne=notes.length?(notes.slice(-7).reduce((a,b)=>a+b.note,0)/Math.min(notes.length,7)).toFixed(1):'-';const streak=calculerStreak();const canvas=document.createElement('canvas');canvas.width=800;canvas.height=450;const ctx=canvas.getContext('2d');const grad=ctx.createLinearGradient(0,0,800,450);grad.addColorStop(0,'#0C447C');grad.addColorStop(1,'#185FA5');ctx.fillStyle=grad;ctx.fillRect(0,0,800,450);ctx.fillStyle='rgba(255,255,255,0.05)';ctx.beginPath();ctx.arc(700,50,200,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(100,400,150,0,Math.PI*2);ctx.fill();const color=getAvatarColor(prenom||'toi');ctx.fillStyle=color;ctx.beginPath();ctx.arc(90,60,30,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 24px Arial';ctx.textAlign='center';ctx.fillText(getInitiale(prenom||'toi'),90,69);ctx.fillStyle='#fff';ctx.font='bold 26px Arial';ctx.textAlign='left';ctx.fillText('Juste là pour toi 💙',130,55);ctx.font='15px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';ctx.fillText('Ma carte bien-être · '+(prenom||'Anonyme'),130,75);ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(50,110,145,160,16);ctx.fill();ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(215,110,145,160,16);ctx.fill();ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(380,110,145,160,16);ctx.fill();ctx.fillStyle='rgba(255,255,255,0.1)';ctx.beginPath();ctx.roundRect(545,110,205,160,16);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 42px Arial';ctx.textAlign='center';ctx.fillText(moyenne,122,200);ctx.fillText(defis.length,287,200);ctx.fillText(journal.length,452,200);ctx.fillText('🔥'+streak,647,200);ctx.font='12px Arial';ctx.fillStyle='rgba(181,212,244,0.8)';ctx.fillText('Humeur /10',122,235);ctx.fillText('Défis',287,235);ctx.fillText('Journal',452,235);ctx.fillText('Jours streak',647,235);ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(50,310,700,1);ctx.fillStyle='rgba(181,212,244,0.6)';ctx.font='13px Arial';ctx.textAlign='left';ctx.fillText('© 2026 Juste là pour toi',50,350);ctx.fillStyle='#5DCAA5';ctx.font='bold 15px Arial';ctx.textAlign='right';ctx.fillText('Prends soin de toi 💙',750,350);const dataURL=canvas.toDataURL('image/png');const a=document.createElement('a');a.href=dataURL;a.download='ma-carte-bien-etre.png';a.click();}
-
-function inviterAmi(){const message=`💙 Salut ! Je t'invite à essayer *Juste là pour toi* — une application bienveillante pour prendre soin de toi.\n\n✅ Chat IA empathique\n✅ Journal de bord\n✅ Exercices de respiration\n✅ Sessions de groupe\n✅ Et bien plus encore !\n\n👉 https://malick043-png.github.io/Juste-l-pour-toi\n\nC'est gratuit et disponible maintenant ! 💙`;if(navigator.share){navigator.share({text:message});}else{const url='https://wa.me/?text='+encodeURIComponent(message);window.open(url,'_blank');}}
+function inviterAmi(){const message=`💙 Salut ! Je t'invite à essayer *Juste là pour toi* — une application bienveillante pour prendre soin de toi.\n\n✅ Chat IA empathique\n✅ Journal de bord\n✅ Exercices de respiration\n✅ Sessions de groupe\n✅ Et bien plus encore !\n\n👉 https://malick043-png.github.io/Juste-l-pour-toi\n\nC'est gratuit ! 💙`;if(navigator.share){navigator.share({text:message});}else{window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank');}}
 
 function sauvegarderConversation(){if(historique.length===0)return;const convs=JSON.parse(localStorage.getItem('conversations')||'[]');convs.unshift({date:getDate(),heure:getTime(),messages:historique.slice()});if(convs.length>10)convs.pop();localStorage.setItem('conversations',JSON.stringify(convs));}
 function afficherHistoriqueConv(){const convs=JSON.parse(localStorage.getItem('conversations')||'[]');const c=document.getElementById('historique-conv');if(!convs.length){c.innerHTML='<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune conversation 💙</p>';return;}c.innerHTML=convs.map((conv,i)=>`<div style="padding:12px;border-radius:12px;border:0.5px solid #B5D4F4;margin-bottom:10px;cursor:pointer;" onclick="toggleConv(${i})"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;color:#0C447C;">💬 ${conv.date} à ${conv.heure}</span><span style="font-size:11px;color:#85B7EB;">${conv.messages.length} messages</span></div><p style="font-size:12px;color:#85B7EB;font-style:italic;">"${conv.messages[0]?.content?.substring(0,60)}..."</p><div id="conv-detail-${i}" style="display:none;margin-top:12px;border-top:0.5px solid #E6F1FB;padding-top:12px;">${conv.messages.map(m=>`<div style="margin-bottom:8px;display:flex;flex-direction:column;${m.role==='user'?'align-items:flex-end':''}"><div style="max-width:85%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.5;${m.role==='user'?'background:#185FA5;color:#fff;':'background:#f7faff;color:#0C447C;border:0.5px solid #B5D4F4;'}">${m.content}</div></div>`).join('')}</div></div>`).join('');}
@@ -1019,61 +1138,36 @@ function toggleConv(i){const el=document.getElementById('conv-detail-'+i);el.sty
 
 async function chargerCompteur(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const data=await res.json();document.getElementById('compteur-affiche').textContent='💙 Rejoins '+data.compteur+' personnes qui prennent soin d\'elles';}catch(e){}}
 async function incrementerCompteur(){try{await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur',{method:'POST'});}catch(e){}}
-async function chargerTemoignages(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/temoignages');const data=await res.json();const c=document.getElementById('temoignages-liste');const compteurRes=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const compteurData=await compteurRes.json();document.getElementById('compteur-detail').textContent='💙 '+compteurData.compteur+' personnes utilisent déjà Juste là pour toi';c.innerHTML=data.map(t=>`<div class="card" style="margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">${creerAvatar(t.nom,40)}<div><p style="font-size:14px;font-weight:500;color:#0C447C;">${t.nom}</p><p style="font-size:12px;color:#f59e0b;">${'⭐'.repeat(t.note)}</p></div></div><p style="font-size:13px;color:#378ADD;line-height:1.6;font-style:italic;">"${t.avis}"</p></div>`).join('');}catch(e){}}
+async function chargerTemoignages(){try{const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/temoignages');const data=await res.json();const c=document.getElementById('temoignages-liste');const cRes=await fetch('https://serveur-juste-la-pour-toi.onrender.com/compteur');const cData=await cRes.json();document.getElementById('compteur-detail').textContent='💙 '+cData.compteur+' personnes utilisent déjà Juste là pour toi';c.innerHTML=data.map(t=>`<div class="card" style="margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">${creerAvatar(t.nom,40)}<div><p style="font-size:14px;font-weight:500;color:#0C447C;">${t.nom}</p><p style="font-size:12px;color:#f59e0b;">${'⭐'.repeat(t.note)}</p></div></div><p style="font-size:13px;color:#378ADD;line-height:1.6;font-style:italic;">"${t.avis}"</p></div>`).join('');}catch(e){}}
 chargerCompteur();
 
 function toggleVoix(){if(enEcoute){arreterEcoute();return;}demarrerEcoute();}
-function demarrerEcoute(){if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){alert('La reconnaissance vocale n\'est pas supportée. Utilise Chrome.');return;}reconnaissance=new (window.SpeechRecognition||window.webkitSpeechRecognition)();reconnaissance.lang='fr-FR';reconnaissance.continuous=false;reconnaissance.interimResults=true;reconnaissance.onstart=()=>{enEcoute=true;document.getElementById('mic-btn').textContent='🔴';document.getElementById('mic-btn').style.background='rgba(229,62,62,0.15)';document.getElementById('mic-btn').style.borderColor='#e53e3e';};reconnaissance.onresult=(e)=>{const transcript=Array.from(e.results).map(r=>r[0].transcript).join('');document.getElementById('input').value=transcript;document.getElementById('input').style.height='auto';document.getElementById('input').style.height=Math.min(document.getElementById('input').scrollHeight,160)+'px';};reconnaissance.onend=()=>{enEcoute=false;document.getElementById('mic-btn').textContent='🎤';document.getElementById('mic-btn').style.background='rgba(24,95,165,0.1)';document.getElementById('mic-btn').style.borderColor='#B5D4F4';document.getElementById('input').focus();};reconnaissance.onerror=()=>{enEcoute=false;document.getElementById('mic-btn').textContent='🎤';document.getElementById('mic-btn').style.background='rgba(24,95,165,0.1)';document.getElementById('mic-btn').style.borderColor='#B5D4F4';};reconnaissance.start();}
+function demarrerEcoute(){if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){alert('La reconnaissance vocale n\'est pas supportée. Utilise Chrome.');return;}reconnaissance=new (window.SpeechRecognition||window.webkitSpeechRecognition)();reconnaissance.lang='fr-FR';reconnaissance.continuous=false;reconnaissance.interimResults=true;reconnaissance.onstart=()=>{enEcoute=true;document.getElementById('mic-btn').textContent='🔴';document.getElementById('mic-btn').style.background='rgba(229,62,62,0.15)';document.getElementById('mic-btn').style.borderColor='#e53e3e';};reconnaissance.onresult=(e)=>{const t=Array.from(e.results).map(r=>r[0].transcript).join('');document.getElementById('input').value=t;document.getElementById('input').style.height='auto';document.getElementById('input').style.height=Math.min(document.getElementById('input').scrollHeight,160)+'px';};reconnaissance.onend=()=>{enEcoute=false;document.getElementById('mic-btn').textContent='🎤';document.getElementById('mic-btn').style.background='rgba(24,95,165,0.1)';document.getElementById('mic-btn').style.borderColor='#B5D4F4';document.getElementById('input').focus();};reconnaissance.onerror=()=>{enEcoute=false;document.getElementById('mic-btn').textContent='🎤';document.getElementById('mic-btn').style.background='rgba(24,95,165,0.1)';document.getElementById('mic-btn').style.borderColor='#B5D4F4';};reconnaissance.start();}
 function arreterEcoute(){if(reconnaissance)reconnaissance.stop();}
-
-function iaLireReponse(texte){if(!iaParle)return;if('speechSynthesis' in window){window.speechSynthesis.cancel();const motsWolof=['mangi','dafa','xam','waaw','dedet','jëf','baal','soxor','ndank','jërejëf'];const estWolof=motsWolof.some(m=>texte.toLowerCase().includes(m));if(estWolof)return;const parler=()=>{const texteNettoye=texte.replace(/[\u{1F000}-\u{1FFFF}]/gu,'').replace(/[\u{2600}-\u{26FF}]/gu,'').replace(/[\u{2700}-\u{27BF}]/gu,'').trim();const utterance=new SpeechSynthesisUtterance(texteNettoye);utterance.lang='fr-FR';utterance.rate=0.9;utterance.pitch=1.1;utterance.volume=1;const voix=window.speechSynthesis.getVoices();const voixFR=voix.find(v=>v.lang.startsWith('fr'));if(voixFR)utterance.voice=voixFR;window.speechSynthesis.speak(utterance);};if(window.speechSynthesis.getVoices().length===0){window.speechSynthesis.onvoiceschanged=parler;}else{parler();}}}
-
-function toggleSon(){const mute=localStorage.getItem('son')==='off';localStorage.setItem('son',mute?'on':'off');document.getElementById('son-btn').textContent=mute?'🔊':'🔇';}
+function iaLireReponse(texte){if(!iaParle)return;if('speechSynthesis' in window){window.speechSynthesis.cancel();const mw=['mangi','dafa','xam','waaw','dedet','jëf','baal','soxor','ndank','jërejëf'];if(mw.some(m=>texte.toLowerCase().includes(m)))return;const parler=()=>{const tn=texte.replace(/[\u{1F000}-\u{1FFFF}]/gu,'').replace(/[\u{2600}-\u{26FF}]/gu,'').replace(/[\u{2700}-\u{27BF}]/gu,'').trim();const u=new SpeechSynthesisUtterance(tn);u.lang='fr-FR';u.rate=0.9;u.pitch=1.1;u.volume=1;const v=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);};if(window.speechSynthesis.getVoices().length===0){window.speechSynthesis.onvoiceschanged=parler;}else{parler();}}}
+function toggleSon(){const m=localStorage.getItem('son')==='off';localStorage.setItem('son',m?'on':'off');document.getElementById('son-btn').textContent=m?'🔊':'🔇';}
 if(localStorage.getItem('son')==='off'){document.getElementById('son-btn').textContent='🔇';}
 function toggleIaParle(){iaParle=!iaParle;localStorage.setItem('ia-parle',iaParle?'on':'off');document.getElementById('ia-parle-btn').textContent=iaParle?'🗣️':'🔇';if(!iaParle)window.speechSynthesis.cancel();}
 if(localStorage.getItem('ia-parle')==='off'){iaParle=false;document.getElementById('ia-parle-btn').textContent='🔇';}
 
 function suggerer(t){document.getElementById('input').value=t;envoyer();}
-
 function ajouterMsg(role,texte,index){
   if(role==='user')document.getElementById('suggestions').style.display='none';
   const w=document.createElement('div');w.className='bwrap'+(role==='user'?' user':'');
   const row=document.createElement('div');row.className='msg-row'+(role==='user'?' user':'');
-
-  // Extraire et afficher l'émotion si c'est un message assistant
   let texteAffiche=texte;
   if(role==='assistant'){
-    const emotion=extraireEmotion(texte);
-    texteAffiche=nettoyerTexteEmotion(texte);
-    if(emotion&&emotion!=='neutral'&&EMOTION_CONFIG[emotion]){
-      const cfg=EMOTION_CONFIG[emotion];
-      const tag=document.createElement('div');
-      tag.innerHTML=`<span class="emotion-tag" style="background:${cfg.bg};color:${cfg.color};">${cfg.emoji} ${cfg.label} détecté</span>`;
-      w.appendChild(tag);
-    }
+    const emotion=extraireEmotion(texte);texteAffiche=nettoyerTexteEmotion(texte);
+    if(emotion&&emotion!=='neutral'&&EMOTION_CONFIG[emotion]){const cfg=EMOTION_CONFIG[emotion];const tag=document.createElement('div');tag.innerHTML=`<span class="emotion-tag" style="background:${cfg.bg};color:${cfg.color};">${cfg.emoji} ${cfg.label} détecté</span>`;w.appendChild(tag);}
   }
-
   const b=document.createElement('div');b.className='bubble '+role;b.textContent=texteAffiche;
   const t=document.createElement('div');t.className='btime';t.textContent=getTime();
-
-  if(role==='user'){
-    const av=document.createElement('div');av.innerHTML=creerAvatar(prenom||'M',28);
-    row.appendChild(b);row.appendChild(av.firstChild);
-    b.style.cursor='pointer';b.title='Appuie pour modifier ✏️';
-    b.onclick=()=>{const nouveau=prompt('✏️ Modifier ton message :',texteAffiche);if(nouveau&&nouveau.trim()&&nouveau!==texteAffiche){b.textContent=nouveau;if(index!==undefined&&historique[index])historique[index].content=nouveau;}};
-  }else{
-    const av=document.createElement('div');av.innerHTML=creerAvatar('J',28);
-    av.firstChild.style.background='linear-gradient(135deg,#185FA5,#1a4a7a)';
-    av.firstChild.textContent='💙';av.firstChild.style.fontSize='14px';
-    row.appendChild(av.firstChild);row.appendChild(b);
-  }
-  w.appendChild(row);w.appendChild(t);
-  document.getElementById('messages').appendChild(w);w.scrollIntoView({behavior:'smooth'});
+  if(role==='user'){const av=document.createElement('div');av.innerHTML=creerAvatar(prenom||'M',28);row.appendChild(b);row.appendChild(av.firstChild);b.style.cursor='pointer';b.onclick=()=>{const n=prompt('✏️ Modifier :',texteAffiche);if(n&&n.trim()&&n!==texteAffiche){b.textContent=n;if(index!==undefined&&historique[index])historique[index].content=n;}};}
+  else{const av=document.createElement('div');av.innerHTML=creerAvatar('J',28);av.firstChild.style.background='linear-gradient(135deg,#185FA5,#1a4a7a)';av.firstChild.textContent='💙';av.firstChild.style.fontSize='14px';row.appendChild(av.firstChild);row.appendChild(b);}
+  w.appendChild(row);w.appendChild(t);document.getElementById('messages').appendChild(w);w.scrollIntoView({behavior:'smooth'});
 }
-
 function showTyping(){const d=document.createElement('div');d.className='typing';d.id='typing';d.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';document.getElementById('messages').appendChild(d);d.scrollIntoView({behavior:'smooth'});}
-function removeTyping(){const el=document.getElementById('typing');if(el)el.remove();if(localStorage.getItem('son')!=='off'){try{const ctx=new (window.AudioContext||window.webkitAudioContext)();const notes=[523,659,784];notes.forEach((freq,i)=>{const o=ctx.createOscillator();const g=ctx.createGain();o.type='sine';o.connect(g);g.connect(ctx.destination);o.frequency.setValueAtTime(freq,ctx.currentTime+i*0.12);g.gain.setValueAtTime(0,ctx.currentTime+i*0.12);g.gain.linearRampToValueAtTime(0.08,ctx.currentTime+i*0.12+0.05);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.12+0.3);o.start(ctx.currentTime+i*0.12);o.stop(ctx.currentTime+i*0.12+0.3);});}catch(e){}}try{if(navigator.vibrate)navigator.vibrate([30,10,30]);}catch(e){}}
-
+function removeTyping(){const el=document.getElementById('typing');if(el)el.remove();if(localStorage.getItem('son')!=='off'){try{const ctx=new (window.AudioContext||window.webkitAudioContext)();[523,659,784].forEach((freq,i)=>{const o=ctx.createOscillator();const g=ctx.createGain();o.type='sine';o.connect(g);g.connect(ctx.destination);o.frequency.setValueAtTime(freq,ctx.currentTime+i*0.12);g.gain.setValueAtTime(0,ctx.currentTime+i*0.12);g.gain.linearRampToValueAtTime(0.08,ctx.currentTime+i*0.12+0.05);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.12+0.3);o.start(ctx.currentTime+i*0.12);o.stop(ctx.currentTime+i*0.12+0.3);});}catch(e){}}try{if(navigator.vibrate)navigator.vibrate([30,10,30]);}catch(e){}}
 async function envoyer(){
   const inp=document.getElementById('input');const t=inp.value.trim();
   if(!t||document.getElementById('btn').disabled)return;
@@ -1083,8 +1177,7 @@ async function envoyer(){
     const res=await fetch('https://serveur-juste-la-pour-toi.onrender.com/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-opus-4-5',max_tokens:1000,system:SYSTEM+' User first name: '+prenom,messages:historique})});
     const data=await res.json();const rep=data.content[0].text;
     const repNettoye=nettoyerTexteEmotion(rep);
-    historique.push({role:'assistant',content:repNettoye});
-    removeTyping();ajouterMsg('assistant',rep);iaLireReponse(repNettoye);verifierBadges();
+    historique.push({role:'assistant',content:repNettoye});removeTyping();ajouterMsg('assistant',rep);iaLireReponse(repNettoye);verifierBadges();
   }catch(e){removeTyping();ajouterMsg('assistant','😔 Désolé, une erreur est survenue.');}
   document.getElementById('btn').disabled=false;inp.focus();
 }
@@ -1096,9 +1189,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementB
 
 // Init
 afficherStreak();
-const prenomSauve=localStorage.getItem('user-prenom-save');
-if(prenomSauve)prenom=prenomSauve;
-
+const ps=localStorage.getItem('user-prenom-save');if(ps)prenom=ps;
+if(spirituelChoisi)selSpirituel(spirituelChoisi);
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/Juste-l-pour-toi/sw.js').catch(()=>{});}
 </script>
 </body>
