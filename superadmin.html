@@ -16,9 +16,8 @@
     .login-input { width: 100%; max-width: 280px; border: 1.5px solid rgba(181,212,244,0.2); border-radius: 20px; padding: 12px 20px; font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; text-align: center; background: rgba(255,255,255,0.07); color: #e8f2ff; margin-bottom: 12px; }
     .login-input::placeholder { color: rgba(181,212,244,0.3); }
     .login-btn { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border: none; border-radius: 20px; padding: 12px 36px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; box-shadow: 0 4px 20px rgba(24,95,165,0.4); }
-
     #dashboard { display: none; }
-    .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; background: #0d1f35; border-right: 0.5px solid rgba(181,212,244,0.1); padding: 20px 0; z-index: 100; }
+    .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 230px; background: #0d1f35; border-right: 0.5px solid rgba(181,212,244,0.1); padding: 20px 0; z-index: 100; overflow-y: auto; }
     .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 0 20px 20px; border-bottom: 0.5px solid rgba(181,212,244,0.1); margin-bottom: 16px; }
     .sidebar-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
     .sidebar-logo-text { font-family: 'Lora', serif; font-size: 13px; color: #e8f2ff; }
@@ -29,37 +28,34 @@
     .nav-icon { font-size: 16px; width: 20px; text-align: center; }
     .nav-separator { height: 0.5px; background: rgba(181,212,244,0.1); margin: 10px 20px; }
     .nav-label { font-size: 10px; color: rgba(181,212,244,0.3); padding: 6px 20px; text-transform: uppercase; letter-spacing: 1px; }
-
-    .main { margin-left: 220px; padding: 24px; }
+    .main { margin-left: 230px; padding: 24px; }
     .page-section { display: none; }
     .page-section.active { display: block; }
-
-    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
     .top-bar h1 { font-family: 'Lora', serif; font-size: 22px; color: #e8f2ff; }
-    .top-bar-right { display: flex; align-items: center; gap: 12px; }
-    .user-badge { background: rgba(24,95,165,0.3); border: 0.5px solid rgba(181,212,244,0.2); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: #B5D4F4; }
+    .top-bar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .user-badge { background: linear-gradient(135deg,rgba(24,95,165,0.4),rgba(24,95,165,0.2)); border: 0.5px solid rgba(181,212,244,0.2); border-radius: 20px; padding: 6px 14px; font-size: 12px; color: #B5D4F4; }
     .btn-logout { background: rgba(229,62,62,0.15); border: 0.5px solid rgba(229,62,62,0.3); color: #fc8181; border-radius: 12px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
-    .stat-card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(181,212,244,0.1); border-radius: 14px; padding: 16px; }
+    .stat-card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(181,212,244,0.1); border-radius: 14px; padding: 16px; transition: all 0.2s; }
+    .stat-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(181,212,244,0.2); }
     .stat-icon { font-size: 24px; margin-bottom: 8px; }
     .stat-nombre { font-size: 28px; font-weight: 700; color: #378ADD; }
     .stat-label { font-size: 12px; color: rgba(181,212,244,0.5); margin-top: 4px; }
     .stat-trend { font-size: 11px; color: #5DCAA5; margin-top: 4px; }
-
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(181,212,244,0.1); border-radius: 14px; padding: 16px; margin-bottom: 16px; }
     .card-titre { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
     .btn-primary { background: linear-gradient(135deg, #185FA5, #1a6db5); color: #fff; border: none; border-radius: 10px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     .btn-danger { background: rgba(229,62,62,0.2); color: #fc8181; border: 0.5px solid rgba(229,62,62,0.3); border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
     .btn-success { background: rgba(29,158,117,0.2); color: #5DCAA5; border: 0.5px solid rgba(29,158,117,0.3); border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
     .btn-warning { background: rgba(245,158,11,0.2); color: #FCD34D; border: 0.5px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
-
+    .btn-purple { background: rgba(155,89,182,0.2); color: #C39BD3; border: 0.5px solid rgba(155,89,182,0.3); border-radius: 8px; padding: 4px 10px; font-size: 11px; cursor: pointer; }
     .input-dark { width: 100%; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: rgba(255,255,255,0.07); color: #e8f2ff; margin-bottom: 8px; }
     .input-dark::placeholder { color: rgba(181,212,244,0.3); }
     .select-dark { width: 100%; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: #0d1f35; color: #e8f2ff; margin-bottom: 8px; }
     .textarea-dark { width: 100%; border: 0.5px solid rgba(181,212,244,0.2); border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: rgba(255,255,255,0.07); color: #e8f2ff; resize: none; height: 80px; }
-
     .item-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid rgba(181,212,244,0.08); font-size: 13px; gap: 8px; }
     .item-row:last-child { border-bottom: none; }
     .badge { font-size: 11px; padding: 2px 8px; border-radius: 8px; }
@@ -67,33 +63,34 @@
     .badge-green { background: rgba(29,158,117,0.2); color: #5DCAA5; }
     .badge-red { background: rgba(229,62,62,0.2); color: #fc8181; }
     .badge-yellow { background: rgba(245,158,11,0.2); color: #FCD34D; }
-
-    .alert-card { background: rgba(229,62,62,0.1); border: 0.5px solid rgba(229,62,62,0.2); border-radius: 10px; padding: 10px 14px; margin-bottom:8px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #fc8181; }
-    .notif-dot { width: 8px; height: 8px; border-radius: 50%; background: #e53e3e; animation: pulse 1.5s infinite; }
+    .badge-purple { background: rgba(155,89,182,0.2); color: #C39BD3; }
+    .badge-orange { background: rgba(224,123,57,0.2); color: #F0A07A; }
+    .alert-card { background: rgba(229,62,62,0.1); border: 0.5px solid rgba(229,62,62,0.2); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #fc8181; }
+    .notif-dot { width: 8px; height: 8px; border-radius: 50%; background: #e53e3e; flex-shrink: 0; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
     .msg-item { padding: 10px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(181,212,244,0.08); margin-bottom: 8px; }
     .msg-auteur { font-size: 12px; color: #378ADD; font-weight: 500; margin-bottom: 4px; }
     .msg-texte { font-size: 13px; color: rgba(181,212,244,0.8); }
     .msg-time { font-size: 10px; color: rgba(181,212,244,0.3); margin-top: 4px; }
-
-    .calendrier-item { padding: 12px; border-radius: 10px; background: rgba(24,95,165,0.1); border: 0.5px solid rgba(24,95,165,0.3); margin-bottom:8px; }
-    .cal-theme { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom:4px; }
+    .calendrier-item { padding: 12px; border-radius: 10px; background: rgba(24,95,165,0.1); border: 0.5px solid rgba(24,95,165,0.3); margin-bottom: 8px; }
+    .cal-theme { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom: 4px; }
     .cal-info { font-size: 12px; color: rgba(181,212,244,0.6); }
-
     .revenu-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid rgba(181,212,244,0.08); }
     .revenu-nom { font-size: 13px; color: #e8f2ff; }
     .revenu-montant { font-size: 14px; font-weight: 500; color: #5DCAA5; }
-
-    .annonce-preview { padding: 12px; border-radius: 10px; background: rgba(24,95,165,0.1); border: 0.5px solid rgba(181,212,244,0.1); margin-top:8px; font-size:13px; color: rgba(181,212,244,0.8); font-style:italic; }
-
+    .annonce-preview { padding: 12px; border-radius: 10px; background: rgba(24,95,165,0.1); border: 0.5px solid rgba(181,212,244,0.1); margin-top: 8px; font-size: 13px; color: rgba(181,212,244,0.8); font-style: italic; }
+    .partenaire-item { padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(181,212,244,0.1); margin-bottom: 10px; }
+    .partenaire-nom { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom: 4px; }
+    .partenaire-info { font-size: 12px; color: rgba(181,212,244,0.5); }
+    .evenement-item { padding: 12px; border-radius: 12px; background: rgba(24,95,165,0.08); border: 0.5px solid rgba(24,95,165,0.2); margin-bottom: 8px; }
+    .progress-bar { background: rgba(255,255,255,0.1); border-radius: 10px; height: 6px; margin-top: 6px; }
+    .progress-fill { height: 6px; border-radius: 10px; background: linear-gradient(135deg,#185FA5,#378ADD); transition: width 0.5s; }
     canvas { max-height: 200px; }
-
     @media (max-width: 768px) {
       .sidebar { display: none; }
       .main { margin-left: 0; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .grid-2 { grid-template-columns: 1fr; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -101,8 +98,8 @@
 
 <div id="login">
   <img src="icon.png" class="login-logo" alt="Logo">
-  <h1 class="login-titre">Super Admin</h1>
-  <p class="login-sous">Juste là pour toi — Accès Fondateur uniquement</p>
+  <h1 class="login-titre">👑 Super Admin Fondateur</h1>
+  <p class="login-sous">Juste là pour toi — Accès El Hadj Malick THIOUNE uniquement</p>
   <input type="password" class="login-input" id="mdp-input" placeholder="Mot de passe fondateur..." onkeydown="if(event.key==='Enter')seConnecter()">
   <button class="login-btn" onclick="seConnecter()">Accéder au panel 🔐</button>
 </div>
@@ -113,27 +110,32 @@
       <img src="icon.png" alt="Logo">
       <div>
         <div class="sidebar-logo-text">Juste là pour toi</div>
-        <div class="sidebar-logo-sub">Super Admin</div>
+        <div class="sidebar-logo-sub">👑 Fondateur</div>
       </div>
     </div>
     <div class="nav-label">Principal</div>
-    <div class="nav-item active" onclick="afficherPage('vue-ensemble')"><span class="nav-icon">📊</span> Vue d'ensemble</div>
-    <div class="nav-item" onclick="afficherPage('alertes')"><span class="nav-icon">🔔</span> Alertes <span id="nb-alertes" style="background:#e53e3e;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:auto;">0</span></div>
+    <div class="nav-item active" onclick="afficherPage('vue-ensemble',this)"><span class="nav-icon">📊</span> Vue d'ensemble</div>
+    <div class="nav-item" onclick="afficherPage('alertes',this)"><span class="nav-icon">🔔</span> Alertes <span id="nb-alertes" style="background:#e53e3e;color:#fff;border-radius:10px;padding:1px 6px;font-size:10px;margin-left:auto;">0</span></div>
     <div class="nav-separator"></div>
     <div class="nav-label">Gestion</div>
-    <div class="nav-item" onclick="afficherPage('sessions')"><span class="nav-icon">📅</span> Sessions</div>
-    <div class="nav-item" onclick="afficherPage('moderateurs')"><span class="nav-icon">👥</span> Modérateurs</div>
-    <div class="nav-item" onclick="afficherPage('inscrits')"><span class="nav-icon">💰</span> Abonnés</div>
-    <div class="nav-item" onclick="afficherPage('revenus')"><span class="nav-icon">📈</span> Revenus</div>
+    <div class="nav-item" onclick="afficherPage('sessions',this)"><span class="nav-icon">📅</span> Sessions</div>
+    <div class="nav-item" onclick="afficherPage('moderateurs',this)"><span class="nav-icon">👥</span> Modérateurs</div>
+    <div class="nav-item" onclick="afficherPage('inscrits',this)"><span class="nav-icon">💰</span> Abonnés</div>
+    <div class="nav-item" onclick="afficherPage('revenus',this)"><span class="nav-icon">📈</span> Revenus</div>
+    <div class="nav-separator"></div>
+    <div class="nav-label">Partenariats</div>
+    <div class="nav-item" onclick="afficherPage('ecoles',this)"><span class="nav-icon">🏫</span> Écoles</div>
+    <div class="nav-item" onclick="afficherPage('entreprises',this)"><span class="nav-icon">🏢</span> Entreprises</div>
+    <div class="nav-item" onclick="afficherPage('evenements',this)"><span class="nav-icon">🎪</span> Événements</div>
     <div class="nav-separator"></div>
     <div class="nav-label">Communauté</div>
-    <div class="nav-item" onclick="afficherPage('communaute')"><span class="nav-icon">🌍</span> Pensées</div>
-    <div class="nav-item" onclick="afficherPage('messagerie')"><span class="nav-icon">💬</span> Messagerie</div>
-    <div class="nav-item" onclick="afficherPage('annonces')"><span class="nav-icon">📢</span> Annonces</div>
+    <div class="nav-item" onclick="afficherPage('communaute',this)"><span class="nav-icon">🌍</span> Pensées</div>
+    <div class="nav-item" onclick="afficherPage('messagerie',this)"><span class="nav-icon">💬</span> Messagerie</div>
+    <div class="nav-item" onclick="afficherPage('annonces',this)"><span class="nav-icon">📢</span> Annonces</div>
     <div class="nav-separator"></div>
     <div class="nav-label">Paramètres</div>
-    <div class="nav-item" onclick="afficherPage('parametres')"><span class="nav-icon">⚙️</span> Paramètres</div>
-    <div class="nav-item" onclick="seDeconnecter()" style="color:rgba(229,62,62,0.7);margin-top:auto;"><span class="nav-icon">🚪</span> Déconnexion</div>
+    <div class="nav-item" onclick="afficherPage('parametres',this)"><span class="nav-icon">⚙️</span> Paramètres</div>
+    <div class="nav-item" onclick="seDeconnecter()" style="color:rgba(229,62,62,0.7);"><span class="nav-icon">🚪</span> Déconnexion</div>
   </div>
 
   <div class="main">
@@ -143,7 +145,7 @@
       <div class="top-bar">
         <h1>📊 Vue d'ensemble</h1>
         <div class="top-bar-right">
-          <span class="user-badge">👑 El Hadj Malick THIOUNE</span>
+          <span class="user-badge">👑 El Hadj Malick THIOUNE — Fondateur</span>
           <button class="btn-logout" onclick="seDeconnecter()">Déconnexion</button>
         </div>
       </div>
@@ -153,42 +155,36 @@
         <div class="stat-card"><div class="stat-icon">🌍</div><div class="stat-nombre" id="stat-pensees">-</div><div class="stat-label">Pensées communauté</div></div>
         <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-nombre" id="stat-sessions-nb">0</div><div class="stat-label">Sessions programmées</div></div>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-titre">📈 Évolution des utilisateurs</div>
-          <canvas id="chart-users"></canvas>
-        </div>
-        <div class="card">
-          <div class="card-titre">💰 Revenus mensuels</div>
-          <canvas id="chart-revenus"></canvas>
-        </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">🏫</div><div class="stat-nombre" id="stat-ecoles">0</div><div class="stat-label">Écoles partenaires</div><div class="stat-trend" id="stat-ecoles-rev">0 FCFA/an</div></div>
+        <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-nombre" id="stat-entreprises">0</div><div class="stat-label">Entreprises partenaires</div><div class="stat-trend" id="stat-ent-rev">0 FCFA/mois</div></div>
+        <div class="stat-card"><div class="stat-icon">🎪</div><div class="stat-nombre" id="stat-evenements">0</div><div class="stat-label">Événements planifiés</div></div>
+        <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-nombre" id="stat-rev-global">0</div><div class="stat-label">Revenus total (FCFA)</div><div class="stat-trend">Toutes sources</div></div>
       </div>
       <div class="grid-2">
-        <div class="card">
-          <div class="card-titre">📅 Prochaines sessions</div>
-          <div id="overview-sessions"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p></div>
-        </div>
-        <div class="card">
-          <div class="card-titre">🔔 Dernières alertes</div>
-          <div id="overview-alertes"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte</p></div>
-        </div>
+        <div class="card"><div class="card-titre">📈 Évolution utilisateurs</div><canvas id="chart-users"></canvas></div>
+        <div class="card"><div class="card-titre">💰 Revenus mensuels ($)</div><canvas id="chart-revenus"></canvas></div>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="card-titre">📅 Prochaines sessions</div><div id="overview-sessions"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p></div></div>
+        <div class="card"><div class="card-titre">🏫 Derniers partenaires</div><div id="overview-partenaires"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun partenaire</p></div></div>
+        <div class="card"><div class="card-titre">🔔 Dernières alertes</div><div id="overview-alertes"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte 🎉</p></div></div>
       </div>
     </div>
 
     <!-- ALERTES -->
     <div class="page-section" id="page-alertes">
-      <div class="top-bar"><h1>🔔 Alertes</h1></div>
+      <div class="top-bar"><h1>🔔 Alertes</h1><button class="btn-primary" onclick="effacerAlertes()">Tout effacer</button></div>
       <div class="card">
-        <div class="card-titre">Alertes récentes <button class="btn-primary" onclick="effacerAlertes()">Tout effacer</button></div>
+        <div class="card-titre">Alertes récentes</div>
         <div id="liste-alertes"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte</p></div>
       </div>
     </div>
 
     <!-- SESSIONS -->
     <div class="page-section" id="page-sessions">
-      <div class="top-bar"><h1>📅 Gestion des sessions</h1></div>
+      <div class="top-bar"><h1>📅 Sessions de groupe</h1><button class="btn-primary" onclick="toggleForm('form-new-session')">+ Nouvelle session</button></div>
       <div class="card">
-        <div class="card-titre">Ajouter une session <button class="btn-primary" onclick="toggleForm('form-new-session')">+ Nouvelle</button></div>
         <div id="form-new-session" style="display:none;padding:14px;background:rgba(24,95,165,0.1);border-radius:10px;margin-bottom:14px;">
           <select class="select-dark" id="s-theme">
             <option>😰 Gestion du stress</option>
@@ -197,28 +193,29 @@
             <option>💔 Relations</option>
             <option>🌱 Développement personnel</option>
             <option>😔 Solitude</option>
+            <option>🕌 Bien-être spirituel</option>
           </select>
           <input type="text" class="input-dark" id="s-jour" placeholder="Jour et heure (ex: Lundi 19h00)">
-          <input type="text" class="input-dark" id="s-date" placeholder="Date (ex: 05/05/2026)">
-          <input type="number" class="input-dark" id="s-duree" placeholder="Durée en minutes">
-          <input type="number" class="input-dark" id="s-max" placeholder="Max participants">
+          <input type="text" class="input-dark" id="s-date" placeholder="Date (ex: 05/07/2026)">
+          <input type="number" class="input-dark" id="s-duree" placeholder="Durée en minutes (ex: 90)">
+          <input type="number" class="input-dark" id="s-max" placeholder="Max participants (ex: 8)">
           <select class="select-dark" id="s-modo">
             <option>El Hadj Malick THIOUNE</option>
             <option>Cheikh Bakary THIOUNE</option>
             <option>Aisha DIA</option>
           </select>
-          <input type="text" class="input-dark" id="s-lien" placeholder="Lien de la session (optionnel)">
-          <button class="btn-primary" onclick="ajouterSession()" style="width:100%;padding:10px;margin-top:4px;">✅ Enregistrer</button>
+          <input type="text" class="input-dark" id="s-lien" placeholder="Lien Zoom/Meet (optionnel)">
+          <button class="btn-primary" onclick="ajouterSession()" style="width:100%;padding:10px;margin-top:4px;">✅ Enregistrer la session</button>
         </div>
-        <div id="liste-sessions-admin"></div>
+        <div class="card-titre">Sessions programmées</div>
+        <div id="liste-sessions-admin"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p></div>
       </div>
     </div>
 
     <!-- MODERATEURS -->
     <div class="page-section" id="page-moderateurs">
-      <div class="top-bar"><h1>👥 Modérateurs</h1></div>
+      <div class="top-bar"><h1>👥 Équipe de modération</h1><button class="btn-primary" onclick="toggleForm('form-new-modo')">+ Ajouter</button></div>
       <div class="card">
-        <div class="card-titre">Équipe de modération <button class="btn-primary" onclick="toggleForm('form-new-modo')">+ Ajouter</button></div>
         <div id="form-new-modo" style="display:none;padding:14px;background:rgba(24,95,165,0.1);border-radius:10px;margin-bottom:14px;">
           <input type="text" class="input-dark" id="m-nom" placeholder="Nom complet">
           <input type="text" class="input-dark" id="m-contact" placeholder="WhatsApp ou email">
@@ -226,6 +223,8 @@
             <option>Modérateur principal</option>
             <option>Modérateur junior</option>
             <option>Responsable marketing</option>
+            <option>Responsable RH</option>
+            <option>Commercial partenariats</option>
           </select>
           <button class="btn-primary" onclick="ajouterModo()" style="width:100%;padding:10px;">✅ Ajouter</button>
         </div>
@@ -235,9 +234,8 @@
 
     <!-- INSCRITS -->
     <div class="page-section" id="page-inscrits">
-      <div class="top-bar"><h1>💰 Abonnés aux sessions</h1></div>
+      <div class="top-bar"><h1>💰 Abonnés aux sessions</h1><button class="btn-primary" onclick="toggleForm('form-new-inscrit')">+ Ajouter</button></div>
       <div class="card">
-        <div class="card-titre">Liste des abonnés <button class="btn-primary" onclick="toggleForm('form-new-inscrit')">+ Ajouter</button></div>
         <div id="form-new-inscrit" style="display:none;padding:14px;background:rgba(24,95,165,0.1);border-radius:10px;margin-bottom:14px;">
           <input type="text" class="input-dark" id="i-nom" placeholder="Prénom">
           <input type="text" class="input-dark" id="i-contact" placeholder="WhatsApp ou email">
@@ -250,21 +248,131 @@
           </select>
           <button class="btn-primary" onclick="ajouterInscrit()" style="width:100%;padding:10px;">✅ Ajouter</button>
         </div>
-        <div id="liste-inscrits-admin"></div>
+        <div id="liste-inscrits-admin"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun abonné</p></div>
       </div>
     </div>
 
     <!-- REVENUS -->
     <div class="page-section" id="page-revenus">
-      <div class="top-bar"><h1>📈 Revenus</h1></div>
-      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
-        <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-nombre" id="rev-total">0$</div><div class="stat-label">Total encaissé</div></div>
-        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-nombre" id="rev-mois">0$</div><div class="stat-label">Ce mois-ci</div></div>
-        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-nombre" id="rev-abonnes">0</div><div class="stat-label">Abonnés actifs</div></div>
+      <div class="top-bar"><h1>📈 Revenus globaux</h1></div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-nombre" id="rev-total">0$</div><div class="stat-label">Sessions (total $)</div></div>
+        <div class="stat-card"><div class="stat-icon">🏫</div><div class="stat-nombre" id="rev-ecoles">0</div><div class="stat-label">Écoles (FCFA/an)</div></div>
+        <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-nombre" id="rev-entreprises">0</div><div class="stat-label">Entreprises (FCFA/mois)</div></div>
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-nombre" id="rev-mois">0$</div><div class="stat-label">Sessions ce mois</div></div>
       </div>
       <div class="card">
-        <div class="card-titre">Historique des paiements</div>
-        <div id="liste-revenus"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun paiement enregistré</p></div>
+        <div class="card-titre">💰 Récapitulatif des revenus</div>
+        <div id="recap-revenus" style="margin-bottom:16px;"></div>
+        <div class="card-titre" style="margin-top:16px;">Historique des paiements sessions</div>
+        <div id="liste-revenus"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun paiement</p></div>
+      </div>
+    </div>
+
+    <!-- ECOLES -->
+    <div class="page-section" id="page-ecoles">
+      <div class="top-bar"><h1>🏫 Partenaires Écoles</h1><button class="btn-primary" onclick="toggleForm('form-new-ecole')">+ Ajouter</button></div>
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card"><div class="stat-icon">🏫</div><div class="stat-nombre" id="ecole-total">0</div><div class="stat-label">Écoles contactées</div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-nombre" id="ecole-signes">0</div><div class="stat-label">Contrats signés</div></div>
+        <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-nombre" id="ecole-rev">0</div><div class="stat-label">FCFA/an générés</div></div>
+      </div>
+      <div class="card">
+        <div id="form-new-ecole" style="display:none;padding:14px;background:rgba(29,158,117,0.1);border-radius:10px;margin-bottom:14px;border:0.5px solid rgba(29,158,117,0.3);">
+          <input type="text" class="input-dark" id="e-nom" placeholder="Nom de l'établissement">
+          <input type="text" class="input-dark" id="e-type" placeholder="Type (Lycée / Université / Grande école)">
+          <input type="text" class="input-dark" id="e-contact" placeholder="Nom du responsable contacté">
+          <input type="text" class="input-dark" id="e-tel" placeholder="WhatsApp / Email du responsable">
+          <input type="number" class="input-dark" id="e-montant" placeholder="Montant du contrat (FCFA)">
+          <input type="text" class="input-dark" id="e-date" placeholder="Date de contact">
+          <select class="select-dark" id="e-statut">
+            <option>Contacté</option>
+            <option>Démo planifiée</option>
+            <option>Démo effectuée</option>
+            <option>En négociation</option>
+            <option>Contrat signé ✅</option>
+            <option>Refusé</option>
+          </select>
+          <textarea class="textarea-dark" id="e-notes" placeholder="Notes / remarques..."></textarea>
+          <button class="btn-success" onclick="ajouterEcole()" style="width:100%;padding:10px;margin-top:4px;border-radius:10px;font-size:13px;cursor:pointer;">✅ Enregistrer</button>
+        </div>
+        <div class="card-titre">Liste des établissements</div>
+        <div id="liste-ecoles"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun établissement enregistré</p></div>
+      </div>
+    </div>
+
+    <!-- ENTREPRISES -->
+    <div class="page-section" id="page-entreprises">
+      <div class="top-bar"><h1>🏢 Partenaires Entreprises</h1><button class="btn-primary" onclick="toggleForm('form-new-entreprise')">+ Ajouter</button></div>
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-nombre" id="ent-total">0</div><div class="stat-label">Entreprises contactées</div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-nombre" id="ent-signes">0</div><div class="stat-label">Contrats signés</div></div>
+        <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-nombre" id="ent-rev">0</div><div class="stat-label">FCFA/mois générés</div></div>
+      </div>
+      <div class="card">
+        <div id="form-new-entreprise" style="display:none;padding:14px;background:rgba(24,95,165,0.1);border-radius:10px;margin-bottom:14px;border:0.5px solid rgba(24,95,165,0.3);">
+          <input type="text" class="input-dark" id="ent-nom" placeholder="Nom de l'entreprise">
+          <select class="select-dark" id="ent-type">
+            <option>Startup</option>
+            <option>PME</option>
+            <option>Grande entreprise</option>
+            <option>ONG</option>
+            <option>Administration</option>
+            <option>Banque / Finance</option>
+            <option>Santé</option>
+            <option>Technologie</option>
+          </select>
+          <input type="text" class="input-dark" id="ent-contact" placeholder="Nom du DRH / responsable">
+          <input type="text" class="input-dark" id="ent-tel" placeholder="WhatsApp / Email">
+          <input type="number" class="input-dark" id="ent-employes" placeholder="Nombre d'employés">
+          <input type="number" class="input-dark" id="ent-montant" placeholder="Montant mensuel (FCFA)">
+          <input type="text" class="input-dark" id="ent-date" placeholder="Date de contact">
+          <select class="select-dark" id="ent-statut">
+            <option>Contacté</option>
+            <option>Démo planifiée</option>
+            <option>Démo effectuée</option>
+            <option>En négociation</option>
+            <option>Contrat signé ✅</option>
+            <option>Refusé</option>
+          </select>
+          <textarea class="textarea-dark" id="ent-notes" placeholder="Notes / remarques..."></textarea>
+          <button class="btn-primary" onclick="ajouterEntreprise()" style="width:100%;padding:10px;margin-top:4px;border-radius:10px;font-size:13px;cursor:pointer;">✅ Enregistrer</button>
+        </div>
+        <div class="card-titre">Liste des entreprises</div>
+        <div id="liste-entreprises"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune entreprise enregistrée</p></div>
+      </div>
+    </div>
+
+    <!-- EVENEMENTS -->
+    <div class="page-section" id="page-evenements">
+      <div class="top-bar"><h1>🎪 Événements bien-être</h1><button class="btn-primary" onclick="toggleForm('form-new-event')">+ Ajouter</button></div>
+      <div class="card">
+        <div id="form-new-event" style="display:none;padding:14px;background:rgba(224,123,57,0.1);border-radius:10px;margin-bottom:14px;border:0.5px solid rgba(224,123,57,0.3);">
+          <input type="text" class="input-dark" id="ev-nom" placeholder="Nom de l'événement">
+          <select class="select-dark" id="ev-type">
+            <option>🎤 Conférence</option>
+            <option>🧘 Atelier</option>
+            <option>🌿 Retraite</option>
+            <option>🎓 Formation</option>
+            <option>💻 Webinaire</option>
+          </select>
+          <input type="text" class="input-dark" id="ev-date" placeholder="Date de l'événement">
+          <input type="text" class="input-dark" id="ev-lieu" placeholder="Lieu (ex: Dakar / En ligne)">
+          <input type="number" class="input-dark" id="ev-prix" placeholder="Prix (FCFA) — 0 si gratuit">
+          <input type="number" class="input-dark" id="ev-places" placeholder="Nombre de places">
+          <input type="number" class="input-dark" id="ev-inscrits" placeholder="Inscrits actuellement">
+          <select class="select-dark" id="ev-statut">
+            <option>Planifié</option>
+            <option>Inscriptions ouvertes</option>
+            <option>Complet</option>
+            <option>Terminé</option>
+            <option>Annulé</option>
+          </select>
+          <textarea class="textarea-dark" id="ev-desc" placeholder="Description de l'événement..."></textarea>
+          <button class="btn-warning" onclick="ajouterEvenement()" style="width:100%;padding:10px;margin-top:4px;border-radius:10px;font-size:13px;cursor:pointer;background:rgba(224,123,57,0.3);color:#F0A07A;border:0.5px solid rgba(224,123,57,0.4);">✅ Enregistrer l'événement</button>
+        </div>
+        <div class="card-titre">Événements planifiés</div>
+        <div id="liste-evenements"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun événement</p></div>
       </div>
     </div>
 
@@ -288,11 +396,16 @@
             <option>Aisha DIA</option>
             <option>Tous les modérateurs</option>
           </select>
+          <select class="select-dark" id="msg-priorite">
+            <option value="normal">📌 Normal</option>
+            <option value="urgent">🚨 Urgent</option>
+            <option value="info">ℹ️ Information</option>
+          </select>
           <textarea class="textarea-dark" id="msg-texte" placeholder="Votre message..."></textarea>
           <button class="btn-primary" onclick="envoyerMessage()" style="width:100%;padding:10px;margin-top:8px;">Envoyer 💙</button>
         </div>
         <div class="card">
-          <div class="card-titre">Messages récents</div>
+          <div class="card-titre">Messages envoyés</div>
           <div id="liste-messages"><p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun message</p></div>
         </div>
       </div>
@@ -303,7 +416,6 @@
       <div class="top-bar"><h1>📢 Annonces</h1></div>
       <div class="card">
         <div class="card-titre">Créer une annonce</div>
-        <p style="font-size:13px;color:rgba(181,212,244,0.5);margin-bottom:10px;">Cette annonce s'affichera sur la page d'accueil de l'application</p>
         <input type="text" class="input-dark" id="annonce-titre" placeholder="Titre de l'annonce">
         <textarea class="textarea-dark" id="annonce-texte" placeholder="Contenu de l'annonce..."></textarea>
         <select class="select-dark" id="annonce-type" style="margin-top:8px;">
@@ -311,9 +423,12 @@
           <option value="session">📅 Nouvelle session</option>
           <option value="promo">🎉 Promotion</option>
           <option value="urgent">🚨 Urgent</option>
+          <option value="ecole">🏫 Partenariat école</option>
+          <option value="entreprise">🏢 Partenariat entreprise</option>
+          <option value="event">🎪 Événement</option>
         </select>
         <div class="annonce-preview" id="annonce-preview">Aperçu de l'annonce...</div>
-        <button class="btn-primary" onclick="publierAnnonce()" style="width:100%;padding:10px;margin-top:10px;">📢 Publier l'annonce</button>
+        <button class="btn-primary" onclick="publierAnnonce()" style="width:100%;padding:10px;margin-top:10px;">📢 Publier</button>
       </div>
       <div class="card">
         <div class="card-titre">Annonces publiées <button class="btn-danger" onclick="effacerAnnonces()">Tout effacer</button></div>
@@ -324,20 +439,40 @@
     <!-- PARAMETRES -->
     <div class="page-section" id="page-parametres">
       <div class="top-bar"><h1>⚙️ Paramètres</h1></div>
-      <div class="card">
-        <div class="card-titre">Informations de l'application</div>
-        <input type="text" class="input-dark" value="Juste là pour toi" placeholder="Nom de l'app">
-        <input type="text" class="input-dark" value="malick043@gmail.com" placeholder="Email de contact">
-        <input type="text" class="input-dark" value="+221 77 884 47 99" placeholder="WhatsApp">
-        <input type="number" class="input-dark" id="param-prix" value="5" placeholder="Prix abonnement ($)">
-        <button class="btn-primary" onclick="alert('Paramètres sauvegardés !')" style="width:100%;padding:10px;">💾 Sauvegarder</button>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-titre">Informations de l'application</div>
+          <input type="text" class="input-dark" value="Juste là pour toi" placeholder="Nom de l'app">
+          <input type="text" class="input-dark" value="malick043@gmail.com" placeholder="Email de contact">
+          <input type="text" class="input-dark" value="+221 77 884 47 99" placeholder="WhatsApp">
+          <input type="number" class="input-dark" id="param-prix" value="5" placeholder="Prix abonnement sessions ($)">
+          <button class="btn-primary" onclick="alert('Paramètres sauvegardés ! 💙')" style="width:100%;padding:10px;">💾 Sauvegarder</button>
+        </div>
+        <div class="card">
+          <div class="card-titre">Changer mon mot de passe</div>
+          <input type="password" class="input-dark" id="new-mdp" placeholder="Nouveau mot de passe">
+          <input type="password" class="input-dark" id="confirm-mdp" placeholder="Confirmer le mot de passe">
+          <button class="btn-primary" onclick="changerMdp()" style="width:100%;padding:10px;">🔐 Changer le mot de passe</button>
+          <p id="mdp-result" style="font-size:12px;color:#5DCAA5;margin-top:8px;display:none;">✅ Mot de passe changé !</p>
+        </div>
       </div>
       <div class="card">
-        <div class="card-titre">Accès rapides</div>
-        <a href="https://malick043-png.github.io/Juste-l-pour-toi" target="_blank" style="display:block;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;margin-bottom:8px;font-size:13px;">🌐 Voir l'application</a>
-        <a href="https://malick043-png.github.io/Juste-l-pour-toi/admin.html" target="_blank" style="display:block;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;margin-bottom:8px;font-size:13px;">🔐 Panel modérateurs</a>
-        <a href="https://dashboard.render.com" target="_blank" style="display:block;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;margin-bottom:8px;font-size:13px;">⚙️ Render (serveur)</a>
-        <a href="https://github.com/malick043-png/Juste-l-pour-toi" target="_blank" style="display:block;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;font-size:13px;">💻 GitHub (code)</a>
+        <div class="card-titre">🔗 Accès rapides</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <a href="https://malick043-png.github.io/Juste-l-pour-toi" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;font-size:12px;">🌐 Application principale</a>
+          <a href="https://malick043-png.github.io/Juste-l-pour-toi/admin.html" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;font-size:12px;">🔐 Panel modérateurs</a>
+          <a href="https://malick043-png.github.io/Juste-l-pour-toi/ecole.html" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(29,158,117,0.1);border:0.5px solid rgba(29,158,117,0.2);color:#5DCAA5;text-decoration:none;font-size:12px;">🏫 Page Écoles</a>
+          <a href="https://malick043-png.github.io/Juste-l-pour-toi/entreprise.html" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(24,95,165,0.1);border:0.5px solid rgba(24,95,165,0.2);color:#85B7EB;text-decoration:none;font-size:12px;">🏢 Page Entreprises</a>
+          <a href="https://dashboard.render.com" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(224,123,57,0.1);border:0.5px solid rgba(224,123,57,0.2);color:#F0A07A;text-decoration:none;font-size:12px;">⚙️ Render (serveur)</a>
+          <a href="https://github.com/malick043-png/Juste-l-pour-toi" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(155,89,182,0.1);border:0.5px solid rgba(155,89,182,0.2);color:#C39BD3;text-decoration:none;font-size:12px;">💻 GitHub (code)</a>
+          <a href="https://console.anthropic.com" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(181,212,244,0.05);border:0.5px solid rgba(181,212,244,0.1);color:#85B7EB;text-decoration:none;font-size:12px;">🤖 Anthropic (IA)</a>
+          <a href="https://wa.me/221778844799" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:rgba(29,158,117,0.1);border:0.5px solid rgba(29,158,117,0.2);color:#5DCAA5;text-decoration:none;font-size:12px;">💬 Mon WhatsApp</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-titre" style="color:#fc8181;">⚠️ Zone dangereuse</div>
+        <button class="btn-danger" onclick="exporterDonnees()" style="width:100%;padding:10px;margin-bottom:8px;border-radius:10px;">📥 Exporter toutes les données</button>
+        <button class="btn-danger" onclick="reinitialiserDonnees()" style="width:100%;padding:10px;border-radius:10px;">🗑️ Réinitialiser toutes les données</button>
       </div>
     </div>
 
@@ -345,17 +480,20 @@
 </div>
 
 <script>
-const MDP_FONDATEUR = 'Joiedevivre';
+const MDP_FONDATEUR_KEY = 'superadmin-mdp-custom';
+const MDP_DEFAUT = 'Joiedevivre';
 const SERVEUR = 'https://serveur-juste-la-pour-toi.onrender.com';
 
+function getMdpActuel(){return localStorage.getItem(MDP_FONDATEUR_KEY)||MDP_DEFAUT;}
+
 function seConnecter(){
-  const mdp = document.getElementById('mdp-input').value;
-  if(mdp === MDP_FONDATEUR){
+  const mdp=document.getElementById('mdp-input').value;
+  if(mdp===getMdpActuel()){
     localStorage.setItem('superadmin-auth','true');
     document.getElementById('login').style.display='none';
     document.getElementById('dashboard').style.display='block';
     chargerDashboard();
-  } else { alert('Accès refusé !'); }
+  }else{alert('Accès refusé ! Mot de passe incorrect.');}
 }
 
 function seDeconnecter(){
@@ -370,20 +508,38 @@ if(localStorage.getItem('superadmin-auth')==='true'){
   chargerDashboard();
 }
 
-function afficherPage(page){
+function changerMdp(){
+  const n=document.getElementById('new-mdp').value;
+  const c=document.getElementById('confirm-mdp').value;
+  if(n.length<4){alert('Minimum 4 caractères !');return;}
+  if(n!==c){alert('Les mots de passe ne correspondent pas !');return;}
+  localStorage.setItem(MDP_FONDATEUR_KEY,n);
+  document.getElementById('mdp-result').style.display='block';
+  document.getElementById('new-mdp').value='';
+  document.getElementById('confirm-mdp').value='';
+  setTimeout(()=>document.getElementById('mdp-result').style.display='none',3000);
+}
+
+function afficherPage(page,el){
   document.querySelectorAll('.page-section').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
-  event.currentTarget.classList.add('active');
-  if(page==='communaute') chargerCommunauteAdmin();
-  if(page==='revenus') calculerRevenus();
-  if(page==='vue-ensemble') chargerVueEnsemble();
-  if(page==='messagerie') afficherMessages();
-  if(page==='annonces') afficherAnnonces();
-  if(page==='sessions') afficherSessions();
-  if(page==='moderateurs') afficherModos();
-  if(page==='inscrits') afficherInscrits();
-  if(page==='alertes') afficherAlertes();
+  if(el)el.classList.add('active');
+  const actions={
+    'communaute':chargerCommunauteAdmin,
+    'revenus':calculerRevenus,
+    'vue-ensemble':chargerVueEnsemble,
+    'messagerie':afficherMessages,
+    'annonces':afficherAnnonces,
+    'sessions':afficherSessions,
+    'moderateurs':afficherModos,
+    'inscrits':afficherInscrits,
+    'alertes':afficherAlertes,
+    'ecoles':afficherEcoles,
+    'entreprises':afficherEntreprises,
+    'evenements':afficherEvenements
+  };
+  if(actions[page])actions[page]();
 }
 
 function toggleForm(id){const f=document.getElementById(id);f.style.display=f.style.display==='none'?'block':'none';}
@@ -394,216 +550,174 @@ async function chargerDashboard(){
   const inscrits=getInscrits();
   const actifs=inscrits.filter(i=>i.statut==='Actif');
   document.getElementById('stat-abonnes').textContent=actifs.length;
-  const sessions=getSessions();
-  document.getElementById('stat-sessions-nb').textContent=sessions.length;
+  document.getElementById('stat-sessions-nb').textContent=getSessions().length;
   const revTotal=inscrits.reduce((a,b)=>a+(parseFloat(b.montant)||5),0);
   document.getElementById('stat-revenu-total').textContent=revTotal.toFixed(0)+'$ total';
+  // Partenaires
+  const ecoles=getEcoles();
+  const ecolesSigne=ecoles.filter(e=>e.statut==='Contrat signé ✅');
+  const revEcoles=ecolesSigne.reduce((a,b)=>a+(parseFloat(b.montant)||0),0);
+  document.getElementById('stat-ecoles').textContent=ecoles.length;
+  document.getElementById('stat-ecoles-rev').textContent=revEcoles.toLocaleString('fr-FR')+' FCFA/an';
+  const entreprises=getEntreprises();
+  const entSignees=entreprises.filter(e=>e.statut==='Contrat signé ✅');
+  const revEnt=entSignees.reduce((a,b)=>a+(parseFloat(b.montant)||0),0);
+  document.getElementById('stat-entreprises').textContent=entreprises.length;
+  document.getElementById('stat-ent-rev').textContent=revEnt.toLocaleString('fr-FR')+' FCFA/mois';
+  document.getElementById('stat-evenements').textContent=getEvenements().length;
+  // Revenus globaux
+  const revGlobal=revEcoles+(revEnt*12)+(revTotal*600);
+  document.getElementById('stat-rev-global').textContent=Math.round(revGlobal/1000)+'K';
   chargerGraphiques();
   chargerVueEnsemble();
   verifierAlertes();
 }
 
 function chargerGraphiques(){
-  const ctx1=document.getElementById('chart-users').getContext('2d');
-  new Chart(ctx1,{type:'line',data:{labels:['Jan','Fév','Mar','Avr','Mai','Juin'],datasets:[{label:'Utilisateurs',data:[10,25,45,80,120,parseInt(document.getElementById('stat-users').textContent)||150],borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.1)',tension:0.4,fill:true}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}},y:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}}}}});
-  const ctx2=document.getElementById('chart-revenus').getContext('2d');
-  const inscrits=getInscrits();
-  const revMois=inscrits.filter(i=>i.statut==='Actif').length*5;
-  new Chart(ctx2,{type:'bar',data:{labels:['Jan','Fév','Mar','Avr','Mai','Juin'],datasets:[{label:'Revenus ($)',data:[0,0,0,0,0,revMois],backgroundColor:'rgba(29,158,117,0.4)',borderColor:'#1D9E75',borderWidth:1}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}},y:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}}}}});
+  const nb=parseInt(document.getElementById('stat-users').textContent)||0;
+  try{
+    const ctx1=document.getElementById('chart-users').getContext('2d');
+    new Chart(ctx1,{type:'line',data:{labels:['Jan','Fév','Mar','Avr','Mai','Juin'],datasets:[{label:'Utilisateurs',data:[10,25,45,80,120,nb||150],borderColor:'#185FA5',backgroundColor:'rgba(24,95,165,0.1)',tension:0.4,fill:true}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}},y:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}}}}});
+    const inscrits=getInscrits();
+    const revMois=inscrits.filter(i=>i.statut==='Actif').length*5;
+    const ctx2=document.getElementById('chart-revenus').getContext('2d');
+    new Chart(ctx2,{type:'bar',data:{labels:['Jan','Fév','Mar','Avr','Mai','Juin'],datasets:[{label:'Revenus ($)',data:[0,0,0,0,0,revMois],backgroundColor:'rgba(29,158,117,0.4)',borderColor:'#1D9E75',borderWidth:1}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}},y:{ticks:{color:'rgba(181,212,244,0.5)'},grid:{color:'rgba(181,212,244,0.05)'}}}}});
+  }catch(e){}
 }
 
 function chargerVueEnsemble(){
   const sessions=getSessions();
-  const c=document.getElementById('overview-sessions');
-  if(!sessions.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p>';return;}
-  c.innerHTML=sessions.slice(0,3).map(s=>`<div class="calendrier-item"><div class="cal-theme">${s.theme}</div><div class="cal-info">📅 ${s.jour} · 🎤 ${s.modo}</div></div>`).join('');
+  const cs=document.getElementById('overview-sessions');
+  cs.innerHTML=sessions.length?sessions.slice(0,3).map(s=>`<div class="calendrier-item"><div class="cal-theme">${s.theme}</div><div class="cal-info">📅 ${s.jour} · 🎤 ${s.modo}</div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p>';
+  const ecoles=getEcoles();const entreprises=getEntreprises();
+  const partenaires=[...ecoles.slice(-2).map(e=>({nom:e.nom,type:'🏫',statut:e.statut})),...entreprises.slice(-2).map(e=>({nom:e.nom,type:'🏢',statut:e.statut}))];
+  const cp=document.getElementById('overview-partenaires');
+  cp.innerHTML=partenaires.length?partenaires.map(p=>`<div style="padding:8px;border-radius:8px;background:rgba(255,255,255,0.04);margin-bottom:6px;font-size:13px;display:flex;justify-content:space-between;align-items:center;"><span>${p.type} ${p.nom}</span><span class="badge ${p.statut==='Contrat signé ✅'?'badge-green':p.statut==='Refusé'?'badge-red':'badge-yellow'}">${p.statut}</span></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun partenaire</p>';
   const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
   const ca=document.getElementById('overview-alertes');
-  if(!alertes.length){ca.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte 🎉</p>';return;}
-  ca.innerHTML=alertes.slice(0,3).map(a=>`<div class="alert-card"><div class="notif-dot"></div>${a.texte}</div>`).join('');
+  ca.innerHTML=alertes.length?alertes.slice(0,3).map(a=>`<div class="alert-card"><div class="notif-dot"></div>${a.texte}</div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte 🎉</p>';
 }
 
-function verifierAlertes(){
-  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
-  document.getElementById('nb-alertes').textContent=alertes.length;
-}
-
-function afficherAlertes(){
-  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
-  const c=document.getElementById('liste-alertes');
-  if(!alertes.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte 🎉</p>';return;}
-  c.innerHTML=alertes.map(a=>`<div class="alert-card"><div class="notif-dot"></div><span>${a.texte}</span><span style="font-size:11px;color:rgba(181,212,244,0.3);margin-left:auto;">${a.date}</span></div>`).join('');
-}
-
+function verifierAlertes(){const a=JSON.parse(localStorage.getItem('alertes')||'[]');document.getElementById('nb-alertes').textContent=a.length;}
+function afficherAlertes(){const a=JSON.parse(localStorage.getItem('alertes')||'[]');const c=document.getElementById('liste-alertes');c.innerHTML=a.length?a.map(al=>`<div class="alert-card"><div class="notif-dot"></div><span>${al.texte}</span><span style="font-size:11px;color:rgba(181,212,244,0.3);margin-left:auto;">${al.date}</span></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune alerte 🎉</p>';}
 function effacerAlertes(){localStorage.removeItem('alertes');afficherAlertes();document.getElementById('nb-alertes').textContent='0';}
+function ajouterAlerte(texte){const a=JSON.parse(localStorage.getItem('alertes')||'[]');a.unshift({texte,date:new Date().toLocaleDateString('fr-FR')});localStorage.setItem('alertes',JSON.stringify(a));verifierAlertes();}
 
+// SESSIONS
 function getSessions(){return JSON.parse(localStorage.getItem('superadmin-sessions')||'[]');}
 function saveSessions(s){localStorage.setItem('superadmin-sessions',JSON.stringify(s));}
+function afficherSessions(){const s=getSessions();const c=document.getElementById('liste-sessions-admin');c.innerHTML=s.length?s.map((s,i)=>`<div class="calendrier-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><div class="cal-theme">${s.theme}</div><div class="cal-info">📅 ${s.jour} ${s.date?'('+s.date+')':''} · ⏱ ${s.duree}min · 👥 Max ${s.max}</div><div class="cal-info">🎤 ${s.modo} ${s.lien?'· <a href="'+s.lien+'" target="_blank" style="color:#85B7EB;">Voir le lien</a>':''}</div></div><button class="btn-danger" onclick="supprimerSession(${i})">✕</button></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p>';}
+function ajouterSession(){const theme=document.getElementById('s-theme').value;const jour=document.getElementById('s-jour').value.trim();if(!jour){alert('Indique le jour et l\'heure !');return;}const session={theme,jour,date:document.getElementById('s-date').value.trim(),duree:document.getElementById('s-duree').value||90,max:document.getElementById('s-max').value||8,modo:document.getElementById('s-modo').value,lien:document.getElementById('s-lien').value.trim()};const s=getSessions();s.push(session);saveSessions(s);ajouterAlerte('Nouvelle session : '+theme+' — '+jour);['s-jour','s-date','s-lien'].forEach(id=>document.getElementById(id).value='');afficherSessions();document.getElementById('stat-sessions-nb').textContent=s.length;alert('Session ajoutée ! 💙');}
+function supprimerSession(i){if(!confirm('Supprimer cette session ?'))return;const s=getSessions();s.splice(i,1);saveSessions(s);afficherSessions();}
 
-function afficherSessions(){
-  const sessions=getSessions();
-  const c=document.getElementById('liste-sessions-admin');
-  if(!sessions.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session programmée</p>';return;}
-  c.innerHTML=sessions.map((s,i)=>`<div class="calendrier-item" style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><div class="cal-theme">${s.theme}</div><div class="cal-info">📅 ${s.jour} ${s.date?'('+s.date+')':''} · ⏱ ${s.duree} min · 👥 Max ${s.max}</div><div class="cal-info">🎤 ${s.modo} ${s.lien?'· <a href="'+s.lien+'" target="_blank" style="color:#85B7EB;">Lien</a>':''}</div></div><button class="btn-danger" onclick="supprimerSession(${i})">✕</button></div></div>`).join('');
-}
-
-function ajouterSession(){
-  const theme=document.getElementById('s-theme').value;
-  const jour=document.getElementById('s-jour').value.trim();
-  const date=document.getElementById('s-date').value.trim();
-  const duree=document.getElementById('s-duree').value||90;
-  const max=document.getElementById('s-max').value||8;
-  const modo=document.getElementById('s-modo').value;
-  const lien=document.getElementById('s-lien').value.trim();
-  if(!jour){alert('Indique le jour et l\'heure !');return;}
-  const sessions=getSessions();
-  sessions.push({theme,jour,date,duree,max,modo,lien});
-  saveSessions(sessions);
-  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
-  alertes.unshift({texte:'Nouvelle session ajoutée : '+theme+' — '+jour,date:new Date().toLocaleDateString('fr-FR')});
-  localStorage.setItem('alertes',JSON.stringify(alertes));
-  document.getElementById('s-jour').value='';document.getElementById('s-date').value='';document.getElementById('s-lien').value='';
-  afficherSessions();
-  document.getElementById('stat-sessions-nb').textContent=sessions.length;
-  alert('Session ajoutée ! 💙');
-}
-
-function supprimerSession(i){if(!confirm('Supprimer ?'))return;const s=getSessions();s.splice(i,1);saveSessions(s);afficherSessions();}
-
+// MODERATEURS
 function getModos(){return JSON.parse(localStorage.getItem('superadmin-modos')||'[{"nom":"El Hadj Malick THIOUNE","contact":"malick043@gmail.com","role":"Fondateur"},{"nom":"Cheikh Bakary THIOUNE","contact":"","role":"Associé & Modérateur"},{"nom":"Aisha DIA","contact":"","role":"Responsable Marketing & Modératrice"}]');}
 function saveModos(m){localStorage.setItem('superadmin-modos',JSON.stringify(m));}
-
-function afficherModos(){
-  const modos=getModos();
-  const c=document.getElementById('liste-modos-admin');
-  c.innerHTML=modos.map((m,i)=>`<div class="item-row"><div><p style="font-weight:500;color:#e8f2ff;">${m.nom}</p><p style="font-size:11px;color:rgba(181,212,244,0.4);">${m.contact||'Contact non renseigné'}</p></div><div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-blue">${m.role}</span>${i>0?`<button class="btn-danger" onclick="supprimerModo(${i})">✕</button>`:''}</div></div>`).join('');
-}
-
-function ajouterModo(){
-  const nom=document.getElementById('m-nom').value.trim();
-  const contact=document.getElementById('m-contact').value.trim();
-  const role=document.getElementById('m-role').value;
-  if(!nom){alert('Indique le nom !');return;}
-  const modos=getModos();
-  modos.push({nom,contact,role});
-  saveModos(modos);
-  document.getElementById('m-nom').value='';document.getElementById('m-contact').value='';
-  afficherModos();
-}
-
+function afficherModos(){const m=getModos();document.getElementById('liste-modos-admin').innerHTML=m.map((mo,i)=>`<div class="item-row"><div><p style="font-weight:500;color:#e8f2ff;">${mo.nom}</p><p style="font-size:11px;color:rgba(181,212,244,0.4);">${mo.contact||'Contact non renseigné'}</p></div><div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-blue">${mo.role}</span>${i>0?`<button class="btn-danger" onclick="supprimerModo(${i})">✕</button>`:''}</div></div>`).join('');}
+function ajouterModo(){const nom=document.getElementById('m-nom').value.trim();if(!nom){alert('Indique le nom !');return;}const m=getModos();m.push({nom,contact:document.getElementById('m-contact').value.trim(),role:document.getElementById('m-role').value});saveModos(m);['m-nom','m-contact'].forEach(id=>document.getElementById(id).value='');afficherModos();}
 function supprimerModo(i){if(!confirm('Supprimer ?'))return;const m=getModos();m.splice(i,1);saveModos(m);afficherModos();}
 
+// INSCRITS
 function getInscrits(){return JSON.parse(localStorage.getItem('superadmin-inscrits')||'[]');}
 function saveInscrits(i){localStorage.setItem('superadmin-inscrits',JSON.stringify(i));}
-
-function afficherInscrits(){
-  const inscrits=getInscrits();
-  const actifs=inscrits.filter(i=>i.statut==='Actif').length;
-  document.getElementById('stat-abonnes').textContent=actifs;
-  const c=document.getElementById('liste-inscrits-admin');
-  if(!inscrits.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun abonné</p>';return;}
-  c.innerHTML=inscrits.map((ins,i)=>`<div class="item-row"><div><p style="font-weight:500;color:#e8f2ff;">${ins.nom}</p><p style="font-size:11px;color:rgba(181,212,244,0.4);">${ins.contact} · ${ins.date}</p></div><div style="display:flex;gap:6px;align-items:center;"><span style="font-size:13px;color:#5DCAA5;">${ins.montant||5}$</span><span class="badge ${ins.statut==='Actif'?'badge-green':ins.statut==='Expiré'?'badge-red':'badge-yellow'}">${ins.statut}</span><button class="btn-danger" onclick="supprimerInscrit(${i})">✕</button></div></div>`).join('');
-}
-
-function ajouterInscrit(){
-  const nom=document.getElementById('i-nom').value.trim();
-  const contact=document.getElementById('i-contact').value.trim();
-  const date=document.getElementById('i-date').value.trim()||new Date().toLocaleDateString('fr-FR');
-  const montant=document.getElementById('i-montant').value||5;
-  const statut=document.getElementById('i-statut').value;
-  if(!nom){alert('Indique le prénom !');return;}
-  const inscrits=getInscrits();
-  inscrits.push({nom,contact,date,montant,statut});
-  saveInscrits(inscrits);
-  const alertes=JSON.parse(localStorage.getItem('alertes')||'[]');
-  alertes.unshift({texte:'Nouvel abonné : '+nom+' ('+montant+'$)',date:new Date().toLocaleDateString('fr-FR')});
-  localStorage.setItem('alertes',JSON.stringify(alertes));
-  document.getElementById('i-nom').value='';document.getElementById('i-contact').value='';document.getElementById('i-montant').value='';
-  afficherInscrits();calculerRevenus();
-  alert('Abonné ajouté ! 💙');
-}
-
+function afficherInscrits(){const ins=getInscrits();document.getElementById('stat-abonnes').textContent=ins.filter(i=>i.statut==='Actif').length;const c=document.getElementById('liste-inscrits-admin');c.innerHTML=ins.length?ins.map((ins,i)=>`<div class="item-row"><div><p style="font-weight:500;color:#e8f2ff;">${ins.nom}</p><p style="font-size:11px;color:rgba(181,212,244,0.4);">${ins.contact||'-'} · ${ins.date}</p></div><div style="display:flex;gap:6px;align-items:center;"><span style="font-size:13px;color:#5DCAA5;">${ins.montant||5}$</span><span class="badge ${ins.statut==='Actif'?'badge-green':ins.statut==='Expiré'?'badge-red':'badge-yellow'}">${ins.statut}</span><button class="btn-danger" onclick="supprimerInscrit(${i})">✕</button></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun abonné</p>';}
+function ajouterInscrit(){const nom=document.getElementById('i-nom').value.trim();if(!nom){alert('Indique le prénom !');return;}const ins=getInscrits();ins.push({nom,contact:document.getElementById('i-contact').value.trim(),date:document.getElementById('i-date').value.trim()||new Date().toLocaleDateString('fr-FR'),montant:document.getElementById('i-montant').value||5,statut:document.getElementById('i-statut').value});saveInscrits(ins);ajouterAlerte('Nouvel abonné : '+nom);['i-nom','i-contact','i-montant'].forEach(id=>document.getElementById(id).value='');afficherInscrits();calculerRevenus();alert('Abonné ajouté ! 💙');}
 function supprimerInscrit(i){if(!confirm('Supprimer ?'))return;const ins=getInscrits();ins.splice(i,1);saveInscrits(ins);afficherInscrits();calculerRevenus();}
 
+// REVENUS
 function calculerRevenus(){
-  const inscrits=getInscrits();
-  const total=inscrits.reduce((a,b)=>a+(parseFloat(b.montant)||5),0);
-  const actifs=inscrits.filter(i=>i.statut==='Actif');
+  const ins=getInscrits();
+  const total=ins.reduce((a,b)=>a+(parseFloat(b.montant)||5),0);
+  const actifs=ins.filter(i=>i.statut==='Actif');
   const mois=actifs.reduce((a,b)=>a+(parseFloat(b.montant)||5),0);
   document.getElementById('rev-total').textContent=total.toFixed(0)+'$';
   document.getElementById('rev-mois').textContent=mois.toFixed(0)+'$';
-  document.getElementById('rev-abonnes').textContent=actifs.length;
+  const ecoles=getEcoles().filter(e=>e.statut==='Contrat signé ✅');
+  const revE=ecoles.reduce((a,b)=>a+(parseFloat(b.montant)||0),0);
+  document.getElementById('rev-ecoles').textContent=revE.toLocaleString('fr-FR');
+  const ent=getEntreprises().filter(e=>e.statut==='Contrat signé ✅');
+  const revEnt=ent.reduce((a,b)=>a+(parseFloat(b.montant)||0),0);
+  document.getElementById('rev-entreprises').textContent=revEnt.toLocaleString('fr-FR');
+  document.getElementById('recap-revenus').innerHTML=`
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;justify-content:space-between;padding:10px;background:rgba(24,95,165,0.1);border-radius:10px;"><span style="font-size:13px;color:#e8f2ff;">💰 Sessions (mensuel)</span><span style="font-size:13px;font-weight:600;color:#5DCAA5;">${mois.toFixed(0)}$ ≈ ${Math.round(mois*600).toLocaleString('fr-FR')} FCFA</span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px;background:rgba(29,158,117,0.1);border-radius:10px;"><span style="font-size:13px;color:#e8f2ff;">🏫 Écoles (annuel)</span><span style="font-size:13px;font-weight:600;color:#5DCAA5;">${revE.toLocaleString('fr-FR')} FCFA</span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px;background:rgba(24,95,165,0.1);border-radius:10px;"><span style="font-size:13px;color:#e8f2ff;">🏢 Entreprises (mensuel)</span><span style="font-size:13px;font-weight:600;color:#5DCAA5;">${revEnt.toLocaleString('fr-FR')} FCFA</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px;background:linear-gradient(135deg,rgba(29,158,117,0.2),rgba(29,158,117,0.1));border-radius:10px;border:0.5px solid rgba(29,158,117,0.3);"><span style="font-size:14px;font-weight:600;color:#e8f2ff;">🏆 Total estimé (mensuel)</span><span style="font-size:14px;font-weight:700;color:#5DCAA5;">${(Math.round(mois*600)+revEnt+(revE/12)).toLocaleString('fr-FR')} FCFA</span></div>
+    </div>`;
   const c=document.getElementById('liste-revenus');
-  if(!inscrits.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun paiement</p>';return;}
-  c.innerHTML=inscrits.map(ins=>`<div class="revenu-item"><div><div class="revenu-nom">${ins.nom}</div><div style="font-size:11px;color:rgba(181,212,244,0.4);">${ins.date} · <span class="badge ${ins.statut==='Actif'?'badge-green':ins.statut==='Expiré'?'badge-red':'badge-yellow'}">${ins.statut}</span></div></div><div class="revenu-montant">${ins.montant||5}$</div></div>`).join('');
+  c.innerHTML=ins.length?ins.map(i=>`<div class="revenu-item"><div><div class="revenu-nom">${i.nom}</div><div style="font-size:11px;color:rgba(181,212,244,0.4);">${i.date} · <span class="badge ${i.statut==='Actif'?'badge-green':i.statut==='Expiré'?'badge-red':'badge-yellow'}">${i.statut}</span></div></div><div class="revenu-montant">${i.montant||5}$</div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun paiement</p>';
 }
 
+// ECOLES
+function getEcoles(){return JSON.parse(localStorage.getItem('superadmin-ecoles')||'[]');}
+function saveEcoles(e){localStorage.setItem('superadmin-ecoles',JSON.stringify(e));}
+function afficherEcoles(){
+  const ecoles=getEcoles();
+  const signes=ecoles.filter(e=>e.statut==='Contrat signé ✅');
+  const rev=signes.reduce((a,b)=>a+(parseFloat(b.montant)||0),0);
+  document.getElementById('ecole-total').textContent=ecoles.length;
+  document.getElementById('ecole-signes').textContent=signes.length;
+  document.getElementById('ecole-rev').textContent=rev.toLocaleString('fr-FR');
+  const c=document.getElementById('liste-ecoles');
+  c.innerHTML=ecoles.length?ecoles.map((e,i)=>`<div class="partenaire-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><p class="partenaire-nom">🏫 ${e.nom}</p><span class="badge ${e.statut==='Contrat signé ✅'?'badge-green':e.statut==='Refusé'?'badge-red':e.statut==='En négociation'?'badge-yellow':'badge-blue'}">${e.statut}</span></div><p class="partenaire-info">${e.type||''} · 👤 ${e.contact||'-'} · 📞 ${e.tel||'-'}</p>${e.montant?'<p style="font-size:12px;color:#5DCAA5;margin-top:4px;">💰 '+parseFloat(e.montant).toLocaleString('fr-FR')+' FCFA/an</p>':''}<p style="font-size:11px;color:rgba(181,212,244,0.3);margin-top:2px;">📅 ${e.date||'-'}</p>${e.notes?'<p style="font-size:11px;color:rgba(181,212,244,0.4);margin-top:4px;font-style:italic;">📝 '+e.notes+'</p>':''}</div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn-success" onclick="changerStatutEcole(${i})">Statut</button><button class="btn-danger" onclick="supprimerEcole(${i})">✕</button></div></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun établissement</p>';
+}
+function ajouterEcole(){const nom=document.getElementById('e-nom').value.trim();if(!nom){alert('Indique le nom !');return;}const e=getEcoles();e.push({nom,type:document.getElementById('e-type').value,contact:document.getElementById('e-contact').value.trim(),tel:document.getElementById('e-tel').value.trim(),montant:document.getElementById('e-montant').value,date:document.getElementById('e-date').value.trim()||new Date().toLocaleDateString('fr-FR'),statut:document.getElementById('e-statut').value,notes:document.getElementById('e-notes').value.trim()});saveEcoles(e);ajouterAlerte('Nouvelle école : '+nom+' — '+document.getElementById('e-statut').value);['e-nom','e-type','e-contact','e-tel','e-montant','e-date','e-notes'].forEach(id=>document.getElementById(id).value='');afficherEcoles();chargerDashboard();alert('École ajoutée ! 💙');}
+function supprimerEcole(i){if(!confirm('Supprimer ?'))return;const e=getEcoles();e.splice(i,1);saveEcoles(e);afficherEcoles();}
+function changerStatutEcole(i){const statuts=['Contacté','Démo planifiée','Démo effectuée','En négociation','Contrat signé ✅','Refusé'];const e=getEcoles();const actuel=statuts.indexOf(e[i].statut);const nouveau=statuts[(actuel+1)%statuts.length];e[i].statut=nouveau;saveEcoles(e);ajouterAlerte('École '+e[i].nom+' : '+nouveau);afficherEcoles();}
+
+// ENTREPRISES
+function getEntreprises(){return JSON.parse(localStorage.getItem('superadmin-entreprises')||'[]');}
+function saveEntreprises(e){localStorage.setItem('superadmin-entreprises',JSON.stringify(e));}
+function afficherEntreprises(){
+  const ent=getEntreprises();
+  const signes=ent.filter(e=>e.statut==='Contrat signé ✅');
+  const rev=signes.reduce((a,b)=>a+(parseFloat(b.montant)||0),0);
+  document.getElementById('ent-total').textContent=ent.length;
+  document.getElementById('ent-signes').textContent=signes.length;
+  document.getElementById('ent-rev').textContent=rev.toLocaleString('fr-FR');
+  const c=document.getElementById('liste-entreprises');
+  c.innerHTML=ent.length?ent.map((e,i)=>`<div class="partenaire-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><p class="partenaire-nom">🏢 ${e.nom}</p><span class="badge ${e.statut==='Contrat signé ✅'?'badge-green':e.statut==='Refusé'?'badge-red':e.statut==='En négociation'?'badge-yellow':'badge-blue'}">${e.statut}</span></div><p class="partenaire-info">${e.type||''} · 👥 ${e.employes||'-'} employés · 👤 ${e.contact||'-'}</p><p class="partenaire-info">📞 ${e.tel||'-'}</p>${e.montant?'<p style="font-size:12px;color:#5DCAA5;margin-top:4px;">💰 '+parseFloat(e.montant).toLocaleString('fr-FR')+' FCFA/mois</p>':''}<p style="font-size:11px;color:rgba(181,212,244,0.3);margin-top:2px;">📅 ${e.date||'-'}</p>${e.notes?'<p style="font-size:11px;color:rgba(181,212,244,0.4);margin-top:4px;font-style:italic;">📝 '+e.notes+'</p>':''}</div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn-primary" onclick="changerStatutEntreprise(${i})" style="font-size:11px;padding:4px 8px;">Statut</button><button class="btn-danger" onclick="supprimerEntreprise(${i})">✕</button></div></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune entreprise</p>';
+}
+function ajouterEntreprise(){const nom=document.getElementById('ent-nom').value.trim();if(!nom){alert('Indique le nom !');return;}const e=getEntreprises();e.push({nom,type:document.getElementById('ent-type').value,contact:document.getElementById('ent-contact').value.trim(),tel:document.getElementById('ent-tel').value.trim(),employes:document.getElementById('ent-employes').value,montant:document.getElementById('ent-montant').value,date:document.getElementById('ent-date').value.trim()||new Date().toLocaleDateString('fr-FR'),statut:document.getElementById('ent-statut').value,notes:document.getElementById('ent-notes').value.trim()});saveEntreprises(e);ajouterAlerte('Nouvelle entreprise : '+nom+' — '+document.getElementById('ent-statut').value);['ent-nom','ent-contact','ent-tel','ent-employes','ent-montant','ent-date','ent-notes'].forEach(id=>document.getElementById(id).value='');afficherEntreprises();chargerDashboard();alert('Entreprise ajoutée ! 💙');}
+function supprimerEntreprise(i){if(!confirm('Supprimer ?'))return;const e=getEntreprises();e.splice(i,1);saveEntreprises(e);afficherEntreprises();}
+function changerStatutEntreprise(i){const statuts=['Contacté','Démo planifiée','Démo effectuée','En négociation','Contrat signé ✅','Refusé'];const e=getEntreprises();const actuel=statuts.indexOf(e[i].statut);const nouveau=statuts[(actuel+1)%statuts.length];e[i].statut=nouveau;saveEntreprises(e);ajouterAlerte('Entreprise '+e[i].nom+' : '+nouveau);afficherEntreprises();}
+
+// EVENEMENTS
+function getEvenements(){return JSON.parse(localStorage.getItem('superadmin-evenements')||'[]');}
+function saveEvenements(e){localStorage.setItem('superadmin-evenements',JSON.stringify(e));}
+function afficherEvenements(){const ev=getEvenements();const c=document.getElementById('liste-evenements');c.innerHTML=ev.length?ev.map((e,i)=>`<div class="evenement-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><p style="font-size:14px;font-weight:500;color:#e8f2ff;">${e.type} ${e.nom}</p><span class="badge ${e.statut==='Inscriptions ouvertes'?'badge-green':e.statut==='Complet'?'badge-red':e.statut==='Terminé'?'badge-blue':'badge-yellow'}">${e.statut}</span></div><p style="font-size:12px;color:rgba(181,212,244,0.5);">📅 ${e.date} · 📍 ${e.lieu||'Non défini'} · ${e.prix>0?'💵 '+parseFloat(e.prix).toLocaleString('fr-FR')+' FCFA':'Gratuit'}</p><p style="font-size:12px;color:rgba(181,212,244,0.5);">👥 ${e.inscrits||0}/${e.places||'-'} inscrits</p>${e.inscrits&&e.places?'<div class="progress-bar"><div class="progress-fill" style="width:'+Math.min(100,Math.round(e.inscrits/e.places*100))+'%"></div></div>':''}</div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn-warning" onclick="changerStatutEvenement(${i})" style="font-size:11px;padding:4px 8px;">Statut</button><button class="btn-danger" onclick="supprimerEvenement(${i})">✕</button></div></div>${e.desc?'<p style="font-size:11px;color:rgba(181,212,244,0.4);margin-top:8px;font-style:italic;">'+e.desc+'</p>':''}</div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun événement</p>';}
+function ajouterEvenement(){const nom=document.getElementById('ev-nom').value.trim();if(!nom){alert('Indique le nom !');return;}const ev=getEvenements();ev.push({nom,type:document.getElementById('ev-type').value,date:document.getElementById('ev-date').value.trim(),lieu:document.getElementById('ev-lieu').value.trim(),prix:document.getElementById('ev-prix').value||0,places:document.getElementById('ev-places').value,inscrits:document.getElementById('ev-inscrits').value||0,statut:document.getElementById('ev-statut').value,desc:document.getElementById('ev-desc').value.trim()});saveEvenements(ev);ajouterAlerte('Nouvel événement : '+nom);['ev-nom','ev-date','ev-lieu','ev-prix','ev-places','ev-inscrits','ev-desc'].forEach(id=>document.getElementById(id).value='');afficherEvenements();chargerDashboard();alert('Événement ajouté ! 💙');}
+function supprimerEvenement(i){if(!confirm('Supprimer ?'))return;const ev=getEvenements();ev.splice(i,1);saveEvenements(ev);afficherEvenements();}
+function changerStatutEvenement(i){const statuts=['Planifié','Inscriptions ouvertes','Complet','Terminé','Annulé'];const ev=getEvenements();const actuel=statuts.indexOf(ev[i].statut);ev[i].statut=statuts[(actuel+1)%statuts.length];saveEvenements(ev);afficherEvenements();}
+
+// COMMUNAUTE
 async function chargerCommunauteAdmin(){
-  try{
-    const res=await fetch(SERVEUR+'/communaute');
-    const data=await res.json();
-    const c=document.getElementById('liste-communaute-admin');
-    if(!data.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune pensée</p>';return;}
-    c.innerHTML=data.map(p=>`<div style="padding:10px;border-radius:10px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(181,212,244,0.08);margin-bottom:8px;"><span class="badge badge-blue" style="margin-bottom:6px;display:inline-block;">${p.groupe||'Général'}</span><p style="font-size:13px;color:rgba(181,212,244,0.8);margin-bottom:6px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:rgba(181,212,244,0.3);">💙 ${p.prenom} · ${p.date} · ❤️ ${p.coeurs}</span><button class="btn-danger" onclick="supprimerPensee(${p.id})">Supprimer</button></div></div>`).join('');
-  }catch(e){document.getElementById('liste-communaute-admin').innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Erreur</p>';}
+  try{const res=await fetch(SERVEUR+'/communaute');const data=await res.json();const c=document.getElementById('liste-communaute-admin');c.innerHTML=data.length?data.map(p=>`<div style="padding:10px;border-radius:10px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(181,212,244,0.08);margin-bottom:8px;"><span class="badge badge-blue" style="margin-bottom:6px;display:inline-block;">${p.groupe||'Général'}</span><p style="font-size:13px;color:rgba(181,212,244,0.8);margin-bottom:6px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:rgba(181,212,244,0.3);">💙 ${p.prenom} · ${p.date} · ❤️ ${p.coeurs}</span><button class="btn-danger" onclick="supprimerPensee(${p.id})">Supprimer</button></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune pensée</p>';}catch(e){document.getElementById('liste-communaute-admin').innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Erreur de connexion</p>';}
 }
+async function supprimerPensee(id){if(!confirm('Supprimer cette pensée ?'))return;try{await fetch(SERVEUR+'/communaute/'+id,{method:'DELETE'});chargerCommunauteAdmin();}catch(e){alert('Erreur !');}}
 
-async function supprimerPensee(id){
-  if(!confirm('Supprimer cette pensée ?'))return;
-  try{await fetch(SERVEUR+'/communaute/'+id,{method:'DELETE'});chargerCommunauteAdmin();}catch(e){alert('Erreur !');}
-}
+// MESSAGERIE
+function envoyerMessage(){const dest=document.getElementById('msg-destinataire').value;const texte=document.getElementById('msg-texte').value.trim();const prio=document.getElementById('msg-priorite').value;if(!texte){alert('Écris un message !');return;}const msgs=JSON.parse(localStorage.getItem('messages-internes')||'[]');msgs.unshift({de:'El Hadj Malick THIOUNE',pour:dest,texte,priorite:prio,date:new Date().toLocaleString('fr-FR')});if(msgs.length>30)msgs.pop();localStorage.setItem('messages-internes',JSON.stringify(msgs));document.getElementById('msg-texte').value='';afficherMessages();alert('Message envoyé à '+dest+' ! 💙');}
+function afficherMessages(){const msgs=JSON.parse(localStorage.getItem('messages-internes')||'[]');const c=document.getElementById('liste-messages');const icons={urgent:'🚨',info:'ℹ️',normal:'📌'};c.innerHTML=msgs.length?msgs.map(m=>`<div class="msg-item"><div class="msg-auteur">${icons[m.priorite]||'📌'} → ${m.pour}</div><div class="msg-texte">${m.texte}</div><div class="msg-time">${m.date}</div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun message</p>';}
 
-function envoyerMessage(){
-  const dest=document.getElementById('msg-destinataire').value;
-  const texte=document.getElementById('msg-texte').value.trim();
-  if(!texte){alert('Écris un message !');return;}
-  const messages=JSON.parse(localStorage.getItem('messages-internes')||'[]');
-  messages.unshift({de:'El Hadj Malick THIOUNE',pour:dest,texte,date:new Date().toLocaleString('fr-FR')});
-  if(messages.length>20)messages.pop();
-  localStorage.setItem('messages-internes',JSON.stringify(messages));
-  document.getElementById('msg-texte').value='';
-  afficherMessages();
-  alert('Message envoyé à '+dest+' ! 💙');
-}
-
-function afficherMessages(){
-  const messages=JSON.parse(localStorage.getItem('messages-internes')||'[]');
-  const c=document.getElementById('liste-messages');
-  if(!messages.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun message</p>';return;}
-  c.innerHTML=messages.map(m=>`<div class="msg-item"><div class="msg-auteur">→ ${m.pour}</div><div class="msg-texte">${m.texte}</div><div class="msg-time">${m.date}</div></div>`).join('');
-}
-
-document.getElementById('annonce-texte').addEventListener('input',function(){
-  const titre=document.getElementById('annonce-titre').value;
-  const texte=this.value;
-  document.getElementById('annonce-preview').textContent=titre?(titre+' — '+texte):texte;
+// ANNONCES
+document.addEventListener('DOMContentLoaded',()=>{
+  const ta=document.getElementById('annonce-texte');
+  if(ta)ta.addEventListener('input',function(){const t=document.getElementById('annonce-titre').value;document.getElementById('annonce-preview').textContent=t?(t+' — '+this.value):this.value;});
 });
-
-function publierAnnonce(){
-  const titre=document.getElementById('annonce-titre').value.trim();
-  const texte=document.getElementById('annonce-texte').value.trim();
-  const type=document.getElementById('annonce-type').value;
-  if(!texte){alert('Écris une annonce !');return;}
-  const annonces=JSON.parse(localStorage.getItem('annonces')||'[]');
-  annonces.unshift({titre,texte,type,date:new Date().toLocaleDateString('fr-FR')});
-  localStorage.setItem('annonces',JSON.stringify(annonces));
-  document.getElementById('annonce-titre').value='';
-  document.getElementById('annonce-texte').value='';
-  document.getElementById('annonce-preview').textContent='Aperçu de l\'annonce...';
-  afficherAnnonces();
-  alert('Annonce publiée ! 💙');
-}
-
-function afficherAnnonces(){
-  const annonces=JSON.parse(localStorage.getItem('annonces')||'[]');
-  const c=document.getElementById('liste-annonces');
-  if(!annonces.length){c.innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune annonce</p>';return;}
-  const icons={info:'ℹ️',session:'📅',promo:'🎉',urgent:'🚨'};
-  c.innerHTML=annonces.map((a,i)=>`<div style="padding:12px;border-radius:10px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(181,212,244,0.08);margin-bottom:8px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">${icons[a.type]||'📢'} ${a.titre||'Annonce'}</p><p style="font-size:12px;color:rgba(181,212,244,0.6);margin-top:4px;">${a.texte}</p><p style="font-size:10px;color:rgba(181,212,244,0.3);margin-top:4px;">${a.date}</p></div><button class="btn-danger" onclick="supprimerAnnonce(${i})">✕</button></div></div>`).join('');
-}
-
+function publierAnnonce(){const titre=document.getElementById('annonce-titre').value.trim();const texte=document.getElementById('annonce-texte').value.trim();if(!texte){alert('Écris une annonce !');return;}const a=JSON.parse(localStorage.getItem('annonces')||'[]');a.unshift({titre,texte,type:document.getElementById('annonce-type').value,date:new Date().toLocaleDateString('fr-FR')});localStorage.setItem('annonces',JSON.stringify(a));document.getElementById('annonce-titre').value='';document.getElementById('annonce-texte').value='';document.getElementById('annonce-preview').textContent='Aperçu de l\'annonce...';afficherAnnonces();alert('Annonce publiée ! 💙');}
+function afficherAnnonces(){const a=JSON.parse(localStorage.getItem('annonces')||'[]');const c=document.getElementById('liste-annonces');const icons={info:'ℹ️',session:'📅',promo:'🎉',urgent:'🚨',ecole:'🏫',entreprise:'🏢',event:'🎪'};c.innerHTML=a.length?a.map((an,i)=>`<div style="padding:12px;border-radius:10px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(181,212,244,0.08);margin-bottom:8px;"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">${icons[an.type]||'📢'} ${an.titre||'Annonce'}</p><p style="font-size:12px;color:rgba(181,212,244,0.6);margin-top:4px;">${an.texte}</p><p style="font-size:10px;color:rgba(181,212,244,0.3);margin-top:4px;">${an.date}</p></div><button class="btn-danger" onclick="supprimerAnnonce(${i})">✕</button></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune annonce</p>';}
 function supprimerAnnonce(i){const a=JSON.parse(localStorage.getItem('annonces')||'[]');a.splice(i,1);localStorage.setItem('annonces',JSON.stringify(a));afficherAnnonces();}
 function effacerAnnonces(){if(!confirm('Effacer toutes les annonces ?'))return;localStorage.removeItem('annonces');afficherAnnonces();}
+
+// EXPORT / REINIT
+function exporterDonnees(){
+  const data={sessions:getSessions(),modos:getModos(),inscrits:getInscrits(),ecoles:getEcoles(),entreprises:getEntreprises(),evenements:getEvenements(),messages:JSON.parse(localStorage.getItem('messages-internes')||'[]'),annonces:JSON.parse(localStorage.getItem('annonces')||'[]'),alertes:JSON.parse(localStorage.getItem('alertes')||'[]'),exportDate:new Date().toLocaleString('fr-FR')};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='superadmin-backup-'+new Date().toLocaleDateString('fr-FR').replace(/\//g,'-')+'.json';a.click();
+}
+function reinitialiserDonnees(){if(!confirm('⚠️ ATTENTION ! Cela effacera TOUTES vos données. Êtes-vous sûr ?'))return;if(!confirm('Dernière confirmation — tout sera supprimé définitivement !'))return;['superadmin-sessions','superadmin-modos','superadmin-inscrits','superadmin-ecoles','superadmin-entreprises','superadmin-evenements','messages-internes','annonces','alertes'].forEach(k=>localStorage.removeItem(k));alert('Données réinitialisées.');chargerDashboard();}
 </script>
 </body>
 </html>
