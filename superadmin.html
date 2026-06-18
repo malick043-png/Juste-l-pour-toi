@@ -38,7 +38,7 @@
     .btn-logout { background: rgba(229,62,62,0.15); border: 0.5px solid rgba(229,62,62,0.3); color: #fc8181; border-radius: 12px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
     .stat-card { background: rgba(255,255,255,0.05); border: 0.5px solid rgba(181,212,244,0.1); border-radius: 14px; padding: 16px; transition: all 0.2s; }
-    .stat-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(181,212,244,0.2); }
+    .stat-card:hover { background: rgba(255,255,255,0.08); }
     .stat-icon { font-size: 24px; margin-bottom: 8px; }
     .stat-nombre { font-size: 28px; font-weight: 700; color: #378ADD; }
     .stat-label { font-size: 12px; color: rgba(181,212,244,0.5); margin-top: 4px; }
@@ -63,7 +63,6 @@
     .badge-red { background: rgba(229,62,62,0.2); color: #fc8181; }
     .badge-yellow { background: rgba(245,158,11,0.2); color: #FCD34D; }
     .badge-purple { background: rgba(155,89,182,0.2); color: #C39BD3; }
-    .badge-orange { background: rgba(224,123,57,0.2); color: #F0A07A; }
     .alert-card { background: rgba(229,62,62,0.1); border: 0.5px solid rgba(229,62,62,0.2); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #fc8181; }
     .notif-dot { width: 8px; height: 8px; border-radius: 50%; background: #e53e3e; flex-shrink: 0; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
@@ -75,12 +74,8 @@
     .cal-theme { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom: 4px; }
     .cal-info { font-size: 12px; color: rgba(181,212,244,0.6); }
     .revenu-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid rgba(181,212,244,0.08); }
-    .revenu-nom { font-size: 13px; color: #e8f2ff; }
-    .revenu-montant { font-size: 14px; font-weight: 500; color: #5DCAA5; }
     .annonce-preview { padding: 12px; border-radius: 10px; background: rgba(24,95,165,0.1); border: 0.5px solid rgba(181,212,244,0.1); margin-top: 8px; font-size: 13px; color: rgba(181,212,244,0.8); font-style: italic; }
     .partenaire-item { padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(181,212,244,0.1); margin-bottom: 10px; }
-    .partenaire-nom { font-size: 14px; font-weight: 500; color: #e8f2ff; margin-bottom: 4px; }
-    .partenaire-info { font-size: 12px; color: rgba(181,212,244,0.5); }
     .evenement-item { padding: 12px; border-radius: 12px; background: rgba(24,95,165,0.08); border: 0.5px solid rgba(24,95,165,0.2); margin-bottom: 8px; }
     .progress-bar { background: rgba(255,255,255,0.1); border-radius: 10px; height: 6px; margin-top: 6px; }
     .progress-fill { height: 6px; border-radius: 10px; background: linear-gradient(135deg,#185FA5,#378ADD); transition: width 0.5s; }
@@ -452,9 +447,18 @@
       <div class="card">
         <div class="card-titre">👥 Équipe actuelle</div>
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(24,95,165,0.1);border-radius:10px;"><div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">👑 El Hadj Malick THIOUNE</p><p style="font-size:11px;color:rgba(181,212,244,0.5);">Fondateur & Créateur</p></div><span class="badge badge-blue">Accès total</span></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(24,95,165,0.1);border-radius:10px;"><div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">🤝 Cheikh Bakary THIOUNE</p><p style="font-size:11px;color:rgba(181,212,244,0.5);">Associé · Responsable RH & Modérateur</p></div><span class="badge badge-green">Modérateur</span></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(24,95,165,0.1);border-radius:10px;"><div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">💼 AÏDA GUEYE</p><p style="font-size:11px;color:rgba(181,212,244,0.5);">Responsable Marketing · Comptabilité & Modératrice</p></div><span class="badge badge-yellow">Marketing + Compta</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(24,95,165,0.15);border-radius:10px;border:0.5px solid rgba(24,95,165,0.3);">
+            <div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">👑 El Hadj Malick THIOUNE</p><p style="font-size:11px;color:rgba(181,212,244,0.5);">Fondateur & Créateur · malick043@gmail.com</p></div>
+            <span class="badge badge-blue">Accès total</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(29,158,117,0.1);border-radius:10px;border:0.5px solid rgba(29,158,117,0.2);">
+            <div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">🤝 Cheikh Bakary THIOUNE</p><p style="font-size:11px;color:rgba(181,212,244,0.5);">Associé · Responsable RH & Modérateur · Mot de passe : Freredesang</p></div>
+            <span class="badge badge-green">Modérateur</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,158,11,0.1);border-radius:10px;border:0.5px solid rgba(245,158,11,0.2);">
+            <div><p style="font-size:13px;font-weight:500;color:#e8f2ff;">💼 AÏDA GUEYE</p><p style="font-size:11px;color:rgba(181,212,244,0.5);">Responsable Marketing · Comptabilité & Modératrice · Mot de passe : AidaGueye2026</p></div>
+            <span class="badge badge-yellow">Marketing + Compta</span>
+          </div>
         </div>
       </div>
       <div class="card">
@@ -481,9 +485,24 @@
 </div>
 
 <script>
+// Nettoyer automatiquement l'ancien cache des modérateurs
+(function(){
+  const modos = localStorage.getItem('superadmin-modos');
+  if(modos && modos.includes('Aisha DIA')){
+    localStorage.removeItem('superadmin-modos');
+  }
+})();
+
 const MDP_FONDATEUR_KEY='superadmin-mdp-custom';
 const MDP_DEFAUT='Joiedevivre';
 const SERVEUR='https://serveur-juste-la-pour-toi.onrender.com';
+
+// Équipe fixe — toujours à jour
+const EQUIPE_DEFAUT = [
+  {nom:'El Hadj Malick THIOUNE', contact:'malick043@gmail.com', role:'Fondateur'},
+  {nom:'Cheikh Bakary THIOUNE', contact:'', role:'Associé & Modérateur'},
+  {nom:'AÏDA GUEYE', contact:'', role:'Responsable Marketing · Comptabilité & Modératrice'}
+];
 
 function getMdpActuel(){return localStorage.getItem(MDP_FONDATEUR_KEY)||MDP_DEFAUT;}
 
@@ -526,7 +545,20 @@ function afficherPage(page,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   if(el)el.classList.add('active');
-  const actions={'communaute':chargerCommunauteAdmin,'revenus':calculerRevenus,'vue-ensemble':chargerVueEnsemble,'messagerie':afficherMessages,'annonces':afficherAnnonces,'sessions':afficherSessions,'moderateurs':afficherModos,'inscrits':afficherInscrits,'alertes':afficherAlertes,'ecoles':afficherEcoles,'entreprises':afficherEntreprises,'evenements':afficherEvenements};
+  const actions={
+    'communaute':chargerCommunauteAdmin,
+    'revenus':calculerRevenus,
+    'vue-ensemble':chargerVueEnsemble,
+    'messagerie':afficherMessages,
+    'annonces':afficherAnnonces,
+    'sessions':afficherSessions,
+    'moderateurs':afficherModos,
+    'inscrits':afficherInscrits,
+    'alertes':afficherAlertes,
+    'ecoles':afficherEcoles,
+    'entreprises':afficherEntreprises,
+    'evenements':afficherEvenements
+  };
   if(actions[page])actions[page]();
 }
 
@@ -587,24 +619,46 @@ function afficherAlertes(){const a=JSON.parse(localStorage.getItem('alertes')||'
 function effacerAlertes(){localStorage.removeItem('alertes');afficherAlertes();document.getElementById('nb-alertes').textContent='0';}
 function ajouterAlerte(texte){const a=JSON.parse(localStorage.getItem('alertes')||'[]');a.unshift({texte,date:new Date().toLocaleDateString('fr-FR')});localStorage.setItem('alertes',JSON.stringify(a));verifierAlertes();}
 
+// SESSIONS
 function getSessions(){return JSON.parse(localStorage.getItem('superadmin-sessions')||'[]');}
 function saveSessions(s){localStorage.setItem('superadmin-sessions',JSON.stringify(s));}
 function afficherSessions(){const s=getSessions();const c=document.getElementById('liste-sessions-admin');c.innerHTML=s.length?s.map((s,i)=>`<div class="calendrier-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div><div class="cal-theme">${s.theme}</div><div class="cal-info">📅 ${s.jour} ${s.date?'('+s.date+')':''} · ⏱ ${s.duree}min · 👥 Max ${s.max}</div><div class="cal-info">🎤 ${s.modo} ${s.lien?'· <a href="'+s.lien+'" target="_blank" style="color:#85B7EB;">Voir le lien</a>':''}</div></div><button class="btn-danger" onclick="supprimerSession(${i})">✕</button></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune session</p>';}
 function ajouterSession(){const theme=document.getElementById('s-theme').value;const jour=document.getElementById('s-jour').value.trim();if(!jour){alert('Indique le jour et l\'heure !');return;}const session={theme,jour,date:document.getElementById('s-date').value.trim(),duree:document.getElementById('s-duree').value||90,max:document.getElementById('s-max').value||8,modo:document.getElementById('s-modo').value,lien:document.getElementById('s-lien').value.trim()};const s=getSessions();s.push(session);saveSessions(s);ajouterAlerte('Nouvelle session : '+theme+' — '+jour);['s-jour','s-date','s-lien'].forEach(id=>document.getElementById(id).value='');afficherSessions();document.getElementById('stat-sessions-nb').textContent=s.length;alert('Session ajoutée ! 💙');}
 function supprimerSession(i){if(!confirm('Supprimer cette session ?'))return;const s=getSessions();s.splice(i,1);saveSessions(s);afficherSessions();}
 
-function getModos(){return JSON.parse(localStorage.getItem('superadmin-modos')||'[{"nom":"El Hadj Malick THIOUNE","contact":"malick043@gmail.com","role":"Fondateur"},{"nom":"Cheikh Bakary THIOUNE","contact":"","role":"Associé & Modérateur"},{"nom":"AÏDA GUEYE","contact":"","role":"Responsable Marketing · Comptabilité & Modératrice"}]');}
-function saveModos(m){localStorage.setItem('superadmin-modos',JSON.stringify(m));}
-function afficherModos(){const m=getModos();document.getElementById('liste-modos-admin').innerHTML=m.map((mo,i)=>`<div class="item-row"><div><p style="font-weight:500;color:#e8f2ff;">${mo.nom}</p><p style="font-size:11px;color:rgba(181,212,244,0.4);">${mo.contact||'Contact non renseigné'}</p></div><div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-blue">${mo.role}</span>${i>0?`<button class="btn-danger" onclick="supprimerModo(${i})">✕</button>`:''}</div></div>`).join('');}
+// MODERATEURS — toujours basé sur l'équipe fixe + ajouts manuels
+function getModos(){
+  const saved=localStorage.getItem('superadmin-modos-v2');
+  if(saved)return JSON.parse(saved);
+  return [...EQUIPE_DEFAUT];
+}
+function saveModos(m){localStorage.setItem('superadmin-modos-v2',JSON.stringify(m));}
+function afficherModos(){
+  const m=getModos();
+  document.getElementById('liste-modos-admin').innerHTML=m.map((mo,i)=>`
+    <div class="item-row">
+      <div>
+        <p style="font-weight:500;color:#e8f2ff;">${mo.nom}</p>
+        <p style="font-size:11px;color:rgba(181,212,244,0.4);">${mo.contact||'Contact non renseigné'}</p>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="badge badge-blue">${mo.role}</span>
+        ${i>2?`<button class="btn-danger" onclick="supprimerModo(${i})">✕</button>`:''}
+      </div>
+    </div>
+  `).join('');
+}
 function ajouterModo(){const nom=document.getElementById('m-nom').value.trim();if(!nom){alert('Indique le nom !');return;}const m=getModos();m.push({nom,contact:document.getElementById('m-contact').value.trim(),role:document.getElementById('m-role').value});saveModos(m);['m-nom','m-contact'].forEach(id=>document.getElementById(id).value='');afficherModos();}
 function supprimerModo(i){if(!confirm('Supprimer ?'))return;const m=getModos();m.splice(i,1);saveModos(m);afficherModos();}
 
+// INSCRITS
 function getInscrits(){return JSON.parse(localStorage.getItem('superadmin-inscrits')||'[]');}
 function saveInscrits(i){localStorage.setItem('superadmin-inscrits',JSON.stringify(i));}
 function afficherInscrits(){const ins=getInscrits();document.getElementById('stat-abonnes').textContent=ins.filter(i=>i.statut==='Actif').length;const c=document.getElementById('liste-inscrits-admin');c.innerHTML=ins.length?ins.map((ins,i)=>`<div class="item-row"><div><p style="font-weight:500;color:#e8f2ff;">${ins.nom}</p><p style="font-size:11px;color:rgba(181,212,244,0.4);">${ins.contact||'-'} · ${ins.date}</p></div><div style="display:flex;gap:6px;align-items:center;"><span style="font-size:13px;color:#5DCAA5;">${ins.montant||5}$</span><span class="badge ${ins.statut==='Actif'?'badge-green':ins.statut==='Expiré'?'badge-red':'badge-yellow'}">${ins.statut}</span><button class="btn-danger" onclick="supprimerInscrit(${i})">✕</button></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun abonné</p>';}
 function ajouterInscrit(){const nom=document.getElementById('i-nom').value.trim();if(!nom){alert('Indique le prénom !');return;}const ins=getInscrits();ins.push({nom,contact:document.getElementById('i-contact').value.trim(),date:document.getElementById('i-date').value.trim()||new Date().toLocaleDateString('fr-FR'),montant:document.getElementById('i-montant').value||5,statut:document.getElementById('i-statut').value});saveInscrits(ins);ajouterAlerte('Nouvel abonné : '+nom);['i-nom','i-contact','i-montant'].forEach(id=>document.getElementById(id).value='');afficherInscrits();calculerRevenus();alert('Abonné ajouté ! 💙');}
 function supprimerInscrit(i){if(!confirm('Supprimer ?'))return;const ins=getInscrits();ins.splice(i,1);saveInscrits(ins);afficherInscrits();calculerRevenus();}
 
+// REVENUS
 function calculerRevenus(){
   const ins=getInscrits();
   const total=ins.reduce((a,b)=>a+(parseFloat(b.montant)||5),0);
@@ -626,9 +680,10 @@ function calculerRevenus(){
       <div style="display:flex;justify-content:space-between;padding:12px;background:linear-gradient(135deg,rgba(29,158,117,0.2),rgba(29,158,117,0.1));border-radius:10px;border:0.5px solid rgba(29,158,117,0.3);"><span style="font-size:14px;font-weight:600;color:#e8f2ff;">🏆 Total estimé (mensuel)</span><span style="font-size:14px;font-weight:700;color:#5DCAA5;">${(Math.round(mois*600)+revEnt+(revE/12)).toLocaleString('fr-FR')} FCFA</span></div>
     </div>`;
   const c=document.getElementById('liste-revenus');
-  c.innerHTML=ins.length?ins.map(i=>`<div class="revenu-item"><div><div class="revenu-nom">${i.nom}</div><div style="font-size:11px;color:rgba(181,212,244,0.4);">${i.date} · <span class="badge ${i.statut==='Actif'?'badge-green':i.statut==='Expiré'?'badge-red':'badge-yellow'}">${i.statut}</span></div></div><div class="revenu-montant">${i.montant||5}$</div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun paiement</p>';
+  c.innerHTML=ins.length?ins.map(i=>`<div class="revenu-item"><div><div style="font-size:13px;color:#e8f2ff;">${i.nom}</div><div style="font-size:11px;color:rgba(181,212,244,0.4);">${i.date} · <span class="badge ${i.statut==='Actif'?'badge-green':i.statut==='Expiré'?'badge-red':'badge-yellow'}">${i.statut}</span></div></div><div style="font-size:14px;font-weight:500;color:#5DCAA5;">${i.montant||5}$</div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun paiement</p>';
 }
 
+// ECOLES
 function getEcoles(){return JSON.parse(localStorage.getItem('superadmin-ecoles')||'[]');}
 function saveEcoles(e){localStorage.setItem('superadmin-ecoles',JSON.stringify(e));}
 function afficherEcoles(){
@@ -639,12 +694,13 @@ function afficherEcoles(){
   document.getElementById('ecole-signes').textContent=signes.length;
   document.getElementById('ecole-rev').textContent=rev.toLocaleString('fr-FR');
   const c=document.getElementById('liste-ecoles');
-  c.innerHTML=ecoles.length?ecoles.map((e,i)=>`<div class="partenaire-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><p class="partenaire-nom">🏫 ${e.nom}</p><span class="badge ${e.statut==='Contrat signé ✅'?'badge-green':e.statut==='Refusé'?'badge-red':e.statut==='En négociation'?'badge-yellow':'badge-blue'}">${e.statut}</span></div><p class="partenaire-info">${e.type||''} · 👤 ${e.contact||'-'} · 📞 ${e.tel||'-'}</p>${e.montant?'<p style="font-size:12px;color:#5DCAA5;margin-top:4px;">💰 '+parseFloat(e.montant).toLocaleString('fr-FR')+' FCFA/an</p>':''}<p style="font-size:11px;color:rgba(181,212,244,0.3);margin-top:2px;">📅 ${e.date||'-'}</p>${e.notes?'<p style="font-size:11px;color:rgba(181,212,244,0.4);margin-top:4px;font-style:italic;">📝 '+e.notes+'</p>':''}</div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn-success" onclick="changerStatutEcole(${i})">Statut</button><button class="btn-danger" onclick="supprimerEcole(${i})">✕</button></div></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun établissement</p>';
+  c.innerHTML=ecoles.length?ecoles.map((e,i)=>`<div class="partenaire-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><p style="font-size:14px;font-weight:500;color:#e8f2ff;">🏫 ${e.nom}</p><span class="badge ${e.statut==='Contrat signé ✅'?'badge-green':e.statut==='Refusé'?'badge-red':e.statut==='En négociation'?'badge-yellow':'badge-blue'}">${e.statut}</span></div><p style="font-size:12px;color:rgba(181,212,244,0.5);">${e.type||''} · 👤 ${e.contact||'-'} · 📞 ${e.tel||'-'}</p>${e.montant?'<p style="font-size:12px;color:#5DCAA5;margin-top:4px;">💰 '+parseFloat(e.montant).toLocaleString('fr-FR')+' FCFA/an</p>':''}<p style="font-size:11px;color:rgba(181,212,244,0.3);margin-top:2px;">📅 ${e.date||'-'}</p>${e.notes?'<p style="font-size:11px;color:rgba(181,212,244,0.4);margin-top:4px;font-style:italic;">📝 '+e.notes+'</p>':''}</div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn-success" onclick="changerStatutEcole(${i})">Statut</button><button class="btn-danger" onclick="supprimerEcole(${i})">✕</button></div></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun établissement</p>';
 }
 function ajouterEcole(){const nom=document.getElementById('e-nom').value.trim();if(!nom){alert('Indique le nom !');return;}const e=getEcoles();e.push({nom,type:document.getElementById('e-type').value,contact:document.getElementById('e-contact').value.trim(),tel:document.getElementById('e-tel').value.trim(),montant:document.getElementById('e-montant').value,date:document.getElementById('e-date').value.trim()||new Date().toLocaleDateString('fr-FR'),statut:document.getElementById('e-statut').value,notes:document.getElementById('e-notes').value.trim()});saveEcoles(e);ajouterAlerte('Nouvelle école : '+nom);['e-nom','e-type','e-contact','e-tel','e-montant','e-date','e-notes'].forEach(id=>document.getElementById(id).value='');afficherEcoles();chargerDashboard();alert('École ajoutée ! 💙');}
 function supprimerEcole(i){if(!confirm('Supprimer ?'))return;const e=getEcoles();e.splice(i,1);saveEcoles(e);afficherEcoles();}
-function changerStatutEcole(i){const statuts=['Contacté','Démo planifiée','Démo effectuée','En négociation','Contrat signé ✅','Refusé'];const e=getEcoles();const actuel=statuts.indexOf(e[i].statut);const nouveau=statuts[(actuel+1)%statuts.length];e[i].statut=nouveau;saveEcoles(e);ajouterAlerte('École '+e[i].nom+' : '+nouveau);afficherEcoles();}
+function changerStatutEcole(i){const statuts=['Contacté','Démo planifiée','Démo effectuée','En négociation','Contrat signé ✅','Refusé'];const e=getEcoles();const actuel=statuts.indexOf(e[i].statut);e[i].statut=statuts[(actuel+1)%statuts.length];saveEcoles(e);ajouterAlerte('École '+e[i].nom+' : '+e[i].statut);afficherEcoles();}
 
+// ENTREPRISES
 function getEntreprises(){return JSON.parse(localStorage.getItem('superadmin-entreprises')||'[]');}
 function saveEntreprises(e){localStorage.setItem('superadmin-entreprises',JSON.stringify(e));}
 function afficherEntreprises(){
@@ -655,12 +711,13 @@ function afficherEntreprises(){
   document.getElementById('ent-signes').textContent=signes.length;
   document.getElementById('ent-rev').textContent=rev.toLocaleString('fr-FR');
   const c=document.getElementById('liste-entreprises');
-  c.innerHTML=ent.length?ent.map((e,i)=>`<div class="partenaire-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><p class="partenaire-nom">🏢 ${e.nom}</p><span class="badge ${e.statut==='Contrat signé ✅'?'badge-green':e.statut==='Refusé'?'badge-red':e.statut==='En négociation'?'badge-yellow':'badge-blue'}">${e.statut}</span></div><p class="partenaire-info">${e.type||''} · 👥 ${e.employes||'-'} employés · 👤 ${e.contact||'-'}</p><p class="partenaire-info">📞 ${e.tel||'-'}</p>${e.montant?'<p style="font-size:12px;color:#5DCAA5;margin-top:4px;">💰 '+parseFloat(e.montant).toLocaleString('fr-FR')+' FCFA/mois</p>':''}<p style="font-size:11px;color:rgba(181,212,244,0.3);margin-top:2px;">📅 ${e.date||'-'}</p>${e.notes?'<p style="font-size:11px;color:rgba(181,212,244,0.4);margin-top:4px;font-style:italic;">📝 '+e.notes+'</p>':''}</div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn-primary" onclick="changerStatutEntreprise(${i})" style="font-size:11px;padding:4px 8px;">Statut</button><button class="btn-danger" onclick="supprimerEntreprise(${i})">✕</button></div></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune entreprise</p>';
+  c.innerHTML=ent.length?ent.map((e,i)=>`<div class="partenaire-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><p style="font-size:14px;font-weight:500;color:#e8f2ff;">🏢 ${e.nom}</p><span class="badge ${e.statut==='Contrat signé ✅'?'badge-green':e.statut==='Refusé'?'badge-red':e.statut==='En négociation'?'badge-yellow':'badge-blue'}">${e.statut}</span></div><p style="font-size:12px;color:rgba(181,212,244,0.5);">${e.type||''} · 👥 ${e.employes||'-'} employés · 👤 ${e.contact||'-'}</p><p style="font-size:12px;color:rgba(181,212,244,0.5);">📞 ${e.tel||'-'}</p>${e.montant?'<p style="font-size:12px;color:#5DCAA5;margin-top:4px;">💰 '+parseFloat(e.montant).toLocaleString('fr-FR')+' FCFA/mois</p>':''}<p style="font-size:11px;color:rgba(181,212,244,0.3);margin-top:2px;">📅 ${e.date||'-'}</p>${e.notes?'<p style="font-size:11px;color:rgba(181,212,244,0.4);margin-top:4px;font-style:italic;">📝 '+e.notes+'</p>':''}</div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn-primary" onclick="changerStatutEntreprise(${i})" style="font-size:11px;padding:4px 8px;">Statut</button><button class="btn-danger" onclick="supprimerEntreprise(${i})">✕</button></div></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune entreprise</p>';
 }
 function ajouterEntreprise(){const nom=document.getElementById('ent-nom').value.trim();if(!nom){alert('Indique le nom !');return;}const e=getEntreprises();e.push({nom,type:document.getElementById('ent-type').value,contact:document.getElementById('ent-contact').value.trim(),tel:document.getElementById('ent-tel').value.trim(),employes:document.getElementById('ent-employes').value,montant:document.getElementById('ent-montant').value,date:document.getElementById('ent-date').value.trim()||new Date().toLocaleDateString('fr-FR'),statut:document.getElementById('ent-statut').value,notes:document.getElementById('ent-notes').value.trim()});saveEntreprises(e);ajouterAlerte('Nouvelle entreprise : '+nom);['ent-nom','ent-contact','ent-tel','ent-employes','ent-montant','ent-date','ent-notes'].forEach(id=>document.getElementById(id).value='');afficherEntreprises();chargerDashboard();alert('Entreprise ajoutée ! 💙');}
 function supprimerEntreprise(i){if(!confirm('Supprimer ?'))return;const e=getEntreprises();e.splice(i,1);saveEntreprises(e);afficherEntreprises();}
-function changerStatutEntreprise(i){const statuts=['Contacté','Démo planifiée','Démo effectuée','En négociation','Contrat signé ✅','Refusé'];const e=getEntreprises();const actuel=statuts.indexOf(e[i].statut);const nouveau=statuts[(actuel+1)%statuts.length];e[i].statut=nouveau;saveEntreprises(e);ajouterAlerte('Entreprise '+e[i].nom+' : '+nouveau);afficherEntreprises();}
+function changerStatutEntreprise(i){const statuts=['Contacté','Démo planifiée','Démo effectuée','En négociation','Contrat signé ✅','Refusé'];const e=getEntreprises();const actuel=statuts.indexOf(e[i].statut);e[i].statut=statuts[(actuel+1)%statuts.length];saveEntreprises(e);ajouterAlerte('Entreprise '+e[i].nom+' : '+e[i].statut);afficherEntreprises();}
 
+// EVENEMENTS
 function getEvenements(){return JSON.parse(localStorage.getItem('superadmin-evenements')||'[]');}
 function saveEvenements(e){localStorage.setItem('superadmin-evenements',JSON.stringify(e));}
 function afficherEvenements(){const ev=getEvenements();const c=document.getElementById('liste-evenements');c.innerHTML=ev.length?ev.map((e,i)=>`<div class="evenement-item"><div style="display:flex;justify-content:space-between;align-items:flex-start;"><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><p style="font-size:14px;font-weight:500;color:#e8f2ff;">${e.type} ${e.nom}</p><span class="badge ${e.statut==='Inscriptions ouvertes'?'badge-green':e.statut==='Complet'?'badge-red':e.statut==='Terminé'?'badge-blue':'badge-yellow'}">${e.statut}</span></div><p style="font-size:12px;color:rgba(181,212,244,0.5);">📅 ${e.date} · 📍 ${e.lieu||'Non défini'} · ${e.prix>0?'💵 '+parseFloat(e.prix).toLocaleString('fr-FR')+' FCFA':'Gratuit'}</p><p style="font-size:12px;color:rgba(181,212,244,0.5);">👥 ${e.inscrits||0}/${e.places||'-'} inscrits</p>${e.inscrits&&e.places?'<div class="progress-bar"><div class="progress-fill" style="width:'+Math.min(100,Math.round(e.inscrits/e.places*100))+'%"></div></div>':''}</div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn-warning" onclick="changerStatutEvenement(${i})" style="font-size:11px;padding:4px 8px;">Statut</button><button class="btn-danger" onclick="supprimerEvenement(${i})">✕</button></div></div>${e.desc?'<p style="font-size:11px;color:rgba(181,212,244,0.4);margin-top:8px;font-style:italic;">'+e.desc+'</p>':''}</div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun événement</p>';}
@@ -668,14 +725,18 @@ function ajouterEvenement(){const nom=document.getElementById('ev-nom').value.tr
 function supprimerEvenement(i){if(!confirm('Supprimer ?'))return;const ev=getEvenements();ev.splice(i,1);saveEvenements(ev);afficherEvenements();}
 function changerStatutEvenement(i){const statuts=['Planifié','Inscriptions ouvertes','Complet','Terminé','Annulé'];const ev=getEvenements();const actuel=statuts.indexOf(ev[i].statut);ev[i].statut=statuts[(actuel+1)%statuts.length];saveEvenements(ev);afficherEvenements();}
 
+// COMMUNAUTE
 async function chargerCommunauteAdmin(){
-  try{const res=await fetch(SERVEUR+'/communaute');const data=await res.json();const c=document.getElementById('liste-communaute-admin');c.innerHTML=data.length?data.map(p=>`<div style="padding:10px;border-radius:10px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(181,212,244,0.08);margin-bottom:8px;"><span class="badge badge-blue" style="margin-bottom:6px;display:inline-block;">${p.groupe||'Général'}</span><p style="font-size:13px;color:rgba(181,212,244,0.8);margin-bottom:6px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:rgba(181,212,244,0.3);">💙 ${p.prenom} · ${p.date} · ❤️ ${p.coeurs}</span><button class="btn-danger" onclick="supprimerPensee(${p.id})">Supprimer</button></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune pensée</p>';}catch(e){document.getElementById('liste-communaute-admin').innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Erreur de connexion</p>';}
+  try{const res=await fetch(SERVEUR+'/communaute');const data=await res.json();const c=document.getElementById('liste-communaute-admin');c.innerHTML=data.length?data.map(p=>`<div style="padding:10px;border-radius:10px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(181,212,244,0.08);margin-bottom:8px;"><span class="badge badge-blue" style="margin-bottom:6px;display:inline-block;">${p.groupe||'Général'}</span><p style="font-size:13px;color:rgba(181,212,244,0.8);margin-bottom:6px;">"${p.pensee}"</p><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:rgba(181,212,244,0.3);">💙 ${p.prenom} · ${p.date} · ❤️ ${p.coeurs}</span><button class="btn-danger" onclick="supprimerPensee(${p.id})">Supprimer</button></div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucune pensée</p>';}
+  catch(e){document.getElementById('liste-communaute-admin').innerHTML='<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Erreur de connexion</p>';}
 }
 async function supprimerPensee(id){if(!confirm('Supprimer cette pensée ?'))return;try{await fetch(SERVEUR+'/communaute/'+id,{method:'DELETE'});chargerCommunauteAdmin();}catch(e){alert('Erreur !');}}
 
+// MESSAGERIE
 function envoyerMessage(){const dest=document.getElementById('msg-destinataire').value;const texte=document.getElementById('msg-texte').value.trim();const prio=document.getElementById('msg-priorite').value;if(!texte){alert('Écris un message !');return;}const msgs=JSON.parse(localStorage.getItem('messages-internes')||'[]');msgs.unshift({de:'El Hadj Malick THIOUNE',pour:dest,texte,priorite:prio,date:new Date().toLocaleString('fr-FR')});if(msgs.length>30)msgs.pop();localStorage.setItem('messages-internes',JSON.stringify(msgs));document.getElementById('msg-texte').value='';afficherMessages();alert('Message envoyé à '+dest+' ! 💙');}
 function afficherMessages(){const msgs=JSON.parse(localStorage.getItem('messages-internes')||'[]');const c=document.getElementById('liste-messages');const icons={urgent:'🚨',info:'ℹ️',normal:'📌'};c.innerHTML=msgs.length?msgs.map(m=>`<div class="msg-item"><div class="msg-auteur">${icons[m.priorite]||'📌'} → ${m.pour}</div><div class="msg-texte">${m.texte}</div><div class="msg-time">${m.date}</div></div>`).join(''):'<p style="font-size:13px;color:rgba(181,212,244,0.4);text-align:center;">Aucun message</p>';}
 
+// ANNONCES
 document.addEventListener('DOMContentLoaded',()=>{
   const ta=document.getElementById('annonce-texte');
   if(ta)ta.addEventListener('input',function(){const t=document.getElementById('annonce-titre').value;document.getElementById('annonce-preview').textContent=t?(t+' — '+this.value):this.value;});
@@ -685,12 +746,19 @@ function afficherAnnonces(){const a=JSON.parse(localStorage.getItem('annonces')|
 function supprimerAnnonce(i){const a=JSON.parse(localStorage.getItem('annonces')||'[]');a.splice(i,1);localStorage.setItem('annonces',JSON.stringify(a));afficherAnnonces();}
 function effacerAnnonces(){if(!confirm('Effacer toutes les annonces ?'))return;localStorage.removeItem('annonces');afficherAnnonces();}
 
+// EXPORT / REINIT
 function exporterDonnees(){
   const data={sessions:getSessions(),modos:getModos(),inscrits:getInscrits(),ecoles:getEcoles(),entreprises:getEntreprises(),evenements:getEvenements(),messages:JSON.parse(localStorage.getItem('messages-internes')||'[]'),annonces:JSON.parse(localStorage.getItem('annonces')||'[]'),alertes:JSON.parse(localStorage.getItem('alertes')||'[]'),exportDate:new Date().toLocaleString('fr-FR')};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='superadmin-backup-'+new Date().toLocaleDateString('fr-FR').replace(/\//g,'-')+'.json';a.click();
 }
-function reinitialiserDonnees(){if(!confirm('⚠️ ATTENTION ! Cela effacera TOUTES vos données. Êtes-vous sûr ?'))return;if(!confirm('Dernière confirmation — tout sera supprimé définitivement !'))return;['superadmin-sessions','superadmin-modos','superadmin-inscrits','superadmin-ecoles','superadmin-entreprises','superadmin-evenements','messages-internes','annonces','alertes'].forEach(k=>localStorage.removeItem(k));alert('Données réinitialisées.');chargerDashboard();}
+function reinitialiserDonnees(){
+  if(!confirm('⚠️ ATTENTION ! Cela effacera TOUTES vos données. Êtes-vous sûr ?'))return;
+  if(!confirm('Dernière confirmation — tout sera supprimé définitivement !'))return;
+  ['superadmin-sessions','superadmin-modos','superadmin-modos-v2','superadmin-inscrits','superadmin-ecoles','superadmin-entreprises','superadmin-evenements','messages-internes','annonces','alertes'].forEach(k=>localStorage.removeItem(k));
+  alert('Données réinitialisées.');
+  chargerDashboard();
+}
 </script>
 </body>
 </html>
