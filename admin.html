@@ -32,10 +32,14 @@
     .badge-role { font-size: 11px; background: #E6F1FB; color: #185FA5; padding: 2px 8px; border-radius: 8px; }
     .input-admin { width: 100%; border: 0.5px solid #B5D4F4; border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: #f7faff; color: #0C447C; margin-bottom: 8px; }
     .select-admin { width: 100%; border: 0.5px solid #B5D4F4; border-radius: 10px; padding: 8px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; background: #f7faff; color: #0C447C; margin-bottom: 8px; }
-    .session-card { padding: 12px; border-radius: 12px; background: #f7faff; border: 0.5px solid #B5D4F4; margin-bottom:10px; }
+    .session-card { padding: 12px; border-radius: 12px; background: #f7faff; border: 0.5px solid #B5D4F4; margin-bottom: 10px; }
     .pensee-card { padding: 10px; border-radius: 10px; background: #f7faff; border: 0.5px solid #B5D4F4; margin-bottom: 8px; }
     .tag { font-size: 11px; background: #E6F1FB; color: #185FA5; padding: 2px 8px; border-radius: 8px; display: inline-block; margin-bottom: 4px; }
     .succes-msg { color: #1D9E75; font-size: 13px; text-align: center; padding: 6px; display: none; }
+    .acces-badge { font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 500; }
+    .acces-fondateur { background: linear-gradient(135deg,#185FA5,#0C447C); color: #fff; }
+    .acces-complet { background: rgba(29,158,117,0.15); color: #1D9E75; }
+    .acces-modo { background: rgba(24,95,165,0.1); color: #185FA5; }
   </style>
 </head>
 <body>
@@ -43,7 +47,7 @@
 <div id="login">
   <img src="icon.png" class="login-logo" alt="Logo">
   <h1 class="login-titre">Panel Administrateur</h1>
-  <p class="login-sous">Juste là pour toi — Accès réservé</p>
+  <p class="login-sous">Juste là pour toi — Accès réservé à l'équipe</p>
   <input type="password" class="login-input" id="mdp-input" placeholder="Mot de passe..." onkeydown="if(event.key==='Enter')seConnecter()">
   <button class="login-btn" onclick="seConnecter()">Se connecter 🔐</button>
 </div>
@@ -51,8 +55,8 @@
 <div id="dashboard">
   <div class="header-admin">
     <div>
-      <h1>🔐 Panel Admin</h1>
-      <p style="font-size:12px;color:#B5D4F4;margin-top:2px;">Juste là pour toi — El Hadj Malick THIOUNE</p>
+      <h1 id="header-nom">🔐 Panel Admin</h1>
+      <p id="header-role" style="font-size:12px;color:#B5D4F4;margin-top:2px;">Juste là pour toi</p>
     </div>
     <button onclick="seDeconnecter()">Déconnexion</button>
   </div>
@@ -61,8 +65,14 @@
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-nombre" id="stat-compteur">-</div><div class="stat-label">👥 Utilisateurs</div></div>
     <div class="stat-card"><div class="stat-nombre" id="stat-communaute">-</div><div class="stat-label">🌍 Pensées communauté</div></div>
-    <div class="stat-card"><div class="stat-nombre" id="stat-sessions">3</div><div class="stat-label">📅 Sessions programmées</div></div>
-    <div class="stat-card"><div class="stat-nombre" id="stat-inscrits">0</div><div class="stat-label">💰 Abonnés sessions</div></div>
+    <div class="stat-card"><div class="stat-nombre" id="stat-sessions">0</div><div class="stat-label">📅 Sessions programmées</div></div>
+    <div class="stat-card" id="stat-inscrits-card"><div class="stat-nombre" id="stat-inscrits">0</div><div class="stat-label">💰 Abonnés sessions</div></div>
+  </div>
+
+  <!-- EQUIPE -->
+  <div class="section" id="section-equipe">
+    <div class="section-titre"><span>👥 Équipe Juste là pour toi</span></div>
+    <div id="liste-equipe"></div>
   </div>
 
   <!-- SESSIONS -->
@@ -79,37 +89,20 @@
         <option>💔 Relations</option>
         <option>🌱 Développement personnel</option>
         <option>😔 Solitude</option>
+        <option>🕌 Bien-être spirituel</option>
       </select>
       <input type="text" class="input-admin" id="new-session-jour" placeholder="Jour et heure (ex: Lundi 19h00)">
       <input type="number" class="input-admin" id="new-session-duree" placeholder="Durée en minutes (ex: 90)">
       <input type="number" class="input-admin" id="new-session-max" placeholder="Max participants (ex: 8)">
       <select class="select-admin" id="new-session-modo">
         <option>El Hadj Malick THIOUNE</option>
-        <option>Modérateur 2</option>
-        <option>Modérateur 3</option>
+        <option>Cheikh Bakary THIOUNE</option>
+        <option>AÏDA GUEYE</option>
       </select>
       <button class="btn-add" onclick="ajouterSession()" style="width:100%;padding:10px;">Enregistrer la session</button>
       <p class="succes-msg" id="succes-session">✅ Session ajoutée !</p>
     </div>
     <div id="liste-sessions"></div>
-  </div>
-
-  <!-- MODERATEURS -->
-  <div class="section">
-    <div class="section-titre">
-      <span>👥 Modérateurs (3 max)</span>
-      <button class="btn-add" onclick="toggleAjoutModo()">+ Ajouter</button>
-    </div>
-    <div id="form-modo" style="display:none;margin-bottom:14px;padding:12px;background:#E6F1FB;border-radius:10px;">
-      <input type="text" class="input-admin" id="new-modo-nom" placeholder="Nom du modérateur">
-      <input type="text" class="input-admin" id="new-modo-contact" placeholder="WhatsApp ou email">
-      <select class="select-admin" id="new-modo-role">
-        <option>Modérateur principal</option>
-        <option>Modérateur junior</option>
-      </select>
-      <button class="btn-add" onclick="ajouterModo()" style="width:100%;padding:10px;">Ajouter le modérateur</button>
-    </div>
-    <div id="liste-modos"></div>
   </div>
 
   <!-- COMMUNAUTE -->
@@ -119,7 +112,7 @@
   </div>
 
   <!-- INSCRITS -->
-  <div class="section">
+  <div class="section" id="section-inscrits">
     <div class="section-titre">
       <span>💰 Inscrits aux sessions</span>
       <button class="btn-add" onclick="toggleAjoutInscrit()">+ Ajouter</button>
@@ -138,19 +131,47 @@
     <div id="liste-inscrits"></div>
   </div>
 
+  <!-- COMPTABILITE (visible uniquement par Aïda et Malick) -->
+  <div class="section" id="section-compta" style="display:none;">
+    <div class="section-titre"><span>📊 Comptabilité</span></div>
+    <div id="compta-contenu">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+        <div style="background:#f0fff8;border:0.5px solid rgba(29,158,117,0.3);border-radius:12px;padding:14px;text-align:center;"><p style="font-size:24px;font-weight:700;color:#1D9E75;" id="compta-sessions">0$</p><p style="font-size:11px;color:#85B7EB;">Revenus sessions</p></div>
+        <div style="background:#f0f6ff;border:0.5px solid #B5D4F4;border-radius:12px;padding:14px;text-align:center;"><p style="font-size:24px;font-weight:700;color:#185FA5;" id="compta-abonnes">0</p><p style="font-size:11px;color:#85B7EB;">Abonnés actifs</p></div>
+      </div>
+      <div id="compta-liste"><p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucune donnée</p></div>
+    </div>
+  </div>
+
   <div style="text-align:center;padding:20px;">
-    <p style="font-size:11px;color:#85B7EB;font-style:italic;">© 2026 Juste là pour toi — Panel Admin v1.0</p>
+    <p style="font-size:11px;color:#85B7EB;font-style:italic;">© 2026 Juste là pour toi — El Hadj Malick THIOUNE</p>
     <a href="https://malick043-png.github.io/Juste-l-pour-toi" style="font-size:12px;color:#185FA5;text-decoration:none;">← Retour à l'application</a>
   </div>
 </div>
 
 <script>
 const UTILISATEURS = {
-  'Joiedevivre': { nom: 'El Hadj Malick THIOUNE', role: 'Fondateur', acces: 'total' },
-  'Freredesang': { nom: 'Cheikh Bakary THIOUNE', role: 'Associé, Responsable RH & Modérateur', acces: 'moderateur' },
-  'Votrereine':  { nom: 'Aisha DIA', role: 'Responsable Marketing & Modératrice', acces: 'moderateur' },
+  'Joiedevivre': {
+    nom: 'El Hadj Malick THIOUNE',
+    role: 'Fondateur & Créateur',
+    acces: 'fondateur',
+    emoji: '👑'
+  },
+  'Freredesang': {
+    nom: 'Cheikh Bakary THIOUNE',
+    role: 'Associé · Responsable RH & Modérateur',
+    acces: 'moderateur',
+    emoji: '🤝'
+  },
+  'AidaGueye2026': {
+    nom: 'AÏDA GUEYE',
+    role: 'Responsable Marketing · Comptabilité & Modératrice',
+    acces: 'marketing_compta',
+    emoji: '💼'
+  },
 };
-let utilisateurConnecte = null;const MDP = 'Joiedevivre';
+
+let utilisateurConnecte = null;
 const SERVEUR = 'https://serveur-juste-la-pour-toi.onrender.com';
 
 function seConnecter() {
@@ -161,19 +182,85 @@ function seConnecter() {
     utilisateurConnecte = user;
     document.getElementById('login').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
-    document.querySelector('.header-admin h1').textContent = '🔐 ' + user.nom;
-    document.querySelector('.header-admin p').textContent = user.role + ' — Juste là pour toi';
-   if (user.acces === 'moderateur') {
-  document.getElementById('stat-inscrits').parentElement.style.display = 'none';
-}
+    document.getElementById('header-nom').textContent = user.emoji + ' ' + user.nom;
+    document.getElementById('header-role').textContent = user.role + ' — Juste là pour toi';
+    appliquerAcces(user);
     chargerDashboard();
   } else {
     alert('Mot de passe incorrect !');
   }
 }
 
+function appliquerAcces(user) {
+  // Sections visibles selon le rôle
+  if (user.acces === 'moderateur') {
+    // Cheikh : sessions + communauté uniquement, pas les inscrits ni comptabilité
+    document.getElementById('stat-inscrits-card').style.display = 'none';
+    document.getElementById('section-inscrits').style.display = 'none';
+    document.getElementById('section-compta').style.display = 'none';
+    document.getElementById('section-equipe').style.display = 'none';
+  } else if (user.acces === 'marketing_compta') {
+    // Aïda : tout sauf gestion avancée
+    document.getElementById('section-compta').style.display = 'block';
+    document.getElementById('section-equipe').style.display = 'none';
+    afficherComptabilite();
+  } else if (user.acces === 'fondateur') {
+    // Malick : tout
+    document.getElementById('section-compta').style.display = 'block';
+    document.getElementById('section-equipe').style.display = 'block';
+    afficherEquipe();
+    afficherComptabilite();
+  }
+}
+
+function afficherEquipe() {
+  const equipe = [
+    { nom: 'El Hadj Malick THIOUNE', role: 'Fondateur & Créateur', emoji: '👑', acces: 'Accès total' },
+    { nom: 'Cheikh Bakary THIOUNE', role: 'Associé · Responsable RH & Modérateur', emoji: '🤝', acces: 'Modération + Sessions' },
+    { nom: 'AÏDA GUEYE', role: 'Responsable Marketing · Comptabilité & Modératrice', emoji: '💼', acces: 'Marketing + Comptabilité + Modération' }
+  ];
+  document.getElementById('liste-equipe').innerHTML = equipe.map(m => `
+    <div class="item-row">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">${m.emoji}</span>
+        <div>
+          <p style="font-weight:500;color:#0C447C;">${m.nom}</p>
+          <p style="font-size:11px;color:#85B7EB;">${m.role}</p>
+        </div>
+      </div>
+      <span class="badge-role">${m.acces}</span>
+    </div>
+  `).join('');
+}
+
+function afficherComptabilite() {
+  const inscrits = getInscrits();
+  const actifs = inscrits.filter(i => i.statut === 'Actif');
+  const total = inscrits.reduce((a, b) => a + 5, 0);
+  document.getElementById('compta-sessions').textContent = total + '$';
+  document.getElementById('compta-abonnes').textContent = actifs.length;
+  const c = document.getElementById('compta-liste');
+  if (!inscrits.length) {
+    c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun inscrit</p>';
+    return;
+  }
+  c.innerHTML = inscrits.map(ins => `
+    <div class="item-row">
+      <div>
+        <p style="font-weight:500;color:#0C447C;">${ins.nom}</p>
+        <p style="font-size:11px;color:#85B7EB;">${ins.contact || '-'} · ${ins.date}</p>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:13px;font-weight:500;color:#1D9E75;">5$</span>
+        <span style="font-size:11px;background:${ins.statut==='Actif'?'#E6F5EF':ins.statut==='Expiré'?'#FEE2E2':'#FEF3C7'};color:${ins.statut==='Actif'?'#1D9E75':ins.statut==='Expiré'?'#e53e3e':'#D97706'};padding:2px 8px;border-radius:8px;">${ins.statut}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
 function seDeconnecter() {
   localStorage.removeItem('admin-auth');
+  utilisateurConnecte = null;
   document.getElementById('login').style.display = 'flex';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('mdp-input').value = '';
@@ -184,22 +271,16 @@ if (savedAuth && UTILISATEURS[savedAuth]) {
   utilisateurConnecte = UTILISATEURS[savedAuth];
   document.getElementById('login').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('header-nom').textContent = utilisateurConnecte.emoji + ' ' + utilisateurConnecte.nom;
+  document.getElementById('header-role').textContent = utilisateurConnecte.role + ' — Juste là pour toi';
+  appliquerAcces(utilisateurConnecte);
   chargerDashboard();
 }
 
 async function chargerDashboard() {
-  try {
-    const res = await fetch(SERVEUR + '/compteur');
-    const data = await res.json();
-    document.getElementById('stat-compteur').textContent = data.compteur;
-  } catch(e) {}
-  try {
-    const res = await fetch(SERVEUR + '/communaute');
-    const data = await res.json();
-    document.getElementById('stat-communaute').textContent = data.length;
-  } catch(e) {}
+  try { const r = await fetch(SERVEUR+'/compteur'); const d = await r.json(); document.getElementById('stat-compteur').textContent = d.compteur; } catch(e) {}
+  try { const r = await fetch(SERVEUR+'/communaute'); const d = await r.json(); document.getElementById('stat-communaute').textContent = d.length; } catch(e) {}
   afficherSessions();
-  afficherModos();
   afficherInscrits();
   chargerCommunauteAdmin();
 }
@@ -239,7 +320,7 @@ function ajouterSession() {
   const modo = document.getElementById('new-session-modo').value;
   if (!jour) { alert('Indique le jour et l\'heure !'); return; }
   const sessions = getSessions();
-  sessions.push({ theme, jour, duree: duree || 90, max: max || 8, modo });
+  sessions.push({ theme, jour, duree: duree||90, max: max||8, modo });
   saveSessions(sessions);
   document.getElementById('new-session-jour').value = '';
   document.getElementById('succes-session').style.display = 'block';
@@ -249,83 +330,23 @@ function ajouterSession() {
 
 function supprimerSession(i) {
   if (!confirm('Supprimer cette session ?')) return;
-  const sessions = getSessions();
-  sessions.splice(i, 1);
-  saveSessions(sessions);
-  afficherSessions();
+  const s = getSessions(); s.splice(i, 1); saveSessions(s); afficherSessions();
 }
 
 async function mettreAjourAppli(sessions) {
-  try {
-    await fetch(SERVEUR + '/sessions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessions })
-    });
-  } catch(e) {}
-}
-
-// MODERATEURS
-function getModos() { return JSON.parse(localStorage.getItem('admin-modos') || '[{"nom":"El Hadj Malick THIOUNE","contact":"malick043@gmail.com","role":"Modérateur principal"}]'); }
-function saveModos(m) { localStorage.setItem('admin-modos', JSON.stringify(m)); }
-
-function afficherModos() {
-  const modos = getModos();
-  const c = document.getElementById('liste-modos');
-  c.innerHTML = modos.map((m, i) => `
-    <div class="item-row">
-      <div>
-        <p style="font-weight:500;">${m.nom}</p>
-        <p style="font-size:11px;color:#85B7EB;">${m.contact}</p>
-      </div>
-      <div style="display:flex;gap:6px;align-items:center;">
-        <span class="badge-role">${m.role}</span>
-        ${i > 0 ? `<button class="btn-danger" onclick="supprimerModo(${i})">✕</button>` : ''}
-      </div>
-    </div>
-  `).join('');
-}
-
-function toggleAjoutModo() {
-  const modos = getModos();
-  if (modos.length >= 3) { alert('Maximum 3 modérateurs !'); return; }
-  const f = document.getElementById('form-modo');
-  f.style.display = f.style.display === 'none' ? 'block' : 'none';
-}
-
-function ajouterModo() {
-  const nom = document.getElementById('new-modo-nom').value.trim();
-  const contact = document.getElementById('new-modo-contact').value.trim();
-  const role = document.getElementById('new-modo-role').value;
-  if (!nom) { alert('Indique le nom !'); return; }
-  const modos = getModos();
-  if (modos.length >= 3) { alert('Maximum 3 modérateurs !'); return; }
-  modos.push({ nom, contact, role });
-  saveModos(modos);
-  document.getElementById('new-modo-nom').value = '';
-  document.getElementById('new-modo-contact').value = '';
-  document.getElementById('form-modo').style.display = 'none';
-  afficherModos();
-}
-
-function supprimerModo(i) {
-  if (!confirm('Supprimer ce modérateur ?')) return;
-  const modos = getModos();
-  modos.splice(i, 1);
-  saveModos(modos);
-  afficherModos();
+  try { await fetch(SERVEUR+'/sessions', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({sessions}) }); } catch(e) {}
 }
 
 // COMMUNAUTE
 async function chargerCommunauteAdmin() {
   try {
-    const res = await fetch(SERVEUR + '/communaute');
+    const res = await fetch(SERVEUR+'/communaute');
     const data = await res.json();
     const c = document.getElementById('liste-communaute');
     if (!data.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;">Aucune pensée</p>'; return; }
     c.innerHTML = data.map(p => `
       <div class="pensee-card">
-        <span class="tag">${p.groupe || 'Général'}</span>
+        <span class="tag">${p.groupe||'Général'}</span>
         <p style="font-size:13px;color:#0C447C;margin-bottom:6px;">"${p.pensee}"</p>
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <span style="font-size:11px;color:#85B7EB;">💙 ${p.prenom} · ${p.date} · ${p.coeurs} ❤️</span>
@@ -338,10 +359,7 @@ async function chargerCommunauteAdmin() {
 
 async function supprimerPensee(id) {
   if (!confirm('Supprimer cette pensée ?')) return;
-  try {
-    await fetch(SERVEUR + '/communaute/' + id, { method: 'DELETE' });
-    chargerCommunauteAdmin();
-  } catch(e) { alert('Erreur !'); }
+  try { await fetch(SERVEUR+'/communaute/'+id, {method:'DELETE'}); chargerCommunauteAdmin(); } catch(e) { alert('Erreur !'); }
 }
 
 // INSCRITS
@@ -352,12 +370,12 @@ function afficherInscrits() {
   const inscrits = getInscrits();
   document.getElementById('stat-inscrits').textContent = inscrits.filter(i => i.statut === 'Actif').length;
   const c = document.getElementById('liste-inscrits');
-  if (!inscrits.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun inscrit pour le moment</p>'; return; }
+  if (!inscrits.length) { c.innerHTML = '<p style="font-size:13px;color:#85B7EB;text-align:center;font-style:italic;">Aucun inscrit</p>'; return; }
   c.innerHTML = inscrits.map((ins, i) => `
     <div class="item-row">
       <div>
         <p style="font-weight:500;">${ins.nom}</p>
-        <p style="font-size:11px;color:#85B7EB;">${ins.contact} · ${ins.date}</p>
+        <p style="font-size:11px;color:#85B7EB;">${ins.contact||'-'} · ${ins.date}</p>
       </div>
       <div style="display:flex;gap:6px;align-items:center;">
         <span style="font-size:11px;background:${ins.statut==='Actif'?'#E6F5EF':ins.statut==='Expiré'?'#FEE2E2':'#FEF3C7'};color:${ins.statut==='Actif'?'#1D9E75':ins.statut==='Expiré'?'#e53e3e':'#D97706'};padding:2px 8px;border-radius:8px;">${ins.statut}</span>
@@ -386,14 +404,17 @@ function ajouterInscrit() {
   document.getElementById('new-inscrit-date').value = '';
   document.getElementById('form-inscrit').style.display = 'none';
   afficherInscrits();
+  if (utilisateurConnecte && (utilisateurConnecte.acces === 'marketing_compta' || utilisateurConnecte.acces === 'fondateur')) {
+    afficherComptabilite();
+  }
 }
 
 function supprimerInscrit(i) {
   if (!confirm('Supprimer cet inscrit ?')) return;
-  const inscrits = getInscrits();
-  inscrits.splice(i, 1);
-  saveInscrits(inscrits);
-  afficherInscrits();
+  const inscrits = getInscrits(); inscrits.splice(i, 1); saveInscrits(inscrits); afficherInscrits();
+  if (utilisateurConnecte && (utilisateurConnecte.acces === 'marketing_compta' || utilisateurConnecte.acces === 'fondateur')) {
+    afficherComptabilite();
+  }
 }
 </script>
 </body>
