@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juste là pour toi — Canevas de Présentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', Arial, sans-serif; background: #f0f6ff; color: #0C447C; }
+    .page { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+    /* COUVERTURE */
+    .cover { background: linear-gradient(135deg, #0C447C, #185FA5, #1a6db5); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 40px; position: relative; overflow: hidden; }
+    .cover::before { content: '💙'; position: absolute; font-size: 300px; opacity: 0.04; top: -60px; right: -60px; }
+    .cover::after { content: '🇸🇳'; position: absolute; font-size: 200px; opacity: 0.04; bottom: -40px; left: -40px; }
+    .cover-logo { width: 100px; height: 100px; border-radius: 50%; border: 4px solid rgba(255,255,255,0.3); margin-bottom: 30px; box-shadow: 0 0 40px rgba(255,255,255,0.2); object-fit: cover; }
+    .cover-badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 6px 20px; font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 24px; letter-spacing: 2px; text-transform: uppercase; }
+    .cover h1 { font-family: 'Lora', serif; font-size: 52px; color: #fff; margin-bottom: 12px; line-height: 1.2; }
+    .cover h2 { font-family: 'Lora', serif; font-size: 20px; color: rgba(255,255,255,0.7); font-weight: 400; font-style: italic; margin-bottom: 40px; }
+    .cover-divider { width: 60px; height: 3px; background: rgba(255,255,255,0.4); border-radius: 2px; margin: 0 auto 40px; }
+    .cover-info { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-bottom: 50px; }
+    .cover-info-item { text-align: center; }
+    .cover-info-label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .cover-info-val { font-size: 15px; color: #fff; font-weight: 500; }
+    .cover-footer { position: absolute; bottom: 30px; left: 0; right: 0; text-align: center; font-size: 12px; color: rgba(255,255,255,0.4); }
+
+    /* SECTIONS */
+    .section { background: #fff; border-radius: 20px; padding: 40px; margin-bottom: 30px; border: 0.5px solid #B5D4F4; box-shadow: 0 4px 20px rgba(24,95,165,0.06); page-break-inside: avoid; }
+    .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid #E6F1FB; }
+    .section-num { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #185FA5, #1a6db5); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .section-titre { font-family: 'Lora', serif; font-size: 22px; color: #0C447C; }
+    .section-sous { font-size: 13px; color: #85B7EB; margin-top: 2px; }
+
+    /* STAT CARDS */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-box { background: linear-gradient(135deg, #f0f6ff, #E6F1FB); border-radius: 14px; padding: 20px; text-align: center; border: 0.5px solid #B5D4F4; }
+    .stat-box-nb { font-size: 32px; font-weight: 700; color: #185FA5; margin-bottom: 4px; }
+    .stat-box-label { font-size: 12px; color: #85B7EB; line-height: 1.4; }
+
+    /* FEATURE CARDS */
+    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .feature-card { background: #f7faff; border-radius: 14px; padding: 18px; border: 0.5px solid #B5D4F4; }
+    .feature-icon { font-size: 28px; margin-bottom: 10px; }
+    .feature-title { font-size: 14px; font-weight: 600; color: #0C447C; margin-bottom: 6px; }
+    .feature-desc { font-size: 12px; color: #85B7EB; line-height: 1.6; }
+
+    /* TARIF CARDS */
+    .tarifs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .tarif-box { border-radius: 16px; padding: 22px; text-align: center; }
+    .tarif-box.blue { background: linear-gradient(135deg, #185FA5, #0C447C); }
+    .tarif-box.green { background: linear-gradient(135deg, #1D9E75, #0a6640); }
+    .tarif-box.orange { background: linear-gradient(135deg, #E07B39, #c9610a); }
+    .tarif-label { font-size: 12px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .tarif-prix { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .tarif-unite { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+    .tarif-features { text-align: left; display: flex; flex-direction: column; gap: 6px; }
+    .tarif-feature { font-size: 11px; color: rgba(255,255,255,0.8); display: flex; align-items: center; gap: 6px; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 30px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #185FA5, #B5D4F4); }
+    .timeline-item { position: relative; margin-bottom: 24px; }
+    .timeline-dot { position: absolute; left: -26px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: #185FA5; border: 3px solid #fff; box-shadow: 0 0 0 2px #185FA5; }
+    .timeline-date { font-size: 11px; color: #85B7EB; font-weight: 500; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+    .timeline-titre { font-size: 14px; font-weight: 600; color: #0C447C; margin-bottom: 4px; }
+    .timeline-desc { font-size: 12px; color: #378ADD; line-height: 1.5; }
+
+    /* EQUIPE */
+    .equipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .equipe-card { background: #f7faff; border-radius: 16px; padding: 20px; text-align: center; border: 0.5px solid #B5D4F4; }
+    .equipe-avatar { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: #fff; }
+    .equipe-nom { font-size: 14px; font-weight: 600; color: #0C447C; margin-bottom: 4px; }
+    .equipe-role { font-size: 11px; color: #85B7EB; line-height: 1.5; }
+
+    /* PROBLEME / SOLUTION */
+    .prob-sol { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .prob-box { background: rgba(229,62,62,0.05); border: 0.5px solid rgba(229,62,62,0.2); border-radius: 14px; padding: 20px; }
+    .sol-box { background: rgba(29,158,117,0.05); border: 0.5px solid rgba(29,158,117,0.2); border-radius: 14px; padding: 20px; }
+    .prob-sol-titre { font-size: 14px; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .prob-sol-titre.red { color: #e53e3e; }
+    .prob-sol-titre.green { color: #1D9E75; }
+    .prob-sol-item { font-size: 12px; color: #666; line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+
+    /* MARCHE */
+    .marche-item { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; border-bottom: 0.5px solid #E6F1FB; }
+    .marche-item:last-child { border-bottom: none; }
+    .marche-icon { font-size: 28px; flex-shrink: 0; }
+    .marche-titre { font-size: 14px; font-weight: 600; color: #0C447C; margin-bottom: 4px; }
+    .marche-desc { font-size: 12px; color: #85B7EB; line-height: 1.5; }
+    .marche-chiffre { font-size: 18px; font-weight: 700; color: #185FA5; margin-left: auto; flex-shrink: 0; }
+
+    /* ROI */
+    .roi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .roi-card { background: linear-gradient(135deg, #f0f6ff, #E6F1FB); border-radius: 14px; padding: 18px; border: 0.5px solid #B5D4F4; }
+    .roi-titre { font-size: 12px; color: #85B7EB; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .roi-val { font-size: 24px; font-weight: 700; color: #185FA5; margin-bottom: 4px; }
+    .roi-desc { font-size: 11px; color: #85B7EB; line-height: 1.5; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .contact-card { background: #f7faff; border-radius: 14px; padding: 16px; text-align: center; border: 0.5px solid #B5D4F4; }
+    .contact-icon { font-size: 28px; margin-bottom: 8px; }
+    .contact-label { font-size: 11px; color: #85B7EB; margin-bottom: 4px; }
+    .contact-val { font-size: 13px; font-weight: 500; color: #185FA5; word-break: break-all; }
+
+    /* SEPARATEUR DE PAGE */
+    .page-break { page-break-before: always; padding-top: 40px; }
+
+    /* CITATION */
+    .citation-box { background: linear-gradient(135deg, #185FA5, #0C447C); border-radius: 16px; padding: 28px; text-align: center; margin-bottom: 24px; }
+    .citation-texte { font-family: 'Lora', serif; font-size: 18px; color: #fff; font-style: italic; line-height: 1.7; margin-bottom: 12px; }
+    .citation-auteur { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+    /* BADGE */
+    .badge-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badge { background: #E6F1FB; color: #185FA5; border-radius: 20px; padding: 6px 16px; font-size: 12px; font-weight: 500; }
+    .badge.green { background: rgba(29,158,117,0.1); color: #1D9E75; }
+    .badge.orange { background: rgba(224,123,57,0.1); color: #E07B39; }
+
+    /* IMPRESSION */
+    @media print {
+      body { background: #fff; }
+      .section { box-shadow: none; border: 1px solid #E6F1FB; }
+      .cover { min-height: auto; padding: 40px; }
+    }
+
+    @media (max-width: 600px) {
+      .stats-row, .features-grid, .tarifs-grid, .equipe-grid, .prob-sol, .roi-grid, .contact-grid { grid-template-columns: 1fr; }
+      .cover h1 { font-size: 36px; }
+      .cover-info { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============ COUVERTURE ============ -->
+<div class="cover">
+  <img src="icon.png" class="cover-logo" alt="Logo" onerror="this.style.display='none'">
+  <div class="cover-badge">Document de Présentation Confidentiel</div>
+  <h1>Juste là pour toi</h1>
+  <h2>La première application africaine de bien-être mental</h2>
+  <div class="cover-divider"></div>
+  <div class="cover-info">
+    <div class="cover-info-item">
+      <div class="cover-info-label">Fondateur</div>
+      <div class="cover-info-val">El Hadj Malick THIOUNE</div>
+    </div>
+    <div class="cover-info-item">
+      <div class="cover-info-label">Pays</div>
+      <div class="cover-info-val">🇸🇳 Sénégal — Afrique</div>
+    </div>
+    <div class="cover-info-item">
+      <div class="cover-info-label">Année</div>
+      <div class="cover-info-val">2026</div>
+    </div>
+    <div class="cover-info-item">
+      <div class="cover-info-label">Secteur</div>
+      <div class="cover-info-val">Santé mentale & Tech</div>
+    </div>
+  </div>
+  <div class="cover-footer">© 2026 Juste là pour toi — El Hadj Malick THIOUNE — Tous droits réservés — Document confidentiel</div>
+</div>
+
+<!-- ============ CONTENU ============ -->
+<div class="page">
+
+  <!-- 1. RÉSUMÉ EXÉCUTIF -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">💡</div>
+      <div>
+        <div class="section-titre">Résumé exécutif</div>
+        <div class="section-sous">L'essentiel du projet en un coup d'œil</div>
+      </div>
+    </div>
+    <div class="citation-box">
+      <div class="citation-texte">"Chaque personne mérite un espace où elle peut s'exprimer librement, sans crainte d'être jugée. Partout. À tout moment."</div>
+      <div class="citation-auteur">— El Hadj Malick THIOUNE, Fondateur</div>
+    </div>
+    <p style="font-size:14px;color:#378ADD;line-height:1.9;margin-bottom:20px;"><strong style="color:#0C447C;">Juste là pour toi</strong> est une application web de bien-être mental développée au Sénégal, pensée pour répondre aux besoins émotionnels et psychologiques des populations africaines — dans leur langue, dans leur réalité culturelle.</p>
+    <p style="font-size:14px;color:#378ADD;line-height:1.9;margin-bottom:20px;">Propulsée par l'intelligence artificielle de <strong style="color:#0C447C;">Claude (Anthropic)</strong>, l'application offre un accompagnement empathique, confidentiel et disponible 24h/24 — en français, en anglais et en wolof.</p>
+    <p style="font-size:14px;color:#378ADD;line-height:1.9;margin-bottom:24px;">Notre vision : démocratiser le soutien en santé mentale en Afrique subsaharienne, en commençant par le Sénégal, à travers une solution technologique accessible, abordable et culturellement adaptée.</p>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-box-nb">3</div><div class="stat-box-label">Langues supportées<br>Français · Anglais · Wolof</div></div>
+      <div class="stat-box"><div class="stat-box-nb">24h</div><div class="stat-box-label">Disponibilité<br>Sans interruption</div></div>
+      <div class="stat-box"><div class="stat-box-nb">100%</div><div class="stat-box-label">Confidentiel<br>Anonymat garanti</div></div>
+    </div>
+    <div class="badge-row">
+      <span class="badge">🤖 Intelligence Artificielle</span>
+      <span class="badge">🇸🇳 Made in Sénégal</span>
+      <span class="badge green">✅ Déjà opérationnel</span>
+      <span class="badge orange">🚀 Phase de lancement</span>
+      <span class="badge">🌍 Vision panafricaine</span>
+    </div>
+  </div>
+
+  <!-- 2. PROBLÈME -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">⚠️</div>
+      <div>
+        <div class="section-titre">Le problème identifié</div>
+        <div class="section-sous">Une réalité silencieuse qui touche des millions d'Africains</div>
+      </div>
+    </div>
+    <div class="prob-sol">
+      <div class="prob-box">
+        <div class="prob-sol-titre red">😔 Les défis actuels</div>
+        <div class="prob-sol-item"><span>❌</span><span>La santé mentale reste un sujet tabou dans nos sociétés africaines</span></div>
+        <div class="prob-sol-item"><span>❌</span><span>Les professionnels de santé mentale sont rares et coûteux</span></div>
+        <div class="prob-sol-item"><span>❌</span><span>1 personne sur 4 souffre de stress chronique sans jamais en parler</span></div>
+        <div class="prob-sol-item"><span>❌</span><span>Aucune application de bien-être adaptée au contexte africain n'existe</span></div>
+        <div class="prob-sol-item"><span>❌</span><span>Le wolof, langue de 12 millions de Sénégalais, est absent des solutions existantes</span></div>
+        <div class="prob-sol-item"><span>❌</span><span>Les jeunes et actifs n'ont pas accès à un soutien émotionnel abordable</span></div>
+      </div>
+      <div class="sol-box">
+        <div class="prob-sol-titre green">💙 Notre réponse</div>
+        <div class="prob-sol-item"><span>✅</span><span>Un espace sûr, sans jugement, disponible à toute heure</span></div>
+        <div class="prob-sol-item"><span>✅</span><span>Une IA empathique qui comprend les réalités africaines</span></div>
+        <div class="prob-sol-item"><span>✅</span><span>Entièrement gratuit pour l'utilisateur de base</span></div>
+        <div class="prob-sol-item"><span>✅</span><span>Première solution en wolof au monde</span></div>
+        <div class="prob-sol-item"><span>✅</span><span>Accessible depuis n'importe quel smartphone</span></div>
+        <div class="prob-sol-item"><span>✅</span><span>Anonymat total — aucune donnée personnelle collectée</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SOLUTION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">🚀</div>
+      <div>
+        <div class="section-titre">Notre solution</div>
+        <div class="section-sous">Une application complète de bien-être mental</div>
+      </div>
+    </div>
+    <p style="font-size:14px;color:#378ADD;line-height:1.8;margin-bottom:24px;"><strong style="color:#0C447C;">Juste là pour toi</strong> est une application web progressive (PWA) accessible depuis tout navigateur mobile ou desktop, sans téléchargement requis. Elle combine intelligence artificielle, outils de bien-être et communauté bienveillante.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">Assistant IA empathique</div>
+        <div class="feature-desc">Conversations illimitées avec une IA bienveillante qui détecte les émotions et adapte ses réponses en temps réel. Disponible en français, anglais et wolof.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📔</div>
+        <div class="feature-title">Journal de bord</div>
+        <div class="feature-desc">Espace d'écriture personnel pour noter ses émotions quotidiennes avec suivi de l'humeur sur graphique et entrées historiques.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔮</div>
+        <div class="feature-title">Prédiction d'humeur IA</div>
+        <div class="feature-desc">Après 3 jours d'utilisation, l'IA analyse les tendances et prédit l'humeur du lendemain avec des conseils personnalisés.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧬</div>
+        <div class="feature-title">Plan bien-être personnalisé</div>
+        <div class="feature-desc">Après 7 jours, l'IA génère un plan de bien-être sur-mesure basé sur les habitudes et les objectifs de l'utilisateur.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <div class="feature-title">Communauté bienveillante</div>
+        <div class="feature-desc">Espace de partage anonyme par thèmes avec système de soutien mutuel, classement et mode solidarité automatique.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🗣️</div>
+        <div class="feature-title">Thérapie par l'écriture</div>
+        <div class="feature-desc">Questions d'introspection guidées par l'IA pour explorer ses émotions en profondeur, comme une véritable séance thérapeutique.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🕌</div>
+        <div class="feature-title">Mode spirituel</div>
+        <div class="feature-desc">Citations et guidance spirituelle selon la préférence de l'utilisateur — Islam, Christianisme ou Sagesse universelle.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <div class="feature-title">Sessions de groupe</div>
+        <div class="feature-desc">Séances collectives encadrées par notre coach pour un soutien en groupe thématique — 2 à 3 fois par semaine.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. MARCHÉ -->
+  <div class="section page-break">
+    <div class="section-header">
+      <div class="section-num">📊</div>
+      <div>
+        <div class="section-titre">Analyse du marché</div>
+        <div class="section-sous">Un marché immense et encore inexploité</div>
+      </div>
+    </div>
+    <div class="marche-item">
+      <div class="marche-icon">🌍</div>
+      <div>
+        <div class="marche-titre">Marché africain de la santé mentale</div>
+        <div class="marche-desc">Le marché mondial de la santé mentale digitale est estimé à 5,8 milliards USD en 2026, avec une croissance annuelle de 23%. L'Afrique subsaharienne représente un segment encore largement sous-exploité malgré une population de 1,2 milliard d'habitants.</div>
+      </div>
+      <div class="marche-chiffre">5,8 Mds$</div>
+    </div>
+    <div class="marche-item">
+      <div class="marche-icon">🇸🇳</div>
+      <div>
+        <div class="marche-titre">Cible primaire — Sénégal</div>
+        <div class="marche-desc">17 millions d'habitants dont 60% de jeunes de moins de 25 ans. Taux de pénétration mobile de 110%. Une population connectée, jeune et confrontée aux pressions sociales et académiques croissantes.</div>
+      </div>
+      <div class="marche-chiffre">17M</div>
+    </div>
+    <div class="marche-item">
+      <div class="marche-icon">🏫</div>
+      <div>
+        <div class="marche-titre">Marché B2B — Établissements scolaires</div>
+        <div class="marche-desc">Plus de 10 000 établissements scolaires au Sénégal dont lycées, universités et grandes écoles. Chaque établissement représente un potentiel de 200 000 à 500 000 FCFA par an selon sa taille.</div>
+      </div>
+      <div class="marche-chiffre">10 000+</div>
+    </div>
+    <div class="marche-item">
+      <div class="marche-icon">🏢</div>
+      <div>
+        <div class="marche-titre">Marché B2B — Entreprises</div>
+        <div class="marche-desc">Des milliers d'entreprises formelles au Sénégal avec des DRH sensibles à la question du bien-être au travail. Le coût moyen du mal-être coûte aux entreprises 20% de leur masse salariale en absentéisme et perte de productivité.</div>
+      </div>
+      <div class="marche-chiffre">50 000+</div>
+    </div>
+    <div class="marche-item" style="border-bottom:none;">
+      <div class="marche-icon">🌐</div>
+      <div>
+        <div class="marche-titre">Vision d'expansion africaine</div>
+        <div class="marche-desc">Expansion prévue vers la Côte d'Ivoire, le Mali, la Guinée, le Cameroun et le Maroc dans les 3 prochaines années, avec adaptation aux langues locales.</div>
+      </div>
+      <div class="marche-chiffre">5 pays</div>
+    </div>
+  </div>
+
+  <!-- 5. MODELE ECONOMIQUE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">💰</div>
+      <div>
+        <div class="section-titre">Modèle économique</div>
+        <div class="section-sous">Plusieurs sources de revenus complémentaires</div>
+      </div>
+    </div>
+    <div class="tarifs-grid" style="margin-bottom:24px;">
+      <div class="tarif-box blue">
+        <div class="tarif-label">Sessions de groupe</div>
+        <div class="tarif-prix">5$</div>
+        <div class="tarif-unite">≈ 3 000 FCFA / mois</div>
+        <div class="tarif-features">
+          <div class="tarif-feature">✓ 2 à 3 séances / semaine</div>
+          <div class="tarif-feature">✓ 1h à 2h par séance</div>
+          <div class="tarif-feature">✓ Groupes thématiques</div>
+          <div class="tarif-feature">✓ Suivi personnalisé</div>
+        </div>
+      </div>
+      <div class="tarif-box green">
+        <div class="tarif-label">Partenariat Écoles</div>
+        <div class="tarif-prix">200K–500K</div>
+        <div class="tarif-unite">FCFA / an</div>
+        <div class="tarif-features">
+          <div class="tarif-feature">✓ Lycée : 200 000 FCFA/an</div>
+          <div class="tarif-feature">✓ Université : 350 000 FCFA/an</div>
+          <div class="tarif-feature">✓ Grande école : 500 000 FCFA/an</div>
+          <div class="tarif-feature">✓ 1 mois gratuit offert</div>
+        </div>
+      </div>
+      <div class="tarif-box orange">
+        <div class="tarif-label">Partenariat Entreprises</div>
+        <div class="tarif-prix">50K–150K</div>
+        <div class="tarif-unite">FCFA / mois</div>
+        <div class="tarif-features">
+          <div class="tarif-feature">✓ Startup : 50 000 FCFA/mois</div>
+          <div class="tarif-feature">✓ PME : 150 000 FCFA/mois</div>
+          <div class="tarif-feature">✓ Grande ent. : sur devis</div>
+          <div class="tarif-feature">✓ ONG : 100 000 FCFA/mois</div>
+        </div>
+      </div>
+    </div>
+    <div class="roi-grid">
+      <div class="roi-card">
+        <div class="roi-titre">Projection 6 mois — Scénario conservateur</div>
+        <div class="roi-val">2,5M FCFA/mois</div>
+        <div class="roi-desc">Basé sur 5 abonnés sessions + 3 écoles partenaires + 2 entreprises</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-titre">Projection 12 mois — Scénario optimiste</div>
+        <div class="roi-val">15M FCFA/mois</div>
+        <div class="roi-desc">Basé sur 30 abonnés sessions + 15 écoles + 10 entreprises partenaires</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-titre">ROI entreprise partenaire</div>
+        <div class="roi-val">x16</div>
+        <div class="roi-desc">Pour une PME de 50 employés, l'investissement rapporte 16 fois son coût en productivité et rétention</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-titre">Coût d'acquisition utilisateur</div>
+        <div class="roi-val">Quasi nul</div>
+        <div class="roi-desc">Croissance organique via bouche-à-oreille, réseaux sociaux et partenariats institutionnels</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. TECHNOLOGIE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">⚙️</div>
+      <div>
+        <div class="section-titre">Architecture technologique</div>
+        <div class="section-sous">Une stack moderne, fiable et évolutive</div>
+      </div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">Intelligence Artificielle</div>
+        <div class="feature-desc">API Anthropic Claude — l'un des modèles d'IA les plus avancés au monde, spécialisé dans les conversations empathiques et la compréhension émotionnelle.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <div class="feature-title">Frontend</div>
+        <div class="feature-desc">Application web progressive (PWA) en HTML/CSS/JavaScript pur, hébergée sur GitHub Pages. Accessible depuis tout navigateur sans installation.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-title">Backend</div>
+        <div class="feature-desc">Serveur Node.js/Express déployé sur Render. API REST sécurisée pour la gestion de la communauté, des sessions et des statistiques.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Sécurité & Confidentialité</div>
+        <div class="feature-desc">Aucune donnée personnelle stockée côté serveur. Données locales chiffrées sur l'appareil. Protection du code source et des droits de propriété intellectuelle.</div>
+      </div>
+    </div>
+    <div style="background:#f0f6ff;border-radius:14px;padding:16px;margin-top:16px;border:0.5px solid #B5D4F4;">
+      <p style="font-size:13px;font-weight:600;color:#0C447C;margin-bottom:10px;">🔗 Liens de l'application :</p>
+      <p style="font-size:12px;color:#378ADD;margin-bottom:4px;">🌐 Application : <strong>https://malick043-png.github.io/Juste-l-pour-toi</strong></p>
+      <p style="font-size:12px;color:#378ADD;margin-bottom:4px;">🏫 Version Écoles : <strong>https://malick043-png.github.io/Juste-l-pour-toi/ecole.html</strong></p>
+      <p style="font-size:12px;color:#378ADD;">🏢 Version Entreprises : <strong>https://malick043-png.github.io/Juste-l-pour-toi/entreprise.html</strong></p>
+    </div>
+  </div>
+
+  <!-- 7. EQUIPE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">👥</div>
+      <div>
+        <div class="section-titre">L'équipe fondatrice</div>
+        <div class="section-sous">Une équipe complémentaire et engagée</div>
+      </div>
+    </div>
+    <div class="equipe-grid">
+      <div class="equipe-card">
+        <div class="equipe-avatar" style="background:linear-gradient(135deg,#185FA5,#0C447C);">👑</div>
+        <div class="equipe-nom">El Hadj Malick THIOUNE</div>
+        <div class="equipe-role">Fondateur & Créateur<br>Juriste · Coach de vie<br>Entrepreneur</div>
+      </div>
+      <div class="equipe-card">
+        <div class="equipe-avatar" style="background:linear-gradient(135deg,#1D9E75,#0a6640);">🤝</div>
+        <div class="equipe-nom">Cheikh Bakary THIOUNE</div>
+        <div class="equipe-role">Associé<br>Responsable RH<br>& Modérateur</div>
+      </div>
+      <div class="equipe-card">
+        <div class="equipe-avatar" style="background:linear-gradient(135deg,#E07B39,#c9610a);">💼</div>
+        <div class="equipe-nom">AÏDA GUEYE</div>
+        <div class="equipe-role">Responsable Marketing<br>Comptabilité<br>& Modératrice</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. FEUILLE DE ROUTE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">🗺️</div>
+      <div>
+        <div class="section-titre">Feuille de route</div>
+        <div class="section-sous">Notre plan d'action pour les 18 prochains mois</div>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">✅ Phase 1 — Accompli</div>
+        <div class="timeline-titre">Développement & lancement de l'application</div>
+        <div class="timeline-desc">Application complète développée et déployée. Toutes les fonctionnalités IA intégrées. Dashboard admin opérationnel. Protection juridique initiée.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:#E07B39;box-shadow:0 0 0 2px #E07B39;"></div>
+        <div class="timeline-date">🔥 Phase 2 — En cours (Juin–Août 2026)</div>
+        <div class="timeline-titre">Lancement commercial & premiers partenariats</div>
+        <div class="timeline-desc">Campagne de lancement sur les réseaux sociaux. Premiers contacts avec les établissements scolaires. Publication sur Google Play Store. Premières sessions de groupe payantes.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:#B5D4F4;box-shadow:0 0 0 2px #B5D4F4;"></div>
+        <div class="timeline-date">📅 Phase 3 — Septembre–Décembre 2026</div>
+        <div class="timeline-titre">Croissance & consolidation</div>
+        <div class="timeline-desc">Publication sur App Store iOS. 10+ partenariats signés (écoles et entreprises). Lancement des événements bien-être à Dakar. Atteinte de 1 000 utilisateurs actifs.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:#B5D4F4;box-shadow:0 0 0 2px #B5D4F4;"></div>
+        <div class="timeline-date">📅 Phase 4 — 2027</div>
+        <div class="timeline-titre">Expansion régionale</div>
+        <div class="timeline-desc">Expansion vers la Côte d'Ivoire et le Mali. Intégration de nouvelles langues africaines. Levée de fonds pour accélérer la croissance. Partenariats avec des institutions de santé.</div>
+      </div>
+      <div class="timeline-item" style="margin-bottom:0;">
+        <div class="timeline-dot" style="background:#B5D4F4;box-shadow:0 0 0 2px #B5D4F4;"></div>
+        <div class="timeline-date">📅 Phase 5 — 2028</div>
+        <div class="timeline-titre">Leadership panafricain</div>
+        <div class="timeline-desc">Présence dans 5+ pays africains. 100 000+ utilisateurs. La référence du bien-être mental en Afrique francophone. Introduction en bourse ou acquisition stratégique.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. AVANTAGES CONCURRENTIELS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">🏆</div>
+      <div>
+        <div class="section-titre">Avantages concurrentiels</div>
+        <div class="section-sous">Ce qui nous différencie de toute autre solution</div>
+      </div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" style="border-left:3px solid #185FA5;">
+        <div class="feature-icon">🇸🇳</div>
+        <div class="feature-title">1ère app en wolof au monde</div>
+        <div class="feature-desc">Aucune application de bien-être mental au monde ne propose le wolof. Nous sommes pionniers sur ce segment de 12 millions de locuteurs.</div>
+      </div>
+      <div class="feature-card" style="border-left:3px solid #1D9E75;">
+        <div class="feature-icon">🌍</div>
+        <div class="feature-title">Ancrage culturel africain</div>
+        <div class="feature-desc">Conçu par un Africain, pour les Africains. Notre IA comprend les réalités culturelles, spirituelles et sociales locales — ce qu'aucune app occidentale ne peut offrir.</div>
+      </div>
+      <div class="feature-card" style="border-left:3px solid #E07B39;">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">Modèle freemium accessible</div>
+        <div class="feature-desc">Gratuit pour les utilisateurs individuels avec une monétisation B2B solide. Aucune barrière à l'entrée pour les populations les plus vulnérables.</div>
+      </div>
+      <div class="feature-card" style="border-left:3px solid #9B59B6;">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">IA de pointe</div>
+        <div class="feature-desc">Propulsé par Claude d'Anthropic, l'un des modèles d'IA les plus avancés pour les conversations empathiques — bien au-delà des simples chatbots.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. OPPORTUNITE D'INVESTISSEMENT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">💼</div>
+      <div>
+        <div class="section-titre">Opportunité de partenariat</div>
+        <div class="section-sous">Rejoignez une aventure humaine et technologique unique</div>
+      </div>
+    </div>
+    <div class="citation-box" style="margin-bottom:24px;">
+      <div class="citation-texte">"Investir dans Juste là pour toi, c'est investir dans la santé mentale de l'Afrique. C'est contribuer à briser un tabou qui coûte des vies."</div>
+      <div class="citation-auteur">— El Hadj Malick THIOUNE, Fondateur</div>
+    </div>
+    <div class="roi-grid" style="margin-bottom:24px;">
+      <div class="roi-card">
+        <div class="roi-titre">🤝 Partenariat institutionnel</div>
+        <div class="roi-val">Établissements</div>
+        <div class="roi-desc">Intégrez Juste là pour toi dans votre établissement et offrez à vos élèves/employés un soutien émotionnel de qualité à un coût minimal.</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-titre">💰 Partenariat financier</div>
+        <div class="roi-val">Investisseurs</div>
+        <div class="roi-desc">Opportunité d'investissement dans un marché en pleine croissance avec un retour potentiel élevé et un impact social mesurable.</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-titre">🌐 Partenariat médiatique</div>
+        <div class="roi-val">Médias & Influenceurs</div>
+        <div class="roi-desc">Portez ce projet à la connaissance du grand public et participez à la sensibilisation sur la santé mentale en Afrique.</div>
+      </div>
+      <div class="roi-card">
+        <div class="roi-titre">🏥 Partenariat santé</div>
+        <div class="roi-val">Professionnels de santé</div>
+        <div class="roi-desc">Complétez votre offre de soins avec notre solution digitale et référez vos patients vers un soutien émotionnel disponible 24h/24.</div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,rgba(29,158,117,0.08),rgba(29,158,117,0.03));border-radius:14px;padding:20px;border:0.5px solid rgba(29,158,117,0.3);">
+      <p style="font-size:14px;font-weight:600;color:#1D9E75;margin-bottom:10px;">✅ Pourquoi nous rejoindre maintenant ?</p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <p style="font-size:13px;color:#378ADD;">• L'application est <strong>déjà opérationnelle</strong> — vous investissez dans un produit existant et fonctionnel</p>
+        <p style="font-size:13px;color:#378ADD;">• Nous sommes <strong>pionniers</strong> sur un marché encore vierge en Afrique</p>
+        <p style="font-size:13px;color:#378ADD;">• Le moment est <strong>idéal</strong> — phase de lancement avec des tarifs préférentiels pour les premiers partenaires</p>
+        <p style="font-size:13px;color:#378ADD;">• Un <strong>impact social fort</strong> — contribuer à la santé mentale de l'Afrique</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. CONTACT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">📞</div>
+      <div>
+        <div class="section-titre">Nous contacter</div>
+        <div class="section-sous">Prêt à rejoindre l'aventure ? Parlons-en !</div>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-val">malick043@gmail.com</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">💬</div>
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-val">+221 77 884 47 99</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🌐</div>
+        <div class="contact-label">Application</div>
+        <div class="contact-val">malick043-png.github.io/Juste-l-pour-toi</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:30px;padding:24px;background:linear-gradient(135deg,#185FA5,#0C447C);border-radius:16px;">
+      <p style="font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:8px;">Juste là pour toi. 💙</p>
+      <p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:16px;">La première application africaine de bien-être mental — En français, anglais & wolof 🇸🇳</p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.4);">© 2026 Juste là pour toi — El Hadj Malick THIOUNE — Tous droits réservés<br>Document confidentiel — Reproduction interdite sans autorisation écrite</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Bouton d'impression
+const printBtn = document.createElement('button');
+printBtn.textContent = '🖨️ Imprimer / Télécharger en PDF';
+printBtn.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#185FA5;color:#fff;border:none;border-radius:16px;padding:12px 20px;font-size:13px;cursor:pointer;font-family:DM Sans,sans-serif;font-weight:500;box-shadow:0 4px 20px rgba(24,95,165,0.4);z-index:999;';
+printBtn.onclick = () => window.print();
+document.body.appendChild(printBtn);
+</script>
+</body>
+</html>
